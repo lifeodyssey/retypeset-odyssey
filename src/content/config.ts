@@ -9,12 +9,13 @@ const postsCollection = defineCollection({
     // For Open Graph
     description: z.string().optional().default(''),
     image: z.string().optional().default(''),
-    // Custom Settings
+    // Extended Settings
     lang: z.string().optional().default(''),
     slug: z.string().optional().default(''),
     toc: z.boolean().optional().default(false),
     pin: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
+    minutes: z.number().optional(),
   }),
 })
 export const collections = {

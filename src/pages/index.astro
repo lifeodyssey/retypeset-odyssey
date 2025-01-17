@@ -1,6 +1,41 @@
 ---
 import Layout from '@/layouts/Layout.astro'
+import { getPinnedPosts, getPosts } from '@/utils/content.config'
+
+const posts = await getPosts()
+const pinnedPosts = await getPinnedPosts()
 ---
 
 <Layout>
+  <main>
+    {pinnedPosts.length > 0 && (
+      <section>
+        <h2>置顶文章</h2>
+        <ul>
+          {pinnedPosts.map(post => (
+            <li>
+              <a href={`/posts/${post.slug}/`}>
+                {post.data.title}
+                <time>({post.data.published.toISOString().split('T')[0]})</time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section>
+      <h2>所有文章</h2>
+      <ul>
+        {posts.map(post => (
+          <li>
+            <a href={`/posts/${post.slug}/`}>
+              {post.data.title}
+              <time>({post.data.published.toISOString().split('T')[0]})</time>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
 </Layout>
