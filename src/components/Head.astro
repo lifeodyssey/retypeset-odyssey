@@ -35,7 +35,7 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 
 <!-- Preload -->
 <link rel="preconnect" href={cdn} />
-<link rel="preload" href={`${cdn}/gh/radishzzz/astro-theme-retypeset@master/src/style/font.css`} as="style" />
+<link rel="preload" href={`${cdn}/gh/radishzzz/astro-theme-retypeset@master/src/styles/font.css`} as="style" />
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
 {imageHostURL && <link rel="dns-prefetch" href={imageHostURL} />}
 {customGoogleAnalyticsURL && <link rel="dns-prefetch" href={customGoogleAnalyticsURL} />}
@@ -53,7 +53,7 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 {[locale, ...moreLocale].map(lang => (
   <link
     rel="alternate"
-    href={lang === locale ? '/' : `/${lang}/`}
+    href={`${url}${lang === locale ? '' : lang}`}
     hreflang={lang === 'zh-tw' ? 'zh-TW' : lang}
   />
 ))}

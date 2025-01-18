@@ -8,7 +8,7 @@ export const themeConfig: ThemeConfig = {
     description: '一个优美的博客主题',
     author: 'radishzz',
     url: 'https://retypeset.netlify.app',
-    favicon: '', // support only webp, svg, png
+    favicon: '/image/logo.svg', // or https://image.example.com/logo.svg support only webp, svg, png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -16,9 +16,9 @@ export const themeConfig: ThemeConfig = {
   color: {
     mode: 'light',
     light: {
-      primary: '#000000',
+      primary: '#232323',
       backgroundStart: '#ffffff',
-      backgroundEnd: '#f5f5f5',
+      backgroundEnd: '#ffeeee',
     },
     dark: {
       primary: '#000000',
@@ -94,7 +94,7 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default, unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset@master/src/style/font.css
+    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default, unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset@master/src/styles/font.css
     commentURL: '', // https://comment.example.com/
     imageHostURL: '', // https://image.example.com/
     // If you proxy analytics requests to the custom domain, you can fill in below

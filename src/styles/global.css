@@ -3,3 +3,12 @@
     --uno-colors-backgroundStart: theme('colors.backgroundStart');
     --uno-colors-backgroundEnd: theme('colors.backgroundEnd');
   }
+html {
+    --at-apply: 'min-h-full font-sans text-[62.5%] bg-gradient-to-b from-backgroundStart to-backgroundEnd c-primary antialiased scroll-smooth';
+  }
+body {
+  --at-apply: 'min-h-screen text-[1.6rem] m-0';
+  }
+h1, h2, h3 {
+    text-rendering: optimizeLegibility;
+  }
