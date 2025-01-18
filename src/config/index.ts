@@ -33,7 +33,6 @@ export const themeConfig: ThemeConfig = {
     locale: 'zh', // zh, zh-tw, ja, en, es, ru, default locale setting
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh-tw', 'ja', 'en', 'es', 'ru']， not fill in the default locale code again
     font: 'sans', // sans, serif, choose the font style for posts
-    rss: true, // true, false, whether to enable RSS
     toc: true, // true, false, whether to enable table of contents in posts
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

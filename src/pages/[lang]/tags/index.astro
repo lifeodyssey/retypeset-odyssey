@@ -1,14 +1,22 @@
 ---
+import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags } from '@/utils/content.config'
 
+export function getStaticPaths() {
+  return themeConfig.global.moreLocale.map(lang => ({
+    params: { lang },
+  }))
+}
+
+const { lang } = Astro.params
 const allTags = await getAllTags()
 ---
 
 <Layout>
   <div>
     {allTags.map(tag => (
-      <a href={`/tags/${tag}/`}>
+      <a href={`/${lang}/tags/${tag}/`}>
         {tag}
       </a>
     ))}

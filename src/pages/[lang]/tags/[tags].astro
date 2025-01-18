@@ -1,15 +1,19 @@
 ---
+import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content.config'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
-  return tags.map(tag => ({
-    params: { tags: tag },
-    props: { tags: tag },
-  }))
+  return themeConfig.global.moreLocale.flatMap(lang =>
+    tags.map(tag => ({
+      params: { lang, tags: tag },
+      props: { tags: tag },
+    })),
+  )
 }
 
+const { lang } = Astro.params
 const { tags } = Astro.props
 const posts = await getPostsByTag(tags)
 const allTags = await getAllTags()
@@ -18,7 +22,7 @@ const allTags = await getAllTags()
 <Layout>
   <div>
     {allTags.map(tag => (
-      <a href={`/tags/${tag}/`}>
+      <a href={`/${lang}/tags/${tag}/`}>
         {tag}
       </a>
     ))}
@@ -28,7 +32,7 @@ const allTags = await getAllTags()
     <ul>
       {posts.map(post => (
         <li>
-          <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+          <a href={`/${lang}/posts/${post.slug}/`}>{post.data.title}</a>
         </li>
       ))}
     </ul>

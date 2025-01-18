@@ -29,7 +29,6 @@ export interface ThemeConfig {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
     font: string
-    rss: boolean
     toc: boolean
   }
 

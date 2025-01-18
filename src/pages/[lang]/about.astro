@@ -1,5 +1,12 @@
 ---
+import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
+
+export function getStaticPaths() {
+  return themeConfig.global.moreLocale.map(lang => ({
+    params: { lang },
+  }))
+}
 ---
 
 <Layout>

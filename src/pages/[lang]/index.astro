@@ -1,12 +1,12 @@
 ---
+import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPosts } from '@/utils/content.config'
 
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'zh' } },
-    { params: { lang: 'en' } },
-  ]
+  return themeConfig.global.moreLocale.map(lang => ({
+    params: { lang },
+  }))
 }
 
 const { lang } = Astro.params

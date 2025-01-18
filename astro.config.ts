@@ -43,6 +43,9 @@ export default defineConfig({
       codes,
     })),
     defaultLocale: locale,
+    routing: {
+      prefixDefaultLocale: false,
+    },
   },
   integrations: [
     partytown({
