@@ -8,23 +8,25 @@ import sanitizeHtml from 'sanitize-html'
 
 const parser = new MarkdownIt()
 const { title, description, url } = themeConfig.site
-const { locale: defaultLocale, moreLocale } = themeConfig.global
+const { moreLocale } = themeConfig.global
 const followConfig = themeConfig.seo?.follow
 
-// Extract first 100 chars from content as description
+// Returns first 200 chars with proper truncation
 function getExcerpt(content: string): string {
-  const plainText = sanitizeHtml(
-    parser.render(content),
-    {
-      allowedTags: [],
-      allowedAttributes: {},
-    },
-  )
+  if (!content)
+    return ''
 
-  return `${plainText.slice(0, 100).trim()}...`
+  // Convert markdown to plain text by removing all HTML tags
+  const plainText = sanitizeHtml(parser.render(content), {
+    allowedTags: [],
+    allowedAttributes: {},
+  })
+
+  const excerpt = plainText.slice(0, 200).trim()
+  return excerpt.length === 200 ? `${excerpt}...` : excerpt
 }
 
-// Return 404 response for invalid language routes
+// Return 404 for invalid language paths
 function return404() {
   return new Response(null, {
     status: 404,
@@ -32,21 +34,22 @@ function return404() {
   })
 }
 
-// Add getStaticPaths for dynamic routes
+// Type for supported non-default languages
+type SupportedLanguage = typeof moreLocale[number]
+
+// Generate static paths for all supported languages
 export function getStaticPaths() {
-  return moreLocale.map(lang => ({ params: { lang } }))
+  return moreLocale.map((lang: SupportedLanguage) => ({ params: { lang } }))
 }
 
-// Generate RSS feed for non-default languages
 export async function GET({ params }: APIContext) {
-  const lang = params.lang as string
+  const lang = params.lang as SupportedLanguage
 
-  // Only generate RSS for valid non-default languages
-  if (!moreLocale.includes(lang)) {
+  // Return 404 if language is not supported
+  if (!moreLocale.includes(lang))
     return return404()
-  }
 
-  // Get posts for specific language (include universal posts)
+  // Get posts for specific language (including universal posts)
   const posts = await getCollection(
     'posts',
     ({ data }: { data: CollectionEntry<'posts'>['data'] }) =>
@@ -57,28 +60,27 @@ export async function GET({ params }: APIContext) {
     title: `${title} (${lang})`,
     description,
     site: url,
-    stylesheet: '/rss/styles.xsl',
-    // Map posts to RSS items with language-specific URLs
-    items: posts.map(post => ({
+    items: posts.map((post: CollectionEntry<'posts'>) => ({
       title: post.data.title,
       pubDate: post.data.published,
       description: post.data.description || getExcerpt(post.body),
-      link: `/${lang}/posts/${post.slug}/`,
-      content: sanitizeHtml(
-        parser.render(post.body),
-        {
-          allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-        },
-      ),
+      // Generate absolute URL with language prefix
+      link: new URL(`${lang}/posts/${post.slug}/`, url).toString(),
+      // Convert markdown content to HTML, allowing img tags
+      content: post.body
+        ? sanitizeHtml(parser.render(post.body), {
+            allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+          })
+        : '',
     })),
-    // Add language and follow challenge info
+    // Add XML namespaces for language and follow challenge
     customData: `
       <language>${lang}</language>
       ${followConfig?.feedID && followConfig?.userID
           ? `<follow_challenge>
-          <feedId>${followConfig.feedID}</feedId>
-          <userId>${followConfig.userID}</userId>
-        </follow_challenge>`
+            <feedId>${followConfig.feedID}</feedId>
+            <userId>${followConfig.userID}</userId>
+          </follow_challenge>`
           : ''
       }
     `.trim(),

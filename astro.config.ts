@@ -36,16 +36,12 @@ const { locale }: { locale: ThemeConfig['global']['locale'] } = themeConfig.glob
 export default defineConfig({
   site: url,
   base: '/',
-  trailingSlash: 'always',
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
       path,
       codes,
     })),
     defaultLocale: locale,
-    routing: {
-      prefixDefaultLocale: false,
-    },
   },
   integrations: [
     partytown({
