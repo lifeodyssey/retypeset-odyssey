@@ -98,9 +98,9 @@ export const themeConfig: ThemeConfig = {
     commentURL: '', // https://comment.example.com/
     imageHostURL: '', // https://image.example.com/
     // If you proxy analytics requests to the custom domain, you can fill in below
-    customGoogleAnalyticsURL: '', // https://whatever.example.com/
-    customUmamiAnalyticsURL: '', // https://whatever.example.com/
-    customUmamiAnalyticsJS: '', // https://whatever.example.com/whatever.js
+    customGoogleAnalyticsURL: '', // https://custom.example.com/
+    customUmamiAnalyticsURL: '', // https://custom.example.com/
+    customUmamiAnalyticsJS: '', // https://custom.example.com/custom.js
     lazyload: false,
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

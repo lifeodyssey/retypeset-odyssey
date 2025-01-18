@@ -35,12 +35,12 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 
 <!-- Preload -->
 <link rel="preconnect" href={cdn} />
-<link rel="preload" href={`${cdn}/gh/radishzzz/astro-theme-retypeset/src/styles/font.css`} as="style" />
+<link rel="preload" href={`${cdn}/gh/radishzzz/retypeset-font/font.css`} as="style" />
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
 {imageHostURL && <link rel="dns-prefetch" href={imageHostURL} />}
 {customGoogleAnalyticsURL && <link rel="dns-prefetch" href={customGoogleAnalyticsURL} />}
 {customUmamiAnalyticsURL && <link rel="dns-prefetch" href={customUmamiAnalyticsURL} />}
-<link rel="stylesheet" href={`${cdn}/gh/radishzzz/astro-theme-retypeset/src/styles/font.css`} />
+<link rel="stylesheet" href={`${cdn}/gh/radishzzz/retypeset-font/font.css`} />
 
 <!-- Link -->
 <link rel="author" href={url} />
