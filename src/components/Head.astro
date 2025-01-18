@@ -10,7 +10,7 @@ interface Props {
 const { postTitle, postDescription, postImage } = Astro.props
 const { title, subtitle, description, author, url, favicon } = themeConfig.site
 const { light: { backgroundStart: lightMode }, dark: { backgroundStart: darkMode } } = themeConfig.color
-const { language } = themeConfig.global
+const { locale, moreLocale } = themeConfig.global
 const { verification = {}, twitterID = '', facebookID = '', facebookLink = '', googleAnalyticsID = '', umamiAnalyticsID = '', siteScreenshot = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', customUmamiAnalyticsURL = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
@@ -46,10 +46,17 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <link rel="author" href={url} />
 <link rel="publisher" href={author} />
 <link rel="canonical" href={Astro.url} />
-<!-- todo language -->
-<link rel="alternate" href="/en/" hreflang="en" />
 <link rel="alternate" href="/rss.xml" type="application/rss+xml" title="RSS" />
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" />
+
+<!-- i18n hreflang generate -->
+{[locale, ...moreLocale].map(lang => (
+  <link
+    rel="alternate"
+    href={lang === locale ? '/' : `/${lang}/`}
+    hreflang={lang === 'zh-tw' ? 'zh-TW' : lang}
+  />
+))}
 
 <!-- Facebook Open Graph -->
 <meta property="fb:app_id" content={facebookID} />
@@ -60,7 +67,7 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <meta property="og:image:alt" content={postTitle || title} />
 <meta property="og:description" content={postDescription || subtitle} />
 <meta property="og:site_name" content={title} />
-<meta property="og:locale" content={language} />
+<meta property="og:locale" content={Astro.currentLocale?.replace('-', '_') || 'en_US'} />
 <meta property="article:author" content={facebookLink} />
 
 <!-- Twitter Card -->

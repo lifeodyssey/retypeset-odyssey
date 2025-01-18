@@ -8,7 +8,7 @@ import sanitizeHtml from 'sanitize-html'
 
 const parser = new MarkdownIt()
 const { title, description, url } = themeConfig.site
-const { language } = themeConfig.global
+const { locale } = themeConfig.global
 const followConfig = themeConfig.seo?.follow
 
 // Extract first 100 chars from content as description
@@ -49,7 +49,7 @@ export async function GET(_context: APIContext) {
       ),
     })),
     customData: `
-      <language>${language}</language>
+      <language>${locale}</language>
       ${followConfig?.feedID && followConfig?.userID
           ? `<follow_challenge>
             <feedId>${followConfig.feedID}</feedId>

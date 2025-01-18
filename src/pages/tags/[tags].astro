@@ -1,0 +1,36 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getAllTags, getPostsByTag } from '@/utils/content.config'
+
+export async function getStaticPaths() {
+  const tags = await getAllTags()
+  return tags.map(tag => ({
+    params: { tags: tag },
+    props: { tags: tag },
+  }))
+}
+
+const { tags } = Astro.props
+const posts = await getPostsByTag(tags)
+const allTags = await getAllTags()
+---
+
+<Layout>
+  <div>
+    {allTags.map(tag => (
+      <a href={`/tags/${tag}/`}>
+        {tag}
+      </a>
+    ))}
+  </div>
+
+  <div>
+    <ul>
+      {posts.map(post => (
+        <li>
+          <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>

@@ -1,30 +1,44 @@
-export const language = {
-  zh: {
+// Global Language Map
+export const langMap: Record<string, string[]> = {
+  'zh': ['zh-CN'],
+  'zh-tw': ['zh-TW'],
+  'ja': ['ja-JP'],
+  'en': ['en-US'],
+  'es': ['es-ES'],
+  'ru': ['ru-RU'],
+}
+// Standard Language Code
+export const langCode = Object.values(langMap).flat()
+// Abbreviated Language Code
+export const langPath = Object.keys(langMap).flat()
+// UI Translation
+export const ui = {
+  'zh': {
     posts: '文章',
     tags: '标签',
     about: '关于',
   },
-  tw: {
+  'zh-tw': {
     posts: '文章',
     tags: '標籤',
     about: '關於',
   },
-  ja: {
+  'ja': {
     posts: '記事',
     tags: 'タグ',
     about: '概要',
   },
-  en: {
+  'en': {
     posts: 'Posts',
     tags: 'Tags',
     about: 'About',
   },
-  es: {
+  'es': {
     posts: 'Posts',
     tags: 'Tags',
     about: 'Sobre',
   },
-  ru: {
+  'ru': {
     posts: 'Посты',
     tags: 'Теги',
     about: 'О себе',

@@ -1,3 +1,5 @@
+import type { langPath } from '@/utils/ui'
+
 export interface ThemeConfig {
 
   site: {
@@ -24,7 +26,8 @@ export interface ThemeConfig {
   }
 
   global: {
-    language: string
+    locale: typeof langPath[number]
+    moreLocale: typeof langPath[number][]
     font: string
     rss: boolean
     toc: boolean

@@ -2,7 +2,7 @@
 import Head from '@/components/Head.astro'
 ---
 
-<html lang="zh-CN">
+<html lang={Astro.currentLocale || 'en-US'}>
   <head>
     <Head />
   </head>

@@ -28,13 +28,22 @@ import { GithubCardComponent } from './src/plugins/rehype-component-github-card.
 import { parseDirectiveNode } from './src/plugins/remark-directive-rehype.js'
 import { remarkExcerpt } from './src/plugins/remark-excerpt.js'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
+import { langMap } from './src/utils/ui'
 
 const { url }: { url: ThemeConfig['site']['url'] } = themeConfig.site
+const { locale }: { locale: ThemeConfig['global']['locale'] } = themeConfig.global
 
 export default defineConfig({
   site: url,
   base: '/',
   trailingSlash: 'always',
+  i18n: {
+    locales: Object.entries(langMap).map(([path, codes]) => ({
+      path,
+      codes,
+    })),
+    defaultLocale: locale,
+  },
   integrations: [
     partytown({
       config: {

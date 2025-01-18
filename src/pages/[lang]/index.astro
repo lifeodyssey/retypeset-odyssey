@@ -2,8 +2,16 @@
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPosts } from '@/utils/content.config'
 
-const posts = await getPosts()
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh' } },
+    { params: { lang: 'en' } },
+  ]
+}
+
+const { lang } = Astro.params
 const pinnedPosts = await getPinnedPosts()
+const posts = await getPosts()
 ---
 
 <Layout>
@@ -13,7 +21,7 @@ const pinnedPosts = await getPinnedPosts()
         <ul>
           {pinnedPosts.map(post => (
             <li>
-              <a href={`/posts/${post.slug}/`}>
+              <a href={`/${lang}/posts/${post.slug}/`}>
                 {post.data.title}
                 <time>({post.data.published.toISOString().split('T')[0]})</time>
               </a>
@@ -27,7 +35,7 @@ const pinnedPosts = await getPinnedPosts()
       <ul>
         {posts.map(post => (
           <li>
-            <a href={`/posts/${post.slug}/`}>
+            <a href={`/${lang}/posts/${post.slug}/`}>
               {post.data.title}
               <time>({post.data.published.toISOString().split('T')[0]})</time>
             </a>
