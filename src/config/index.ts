@@ -94,7 +94,7 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default, unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset@master/src/styles/font.css
+    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default, unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset/src/styles/font.css
     commentURL: '', // https://comment.example.com/
     imageHostURL: '', // https://image.example.com/
     // If you proxy analytics requests to the custom domain, you can fill in below
