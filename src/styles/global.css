@@ -1,14 +1,14 @@
 :root {
-    --uno-colors-primary: theme('colors.primary');
-    --uno-colors-backgroundStart: theme('colors.backgroundStart');
+    --uno-colors-text: theme('colors.text');
+    --uno-colors-backgroundTop: theme('colors.backgroundTop');
     --uno-colors-backgroundEnd: theme('colors.backgroundEnd');
   }
 html {
-    --at-apply: 'min-h-full font-sans text-[62.5%] bg-gradient-to-b from-backgroundStart to-backgroundEnd c-primary antialiased scroll-smooth';
-  }
+  --at-apply: 'antialiased scroll-smooth text-62.5%';
+}
 body {
-  --at-apply: 'min-h-screen text-[1.6rem] m-0';
-  }
+  --at-apply: 'min-h-screen min-h-dvh bg-gradient-to-b from-backgroundTop to-backgroundEnd bg-fixed overscroll-none text-1.6rem c-text';
+}
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
   }
@@ -30,6 +30,6 @@ h5 {
 h6 {
   --at-apply: 'text-[1.6rem]';
 }
-:where(p) {
-  --at-apply: 'text-primary/85';
-}
+/* :where(p) {
+  --at-apply: 'text-text/85';
+} */

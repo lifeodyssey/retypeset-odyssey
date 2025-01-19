@@ -9,7 +9,7 @@ interface Props {
 
 const { postTitle, postDescription, postImage } = Astro.props
 const { title, subtitle, description, author, url, favicon } = themeConfig.site
-const { light: { backgroundStart: lightMode }, dark: { backgroundStart: darkMode } } = themeConfig.color
+const { light: { backgroundTop: lightMode }, dark: { backgroundTop: darkMode } } = themeConfig.color
 const { locale, moreLocale } = themeConfig.global
 const { verification = {}, twitterID = '', facebookID = '', facebookLink = '', googleAnalyticsID = '', umamiAnalyticsID = '', siteScreenshot = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification

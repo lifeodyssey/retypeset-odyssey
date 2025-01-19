@@ -16,13 +16,13 @@ export const themeConfig: ThemeConfig = {
   color: {
     mode: 'light',
     light: {
-      primary: '#232323',
-      backgroundStart: '#ffffff',
-      backgroundEnd: '#ffeeee',
+      text: '#232323',
+      backgroundTop: '#f8f8f8',
+      backgroundEnd: '#FDE9EB',
     },
     dark: {
-      primary: '#000000',
-      backgroundStart: '#ffffff',
+      text: '#000000',
+      backgroundTop: '#ffffff',
       backgroundEnd: '#000000',
     },
   },
@@ -31,9 +31,8 @@ export const themeConfig: ThemeConfig = {
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
     locale: 'zh', // zh, zh-tw, ja, en, es, ru, default locale setting
-    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh-tw', 'ja', 'en', 'es', 'ru']， not fill in the default locale code again
-    font: 'sans', // sans, serif, choose the font style for posts
-    toc: true, // true, false, whether to enable table of contents in posts
+    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']， NOT fill in the default locale code again
+    font: 'sans', // sans, serif, italic, choose the font style for posts
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 

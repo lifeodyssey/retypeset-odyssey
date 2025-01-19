@@ -37,7 +37,7 @@ export default defineConfig({
     colors: light,
     fontFamily: {
       title: ['Snell-Black', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-      time: ['Snell-Bold', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+      date: ['Snell-Bold', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
       serif: ['STIX', 'EarlySummer', 'Georgia', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
       italic: ['STIX-italic', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
       custom: ['EarlySummer-custom', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],

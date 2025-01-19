@@ -14,13 +14,13 @@ export interface ThemeConfig {
   color: {
     mode: 'light' | 'dark'
     light: {
-      primary: string
-      backgroundStart: string
+      text: string
+      backgroundTop: string
       backgroundEnd: string
     }
     dark: {
-      primary: string
-      backgroundStart: string
+      text: string
+      backgroundTop: string
       backgroundEnd: string
     }
   }
@@ -29,7 +29,6 @@ export interface ThemeConfig {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
     font: string
-    toc: boolean
   }
 
   comment?: {

@@ -1,9 +1,12 @@
 ---
 import Head from '@/components/Head.astro'
+import themeConfig from '@/config'
 import '@/styles/global.css'
+
+const fontStyle = `font-${themeConfig.global.font}`
 ---
 
-<html lang={Astro.currentLocale || 'en-US'}>
+<html lang={Astro.currentLocale || 'en-US'} class={fontStyle}>
   <head>
     <Head />
   </head>

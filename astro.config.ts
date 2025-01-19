@@ -4,7 +4,6 @@ import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
-import swup from '@swup/astro'
 import compress from 'astro-compress'
 import robotsTxt from 'astro-robots-txt'
 import { defineConfig } from 'astro/config'
@@ -61,16 +60,6 @@ export default defineConfig({
       sitemap: true,
     }),
     compress(),
-    swup({
-      theme: false,
-      animationClass: 'transition-swup-',
-      cache: true,
-      preload: true,
-      accessibility: true,
-      smoothScrolling: true,
-      updateHead: true,
-      updateBodyClass: true,
-    }),
   ],
   markdown: {
     remarkPlugins: [

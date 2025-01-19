@@ -1,5 +1,5 @@
 {
-  "name": "astro-theme-retyprset",
+  "name": "astro-theme-retypeset",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -20,7 +20,6 @@
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
     "@rehype-pretty/transformers": "^0.13.2",
-    "@swup/astro": "^1.5.0",
     "@unocss/reset": "^65.4.2",
     "astro": "^5.1.7",
     "astro-compress": "^2.3.6",
