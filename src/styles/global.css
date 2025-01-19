@@ -12,3 +12,24 @@ body {
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
   }
+h1 {
+  --at-apply: 'text-[3.6rem]';
+}
+h2 {
+  --at-apply: 'text-[3rem]';
+}
+h3 {
+  --at-apply: 'text-[2.4rem]';
+}
+h4 {
+  --at-apply: 'text-[2rem]';
+}
+h5 {
+  --at-apply: 'text-[1.8rem]';
+}
+h6 {
+  --at-apply: 'text-[1.6rem]';
+}
+:where(p) {
+  --at-apply: 'text-primary/85';
+}

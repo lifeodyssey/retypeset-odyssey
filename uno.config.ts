@@ -16,32 +16,11 @@ const { light, dark }: {
   dark: ThemeConfig['color']['dark']
 } = themeConfig.color
 
-const cssExtend = {
-  h1: {
-    'font-size': '3.6rem',
-  },
-  h2: {
-    'font-size': '3rem',
-  },
-  h3: {
-    'font-size': '2.4rem',
-  },
-  h4: {
-    'font-size': '2rem',
-  },
-  h5: {
-    'font-size': '1.8rem',
-  },
-  h6: {
-    'font-size': '1.6rem',
-  },
-}
-
 export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    presetTypography({ cssExtend }),
+    presetTypography(),
     presetTheme<Theme>({
       theme: {
         dark: {
