@@ -1,40 +1,50 @@
 <script>
-declare global {
-  interface Document {
-    startViewTransition: (callback: () => void) => void
+  declare global {
+    interface Document {
+      startViewTransition: (callback: () => void) => void
+    }
   }
-}
 
-const TOGGLE = document.querySelector('button[aria-pressed]') as HTMLButtonElement
-if (!TOGGLE)
-  throw new Error('Theme toggle button not found')
+  const TOGGLE = document.querySelector('button[aria-pressed]') as HTMLButtonElement
+  if (!TOGGLE)
+    throw new Error('Theme toggle button not found')
 
-const isDark = document.documentElement.classList.contains('dark')
-TOGGLE.setAttribute('aria-pressed', String(isDark))
-
-function SWITCH() {
-  const isDark = !TOGGLE.matches('[aria-pressed=true]')
+  const isDark = document.documentElement.classList.contains('dark')
   TOGGLE.setAttribute('aria-pressed', String(isDark))
-  const newTheme = isDark ? 'dark' : 'light'
-  document.documentElement.classList.toggle('dark', isDark)
-  localStorage.setItem('theme', newTheme)
-}
 
-function TOGGLE_THEME() {
-  if (!document.startViewTransition) {
-    SWITCH()
-    return
+  function SWITCH() {
+    const isDark = !TOGGLE.matches('[aria-pressed=true]')
+    TOGGLE.setAttribute('aria-pressed', String(isDark))
+    const newTheme = isDark ? 'dark' : 'light'
+    document.documentElement.classList.toggle('dark', isDark)
+    localStorage.setItem('theme', newTheme)
   }
-  document.startViewTransition(SWITCH)
-}
 
-TOGGLE.addEventListener('click', TOGGLE_THEME)
+  function TOGGLE_THEME() {
+    if (!document.startViewTransition) {
+      SWITCH()
+      return
+    }
+    document.startViewTransition(SWITCH)
+  }
+
+  TOGGLE.addEventListener('click', TOGGLE_THEME)
 </script>
+
+<style>
+  [aria-pressed='true'] .moon-icon,
+  .sun-icon {
+    display: none;
+  }
+  [aria-pressed='true'] .sun-icon {
+    display: block;
+  }
+</style>
 
 <button
   aria-pressed="false"
   aria-label="Theme Toggle Button"
-  class="absolute right-10 top-10 z-999 aspect-square w-8 text-secondary [&[aria-pressed='true']_.sun-icon]:block [&_.sun-icon]:hidden [&[aria-pressed='true']_.moon-icon]:hidden"
+  class="absolute right-10 top-10 z-999 aspect-square w-8 text-secondary"
 >
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="moon-icon" fill="currentColor">
     <g>

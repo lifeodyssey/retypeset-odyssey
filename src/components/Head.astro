@@ -27,9 +27,9 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <meta name="description" content={postDescription || description} />
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
-<meta name="theme-color" content=`"${lightMode}"` />
-<meta name="theme-color" media="(prefers-color-scheme: light)" content={`"${lightMode}"`} />
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content={`"${darkMode}"`} />
+<meta name="theme-color" content={lightMode} />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content={lightMode} />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content={darkMode} />
 <meta itemprop="name" content={postTitle || title} />
 <meta itemprop="image" content={postImage || siteScreenshot} />
 <meta itemprop="description" content={postDescription || subtitle} />
