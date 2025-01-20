@@ -4,10 +4,10 @@
     --uno-colors-background: theme('colors.background');
   }
 html {
-  --at-apply: 'h-[-webkit-fill-available] scroll-smooth antialiased text-62.5%';
+  --at-apply: 'scroll-smooth antialiased text-62.5%';
 }
 body {
-  --at-apply: 'min-h-screen min-h-[-webkit-fill-available] bg-background text-primary text-1.6rem';
+  --at-apply: 'bg-background text-primary text-1.6rem';
 }
 @supports not (view-transition-name: none) {
   body {
