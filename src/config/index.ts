@@ -16,13 +16,13 @@ export const themeConfig: ThemeConfig = {
   color: {
     mode: 'light', // light, dark, DEFAULT to match system theme
     light: {
-      primary: '#505050', // title text color in light mode
-      secondary: '#17191A', // posts text color in light mode
+      primary: '#17191A', // title text color in light mode
+      secondary: '#505050', // post text color in light mode
       background: '#F7EEEC', // background color in light mode
     },
     dark: {
-      primary: '#A0A09F', // title text color in dark mode
-      secondary: '#BEBEBE', // posts text color in dark mode
+      primary: '#BEBEBE', // title text color in dark mode
+      secondary: '#A0A09F', // post text color in dark mode
       background: '#161616', // background color in dark mode
     },
   },

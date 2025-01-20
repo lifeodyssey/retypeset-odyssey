@@ -59,7 +59,17 @@ export default defineConfig({
       policy: [{ userAgent: '*', allow: '/' }],
       sitemap: true,
     }),
-    compress(),
+    compress({
+      HTML: {
+        'html-minifier-terser': {
+          removeAttributeQuotes: false,
+          collapseWhitespace: true,
+          removeComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+        },
+      },
+    }),
   ],
   markdown: {
     remarkPlugins: [

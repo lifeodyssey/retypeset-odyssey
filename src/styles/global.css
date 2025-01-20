@@ -7,7 +7,7 @@ html {
   --at-apply: 'scroll-smooth antialiased text-62.5%';
 }
 body {
-  --at-apply: 'bg-background text-primary text-1.6rem';
+  --at-apply: 'bg-background text-secondary text-1.6rem';
 }
 @supports not (view-transition-name: none) {
   body {
