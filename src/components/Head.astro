@@ -9,7 +9,7 @@ interface Props {
 
 const { postTitle, postDescription, postImage } = Astro.props
 const { title, subtitle, description, author, url, favicon } = themeConfig.site
-const { light: { backgroundTop: lightMode }, dark: { backgroundTop: darkMode } } = themeConfig.color
+const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const { locale, moreLocale } = themeConfig.global
 const { verification = {}, twitterID = '', facebookID = '', facebookLink = '', googleAnalyticsID = '', umamiAnalyticsID = '', siteScreenshot = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
@@ -23,7 +23,7 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 {favicon.toLowerCase().endsWith('.svg') && <link rel="icon" type="image/svg+xml" href={favicon} />}
 {favicon.toLowerCase().endsWith('.png') && <link rel="icon" type="image/png" href={favicon} />}
 
-<title>{postTitle ? `${postTitle} - ${title}` : `${title} - ${subtitle}`}</title>
+<title>{postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`}</title>
 <meta name="description" content={postDescription || description} />
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />

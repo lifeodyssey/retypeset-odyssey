@@ -1,16 +1,27 @@
 ---
 import Head from '@/components/Head.astro'
+import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
 import '@/styles/global.css'
 
+interface Props {
+  postTitle?: string
+  postDescription?: string
+  postImage?: string
+}
+
+const { postTitle, postDescription, postImage } = Astro.props
+
 const fontStyle = `font-${themeConfig.global.font}`
+const colorMode = themeConfig.color.mode
 ---
 
-<html lang={Astro.currentLocale || 'en-US'} class={fontStyle}>
+<html lang={Astro.currentLocale || 'en-US'} class={`${fontStyle} ${colorMode}`}>
   <head>
-    <Head />
+    <Head {postTitle} {postDescription} {postImage} />
   </head>
   <body>
+    <ThemeToggle />
     <main class="lg:p-9rem_8rem mx-a h-screen max-w-123rem min-w-32rem gap-x-[clamp(11rem,8.05%+8.102rem,18rem)] px-[clamp(2.4rem,9.94%-1.1784rem,9rem)] py-[clamp(4.4rem,5.42%+2.4488rem,8rem)] grid-[15rem_1.5rem_5.4rem_1fr_4.8rem_5.25rem]-[1fr_min(22rem,27%)]">
       <slot />
     </main>

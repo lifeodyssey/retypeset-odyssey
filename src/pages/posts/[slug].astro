@@ -14,7 +14,11 @@ const { post } = Astro.props
 const { Content } = await post.render()
 ---
 
-<Layout>
+<Layout
+  postTitle={post.data.title}
+  postDescription={post.data.description}
+  postImage={post.data.image}
+>
   <article>
     <h1>{post.data.title}</h1>
     <time>{post.data.published.toISOString().split('T')[0]}</time>

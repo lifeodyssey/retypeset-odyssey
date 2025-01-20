@@ -14,21 +14,21 @@ export interface ThemeConfig {
   color: {
     mode: 'light' | 'dark'
     light: {
-      text: string
-      backgroundTop: string
-      backgroundEnd: string
+      primary: string
+      secondary: string
+      background: string
     }
     dark: {
-      text: string
-      backgroundTop: string
-      backgroundEnd: string
+      primary: string
+      secondary: string
+      background: string
     }
   }
 
   global: {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
-    font: string
+    font: 'sans' | 'serif' | 'italic'
   }
 
   comment?: {

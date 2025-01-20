@@ -3,27 +3,27 @@ import type { ThemeConfig } from '@/types'
 export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
-    title: 'retypeset',
+    title: 'Retypeset',
     subtitle: '再现版式之美',
     description: '一个优美的博客主题',
     author: 'radishzz',
     url: 'https://retypeset.netlify.app',
-    favicon: '/image/logo.svg', // or https://image.example.com/logo.svg support only webp, svg, png
+    favicon: '/image/logo.svg', // or https://image.example.com/logo.svg, support only webp, svg, png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'light',
+    mode: 'dark', // light, dark, DEFAULT to match system theme
     light: {
-      text: '#232323',
-      backgroundTop: '#f8f8f8',
-      backgroundEnd: '#FDE9EB',
+      primary: '#505050', // title text color in light mode
+      secondary: '#17191A', // posts text color in light mode
+      background: '#F7EEEC', // background color in light mode
     },
     dark: {
-      text: '#000000',
-      backgroundTop: '#ffffff',
-      backgroundEnd: '#000000',
+      primary: '#A0A09F', // title text color in dark mode
+      secondary: '#BEBEBE', // posts text color in dark mode
+      background: '#161616', // background color in dark mode
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

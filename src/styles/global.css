@@ -1,13 +1,13 @@
 :root {
-    --uno-colors-text: theme('colors.text');
-    --uno-colors-backgroundTop: theme('colors.backgroundTop');
-    --uno-colors-backgroundEnd: theme('colors.backgroundEnd');
+    --uno-colors-primary: theme('colors.primary');
+    --uno-colors-secondary: theme('colors.secondary');
+    --uno-colors-background: theme('colors.background');
   }
 html {
   --at-apply: 'antialiased scroll-smooth text-62.5%';
 }
 body {
-  --at-apply: 'min-h-screen min-h-dvh bg-gradient-to-b from-backgroundTop to-backgroundEnd bg-fixed overscroll-none text-1.6rem c-text';
+  --at-apply: 'bg-background min-h-dvh c-primary text-1.6rem';
 }
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
@@ -30,6 +30,24 @@ h5 {
 h6 {
   --at-apply: 'text-[1.6rem]';
 }
-/* :where(p) {
-  --at-apply: 'text-text/85';
-} */
+/* Horizontal reveal animation on theme toggle */
+@keyframes reveal {
+  from {
+    clip-path: inset(var(--from));
+  }
+}
+html.dark {
+  --from: 0 0 100% 0;
+}
+html:not(.dark) {
+  --from: 100% 0 0 0;
+}
+::view-transition-new(root) {
+  animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: inset(0 0 0 0);
+  z-index: 2;
+}
+::view-transition-old(root) {
+  z-index: -1;
+  animation: none;
+}
