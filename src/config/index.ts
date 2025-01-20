@@ -14,7 +14,7 @@ export const themeConfig: ThemeConfig = {
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'dark', // light, dark, DEFAULT to match system theme
+    mode: 'light', // light, dark, DEFAULT to match system theme
     light: {
       primary: '#505050', // title text color in light mode
       secondary: '#17191A', // posts text color in light mode
