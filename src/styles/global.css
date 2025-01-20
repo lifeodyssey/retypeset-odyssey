@@ -4,10 +4,15 @@
     --uno-colors-background: theme('colors.background');
   }
 html {
-  --at-apply: 'antialiased scroll-smooth text-62.5%';
+  --at-apply: 'min-h-screen min-h-dvh scroll-smooth antialiased text-62.5%';
 }
 body {
-  --at-apply: 'bg-background min-h-dvh c-primary text-1.6rem';
+  --at-apply: 'min-h-screen min-h-dvh bg-background text-primary text-1.6rem';
+}
+@supports not (view-transition-name: none) {
+  body {
+    --at-apply: 'transition-all duration-500 ease-in-out';
+  }
 }
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
@@ -43,11 +48,13 @@ html:not(.dark) {
   --from: 100% 0 0 0;
 }
 ::view-transition-new(root) {
+  transition: none;
   animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
   clip-path: inset(0 0 0 0);
   z-index: 2;
 }
 ::view-transition-old(root) {
-  z-index: -1;
+  transition: none;
   animation: none;
+  z-index: -1;
 }
