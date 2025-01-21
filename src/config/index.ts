@@ -8,31 +8,33 @@ export const themeConfig: ThemeConfig = {
     description: '一个优美的博客主题',
     author: 'radishzz',
     url: 'https://retypeset.netlify.app',
-    favicon: '/image/logo.svg', // or https://image.example.com/logo.svg, support only webp, svg, png
+    favicon: '/image/logo.svg', // or https://image.example.com/logo.svg. Support only webp, svg, png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'light', // light, dark, DEFAULT to match system theme
+    mode: 'light', // light, dark. Default to match system theme
     light: {
       primary: '#17191A', // title text color in light mode
       secondary: '#505050', // post text color in light mode
       background: '#FAEDE4', // background color in light mode
+      codeTheme: 'github-light', // code block theme in light mode. See more at https://shiki.style/themes and https://vscodethemes.com/
     },
     dark: {
       primary: '#BEBEBE', // title text color in dark mode
       secondary: '#A0A09F', // post text color in dark mode
       background: '#161616', // background color in dark mode
+      codeTheme: 'github-dark', // code block theme in dark mode. See more at https://shiki.style/themes and https://vscodethemes.com/
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
-    locale: 'zh', // zh, zh-tw, ja, en, es, ru, default locale setting
-    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']， NOT fill in the default locale code again
-    font: 'sans', // sans, serif, italic, choose the font style for posts
+    locale: 'zh', // zh, zh-tw, ja, en, es, ru. Default locale setting
+    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. NOT fill in the default locale code again
+    font: 'sans', // sans, serif, italic. Choose the font style for posts
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -70,7 +72,7 @@ export const themeConfig: ThemeConfig = {
       feedID: '',
       userID: '',
     },
-    siteScreenshot: '', // Take a screenshot of website homepage to show on twitter card
+    siteScreenshot: '', // please take a screenshot of your website homepage to show on twitter card
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -93,7 +95,7 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default, unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset/src/styles/font.css
+    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default. Unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset/src/styles/font.css
     commentURL: '', // https://comment.example.com/
     imageHostURL: '', // https://image.example.com/
     // If you proxy analytics requests to the custom domain, you can fill in below

@@ -6,12 +6,13 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "allowJs": false,
-    "strictNullChecks": true
+    "allowJs": true
   },
   "include": [
-    ".astro/types.d.ts",
-    "src/**/*"
+    "src/**/*.ts",
+    "src/**/*.astro",
+    "uno.config.ts",
+    "astro.config.ts"
   ],
   "exclude": ["dist"]
 }
