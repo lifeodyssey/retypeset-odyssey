@@ -18,7 +18,7 @@ export const themeConfig: ThemeConfig = {
     light: {
       primary: '#17191A', // title text color in light mode
       secondary: '#505050', // post text color in light mode
-      background: '#F7EEEC', // background color in light mode
+      background: '#FAEDE4', // background color in light mode
     },
     dark: {
       primary: '#BEBEBE', // title text color in dark mode

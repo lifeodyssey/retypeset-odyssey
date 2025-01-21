@@ -28,8 +28,8 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
 <meta name="color-scheme" content="light dark" />
-<meta name="theme-color" content="#F7EEEC" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content={lightMode} media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content={darkMode} media="(prefers-color-scheme: dark)" />
 <meta itemprop="name" content={postTitle || title} />
 <meta itemprop="image" content={postImage || siteScreenshot} />
 <meta itemprop="description" content={postDescription || subtitle} />
@@ -94,9 +94,8 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 
 <!-- Theme Toggle -->
 <script is:inline>
-  const savedTheme = localStorage.getItem('theme')
-  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const theme = savedTheme || (defaultDark ? 'dark' : 'light')
+  const theme = localStorage.getItem('theme')
+    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
   document.documentElement.classList.toggle('dark', theme === 'dark')
 </script>
 
