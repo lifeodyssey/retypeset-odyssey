@@ -1,13 +1,13 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-// import { getPinnedPosts, getPosts } from '@/utils/content.config'
+import { getPinnedPosts, getPosts } from '@/utils/content.config'
 
-// const posts = await getPosts()
-// const pinnedPosts = await getPinnedPosts()
+const posts = await getPosts()
+const pinnedPosts = await getPinnedPosts()
 ---
 
 <Layout>
-  <!-- <main>
+  <main>
     {pinnedPosts.length > 0 && (
       <section>
         <ul>
@@ -35,5 +35,5 @@ import Layout from '@/layouts/Layout.astro'
         ))}
       </ul>
     </section>
-  </main> -->
+  </main>
 </Layout>

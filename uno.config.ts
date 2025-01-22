@@ -25,10 +25,6 @@ export default defineConfig({
       },
     }),
   ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
-  ],
   theme: {
     colors: light,
     fontFamily: {
@@ -39,4 +35,10 @@ export default defineConfig({
       custom: ['EarlySummer-custom', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
     },
   },
+  shortcuts: [],
+  rules: [],
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup(),
+  ],
 })

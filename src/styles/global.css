@@ -14,6 +14,13 @@ body {
     --at-apply: 'transition-all duration-500 ease-in-out';
   }
 }
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
   }

@@ -1,0 +1,48 @@
+<script>
+import { OverlayScrollbars } from 'overlayscrollbars'
+
+// Store scrollbar instance for later use
+let scrollbarsInstance: ReturnType<typeof OverlayScrollbars> | null = null
+
+// Initialize custom scrollbar with theme support
+function initScrollbar() {
+  const bodyElement = document.body
+  if (!bodyElement.hasAttribute('data-scrollbar-initialized')) {
+    scrollbarsInstance = OverlayScrollbars({
+      target: bodyElement,
+    }, {
+      scrollbars: {
+        theme: document.documentElement.classList.contains('dark') ? 'scrollbar-dark' : 'scrollbar-light',
+        autoHide: 'scroll',
+      },
+      overflow: {
+        x: 'hidden',
+      },
+    })
+
+    bodyElement.setAttribute('data-scrollbar-initialized', 'true')
+  }
+}
+
+// Handle theme changes and update scrollbar appearance
+document.addEventListener('theme-changed', () => {
+  scrollbarsInstance?.options({
+    scrollbars: {
+      theme: document.documentElement.classList.contains('dark') ? 'scrollbar-dark' : 'scrollbar-light',
+    },
+  })
+})
+
+// Cleanup scrollbar instance before page transitions
+document.addEventListener('astro:before-swap', () => {
+  scrollbarsInstance?.destroy()
+  scrollbarsInstance = null
+})
+
+document.addEventListener('DOMContentLoaded', initScrollbar)
+document.addEventListener('astro:page-load', initScrollbar)
+</script>
+
+<style is:global>
+@import '@/styles/scrollbar.css';
+</style>

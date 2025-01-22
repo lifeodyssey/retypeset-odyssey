@@ -1,0 +1,30 @@
+@import 'overlayscrollbars/overlayscrollbars.css';
+
+.scrollbar-light,
+.scrollbar-dark {
+  --os-size: 1rem;
+  --os-padding-perpendicular: 0.2rem;
+  --os-padding-axis: 0.4rem;
+  --os-handle-border-radius: 0.7rem;
+  --os-handle-perpendicular-size-hover: 160%;
+  --os-handle-perpendicular-size-active: 160%;
+  --os-handle-interactive-area-offset: 3px;
+}
+
+.scrollbar-light {
+  --os-handle-bg: #D1C6BE;
+  --os-handle-bg-hover: #C1B6AF;
+  --os-handle-bg-active: #C1B6AF;
+}
+
+.scrollbar-dark {
+  --os-handle-bg: #383838;
+  --os-handle-bg-hover: #464646;
+  --os-handle-bg-active: #464646;
+}
+
+@media (max-width: 1023px) {
+  .os-scrollbar {
+    display: none !important;
+  }
+}

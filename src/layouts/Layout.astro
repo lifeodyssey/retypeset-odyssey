@@ -1,5 +1,6 @@
 ---
 import Head from '@/components/Head.astro'
+import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
 import '@/styles/global.css'
@@ -16,11 +17,15 @@ const fontStyle = `font-${themeConfig.global.font}`
 const colorMode = themeConfig.color.mode
 ---
 
-<html lang={Astro.currentLocale || 'en-US'} class={`${fontStyle} ${colorMode}`}>
+<html
+  lang={Astro.currentLocale || 'en-US'}
+  class:list={[fontStyle, colorMode]}
+  data-overlayscrollbars-initialize
+>
   <head>
     <Head {postTitle} {postDescription} {postImage} />
   </head>
-  <body>
+  <body data-overlayscrollbars-initialize>
     <ThemeToggle />
     <main
       class="mx-a max-w-123rem h-dvh"
@@ -28,5 +33,6 @@ const colorMode = themeConfig.color.mode
     >
       <slot />
     </main>
+    <Scrollbar />
   </body>
 </html>
