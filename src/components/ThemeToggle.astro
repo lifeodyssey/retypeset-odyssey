@@ -20,6 +20,13 @@
     document.startViewTransition(switchTheme)
   }
 
+  // Sync theme on page navigation
+  document.addEventListener('astro:after-swap', () => {
+    const theme = localStorage.getItem('theme')
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    themeToggle.setAttribute('aria-pressed', String(theme === 'dark'))
+  })
+
   themeToggle.addEventListener('click', toggleTheme)
 </script>
 
