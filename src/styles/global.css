@@ -1,90 +1,70 @@
-/* Base settings */
 :root {
-    --uno-colors-primary: theme('colors.primary');
-    --uno-colors-secondary: theme('colors.secondary');
-    --uno-colors-background: theme('colors.background');
-  }
+  --uno-colors-primary: theme('colors.primary');
+  --uno-colors-secondary: theme('colors.secondary');
+  --uno-colors-background: theme('colors.background');
+}
 html {
-  --at-apply: 'scroll-smooth antialiased text-62.5%';
+--at-apply: 'scroll-smooth antialiased text-62.5%';
 }
 body {
-  --at-apply: 'bg-background c-secondary text-1.6rem';
+--at-apply: 'bg-background c-secondary text-1.6rem';
 }
 * {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+scrollbar-width: none;
+-ms-overflow-style: none;
+&::-webkit-scrollbar {
+  display: none;
 }
-/* Typography */
+}
 h1, h2, h3 {
-    text-rendering: optimizeLegibility;
-  }
+  text-rendering: optimizeLegibility;
+}
 h1 {
-  --at-apply: 'text-3.6rem';
+--at-apply: 'text-3.6rem';
 }
 h2 {
-  --at-apply: 'text-3rem';
+--at-apply: 'text-3rem';
 }
 h3 {
-  --at-apply: 'text-2.4rem';
+--at-apply: 'text-2.4rem';
 }
 h4 {
-  --at-apply: 'text-2rem';
+--at-apply: 'text-2rem';
 }
 h5 {
-  --at-apply: 'text-1.8rem';
+--at-apply: 'text-1.8rem';
 }
 h6 {
-  --at-apply: 'text-1.6rem';
+--at-apply: 'text-1.6rem';
 }
-/* Functional styles */
 article img {
-  cursor: zoom-in;
+cursor: zoom-in;
 }
-/* Default to dark theme when system prefers dark mode */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    color-scheme: dark;
-  }
-  :root:not([data-theme='light']) html {
-    --at-apply: 'dark';
-  }
-}
-/* When user explicitly chooses dark theme */
-:root[data-theme='dark'] {
-  color-scheme: dark;
-}
-:root[data-theme='dark'] html {
-  --at-apply: 'dark';
-}
-/* Theme toggle animation */
+/* Horizontal reveal animation on theme toggle */
 @keyframes reveal {
-  from {
-    clip-path: inset(var(--from));
-  }
+from {
+  clip-path: inset(var(--from));
+}
 }
 html.dark {
-  --from: 0 0 100% 0;
+--from: 0 0 100% 0;
 }
 html:not(.dark) {
-  --from: 100% 0 0 0;
+--from: 100% 0 0 0;
+}
+::view-transition-new(root) {
+transition: none;
+animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
+clip-path: inset(0 0 0 0);
+z-index: 2;
+}
+::view-transition-old(root) {
+transition: none;
+animation: none;
+z-index: -1;
 }
 @supports not (view-transition-name: none) {
   body {
     --at-apply: 'transition-all duration-500 ease-in-out';
   }
-}
-/* View Transitions */
-::view-transition-new(root) {
-  transition: none;
-  animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
-  clip-path: inset(0 0 0 0);
-  z-index: 2;
-}
-::view-transition-old(root) {
-  transition: none;
-  animation: none;
-  z-index: -1;
-}
+  }

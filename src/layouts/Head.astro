@@ -94,9 +94,10 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 {baidu && <meta name="baidu-site-verification" content={baidu} />}
 
 <!-- Theme Toggle -->
-<script is:inline>
+<script is:inline define:vars={{ defaultMode: themeConfig.color.mode }}>
+  const systemTheme = matchMedia('(prefers-color-scheme: dark)')
   const theme = localStorage.getItem('theme')
-    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    ?? (systemTheme.matches !== null ? (systemTheme.matches ? 'dark' : 'light') : defaultMode)
   document.documentElement.classList.toggle('dark', theme === 'dark')
 </script>
 
