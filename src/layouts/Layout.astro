@@ -1,9 +1,11 @@
 ---
-import Head from '@/components/Head.astro'
+import PhotoSwipe from '@/components/PhotoSwipe.astro'
 import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
+import Head from '@/layouts/Head.astro'
 import '@/styles/global.css'
+import '@/styles/photoswipe.css'
 
 interface Props {
   postTitle?: string
@@ -22,9 +24,7 @@ const colorMode = themeConfig.color.mode
   class:list={[fontStyle, colorMode]}
   data-overlayscrollbars-initialize
 >
-  <head>
-    <Head {postTitle} {postDescription} {postImage} />
-  </head>
+  <Head {postTitle} {postDescription} {postImage} />
   <body data-overlayscrollbars-initialize>
     <ThemeToggle />
     <main
@@ -34,5 +34,6 @@ const colorMode = themeConfig.color.mode
       <slot />
     </main>
     <Scrollbar />
+    <PhotoSwipe />
   </body>
 </html>

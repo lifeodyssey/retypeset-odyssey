@@ -7,7 +7,7 @@ html {
   --at-apply: 'scroll-smooth antialiased text-62.5%';
 }
 body {
-  --at-apply: 'bg-background text-secondary text-1.6rem';
+  --at-apply: 'bg-background c-secondary text-1.6rem';
 }
 @supports not (view-transition-name: none) {
   body {
@@ -17,30 +17,33 @@ body {
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
-*::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
   }
 h1 {
-  --at-apply: 'text-[3.6rem]';
+  --at-apply: 'text-3.6rem';
 }
 h2 {
-  --at-apply: 'text-[3rem]';
+  --at-apply: 'text-3rem';
 }
 h3 {
-  --at-apply: 'text-[2.4rem]';
+  --at-apply: 'text-2.4rem';
 }
 h4 {
-  --at-apply: 'text-[2rem]';
+  --at-apply: 'text-2rem';
 }
 h5 {
-  --at-apply: 'text-[1.8rem]';
+  --at-apply: 'text-1.8rem';
 }
 h6 {
-  --at-apply: 'text-[1.6rem]';
+  --at-apply: 'text-1.6rem';
+}
+article img {
+  cursor: zoom-in;
 }
 /* Horizontal reveal animation on theme toggle */
 @keyframes reveal {

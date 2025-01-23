@@ -47,7 +47,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.10.9",
     "@types/sanitize-html": "^2.13.0",
     "@unocss/eslint-plugin": "^65.4.3",
     "@unocss/preset-attributify": "^65.4.3",
