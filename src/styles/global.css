@@ -1,3 +1,4 @@
+/* Base settings */
 :root {
     --uno-colors-primary: theme('colors.primary');
     --uno-colors-secondary: theme('colors.secondary');
@@ -9,11 +10,6 @@ html {
 body {
   --at-apply: 'bg-background c-secondary text-1.6rem';
 }
-@supports not (view-transition-name: none) {
-  body {
-    --at-apply: 'transition-all duration-500 ease-in-out';
-  }
-}
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -21,6 +17,7 @@ body {
     display: none;
   }
 }
+/* Typography */
 h1, h2, h3 {
     text-rendering: optimizeLegibility;
   }
@@ -42,10 +39,27 @@ h5 {
 h6 {
   --at-apply: 'text-1.6rem';
 }
+/* Functional styles */
 article img {
   cursor: zoom-in;
 }
-/* Horizontal reveal animation on theme toggle */
+/* Default to dark theme when system prefers dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+  :root:not([data-theme='light']) html {
+    --at-apply: 'dark';
+  }
+}
+/* When user explicitly chooses dark theme */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root[data-theme='dark'] html {
+  --at-apply: 'dark';
+}
+/* Theme toggle animation */
 @keyframes reveal {
   from {
     clip-path: inset(var(--from));
@@ -57,6 +71,12 @@ html.dark {
 html:not(.dark) {
   --from: 100% 0 0 0;
 }
+@supports not (view-transition-name: none) {
+  body {
+    --at-apply: 'transition-all duration-500 ease-in-out';
+  }
+}
+/* View Transitions */
 ::view-transition-new(root) {
   transition: none;
   animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
