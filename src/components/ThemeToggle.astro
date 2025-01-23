@@ -20,11 +20,21 @@
     document.startViewTransition(switchTheme)
   }
 
-  // Sync theme on page navigation
-  document.addEventListener('astro:after-swap', () => {
+  // Apply theme to document
+  function applyTheme(doc: Document) {
     const theme = localStorage.getItem('theme')
-    document.documentElement.classList.toggle('dark', theme === 'dark')
-    themeToggle.setAttribute('aria-pressed', String(theme === 'dark'))
+    const isDark = theme === 'dark'
+    doc.documentElement.classList.toggle('dark', isDark)
+    const button = doc === document ? themeToggle : doc.querySelector('button[aria-pressed]')
+    if (button) {
+      button.setAttribute('aria-pressed', String(isDark))
+    }
+  }
+
+  // Initialize theme and handle page navigation
+  applyTheme(document)
+  document.addEventListener('astro:before-swap', (e) => {
+    applyTheme(e.newDocument)
   })
 
   themeToggle.addEventListener('click', toggleTheme)
