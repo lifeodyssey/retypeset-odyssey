@@ -20,23 +20,6 @@
     document.startViewTransition(switchTheme)
   }
 
-  // Apply theme to document
-  function applyTheme(doc: Document) {
-    const theme = localStorage.getItem('theme')
-    const isDark = theme === 'dark'
-    doc.documentElement.classList.toggle('dark', isDark)
-    const button = doc === document ? themeToggle : doc.querySelector('button[aria-pressed]')
-    if (button) {
-      button.setAttribute('aria-pressed', String(isDark))
-    }
-  }
-
-  // Initialize theme and handle page navigation
-  applyTheme(document)
-  document.addEventListener('astro:before-swap', (e) => {
-    applyTheme(e.newDocument)
-  })
-
   themeToggle.addEventListener('click', toggleTheme)
 </script>
 
