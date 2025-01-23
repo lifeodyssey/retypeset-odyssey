@@ -16,12 +16,11 @@ interface Props {
 const { postTitle, postDescription, postImage } = Astro.props
 
 const fontStyle = `font-${themeConfig.global.font}`
-const colorMode = themeConfig.color.mode
 ---
 
 <html
   lang={Astro.currentLocale || 'en-US'}
-  class:list={[fontStyle, colorMode]}
+  class:list={[fontStyle]}
   data-overlayscrollbars-initialize
 >
   <Head {postTitle} {postDescription} {postImage} />
