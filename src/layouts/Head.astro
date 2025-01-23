@@ -95,10 +95,19 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 
 <!-- Theme Toggle -->
 <script is:inline define:vars={{ defaultMode: themeConfig.color.mode }}>
-  const systemTheme = matchMedia('(prefers-color-scheme: dark)')
-  const theme = localStorage.getItem('theme')
-    ?? (systemTheme.matches !== null ? (systemTheme.matches ? 'dark' : 'light') : defaultMode)
+function getTheme() {
+  const storedTheme = localStorage.getItem('theme')
+  if (storedTheme)
+    return storedTheme
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+  return systemTheme ? 'dark' : defaultMode
+}
+function updateTheme() {
+  const theme = localStorage.getItem('theme') || getTheme()
   document.documentElement.classList.toggle('dark', theme === 'dark')
+}
+updateTheme()
+document.addEventListener('astro:after-swap', updateTheme)
 </script>
 
 <!-- Google Analytics -->
