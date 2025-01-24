@@ -30,7 +30,8 @@ export interface ThemeConfig {
   global: {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
-    font: 'sans' | 'serif' | 'italic'
+    font: 'sans' | 'serif'
+    titleSpace: 1 | 2 | 3 | 4
   }
 
   comment?: {

@@ -1,0 +1,87 @@
+---
+import themeConfig from '@/config'
+import { ui } from '@/utils/ui'
+
+// Configuration
+const defaultLocale = themeConfig.global.locale
+const moreLocales = themeConfig.global.moreLocale
+const currentPath = Astro.url.pathname
+
+// Path utilities
+const cleanPath = (path: string) => path.replace(/^\/+|\/+$/g, '')
+
+// Language utilities
+function getLangFromPath(path: string) {
+  const secondaryLang = moreLocales.find(lang =>
+    path.startsWith(`/${lang}/`) || path === `/${lang}` || path === `/${lang}/`,
+  )
+  return secondaryLang || defaultLocale
+}
+
+const currentLang = getLangFromPath(currentPath)
+const currentUI = ui[currentLang as keyof typeof ui]
+
+// Localization utilities
+function getLocalizedPath(path: string) {
+  const clean = cleanPath(path)
+  return currentLang === defaultLocale ? `/${clean}` : `/${currentLang}/${clean}`
+}
+
+// Page type detection utilities
+function isHomePage(path: string) {
+  const clean = cleanPath(path)
+  return clean === '' || moreLocales.includes(clean)
+}
+function isPostPage(path: string) {
+  const clean = cleanPath(path)
+  return clean.startsWith('posts') || moreLocales.some(lang => clean.startsWith(`${lang}/posts`))
+}
+function isTagPage(path: string) {
+  const clean = cleanPath(path)
+  return clean.startsWith('tags') || moreLocales.some(lang => clean.startsWith(`${lang}/tags`))
+}
+function isAboutPage(path: string) {
+  const clean = cleanPath(path)
+  return clean.startsWith('about') || moreLocales.some(lang => clean.startsWith(`${lang}/about`))
+}
+
+// Active state detection
+const isPostActive = isHomePage(currentPath) || isPostPage(currentPath)
+const isTagActive = isTagPage(currentPath)
+const isAboutActive = isAboutPage(currentPath)
+---
+
+<nav class="mb-18 mt-10 text-5.6 text-secondary font-semibold leading-11.4 font-navbar">
+  <ul>
+    <li>
+      <a
+        href={getLocalizedPath('/')}
+        class:list={[
+          isPostActive ? 'font-bold opacity-100' : 'opacity-25',
+        ]}
+      >
+        {currentUI.posts}
+      </a>
+    </li>
+    <li>
+      <a
+        href={getLocalizedPath('/tags')}
+        class:list={[
+          isTagActive ? 'font-bold opacity-100' : 'opacity-25',
+        ]}
+      >
+        {currentUI.tags}
+      </a>
+    </li>
+    <li>
+      <a
+        href={getLocalizedPath('/about')}
+        class:list={[
+          isAboutActive ? 'font-bold opacity-100' : 'opacity-25',
+        ]}
+      >
+        {currentUI.about}
+      </a>
+    </li>
+  </ul>
+</nav>

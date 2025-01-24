@@ -14,7 +14,7 @@ export const themeConfig: ThemeConfig = {
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'light', // light, dark. Default to match system theme
+    mode: 'light', // light, dark. Matches system theme by default, falls back to configured theme mode if not available.
     light: {
       primary: '#17191A', // title text color in light mode
       secondary: '#505050', // post text color in light mode
@@ -32,9 +32,10 @@ export const themeConfig: ThemeConfig = {
 
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
-    locale: 'zh', // zh, zh-tw, ja, en, es, ru. Default locale setting
+    locale: 'zh', // Support only zh, zh-tw, ja, en, es, ru. Default locale setting
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. NOT fill in the default locale code again
-    font: 'sans', // sans, serif, italic. Choose the font style for posts
+    font: 'sans', // Support only sans, serif. Choose the font style for posts
+    titleSpace: 4, // Support only 1, 2, 3, 4. Space between title and subtitle, 1 is the smallest, 4 is the largest
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 

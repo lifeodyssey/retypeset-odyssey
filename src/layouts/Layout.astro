@@ -1,4 +1,7 @@
 ---
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import Navigation from '@/components/Navigation.astro'
 import PhotoSwipe from '@/components/PhotoSwipe.astro'
 import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
@@ -14,7 +17,6 @@ interface Props {
 }
 
 const { postTitle, postDescription, postImage } = Astro.props
-
 const fontStyle = `font-${themeConfig.global.font}`
 ---
 
@@ -25,14 +27,25 @@ const fontStyle = `font-${themeConfig.global.font}`
 >
   <Head {postTitle} {postDescription} {postImage} />
   <body data-overlayscrollbars-initialize>
-    <ThemeToggle />
-    <main
-      class="mx-a max-w-123rem h-dvh"
-      lg="grid gap-x-6 cols-[3fr_1fr] rows-[1fr_9rem]"
+    <div
+      class="mx-a max-w-492 h-dvh"
+      p="x-[calc(9.94vw-1.1784rem)] y-[calc(5.42vw+2.4488rem)] lg:(x-36 y-10.4167dvh)"
+      lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.8269vw-6.2727rem),18rem)]"
     >
-      <slot />
-    </main>
+      <div>
+        <Header />
+        <Navigation />
+        <Footer />
+      </div>
+
+      <main class="col-start-1 row-start-1">
+        <slot />
+      </main>
+
+    </div>
+    <ThemeToggle />
     <Scrollbar />
     <PhotoSwipe />
   </body>
 </html>
+
