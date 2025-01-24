@@ -5,9 +5,9 @@ export const themeConfig: ThemeConfig = {
   site: {
     title: 'Retypeset',
     subtitle: '再现版式之美',
-    description: '一个优美的博客主题',
+    description: '重新编排 - 再现版式之美 | Retypeset - Rediscover the beauty of typography',
     author: 'radishzz',
-    url: 'https://retypeset.netlify.app',
+    url: 'https://retypeset.radishzz.cc',
     favicon: '/image/logo.svg', // or https://image.example.com/logo.svg. Support only webp, svg, png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -32,10 +32,10 @@ export const themeConfig: ThemeConfig = {
 
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
-    locale: 'zh', // Support only zh, zh-tw, ja, en, es, ru. Default locale setting
+    locale: 'zh', // support only zh, zh-tw, ja, en, es, ru. Default locale setting
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. NOT fill in the default locale code again
-    font: 'sans', // Support only sans, serif. Choose the font style for posts
-    titleSpace: 4, // Support only 1, 2, 3, 4. Space between title and subtitle, 1 is the smallest, 4 is the largest
+    font: 'sans', // support only sans, serif. Choose the font style for posts
+    titleSpace: 4, // support only 1, 2, 3, 4. Space between title and subtitle, 1 is the smallest, 4 is the largest
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 

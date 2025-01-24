@@ -8,6 +8,9 @@
 
   // Initialize PhotoSwipe lightbox with custom configuration
   function createPhotoSwipe() {
+    // Clean up existing instance if any
+    cleanup()
+
     lightbox = new PhotoSwipeLightbox({
       gallery: 'article img',
       pswpModule: () => pswp,
@@ -43,10 +46,7 @@
     }
   }
 
-  // Initialize PhotoSwipe when DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    createPhotoSwipe()
-  })
-
+  // Initialize PhotoSwipe when DOM is ready and after page transitions
+  document.addEventListener('astro:page-load', createPhotoSwipe)
   document.addEventListener('astro:before-swap', cleanup)
-  </script>
+</script>
