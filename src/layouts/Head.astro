@@ -1,5 +1,6 @@
 ---
 import themeConfig from '@/config'
+import { ClientRouter } from 'astro:transitions'
 
 interface Props {
   postTitle?: string
@@ -35,6 +36,7 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <meta itemprop="name" content={postTitle || title} />
 <meta itemprop="image" content={postImage || siteScreenshot} />
 <meta itemprop="description" content={postDescription || subtitle} />
+<ClientRouter />
 
 <!-- Preload -->
 <link rel="preconnect" href={cdn} />

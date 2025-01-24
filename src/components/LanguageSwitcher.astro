@@ -1,60 +1,58 @@
 ---
 import themeConfig from '@/config'
 
+// Language array with empty string as default locale
 const langs = ['', ...themeConfig.global.moreLocale]
+const currentLocale = themeConfig.global.locale
+
+function getLanguageDisplayName(code: string) {
+  if (!code)
+return 'Default'
+  return new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || code
+}
 ---
-
-<script is:inline define:vars={{ langs }}>
- const langSwitch = document.getElementById('language-switcher')
-
- langSwitch?.addEventListener('click', () => {
-   const { pathname, search, hash } = window.location
-
-   // 获取当前语言和路径段
-   const segments = pathname.split('/').filter(Boolean)
-   const firstSegment = segments[0] || ''
-   const currentLang = langs.includes(firstSegment) ? firstSegment : ''
-
-   // 获取下一个语言
-   const currentIndex = langs.indexOf(currentLang)
-   const nextLang = langs[(currentIndex + 1) % langs.length]
-
-   // 构建新的 URL
-   let newPath
-   if (currentLang) {
-     // 如果当前有语言前缀，替换它
-     segments[0] = nextLang || segments[0]
-     newPath = nextLang ? `/${segments.join('/')}` : `/${segments.slice(1).join('/')}`
-   }
- else {
-     // 如果当前没有语言前缀
-     newPath = nextLang ? `/${nextLang}${pathname}` : pathname
-   }
-
-   // 确保路径至少是 "/"
-   newPath = newPath || '/'
-
-   // 切换语言
-   window.location.href = `${newPath}${search}${hash}`
- })
-</script>
 
 <button
   id="language-switcher"
-  class="absolute right-25.6 top-19.4 z-999 aspect-square w-7 c-secondary active:scale-92"
-  aria-label="Language Switch Button"
-  title="Language Switch Button"
+  class="absolute right-25.6 top-20 z-99 aspect-square w-6.6 c-secondary active:scale-92"
+  aria-label="Switch Language"
+  title={`Current Language: ${getLanguageDisplayName(currentLocale)}`}
 >
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-full w-full">
     <path d="M19 21 12.3 2h-1L4.7 21l-2.5.2v.8h6.3v-.8L5.7 21l2-5.9h7.5l2 5.9-3.3.2v.8h7.9v-.8zM8 14.3l3.4-10.1 3.5 10.1z" fill="currentColor" />
   </svg>
+  <span class="sr-only">Switch Language</span>
 </button>
 
-<style>
-  #language-switcher {
-    transition: transform 0.3s ease;
+<script is:inline define:vars={{ langs }}>
+// Move event binding into astro:page-load event
+document.addEventListener('astro:page-load', () => {
+  const langSwitch = document.getElementById('language-switcher')
+
+  langSwitch?.addEventListener('click', () => {
+    const { pathname, search, hash } = window.location
+    const segments = pathname.split('/').filter(Boolean)
+    const firstSegment = segments[0] || ''
+    // Check if first segment is a valid language code
+    const currentLang = langs.includes(firstSegment) ? firstSegment : ''
+
+    // Get next language in rotation (empty string means default locale)
+    const currentIndex = langs.indexOf(currentLang)
+    const nextLang = langs[(currentIndex + 1) % langs.length]
+
+    const newPath = buildNewPath(currentLang, nextLang, segments, pathname) || '/'
+    window.location.href = `${newPath}${search}${hash}`
+  })
+})
+
+// Handle path construction for both cases:
+// 1. Current path has language prefix
+// 2. Current path has no language prefix
+function buildNewPath(currentLang, nextLang, segments, pathname) {
+  if (currentLang) {
+    segments[0] = nextLang || segments[0]
+    return nextLang ? `/${segments.join('/')}` : `/${segments.slice(1).join('/')}`
   }
-  #language-switcher:hover {
-    transform: scale(1.1);
-  }
-</style>
+  return nextLang ? `/${nextLang}${pathname}` : pathname
+}
+</script>

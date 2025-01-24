@@ -52,16 +52,16 @@ html.dark {
 html:not(.dark) {
 --from: 100% 0 0 0;
 }
-::view-transition-new(root) {
-transition: none;
-animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
-clip-path: inset(0 0 0 0);
-z-index: 2;
+::view-transition-new(theme-transition) {
+  transition: none;
+  animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: inset(0 0 0 0);
+  z-index: 2;
 }
-::view-transition-old(root) {
-transition: none;
-animation: none;
-z-index: -1;
+::view-transition-old(theme-transition) {
+  transition: none;
+  animation: none;
+  z-index: -1;
 }
 @supports not (view-transition-name: none) {
   body:not([data-restore-theme]) {
