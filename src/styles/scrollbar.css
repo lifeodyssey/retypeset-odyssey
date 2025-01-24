@@ -12,9 +12,9 @@
 }
 
 .scrollbar-light {
-  --os-handle-bg: #D1C6BE;
-  --os-handle-bg-hover: #C1B6AF;
-  --os-handle-bg-active: #C1B6AF;
+  --os-handle-bg: #C9C4C1;
+  --os-handle-bg-hover: #B8B3B0;
+  --os-handle-bg-active: #B8B3B0;
 }
 
 .scrollbar-dark {

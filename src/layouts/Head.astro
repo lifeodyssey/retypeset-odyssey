@@ -97,27 +97,21 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <script is:inline define:vars={{ defaultMode: themeConfig.color.mode }}>
 function initTheme() {
   const theme = (() => {
-    // 1. 检查 localStorage
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
       return localStorage.getItem('theme')
     }
-    // 2. 检查系统主题
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark'
     }
-    // 3. 使用默认主题
     return defaultMode
   })()
-
   document.documentElement.classList.toggle('dark', theme === 'dark')
 }
 
-// 立即执行初始化
 initTheme()
 
-// 监听系统主题变化
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem('theme')) { // 只在用户未手动设置主题时响应
+  if (!localStorage.getItem('theme')) {
     document.documentElement.classList.toggle('dark', e.matches)
   }
 })
