@@ -18,7 +18,7 @@ import remarkGithubAdmonitionsToDirectives from 'remark-github-admonitions-to-di
 import remarkMath from 'remark-math'
 import remarkSectionize from 'remark-sectionize'
 import UnoCSS from 'unocss/astro'
-import { themeConfig } from './src/config'
+import { themeConfig } from './src/config.js'
 // Local plugins
 import { AdmonitionComponent } from './src/plugins/rehype-component-admonition.mjs'
 import { GithubCardComponent } from './src/plugins/rehype-component-github-card.mjs'
@@ -34,6 +34,10 @@ const { locale } = themeConfig.global
 export default defineConfig({
   site: url,
   base: '/',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
       path,

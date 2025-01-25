@@ -1,26 +1,18 @@
 ---
-import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
-import { checkSlugDuplication } from '@/utils/content.config'
+import { checkSlugDuplication } from '@/utils/content'
+import { generateMultiLangPostPaths } from '@/utils/i18n'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
-  
+
   const duplicates = await checkSlugDuplication(posts)
   if (duplicates.length > 0) {
     throw new Error(`Slug conflicts found:\n${duplicates.join('\n')}`)
   }
 
-  return themeConfig.global.moreLocale.flatMap(lang =>
-    posts.map(post => ({
-      params: {
-        lang,
-        slug: post.data.slug || post.slug,
-      },
-      props: { post },
-    })),
-  )
+  return generateMultiLangPostPaths(posts)
 }
 
 const { post } = Astro.props

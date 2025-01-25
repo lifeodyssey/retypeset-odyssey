@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-import { getAllTags, getPostsByTag } from '@/utils/content.config'
+import { getAllTags, getPostsByTag } from '@/utils/content'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()

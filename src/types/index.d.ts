@@ -1,5 +1,7 @@
 import type { langPath } from '@/utils/ui'
 
+type Exclude<T, U> = T extends U ? never : T
+
 export interface ThemeConfig {
 
   site: {
@@ -84,7 +86,12 @@ export interface ThemeConfig {
     customGoogleAnalyticsURL?: string
     customUmamiAnalyticsURL?: string
     customUmamiAnalyticsJS?: string
-    lazyload: boolean
+  }
+
+  about: {
+    [key in ThemeConfig['global']['locale']]: string
+  } & {
+    [key in ThemeConfig['global']['moreLocale'][number]]?: string
   }
 }
 

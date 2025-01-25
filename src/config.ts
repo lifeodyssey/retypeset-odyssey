@@ -3,11 +3,11 @@ import type { ThemeConfig } from '@/types'
 export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
-    title: 'Retypeset',
-    subtitle: '再现版式之美',
-    description: '重新编排 - 再现版式之美 | Retypeset - Rediscover the beauty of typography',
-    author: 'radishzz',
-    url: 'https://retypeset.radishzz.cc',
+    title: 'Retypeset', // site title
+    subtitle: '再现版式之美', // site subtitle
+    description: 'This is Retypeset, an elegant and open-source Astro blog theme, help you rediscover the beauty of typography.', // site description for SEO
+    author: 'radishzz', // author name
+    url: 'https://retypeset.radishzz.cc', // site url
     favicon: '/image/logo.svg', // or https://image.example.com/logo.svg. Support only webp, svg, png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -60,20 +60,20 @@ export const themeConfig: ThemeConfig = {
     facebookLink: '', // facebook profile link
     // site verification
     verification: {
-      google: '',
-      bing: '',
-      yandex: '',
-      baidu: '',
+      google: '', // Google Search Console: https://search.google.com/search-console
+      bing: '', // Bing Webmaster Tools: https://www.bing.com/webmasters
+      yandex: '', // Yandex Webmaster: https://webmaster.yandex.com
+      baidu: '', // Baidu Search: https://ziyuan.baidu.com
     },
     // site analytics
-    googleAnalyticsID: '',
-    umamiAnalyticsID: '',
+    googleAnalyticsID: '', // Google Analytics: https://analytics.google.com
+    umamiAnalyticsID: '', // Umami Analytics: https://cloud.umami.is
     // follow verification
     follow: {
-      feedID: '',
-      userID: '',
+      feedID: '', // feed ID
+      userID: '', // user ID
     },
-    siteScreenshot: '', // please take a screenshot of your website homepage to show on twitter card
+    siteScreenshot: '', // take a screenshot of your website homepage to show on twitter card
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -96,16 +96,28 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    cdn: 'https://cdn.jsdelivr.net', // Recommended to keep default. Unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset/src/styles/font.css
+    cdn: 'https://cdn.jsdelivr.net', // Keep the default CDN unless you can proxy https://cdn.jsdelivr.net/gh/radishzzz/astro-theme-retypeset/src/styles/font.css
     commentURL: '', // https://comment.example.com/
     imageHostURL: '', // https://image.example.com/
     // If you proxy analytics requests to the custom domain, you can fill in below
     customGoogleAnalyticsURL: '', // https://custom.example.com/
     customUmamiAnalyticsURL: '', // https://custom.example.com/
     customUmamiAnalyticsJS: '', // https://custom.example.com/custom.js
-    lazyload: false,
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
+
+  // ABOUT PAGE CONTENT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
+  about: {
+    // Required: Content for about page in default language
+    '[locale]': '关于我',
+    // Optional: Content for about page in other languages. If not set, will fallback to [locale] content
+    'zh-tw': '關於我',
+    'ja': '私について',
+    'en': 'About me',
+    'es': 'Sobre mí',
+    'ru': 'Обо мне',
+  },
+  // ABOUT PAGE CONTENT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }
 
 export default themeConfig

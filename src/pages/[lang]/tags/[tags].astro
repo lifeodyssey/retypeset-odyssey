@@ -1,16 +1,11 @@
 ---
-import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
-import { getAllTags, getPostsByTag } from '@/utils/content.config'
+import { getAllTags, getPostsByTag } from '@/utils/content'
+import { generateMultiLangTagPaths } from '@/utils/i18n'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
-  return themeConfig.global.moreLocale.flatMap(lang =>
-    tags.map(tag => ({
-      params: { lang, tags: tag },
-      props: { tags: tag },
-    })),
-  )
+  return generateMultiLangTagPaths(tags)
 }
 
 const { lang } = Astro.params
