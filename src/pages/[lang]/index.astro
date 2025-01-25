@@ -21,7 +21,7 @@ const posts = await getPosts()
         <ul>
           {pinnedPosts.map(post => (
             <li>
-              <a href={`/${lang}/posts/${post.slug}/`}>
+              <a href={`/${lang}/posts/${post.data.slug || post.slug}/`}>
                 {post.data.title}
                 <time>({post.data.published.toISOString().split('T')[0]})</time>
               </a>
@@ -35,7 +35,7 @@ const posts = await getPosts()
       <ul>
         {posts.map(post => (
           <li>
-            <a href={`/${lang}/posts/${post.slug}/`}>
+            <a href={`/${lang}/posts/${post.data.slug || post.slug}/`}>
               {post.data.title}
               <time>({post.data.published.toISOString().split('T')[0]})</time>
             </a>

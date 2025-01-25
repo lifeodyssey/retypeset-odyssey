@@ -28,7 +28,7 @@ const allTags = await getAllTags()
     <ul>
       {posts.map(post => (
         <li>
-          <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+          <a href={`/posts/${post.data.slug || post.slug}/`}>{post.data.title}</a>
         </li>
       ))}
     </ul>

@@ -7,6 +7,31 @@ export type Post = CollectionEntry<'posts'>
 export type PostData = Post['data']
 export type PostsGroupByYear = Map<number, Post[]>
 
+// Check if the slug is duplicated under the same language.
+export async function checkSlugDuplication(posts: Post[]): Promise<string[]> {
+  const slugMap = new Map<string, Set<string>>() // Map<lang, Set<slug>>
+  const duplicates: string[] = []
+
+  posts.forEach((post) => {
+    const lang = post.data.lang || ''
+    const slug = post.data.slug || post.slug
+
+    if (!slugMap.has(lang)) {
+      slugMap.set(lang, new Set())
+    }
+
+    const slugSet = slugMap.get(lang)!
+    if (slugSet.has(slug)) {
+      duplicates.push(`Duplicate slug "${slug}" found in language "${lang || 'default'}"`)
+    }
+    else {
+      slugSet.add(slug)
+    }
+  })
+
+  return duplicates
+}
+
 // Get all posts except drafts (include pinned)
 export async function getPosts(lang?: string) {
   const defaultLocale = themeConfig.global.locale

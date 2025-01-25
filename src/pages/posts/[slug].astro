@@ -1,11 +1,20 @@
 ---
 import Layout from '@/layouts/Layout.astro'
+import { checkSlugDuplication } from '@/utils/content.config'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
+  
+  const duplicates = await checkSlugDuplication(posts)
+  if (duplicates.length > 0) {
+    throw new Error(`Slug conflicts found:\n${duplicates.join('\n')}`)
+  }
+
   return posts.map(post => ({
-    params: { slug: post.slug },
+    params: {
+      slug: post.data.slug || post.slug,
+    },
     props: { post },
   }))
 }

@@ -42,7 +42,7 @@ export async function GET() {
       pubDate: post.data.published,
       description: post.data.description || getExcerpt(post.body),
       // Generate absolute URL for post
-      link: new URL(`posts/${post.slug}/`, url).toString(),
+      link: new URL(`posts/${post.data.slug || post.slug}/`, url).toString(),
       // Convert markdown content to HTML, allowing img tags
       content: post.body
         ? sanitizeHtml(parser.render(post.body), {

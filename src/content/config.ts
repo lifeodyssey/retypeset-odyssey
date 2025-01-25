@@ -11,7 +11,19 @@ const postsCollection = defineCollection({
     image: z.string().optional().default(''),
     // Extended Settings
     lang: z.string().optional().default(''),
-    slug: z.string().optional().default(''),
+    slug: z.string()
+      .optional()
+      .default('')
+      .refine(
+        (slug) => {
+          if (!slug)
+            return true
+          return /^[\w\-]*$/.test(slug)
+        },
+        {
+          message: 'Slug can only contain letters, numbers, hyphens and underscores',
+        },
+      ),
     toc: z.boolean().optional().default(false),
     pin: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
