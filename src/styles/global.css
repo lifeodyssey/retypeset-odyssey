@@ -14,7 +14,8 @@ html::-webkit-scrollbar {
 body {
   --at-apply: 'text-1.6rem';
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 h1, h2, h3 {
   text-rendering: optimizeLegibility;
