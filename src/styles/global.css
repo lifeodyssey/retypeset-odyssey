@@ -9,14 +9,12 @@ html {
   -ms-overflow-style: none;
 }
 html::-webkit-scrollbar {
-  --at-apply: 'hidden w-0 h-0';
+  --at-apply: 'hidden';
 }
 body {
   --at-apply: 'text-1.6rem';
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 h1, h2, h3 {
   text-rendering: optimizeLegibility;
@@ -42,6 +40,7 @@ h6 {
 article img {
   cursor: zoom-in;
   transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 /* Horizontal reveal animation on theme toggle */
 @keyframes reveal {
@@ -59,6 +58,8 @@ html:not(.dark) {
   animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
   clip-path: inset(0 0 0 0);
   z-index: 2;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 ::view-transition-old(theme-transition) {
   animation: none;
