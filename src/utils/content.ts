@@ -3,13 +3,24 @@ import themeConfig from '@/config'
 import { langPath } from '@/utils/ui'
 import { getCollection } from 'astro:content'
 
-export type Post = CollectionEntry<'posts'>
+// Type definitions
+export type Post = CollectionEntry<'posts'> & {
+  remarkPluginFrontmatter?: {
+    minutes?: number
+  }
+}
 export type PostData = Post['data']
 export type PostsGroupByYear = Map<number, Post[]>
 
-// Check if the slug is duplicated under the same language.
+// Get post metadata including reading time
+async function getPostMeta(post: CollectionEntry<'posts'>): Promise<Post> {
+  const { remarkPluginFrontmatter } = await post.render()
+  return { ...post, remarkPluginFrontmatter }
+}
+
+// Check if the slug is duplicated under the same language
 export async function checkSlugDuplication(posts: Post[]): Promise<string[]> {
-  const slugMap = new Map<string, Set<string>>() // Map<lang, Set<slug>>
+  const slugMap = new Map<string, Set<string>>()
   const duplicates: string[] = []
 
   posts.forEach((post) => {
@@ -48,7 +59,9 @@ export async function getPosts(lang?: string) {
     },
   )
 
-  return posts.sort((a: Post, b: Post) =>
+  const postsWithMeta = await Promise.all(posts.map(getPostMeta))
+
+  return postsWithMeta.sort((a: Post, b: Post) =>
     b.data.published.valueOf() - a.data.published.valueOf(),
   )
 }
@@ -65,7 +78,7 @@ export async function getPinnedPosts(lang?: string) {
   return posts.filter(post => post.data.pin)
 }
 
-// Get posts group by year (not pinned)
+// Get posts grouped by year (not pinned)
 export async function getPostsByYear(lang?: string): Promise<PostsGroupByYear> {
   const posts = await getRegularPosts(lang)
   const yearMap = new Map<number, Post[]>()
@@ -108,7 +121,7 @@ export async function getAllTags(lang?: string) {
   return Array.from(tags)
 }
 
-// Get posts group by each tag
+// Get posts grouped by tags
 export async function getPostsGroupByTags(lang?: string) {
   const posts = await getRegularPosts(lang)
   const tagMap = new Map<string, Post[]>()
@@ -127,7 +140,7 @@ export async function getPostsGroupByTags(lang?: string) {
   return tagMap
 }
 
-// Get all posts by one tag
+// Get all posts by specific tag
 export async function getPostsByTag(tag: string, lang?: string) {
   const posts = await getRegularPosts(lang)
   return posts.filter((post: Post) =>

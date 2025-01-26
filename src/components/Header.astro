@@ -2,9 +2,9 @@
 import themeConfig from '@/config'
 
 const { title, subtitle } = themeConfig.site
-const { titleSpace = 2 } = themeConfig.global
+const { titleSpace } = themeConfig.global
 
-const marginClass = {
+const marginBottom = {
   1: 'mb-1',
   2: 'mb-2',
   3: 'mb-3',
@@ -13,18 +13,13 @@ const marginClass = {
 ---
 
 <header>
-  <h1
-    class={`${marginClass} mt--5.2 text-12 c-primary font-bold font-title`}
-    aria-label="Title Tag"
-  >
+  <h1 class={`${marginBottom} mt--5.2 text-12 c-primary font-bold font-title`}>
     <a href="/">
       {title}
     </a>
   </h1>
-  <h2
-    class="text-5.6 c-secondary font-navbar"
-    aria-label="Meta Description"
-  >
+  
+  <h2 class="text-5.6 c-secondary font-navbar">
     {subtitle}
   </h2>
 </header>

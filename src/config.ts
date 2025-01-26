@@ -16,16 +16,16 @@ export const themeConfig: ThemeConfig = {
   color: {
     mode: 'light', // light, dark. Matches system theme by default, falls back to configured theme mode if not available.
     light: {
-      primary: '#17191A', // title text color in light mode
-      secondary: '#505050', // post text color in light mode
-      background: '#FAEDE4', // background color in light mode
-      codeTheme: 'github-light', // code block theme in light mode. See more at https://shiki.style/themes and https://vscodethemes.com/
+      primary: '#17191A', // title font color
+      secondary: '#505050', // post font color
+      background: '#FAEDE4', // background color
+      codeTheme: 'github-light', // code block theme. See more at https://shiki.style/themes and https://vscodethemes.com/
     },
     dark: {
-      primary: '#BEBEBE', // title text color in dark mode
-      secondary: '#A0A09F', // post text color in dark mode
-      background: '#161616', // background color in dark mode
-      codeTheme: 'github-dark', // code block theme in dark mode. See more at https://shiki.style/themes and https://vscodethemes.com/
+      primary: '#BEBEBE', // title font color
+      secondary: '#A0A09F', // post font color
+      background: '#161616', // background color
+      codeTheme: 'github-dark', // code block theme. See more at https://shiki.style/themes and https://vscodethemes.com/
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

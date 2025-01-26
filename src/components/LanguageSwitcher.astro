@@ -6,26 +6,30 @@ const langs = ['', ...themeConfig.global.moreLocale]
 const currentLocale = themeConfig.global.locale
 
 function getLanguageDisplayName(code: string) {
-  if (!code)
-return 'Default'
+  if (!code) {
+    return 'Default'
+  }
   return new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || code
 }
 ---
 
 <button
+  type="button"
   id="language-switcher"
-  class="absolute right-25.6 top-20 z-99 aspect-square w-6.6 c-secondary active:scale-92"
-  aria-label="Switch Language"
-  title={`Current Language: ${getLanguageDisplayName(currentLocale)}`}
+  class="absolute right-25.6 top-20 z-9 aspect-square w-6.6 c-secondary active:scale-90"
+  aria-label={`Current Language: ${getLanguageDisplayName(currentLocale)}. Click to switch to next language.`}
 >
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-full w-full">
+  <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  viewBox="0 0 24 24" 
+  class="h-full w-full"
+  aria-hidden="true"
+  >
     <path d="M19 21 12.3 2h-1L4.7 21l-2.5.2v.8h6.3v-.8L5.7 21l2-5.9h7.5l2 5.9-3.3.2v.8h7.9v-.8zM8 14.3l3.4-10.1 3.5 10.1z" fill="currentColor" />
   </svg>
-  <span class="sr-only">Switch Language</span>
 </button>
 
 <script is:inline define:vars={{ langs }}>
-// Move event binding into astro:page-load event
 document.addEventListener('astro:page-load', () => {
   const langSwitch = document.getElementById('language-switcher')
 
@@ -33,24 +37,32 @@ document.addEventListener('astro:page-load', () => {
     const { pathname, search, hash } = window.location
     const segments = pathname.split('/').filter(Boolean)
     const firstSegment = segments[0] || ''
-    // Check if first segment is a valid language code
-    const currentLang = langs.includes(firstSegment) ? firstSegment : ''
-    // Get next language in rotation (empty string means default locale)
+    
+    // Get current language or empty string if invalid
+    const currentLang = langs.includes(firstSegment) 
+      ? firstSegment 
+      : ''
+    
     const currentIndex = langs.indexOf(currentLang)
     const nextLang = langs[(currentIndex + 1) % langs.length]
+    
     const newPath = buildNewPath(currentLang, nextLang, segments, pathname) || '/'
     window.location.href = `${newPath}${search}${hash}`
   })
 })
 
-// Handle path construction for both cases:
-// 1. Current path has language prefix
-// 2. Current path has no language prefix
 function buildNewPath(currentLang, nextLang, segments, pathname) {
   if (currentLang) {
     segments[0] = nextLang || segments[0]
-    return nextLang ? `/${segments.join('/')}` : `/${segments.slice(1).join('/')}`
+    
+    // Handle path with or without language code
+    return nextLang 
+      ? `/${segments.join('/')}` 
+      : `/${segments.slice(1).join('/')}`
   }
-  return nextLang ? `/${nextLang}${pathname}` : pathname
+  
+  return nextLang 
+    ? `/${nextLang}${pathname}` 
+    : pathname
 }
 </script>

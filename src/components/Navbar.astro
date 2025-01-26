@@ -51,13 +51,13 @@ const isTagActive = isTagPage(currentPath)
 const isAboutActive = isAboutPage(currentPath)
 ---
 
-<nav class="mb-20 mt-13 text-5.6 text-secondary font-semibold leading-13 font-navbar">
+<nav class="mb-16 mt-13 text-5.6 font-semibold leading-13 font-navbar">
   <ul>
     <li>
       <a
         href={getLocalizedPath('/')}
         class:list={[
-          isPostActive ? 'font-bold text-primary' : 'text-secondary',
+          isPostActive && 'font-bold text-primary'
         ]}
       >
         {currentUI.posts}
@@ -67,7 +67,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/tags')}
         class:list={[
-          isTagActive ? 'font-bold text-primary' : 'text-secondary',
+          isTagActive && 'font-bold text-primary'
         ]}
       >
         {currentUI.tags}
@@ -77,7 +77,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/about')}
         class:list={[
-          isAboutActive ? 'font-bold text-primary' : 'text-secondary',
+          isAboutActive && 'font-bold text-primary'
         ]}
       >
         {currentUI.about}

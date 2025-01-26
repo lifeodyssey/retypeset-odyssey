@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
-const { Content } = await post.render()
+const { Content, remarkPluginFrontmatter } = await post.render()
 ---
 
 <Layout
@@ -26,7 +26,10 @@ const { Content } = await post.render()
 >
   <article>
     <h1>{post.data.title}</h1>
-    <time>{post.data.published.toISOString().split('T')[0]}</time>
+    <time>
+      {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
+      {remarkPluginFrontmatter.minutes && <span> · {remarkPluginFrontmatter.minutes} min</span>}
+    </time>
     <Content />
   </article>
 </Layout>

@@ -34,8 +34,8 @@ export const ui = {
     about: 'About',
   },
   'es': {
-    posts: 'Posts',
-    tags: 'Tags',
+    posts: 'Artículos',
+    tags: 'Etiquetas',
     about: 'Sobre',
   },
   'ru': {

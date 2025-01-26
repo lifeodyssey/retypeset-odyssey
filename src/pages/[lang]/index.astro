@@ -1,15 +1,17 @@
 ---
+import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
-import { getPinnedPosts, getPosts } from '@/utils/content'
-import { generateLanguagePaths } from '@/utils/i18n'
+import { getPinnedPosts, getPostsByYear } from '@/utils/content'
 
 export function getStaticPaths() {
-  return generateLanguagePaths()
+  return themeConfig.global.moreLocale.map(lang => ({
+    params: { lang },
+  }))
 }
 
 const { lang } = Astro.params
-const pinnedPosts = await getPinnedPosts()
-const posts = await getPosts()
+const pinnedPosts = await getPinnedPosts(lang)
+const postsByYear = await getPostsByYear(lang)
 ---
 
 <Layout>
@@ -21,7 +23,10 @@ const posts = await getPosts()
             <li>
               <a href={`/${lang}/posts/${post.data.slug || post.slug}/`}>
                 {post.data.title}
-                <time>({post.data.published.toISOString().split('T')[0]})</time>
+                <time class="block lg:inline lg:before:content-['_']">
+                  {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
+                  {post.remarkPluginFrontmatter?.minutes && <span> · {post.remarkPluginFrontmatter.minutes} min</span>}
+                </time>
               </a>
             </li>
           ))}
@@ -29,17 +34,27 @@ const posts = await getPosts()
       </section>
     )}
 
-    <section>
-      <ul>
-        {posts.map(post => (
-          <li>
-            <a href={`/${lang}/posts/${post.data.slug || post.slug}/`}>
-              {post.data.title}
-              <time>({post.data.published.toISOString().split('T')[0]})</time>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
+    {[...postsByYear.entries()].map(([year, posts]) => (
+      // Year Group
+      <section class="mt-8">
+        {/* Year */}
+        <time class="text-8 font-date">{year}</time>
+        {/* Posts List */}
+        <ul>
+          {posts.map(post => (
+            // Single Post
+            <li class="mt-6">
+              {/* Post Title */}
+              <a href={`/posts/${post.data.slug || post.slug}/`}>{post.data.title}</a>
+                {/* Post Date */} 
+                <time class="text-5.6 leading-7 font-date block lg:inline lg:before:content-['_'] opacity-30" aria-hidden="true">
+                  {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
+                  {post.remarkPluginFrontmatter?.minutes &&  <span class="ml-2">  {post.remarkPluginFrontmatter.minutes} min</span>}
+                </time>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
   </main>
 </Layout>
