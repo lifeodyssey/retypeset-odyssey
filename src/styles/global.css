@@ -3,68 +3,82 @@
   --uno-colors-secondary: theme('colors.secondary');
   --uno-colors-background: theme('colors.background');
 }
+
 html {
-  --at-apply: 'bg-background c-secondary scroll-smooth antialiased text-62.5%';
+  --at-apply: 'bg-background c-secondary text-62.5% antialiased scroll-smooth';
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 html::-webkit-scrollbar {
   --at-apply: 'hidden';
 }
+
 body {
   --at-apply: 'text-1.6rem';
+  /* Fix for iOS browser flash issue */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
+
 h1, h2, h3 {
   text-rendering: optimizeLegibility;
 }
+
 h1 {
   --at-apply: 'text-3.6rem';
 }
+
 h2 {
   --at-apply: 'text-3rem';
 }
+
 h3 {
   --at-apply: 'text-2.4rem';
 }
+
 h4 {
   --at-apply: 'text-2rem';
 }
+
 h5 {
   --at-apply: 'text-1.8rem';
 }
+
 h6 {
   --at-apply: 'text-1.6rem';
 }
+
 article img {
-  cursor: zoom-in;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  --at-apply: 'cursor-zoom-in';
 }
+
 /* Horizontal reveal animation on theme toggle */
 @keyframes reveal {
   from {
     clip-path: inset(var(--from));
   }
 }
+
 html.dark {
   --from: 0 0 100% 0;
 }
+
 html:not(.dark) {
   --from: 100% 0 0 0;
 }
+
 ::view-transition-new(theme-transition) {
   animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
   clip-path: inset(0 0 0 0);
   z-index: 2;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
+
 ::view-transition-old(theme-transition) {
   animation: none;
   z-index: 1;
 }
+
 @supports not (view-transition-name: none) {
   body:not([data-restore-theme]) {
     --at-apply: 'transition-colors duration-500 ease-in-out';

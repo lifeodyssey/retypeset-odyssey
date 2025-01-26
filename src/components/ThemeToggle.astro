@@ -3,7 +3,6 @@
 const themeToggle = document.querySelector('button[aria-pressed]') as HTMLButtonElement
 themeToggle.setAttribute('aria-pressed', String(document.documentElement.classList.contains('dark')))
 
-// Core theme switching logic
 function switchTheme() {
   document.body.removeAttribute('data-restore-theme')
   const isDark = document.documentElement.classList.toggle('dark')
@@ -12,17 +11,15 @@ function switchTheme() {
   document.dispatchEvent(new Event('theme-changed'))
 }
 
-// Handle theme toggle with view transitions API
 function toggleTheme() {
   if (!document.startViewTransition) {
     switchTheme()
     return
   }
 
-  // Set transition name for theme toggle
+  // Set temporary transition name for theme toggle
   document.documentElement.style.setProperty('view-transition-name', 'theme-transition')
 
-  // Execute transition
   const transition = document.startViewTransition(() => {
     switchTheme()
   })
@@ -33,7 +30,6 @@ function toggleTheme() {
   })
 }
 
-// Sync theme state across page navigation
 function syncTheme() {
   document.body.setAttribute('data-restore-theme', 'true')
   const theme = localStorage.getItem('theme')
@@ -44,7 +40,6 @@ function syncTheme() {
   })
 }
 
-// Event listeners
 document.addEventListener('astro:page-load', () => {
   const themeToggle = document.querySelector('button[aria-pressed]') as HTMLButtonElement
   themeToggle.setAttribute('aria-pressed', String(document.documentElement.classList.contains('dark')))

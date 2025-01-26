@@ -55,7 +55,6 @@ function buildNewPath(currentLang, nextLang, segments, pathname) {
   if (currentLang) {
     segments[0] = nextLang || segments[0]
     
-    // Handle path with or without language code
     return nextLang 
       ? `/${segments.join('/')}` 
       : `/${segments.slice(1).join('/')}`

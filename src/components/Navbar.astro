@@ -2,15 +2,12 @@
 import themeConfig from '@/config'
 import { ui } from '@/utils/ui'
 
-// Configuration
 const defaultLocale = themeConfig.global.locale
 const moreLocales = themeConfig.global.moreLocale
 const currentPath = Astro.url.pathname
 
-// Path utilities
 const cleanPath = (path: string) => path.replace(/^\/+|\/+$/g, '')
 
-// Language utilities
 function getLangFromPath(path: string) {
   const secondaryLang = moreLocales.find(lang =>
     path.startsWith(`/${lang}/`) || path === `/${lang}` || path === `/${lang}/`,
@@ -21,13 +18,11 @@ function getLangFromPath(path: string) {
 const currentLang = getLangFromPath(currentPath)
 const currentUI = ui[currentLang as keyof typeof ui]
 
-// Localization utilities
 function getLocalizedPath(path: string) {
   const clean = cleanPath(path)
   return currentLang === defaultLocale ? `/${clean}` : `/${currentLang}/${clean}`
 }
 
-// Page type detection utilities
 function isHomePage(path: string) {
   const clean = cleanPath(path)
   return clean === '' || moreLocales.includes(clean)
@@ -45,7 +40,6 @@ function isAboutPage(path: string) {
   return clean.startsWith('about') || moreLocales.some(lang => clean.startsWith(`${lang}/about`))
 }
 
-// Active state detection
 const isPostActive = isHomePage(currentPath) || isPostPage(currentPath)
 const isTagActive = isTagPage(currentPath)
 const isAboutActive = isAboutPage(currentPath)

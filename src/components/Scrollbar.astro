@@ -1,10 +1,8 @@
 <script>
 import { OverlayScrollbars } from 'overlayscrollbars'
 
-// Store scrollbar instance for later use
 let scrollbarsInstance: ReturnType<typeof OverlayScrollbars> | null = null
 
-// Initialize custom scrollbar with theme support
 function initScrollbar() {
   const bodyElement = document.body
   if (!bodyElement.hasAttribute('data-scrollbar-initialized')) {
@@ -25,7 +23,7 @@ function initScrollbar() {
   }
 }
 
-// Handle theme changes and update scrollbar appearance
+// Automatically update scrollbar theme
 document.addEventListener('theme-changed', () => {
   scrollbarsInstance?.options({
     scrollbars: {

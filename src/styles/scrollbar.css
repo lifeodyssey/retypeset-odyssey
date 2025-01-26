@@ -10,16 +10,19 @@
   --os-handle-perpendicular-size-active: 160%;
   --os-handle-interactive-area-offset: 3px;
 }
+
 .scrollbar-light {
   --os-handle-bg: #C9C4C1;
   --os-handle-bg-hover: #B8B3B0;
   --os-handle-bg-active: #B8B3B0;
 }
+
 .scrollbar-dark {
   --os-handle-bg: #383838;
   --os-handle-bg-hover: #464646;
   --os-handle-bg-active: #464646;
 }
+
 @media (max-width: 1023px) {
   .os-scrollbar {
     display: none !important;

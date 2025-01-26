@@ -4,32 +4,24 @@ const postsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     published: z.date(),
+    // Optional
     updated: z.date().optional(),
     tags: z.array(z.string()).optional().default([]),
-    // For Open Graph
     description: z.string().optional().default(''),
     image: z.string().optional().default(''),
-    // Extended Settings
-    lang: z.string().optional().default(''),
-    slug: z.string()
-      .optional()
-      .default('')
-      .refine(
-        (slug) => {
-          if (!slug)
-            return true
-          return /^[\w\-]*$/.test(slug)
-        },
-        {
-          message: 'Slug can only contain letters, numbers, hyphens and underscores',
-        },
-      ),
-    toc: z.boolean().optional().default(false),
+    // Advanced
     pin: z.boolean().optional().default(false),
+    toc: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
+    lang: z.string().optional().default(''),
+    slug: z.string().optional().default('').refine(
+      slug => !slug || /^[\w\-]*$/.test(slug),
+      { message: 'Slug can only contain letters, numbers, hyphens and underscores' },
+    ),
     minutes: z.number().optional(),
   }),
 })
+
 export const collections = {
   posts: postsCollection,
 }
