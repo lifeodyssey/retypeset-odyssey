@@ -31,12 +31,12 @@ function toggleTheme() {
 }
 
 function syncTheme() {
-  document.body.setAttribute('data-restore-theme', 'true')
+  document.documentElement.setAttribute('data-restore-theme', 'true')
   const theme = localStorage.getItem('theme')
   document.documentElement.classList.toggle('dark', theme === 'dark')
   themeToggle.setAttribute('aria-pressed', String(theme === 'dark'))
   requestAnimationFrame(() => {
-    document.body.removeAttribute('data-restore-theme')
+    document.documentElement.removeAttribute('data-restore-theme')
   })
 }
 

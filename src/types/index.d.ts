@@ -32,7 +32,7 @@ export interface ThemeConfig {
   global: {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
-    font: 'sans' | 'serif'
+    fontStyle: 'sans' | 'serif'
     titleSpace: 1 | 2 | 3 | 4
   }
 
@@ -47,8 +47,6 @@ export interface ThemeConfig {
 
   seo?: {
     twitterID?: string
-    facebookID?: string
-    facebookLink?: string
     verification?: {
       google?: string
       bing?: string
@@ -61,7 +59,6 @@ export interface ThemeConfig {
       feedID?: string
       userID?: string
     }
-    siteScreenshot: string
   }
 
   footer: {

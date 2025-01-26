@@ -12,20 +12,18 @@ const { postTitle, postDescription, postImage } = Astro.props
 const { title, subtitle, description, author, url, favicon } = themeConfig.site
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const { locale, moreLocale } = themeConfig.global
-const { verification = {}, twitterID = '', facebookID = '', facebookLink = '', googleAnalyticsID = '', umamiAnalyticsID = '', siteScreenshot = '' } = themeConfig.seo ?? {}
+const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', customUmamiAnalyticsURL = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
 ---
 
 <head>
-<!-- Basic -->
+<!-- Basic info -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
 {favicon.toLowerCase().endsWith('.webp') && <link rel="icon" type="image/webp" href={favicon} />}
 {favicon.toLowerCase().endsWith('.svg') && <link rel="icon" type="image/svg+xml" href={favicon} />}
 {favicon.toLowerCase().endsWith('.png') && <link rel="icon" type="image/png" href={favicon} />}
-
 <title>{postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`}</title>
 <meta name="description" content={postDescription || description} />
 <meta name="author" content={author} />
@@ -33,9 +31,6 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content={lightMode} media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content={darkMode} media="(prefers-color-scheme: dark)" />
-<meta itemprop="name" content={postTitle || title} />
-<meta itemprop="image" content={postImage || siteScreenshot} />
-<meta itemprop="description" content={postDescription || subtitle} />
 <ClientRouter />
 
 <!-- Preload -->
@@ -46,13 +41,8 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 {customGoogleAnalyticsURL && <link rel="dns-prefetch" href={customGoogleAnalyticsURL} />}
 {customUmamiAnalyticsURL && <link rel="dns-prefetch" href={customUmamiAnalyticsURL} />}
 <link rel="stylesheet" href={`${cdn}/gh/radishzzz/retypeset-font/font.css`} />
-
-<!-- Link -->
-<link rel="author" href={url} />
-<link rel="publisher" href={author} />
-<link rel="canonical" href={Astro.url} />
 <link rel="alternate" href="/rss.xml" type="application/rss+xml" title="RSS" />
-<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" />
+<link rel="canonical" href={Astro.url} />
 
 <!-- i18n hreflang generate -->
 {[locale, ...moreLocale].map(lang => (
@@ -64,31 +54,24 @@ const { cdn, commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', 
 ))}
 
 <!-- Facebook Open Graph -->
-<meta property="fb:app_id" content={facebookID} />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:type" content={postTitle ? 'article' : 'website'} />
 <meta property="og:title" content={postTitle || title} />
-<meta property="og:image" content={postImage || siteScreenshot} />
-<meta property="og:image:alt" content={postTitle || title} />
+<meta property="og:type" content={postTitle ? 'article' : 'website'} />
+<meta property="og:image" content={postImage || favicon} />
+<meta property="og:url" content={Astro.url} />
 <meta property="og:description" content={postDescription || subtitle} />
 <meta property="og:site_name" content={title} />
-<meta property="og:locale" content={Astro.currentLocale?.replace('-', '_') || 'en_US'} />
-<meta property="article:author" content={facebookLink} />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:url" content={Astro.url} />
 <meta name="twitter:title" content={postTitle || title} />
 <meta name="twitter:description" content={postDescription || subtitle} />
-<meta name="twitter:image" content={postImage || siteScreenshot} />
-<meta name="twitter:image:alt" content={postTitle || title} />
+<meta name="twitter:image" content={postImage || favicon} />
 {twitterID && (
   <>
     <meta name="twitter:site" content={twitterID} />
     <meta name="twitter:creator" content={twitterID} />
   </>
 )}
-<meta name="twitter:dnt" content="on" />
 
 <!-- Site Verification -->
 {google && <meta name="google-site-verification" content={google} />}
