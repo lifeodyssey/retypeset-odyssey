@@ -47,7 +47,7 @@ const postsByYear = await getPostsByYear(lang)
               {/* Post Title */}
               <a href={`/${lang}/posts/${post.data.slug || post.slug}`}>{post.data.title}</a>
                 {/* Post Date */} 
-                <time class="text-5.6 leading-7 font-date block lg:inline lg:before:content-['_'] opacity-30" aria-hidden="true">
+                <time class="text-5.6 leading-7 font-time block lg:inline lg:before:content-['_'] opacity-30" aria-hidden="true">
                   {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
                   {post.remarkPluginFrontmatter?.minutes &&  <span class="ml-2">  {post.remarkPluginFrontmatter.minutes} min</span>}
                 </time>

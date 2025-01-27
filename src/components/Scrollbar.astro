@@ -7,8 +7,11 @@ function initScrollbar() {
   const bodyElement = document.body
   if (!bodyElement.hasAttribute('data-scrollbar-initialized')) {
     scrollbarsInstance = OverlayScrollbars({
-      target: bodyElement,
-    }, {
+			target: bodyElement,
+			cancel: {
+				nativeScrollbarsOverlaid: true,  // don't initialize the overlay scrollbar if there is a native one
+			}
+		}, {
       scrollbars: {
         theme: document.documentElement.classList.contains('dark') ? 'scrollbar-dark' : 'scrollbar-light',
         autoHide: 'scroll',

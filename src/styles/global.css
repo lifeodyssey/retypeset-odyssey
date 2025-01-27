@@ -21,10 +21,6 @@ body {
   -webkit-transform: translateZ(0);
 }
 
-h1, h2, h3 {
-  text-rendering: optimizeLegibility;
-}
-
 h1 {
   --at-apply: 'text-3.6rem';
 }
@@ -51,6 +47,8 @@ h6 {
 
 article img {
   --at-apply: 'cursor-zoom-in';
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* Horizontal reveal animation on theme toggle */
@@ -83,4 +81,46 @@ html:not(.dark) {
   html:not([data-restore-theme]) {
     --at-apply: 'transition-colors duration-500 ease-in-out';
   }
+}
+
+/* Snell Roundhand static Font */
+@font-face {
+  font-family: "Snell-Bold";
+  src: url("/font/Snell-Bold.woff2") format("woff2");
+  font-display: swap;
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A, U+00E1, U+00E9, U+00ED, U+00F3, U+00FA, U+00FC, U+00F1, U+002C-002E, U+003F, U+0021, U+003A, U+003B, U+0022, U+0027, U+0028-0029, U+005B-005D, U+003C-003E, U+002D, U+005F, U+002F, U+00B7, U+00A9, U+0401, U+0410-044F, U+0451;
+}
+
+@font-face {
+  font-family: "Snell-Black";
+  src: url("/font/Snell-Black.woff2") format("woff2");
+  font-display: swap;
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A, U+00E1, U+00E9, U+00ED, U+00F3, U+00FA, U+00FC, U+00F1, U+002C-002E, U+003F, U+0021, U+003A, U+003B, U+0022, U+0027, U+0028-0029, U+005B-005D, U+003C-003E, U+002D, U+005F, U+002F, U+00B7, U+00A9, U+0401, U+0410-044F, U+0451;
+}
+
+/* STIX Two Text Variable Font */
+@font-face {
+  font-family: "STIX";
+  src: url("/font/STIX.woff2") format("woff2-variations");
+  font-display: swap;
+  font-weight: 400 700;
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A, U+00E1, U+00E9, U+00ED, U+00F3, U+00FA, U+00FC, U+00F1, U+002C-002E, U+003F, U+0021, U+003A, U+003B, U+0022, U+0027, U+0028-0029, U+005B-005D, U+003C-003E, U+002D, U+005F, U+002F, U+00B7, U+00A9, U+0401, U+0410-044F, U+0451;
+}
+
+@font-face {
+  font-family: "STIX-italic";
+  src: url("/font/STIX-italic.woff2") format("woff2-variations");
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400 700;
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A, U+00E1, U+00E9, U+00ED, U+00F3, U+00FA, U+00FC, U+00F1, U+002C-002E, U+003F, U+0021, U+003A, U+003B, U+0022, U+0027, U+0028-0029, U+005B-005D, U+003C-003E, U+002D, U+005F, U+002F, U+00B7, U+00A9, U+0401, U+0410-044F, U+0451;
+}
+
+/* Minimal Subset of EarlySummerSerif Variable Font for UI */
+@font-face {
+  font-family: "EarlySummer-subset";
+  src: url("/font/EarlySummer-subset.woff2") format("woff2-variations");
+  font-display: swap;
+  font-weight: 400 700;
+  unicode-range: U+91cd, U+65b0, U+7f16, U+6392, U+518d, U+73b0, U+7248, U+5f0f, U+4e4b, U+7f8e, U+6587, U+7ae0, U+6807, U+7b7e, U+5173, U+4e8e, U+6a19, U+7c64, U+95dc, U+65bc, U+8a18, U+4e8b, U+30bf, U+30b0, U+6982, U+8981;
 }
