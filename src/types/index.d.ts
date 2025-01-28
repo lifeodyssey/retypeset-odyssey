@@ -77,7 +77,6 @@ export interface ThemeConfig {
   }
 
   preload: {
-    cdn: string
     commentURL?: string
     imageHostURL?: string
     customGoogleAnalyticsURL?: string

@@ -43,6 +43,7 @@ function isAboutPage(path: string) {
 const isPostActive = isHomePage(currentPath) || isPostPage(currentPath)
 const isTagActive = isTagPage(currentPath)
 const isAboutActive = isAboutPage(currentPath)
+
 ---
 
 <nav class="mb-16 mt-13 text-5.6 font-semibold leading-13 font-navbar">
@@ -51,7 +52,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/')}
         class:list={[
-          isPostActive && 'font-bold text-primary'
+          isPostActive ? 'underline-animation font-bold text-primary' : 'underline-animation',
         ]}
       >
         {currentUI.posts}
@@ -61,7 +62,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/tags')}
         class:list={[
-          isTagActive && 'font-bold text-primary'
+          isTagActive ? 'underline-animation font-bold text-primary' : 'underline-animation',
         ]}
       >
         {currentUI.tags}
@@ -71,7 +72,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/about')}
         class:list={[
-          isAboutActive && 'font-bold text-primary'
+          isAboutActive ? 'underline-animation font-bold text-primary' : 'underline-animation',
         ]}
       >
         {currentUI.about}
@@ -79,3 +80,33 @@ const isAboutActive = isAboutPage(currentPath)
     </li>
   </ul>
 </nav>
+
+<script is:inline>
+document.addEventListener('astro:before-preparation', (event) => {
+  const hoverElement = document.querySelector('.underline-animation:hover')
+
+  if (hoverElement) {
+    const originalLoader = event.loader
+
+    event.loader = async function () {
+      await new Promise((resolve) => {
+        // 添加强制收回动画的类
+        hoverElement.classList.add('force-leave')
+
+        // 等待动画完成
+        setTimeout(resolve, 300)
+      })
+
+      return originalLoader()
+    }
+  }
+})
+
+// 为所有带有下划线动画的链接添加点击事件处理
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.underline-animation')
+  if (link) {
+    link.classList.add('force-leave')
+  }
+})
+</script>

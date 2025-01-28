@@ -47,6 +47,7 @@ h6 {
 
 article img {
   --at-apply: 'cursor-zoom-in';
+  /* Optimize animation performance of Scrollbar */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
