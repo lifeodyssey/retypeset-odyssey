@@ -17,8 +17,8 @@ html::-webkit-scrollbar {
 body {
   --at-apply: 'text-1.6rem';
   /* Fix for iOS browser flash issue */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 h1 {

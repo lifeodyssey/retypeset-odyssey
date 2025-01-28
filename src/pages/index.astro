@@ -30,7 +30,7 @@ const postsByYear = await getPostsByYear()
       // Year Group
       <section class="mt-8">
         {/* Year */}
-        <time class="text-8 font-time">{year}</time>
+        <time class="text-8 font-navbar">{year}</time>
         {/* Posts List */}
         <ul>
           {posts.map(post => (
@@ -38,10 +38,10 @@ const postsByYear = await getPostsByYear()
             <li class="mt-6">
               {/* Post Title */}
               <a class="hover:text-secondary" href={`/posts/${post.data.slug || post.slug}`}>{post.data.title}</a>
-                {/* Post Date */} 
-                <div class="text-5.6 leading-7 font-time block lg:inline lg:before:content-['_']" aria-hidden="true">
+                {/* Post Date */}
+                <div class="block text-5.6 leading-7 font-navbar lg:inline lg:before:content-['_']" aria-hidden="true">
                   {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
-                  {post.remarkPluginFrontmatter?.minutes &&  <span class="ml-2">  {post.remarkPluginFrontmatter.minutes} min</span>}
+                  {post.remarkPluginFrontmatter?.minutes && <span class="ml-2">  {post.remarkPluginFrontmatter.minutes} min</span>}
                 </div>
             </li>
           ))}

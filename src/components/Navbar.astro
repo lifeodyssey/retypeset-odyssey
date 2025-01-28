@@ -52,7 +52,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/')}
         class:list={[
-          isPostActive ? 'underline-animation font-bold text-primary' : 'underline-animation',
+          isPostActive ? 'font-bold text-primary' : '',
         ]}
       >
         {currentUI.posts}
@@ -62,7 +62,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/tags')}
         class:list={[
-          isTagActive ? 'underline-animation font-bold text-primary' : 'underline-animation',
+          isTagActive ? 'font-bold text-primary' : '',
         ]}
       >
         {currentUI.tags}
@@ -72,7 +72,7 @@ const isAboutActive = isAboutPage(currentPath)
       <a
         href={getLocalizedPath('/about')}
         class:list={[
-          isAboutActive ? 'underline-animation font-bold text-primary' : 'underline-animation',
+          isAboutActive ? 'font-bold text-primary' : '',
         ]}
       >
         {currentUI.about}
@@ -80,33 +80,3 @@ const isAboutActive = isAboutPage(currentPath)
     </li>
   </ul>
 </nav>
-
-<script is:inline>
-document.addEventListener('astro:before-preparation', (event) => {
-  const hoverElement = document.querySelector('.underline-animation:hover')
-
-  if (hoverElement) {
-    const originalLoader = event.loader
-
-    event.loader = async function () {
-      await new Promise((resolve) => {
-        // 添加强制收回动画的类
-        hoverElement.classList.add('force-leave')
-
-        // 等待动画完成
-        setTimeout(resolve, 300)
-      })
-
-      return originalLoader()
-    }
-  }
-})
-
-// 为所有带有下划线动画的链接添加点击事件处理
-document.addEventListener('click', (e) => {
-  const link = e.target.closest('.underline-animation')
-  if (link) {
-    link.classList.add('force-leave')
-  }
-})
-</script>
