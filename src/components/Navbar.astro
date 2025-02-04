@@ -1,49 +1,14 @@
 ---
-import themeConfig from '@/config'
+import { getPagePath } from '@/utils/path'
 import { ui } from '@/utils/ui'
 
-const defaultLocale = themeConfig.global.locale
-const moreLocales = themeConfig.global.moreLocale
 const currentPath = Astro.url.pathname
-
-const cleanPath = (path: string) => path.replace(/^\/+|\/+$/g, '')
-
-function getLangFromPath(path: string) {
-  const secondaryLang = moreLocales.find(lang =>
-    path.startsWith(`/${lang}/`) || path === `/${lang}` || path === `/${lang}/`,
-  )
-  return secondaryLang || defaultLocale
-}
-
-const currentLang = getLangFromPath(currentPath)
+const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath } = getPagePath(currentPath)
 const currentUI = ui[currentLang as keyof typeof ui]
 
-function getLocalizedPath(path: string) {
-  const clean = cleanPath(path)
-  return currentLang === defaultLocale ? `/${clean}` : `/${currentLang}/${clean}`
-}
-
-function isHomePage(path: string) {
-  const clean = cleanPath(path)
-  return clean === '' || moreLocales.includes(clean)
-}
-function isPostPage(path: string) {
-  const clean = cleanPath(path)
-  return clean.startsWith('posts') || moreLocales.some(lang => clean.startsWith(`${lang}/posts`))
-}
-function isTagPage(path: string) {
-  const clean = cleanPath(path)
-  return clean.startsWith('tags') || moreLocales.some(lang => clean.startsWith(`${lang}/tags`))
-}
-function isAboutPage(path: string) {
-  const clean = cleanPath(path)
-  return clean.startsWith('about') || moreLocales.some(lang => clean.startsWith(`${lang}/about`))
-}
-
-const isPostActive = isHomePage(currentPath) || isPostPage(currentPath)
-const isTagActive = isTagPage(currentPath)
-const isAboutActive = isAboutPage(currentPath)
-
+const isPostActive = isHome || isPost
+const isTagActive = isTag
+const isAboutActive = isAbout
 ---
 
 <nav class="mb-16 mt-13 text-5.6 font-semibold leading-13 font-navbar">

@@ -33,7 +33,7 @@ export interface ThemeConfig {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
     fontStyle: 'sans' | 'serif'
-    titleSpace: 1 | 2 | 3 | 4
+    titleSpace: 1 | 2 | 3
   }
 
   comment?: {
@@ -82,12 +82,6 @@ export interface ThemeConfig {
     customGoogleAnalyticsURL?: string
     customUmamiAnalyticsURL?: string
     customUmamiAnalyticsJS?: string
-  }
-
-  about: {
-    [key in ThemeConfig['global']['locale']]: string
-  } & {
-    [key in ThemeConfig['global']['moreLocale'][number]]?: string
   }
 }
 

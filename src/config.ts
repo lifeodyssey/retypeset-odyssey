@@ -4,26 +4,26 @@ export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
     title: 'Retypeset', // site title
-    subtitle: '再现版式之美', // site subtitle
+    subtitle: '再现版式之美', // site subtitle (optional)
     description: 'This is Retypeset, an elegant and open-source Astro blog theme, help you rediscover the beauty of typography.', // site description for SEO
     author: 'radishzz', // author name
     url: 'https://retypeset.radishzz.cc', // site url
-    favicon: '/image/logo.svg', // or https://image.example.com/logo.svg. Support only webp, svg, png
+    favicon: '/image/logo.svg', // or https://example.com/logo.svg. Support webp, svg or png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'light', // light, dark. Matches system theme by default, falls back to configured theme mode if not available.
+    mode: 'light', // light or dark. Matches system theme by default, falls back to configured theme mode if not available.
     light: {
-      primary: '#17191A', // title font color
-      secondary: '#505050', // post font color
+      primary: '#17191A', // accent color for title
+      secondary: '#505050', // secondary color for text
       background: '#FAEDE4', // background color
       codeTheme: 'github-light', // code block theme. See more at https://shiki.style/themes and https://vscodethemes.com/
     },
     dark: {
-      primary: '#BEBEBE', // title font color
-      secondary: '#A0A09F', // post font color
+      primary: '#BEBEBE', // accent color for title
+      secondary: '#A0A09F', // secondary color for text
       background: '#161616', // background color
       codeTheme: 'github-dark', // code block theme. See more at https://shiki.style/themes and https://vscodethemes.com/
     },
@@ -32,23 +32,23 @@ export const themeConfig: ThemeConfig = {
 
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
-    locale: 'zh', // support only zh, zh-tw, ja, en, es, ru. Default language setting
-    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. NOT fill in the default locale code again
-    fontStyle: 'sans', // support only sans, serif. Choose the font style for posts
-    titleSpace: 4, // support only 1, 2, 3, 4. Space between title and subtitle, 1 is the smallest, 4 is the largest
+    locale: 'zh', // support 'zh', 'zh-tw', 'ja', 'en', 'es', 'ru'. Default language setting
+    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. Not fill in the default locale code again
+    fontStyle: 'sans', // support sans or serif. Font styles for post content
+    titleSpace: 3, // support 1, 2 or 3. Space between title and subtitle
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
     waline: {
-      serverURL: '',
+      serverURL: '', // Waline server URL
       emoji: [
-        '',
-        '',
-      ],
-      search: true,
-      imageUploader: true,
+        '//unpkg.com/@waline/emojis@1.2.0/bmoji',
+        '//unpkg.com/@waline/emojis@1.2.0/weibo',
+      ], // see more at https://waline.js.org/guide/features/emoji.html
+      search: false, // whether to enable GIF search
+      imageUploader: false, // whether to enable image uploader
     },
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -56,17 +56,14 @@ export const themeConfig: ThemeConfig = {
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   seo: {
     twitterID: '', // @twitter ID
-    // site verification
     verification: {
       google: '', // Google Search Console: https://search.google.com/search-console
       bing: '', // Bing Webmaster Tools: https://www.bing.com/webmasters
       yandex: '', // Yandex Webmaster: https://webmaster.yandex.com
       baidu: '', // Baidu Search: https://ziyuan.baidu.com
     },
-    // site analytics
     googleAnalyticsID: '', // Google Analytics: https://analytics.google.com
     umamiAnalyticsID: '', // Umami Analytics: https://cloud.umami.is
-    // follow verification
     follow: {
       feedID: '', // feed ID
       userID: '', // user ID
@@ -101,19 +98,6 @@ export const themeConfig: ThemeConfig = {
     customUmamiAnalyticsJS: '', // https://custom.example.com/custom.js
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-
-  // ABOUT PAGE CONTENT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  about: {
-    // Required: Content for about page in default language
-    '[locale]': '关于我',
-    // Optional: Content for about page in other languages. If not set, will fallback to [locale] content
-    'zh-tw': '關於我',
-    'ja': '私について',
-    'en': 'About me',
-    'es': 'Sobre mí',
-    'ru': 'Обо мне',
-  },
-  // ABOUT PAGE CONTENT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }
 
 export default themeConfig

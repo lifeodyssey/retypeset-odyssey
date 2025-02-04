@@ -62,13 +62,24 @@
     "antfu",
     "astrojs",
     "attributify",
+    "bmoji",
+    "gtag",
     "katex",
+    "Lightbox",
     "mdast",
+    "msrc",
+    "msvalidate",
     "overlayscrollbars",
     "partytown",
     "photoswipe",
+    "pswp",
+    "radishzz",
     "rehype",
+    "Retypeset",
+    "Umami",
     "unocss",
-    "vite"
+    "vite",
+    "waline",
+    "weibo"
   ]
 }

@@ -1,25 +1,29 @@
 ---
 import themeConfig from '@/config'
+import { getPagePath } from '@/utils/path'
 
 const { title, subtitle } = themeConfig.site
 const { titleSpace } = themeConfig.global
+const currentPath = Astro.url.pathname
+const { getLocalizedPath } = getPagePath(currentPath)
 
 const marginBottom = {
   1: 'mb-1',
-  2: 'mb-2',
-  3: 'mb-3',
-  4: 'mb-4',
+  2: 'mb-3',
+  3: 'mb-5',
 }[titleSpace] || 'mb-3'
 ---
 
 <header>
-  <h1 class={`${marginBottom} mt--5.2 text-12 c-primary font-bold font-title`}>
-    <a href="/">
+  <h1 class={`${marginBottom} mt--5 text-12.8 c-primary font-bold font-title`}>
+    <a href={getLocalizedPath('/')}>
       {title}
     </a>
   </h1>
-  
-  <h2 class="text-5.6 c-secondary font-navbar">
-    {subtitle}
-  </h2>
+
+  {subtitle && (
+    <h2 class="text-5.6 c-secondary font-navbar">
+      {subtitle}
+    </h2>
+  )}
 </header>

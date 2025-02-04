@@ -5,9 +5,11 @@ import LanguageSwitcher from '@/components/LanguageSwitcher.astro'
 import Navigation from '@/components/Navbar.astro'
 import PhotoSwipe from '@/components/PhotoSwipe.astro'
 import Scrollbar from '@/components/Scrollbar.astro'
+import SiteTitle from '@/components/SiteTitle.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
+import { getPagePath } from '@/utils/path'
 import '@/styles/font.css'
 import '@/styles/global.css'
 import '@/styles/photoswipe.css'
@@ -20,6 +22,7 @@ interface Props {
 
 const { postTitle, postDescription, postImage } = Astro.props
 const fontStyle = `font-${themeConfig.global.fontStyle}`
+const { isHome, isPost } = getPagePath(Astro.url.pathname);
 ---
 
 <html
@@ -34,16 +37,21 @@ const fontStyle = `font-${themeConfig.global.fontStyle}`
       p="x-[calc(9.94vw-1.1784rem)] y-[calc(5.42vw+2.4488rem)] lg:(x-36 y-10.4167dvh)"
       lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.8269vw-6.2727rem),18rem)]"
     >
-      <div>
+      <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
         <Header />
         <Navigation />
         <Footer />
       </div>
 
+      {!isHome && isPost && (
+        <div class="lg:hidden">
+          <SiteTitle />
+        </div>
+      )}
+
       <main class="col-start-1 row-start-1">
         <slot />
       </main>
-
     </div>
     <ThemeToggle />
     <LanguageSwitcher />
@@ -51,4 +59,3 @@ const fontStyle = `font-${themeConfig.global.fontStyle}`
     <PhotoSwipe />
   </body>
 </html>
-

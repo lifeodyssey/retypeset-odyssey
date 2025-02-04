@@ -1,0 +1,15 @@
+---
+import themeConfig from '@/config'
+import { getPagePath } from '@/utils/path'
+
+const { title } = themeConfig.site
+const currentPath = Astro.url.pathname
+const { getLocalizedPath } = getPagePath(currentPath)
+---
+
+<a
+  class="mt--1.4 text-8.32 c-secondary font-bold font-title"
+  href={getLocalizedPath('/')}
+>
+  {title}
+</a>
