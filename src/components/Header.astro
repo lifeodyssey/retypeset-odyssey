@@ -16,7 +16,10 @@ const marginBottom = {
 
 <header>
   <h1 class={`${marginBottom} mt--5 text-12.8 c-primary font-bold font-title`}>
-    <a href={getLocalizedPath('/')}>
+    <a
+      href={getLocalizedPath('/')}
+      transition:name="site-title"
+    >
       {title}
     </a>
   </h1>

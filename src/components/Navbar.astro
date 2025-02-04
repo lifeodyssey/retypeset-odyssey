@@ -3,21 +3,24 @@ import { getPagePath } from '@/utils/path'
 import { ui } from '@/utils/ui'
 
 const currentPath = Astro.url.pathname
-const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath } = getPagePath(currentPath)
+const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath }
+  = getPagePath(currentPath)
 const currentUI = ui[currentLang as keyof typeof ui]
 
 const isPostActive = isHome || isPost
 const isTagActive = isTag
-const isAboutActive = isAbout
+const isAboutActive = isAbout;
 ---
 
-<nav class="mb-16 mt-13 text-5.6 font-semibold leading-13 font-navbar">
+<nav class="mb-17 mt-17 text-5.84 font-semibold leading-14 font-navbar">
   <ul>
     <li>
       <a
         href={getLocalizedPath('/')}
         class:list={[
-          isPostActive ? 'font-bold text-primary' : '',
+          isPostActive
+            ? 'font-bold text-primary'
+            : 'hover:text-primary hover:font-bold',
         ]}
       >
         {currentUI.posts}
@@ -27,7 +30,9 @@ const isAboutActive = isAbout
       <a
         href={getLocalizedPath('/tags')}
         class:list={[
-          isTagActive ? 'font-bold text-primary' : '',
+          isTagActive
+            ? 'font-bold text-primary'
+            : 'hover:text-primary hover:font-bold',
         ]}
       >
         {currentUI.tags}
@@ -37,7 +42,9 @@ const isAboutActive = isAbout
       <a
         href={getLocalizedPath('/about')}
         class:list={[
-          isAboutActive ? 'font-bold text-primary' : '',
+          isAboutActive
+            ? 'font-bold text-primary'
+            : 'hover:text-primary hover:font-bold',
         ]}
       >
         {currentUI.about}
