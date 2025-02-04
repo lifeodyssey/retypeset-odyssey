@@ -21,7 +21,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@rehype-pretty/transformers": "^0.13.2",
     "@unocss/reset": "^65.4.3",
-    "astro": "^5.2.4",
+    "astro": "^5.2.5",
     "astro-compress": "^2.3.6",
     "astro-robots-txt": "^1.0.0",
     "hastscript": "^9.0.0",
