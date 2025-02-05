@@ -35,7 +35,16 @@ export default defineConfig({
     },
   },
   shortcuts: {},
-  rules: [],
+  rules: [
+    ['scrollbar-hidden', {
+      'scrollbar-width': 'none',
+      '-ms-overflow-style': 'none',
+    }],
+    ['ios-flash-fix', {
+      'backface-visibility': 'hidden',
+      '-webkit-backface-visibility': 'hidden',
+    }],
+  ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),

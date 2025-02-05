@@ -19,8 +19,8 @@ const isAboutActive = isAbout;
         href={getLocalizedPath('/')}
         class:list={[
           isPostActive
-            ? 'font-bold text-primary'
-            : 'hover:text-primary hover:font-bold',
+            ? 'font-bold c-primary'
+            : 'hover:c-primary hover:font-bold',
         ]}
       >
         {currentUI.posts}
@@ -31,8 +31,8 @@ const isAboutActive = isAbout;
         href={getLocalizedPath('/tags')}
         class:list={[
           isTagActive
-            ? 'font-bold text-primary'
-            : 'hover:text-primary hover:font-bold',
+            ? 'font-bold c-primary'
+            : 'hover:c-primary hover:font-bold',
         ]}
       >
         {currentUI.tags}
@@ -43,8 +43,8 @@ const isAboutActive = isAbout;
         href={getLocalizedPath('/about')}
         class:list={[
           isAboutActive
-            ? 'font-bold text-primary'
-            : 'hover:text-primary hover:font-bold',
+            ? 'font-bold c-primary'
+            : 'hover:c-primary hover:font-bold',
         ]}
       >
         {currentUI.about}

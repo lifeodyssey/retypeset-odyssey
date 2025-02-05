@@ -37,7 +37,7 @@ const postsByYear = await getPostsByYear()
             // Single Post
             <li class="mt-7">
               {/* Post Title */}
-              <a class="hover:text-primary" href={`/posts/${post.data.slug || post.slug}`}>{post.data.title}</a>
+              <a class="hover:c-primary" href={`/posts/${post.data.slug || post.slug}`}>{post.data.title}</a>
                 {/* Post Date */}
                 <div class="mb-9 block text-5.6 leading-11 font-time lg:ml-4 lg:inline">
                   {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
