@@ -19,6 +19,7 @@ function toggleTheme() {
 
   // Set temporary transition name for theme toggle
   document.documentElement.style.setProperty('view-transition-name', 'theme-transition')
+  document.documentElement.setAttribute('data-theme-transition', '')
 
   const transition = document.startViewTransition(() => {
     switchTheme()
@@ -27,6 +28,7 @@ function toggleTheme() {
   // Clean up after transition
   transition.finished.then(() => {
     document.documentElement.style.removeProperty('view-transition-name')
+    document.documentElement.removeAttribute('data-theme-transition')
   })
 }
 
