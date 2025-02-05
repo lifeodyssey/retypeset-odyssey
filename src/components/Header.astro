@@ -8,16 +8,16 @@ const currentPath = Astro.url.pathname
 const { getLocalizedPath } = getPagePath(currentPath)
 
 const marginBottom = {
-  1: 'mb-1',
-  2: 'mb-3',
-  3: 'mb-5',
-}[titleSpace] || 'mb-3'
+    1: 'mb-1',
+    2: 'mb-3',
+    3: 'mb-5',
+  }[titleSpace] || 'mb-3'
 ---
 
 <header>
-  <h1 class={`${marginBottom} mt--5 text-12.8 c-primary font-bold font-title`}>
+  <h1>
     <a
-      class="ios-flash-fix"
+      class={`${marginBottom} mt--5 text-12.8 c-primary font-bold font-title`}
       href={getLocalizedPath('/')}
       transition:name="site-title"
       data-disable-transition-on-theme

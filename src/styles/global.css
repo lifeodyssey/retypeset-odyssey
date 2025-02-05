@@ -77,11 +77,7 @@ html[data-theme-transition] [data-disable-transition-on-theme] {
 
 @supports not (view-transition-name: none) {
   html:not([data-restore-theme]) {
-    --at-apply: 'transition-colors duration-300 ease-in-out';
-  }
-
-  html:not([data-restore-theme]) [data-disable-transition-on-theme] {
-    --at-apply: 'transition-none!';
+    --at-apply: 'transition-colors duration-300 ease-out';
   }
 }
 
