@@ -1,11 +1,11 @@
 ---
 import Footer from '@/components/Footer.astro'
-import Header from '@/components/Header.astro'
 import LanguageSwitcher from '@/components/LanguageSwitcher.astro'
+import MainHeader from '@/components/MainHeader.astro'
+import MobileHeader from '@/components/MobileHeader.astro'
 import Navigation from '@/components/Navbar.astro'
 import PhotoSwipe from '@/components/PhotoSwipe.astro'
 import Scrollbar from '@/components/Scrollbar.astro'
-import SiteTitle from '@/components/SiteTitle.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
@@ -38,16 +38,18 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
       lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.8269vw-6.2727rem),18rem)]"
     >
       <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
-        <Header />
+        <MainHeader />
         <Navigation />
         <Footer />
       </div>
 
-      {!isHome && isPost && (
-        <div class="lg:hidden">
-          <SiteTitle />
-        </div>
-      )}
+      {
+        !isHome && isPost && (
+          <div class="lg:hidden">
+            <MobileHeader />
+          </div>
+        )
+      }
 
       <main class="col-start-1 row-start-1">
         <slot />
