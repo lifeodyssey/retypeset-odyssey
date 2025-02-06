@@ -16,14 +16,15 @@ function getLanguageDisplayName(code: string) {
 <button
   type="button"
   id="language-switcher"
-  class="absolute right-25.6 top-20 z-9 aspect-square w-6.6 c-secondary active:scale-90"
+  class="absolute right-[calc(9.94vw+2.8rem)] top-[calc(7.3vw+2.68rem)] z-9 aspect-square w-6.6 c-secondary active:scale-90"
+  lg="hidden"
   aria-label={`Current Language: ${getLanguageDisplayName(currentLocale)}. Click to switch to next language.`}
 >
-  <svg 
-  xmlns="http://www.w3.org/2000/svg" 
-  viewBox="0 0 24 24" 
-  class="h-full w-full"
-  aria-hidden="true"
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    class="h-full w-full"
+    aria-hidden="true"
   >
     <path d="M19 21 12.3 2h-1L4.7 21l-2.5.2v.8h6.3v-.8L5.7 21l2-5.9h7.5l2 5.9-3.3.2v.8h7.9v-.8zM8 14.3l3.4-10.1 3.5 10.1z" fill="currentColor" />
   </svg>
@@ -37,15 +38,15 @@ document.addEventListener('astro:page-load', () => {
     const { pathname, search, hash } = window.location
     const segments = pathname.split('/').filter(Boolean)
     const firstSegment = segments[0] || ''
-    
+
     // Get current language or empty string if invalid
-    const currentLang = langs.includes(firstSegment) 
-      ? firstSegment 
+    const currentLang = langs.includes(firstSegment)
+      ? firstSegment
       : ''
-    
+
     const currentIndex = langs.indexOf(currentLang)
     const nextLang = langs[(currentIndex + 1) % langs.length]
-    
+
     const newPath = buildNewPath(currentLang, nextLang, segments, pathname) || '/'
     window.location.href = `${newPath}${search}${hash}`
   })
@@ -54,14 +55,14 @@ document.addEventListener('astro:page-load', () => {
 function buildNewPath(currentLang, nextLang, segments, pathname) {
   if (currentLang) {
     segments[0] = nextLang || segments[0]
-    
-    return nextLang 
-      ? `/${segments.join('/')}` 
+
+    return nextLang
+      ? `/${segments.join('/')}`
       : `/${segments.slice(1).join('/')}`
   }
-  
-  return nextLang 
-    ? `/${nextLang}${pathname}` 
+
+  return nextLang
+    ? `/${nextLang}${pathname}`
     : pathname
 }
 </script>

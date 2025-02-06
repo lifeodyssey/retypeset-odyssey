@@ -34,8 +34,8 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
   <body data-overlayscrollbars-initialize>
     <div
       class="mx-a max-w-492 h-dvh"
-      p="x-[calc(9.94vw-1.1784rem)] y-[calc(5.42vw+2.4488rem)] lg:(x-36 y-10.4167dvh)"
-      lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.8269vw-6.2727rem),18rem)]"
+      p="x-[calc(9.942vw-1.18rem)] y-[calc(7.3vw+0.52rem)] lg:(x-36 y-[max(10.4vh,7.8rem)])"
+      lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.83vw-6.27rem),18rem)]"
     >
       <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
         <MainHeader />
@@ -43,13 +43,7 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
         <Footer />
       </div>
 
-      {
-        !isHome && isPost && (
-          <div class="lg:hidden">
-            <MobileHeader />
-          </div>
-        )
-      }
+      {!isHome && isPost && <MobileHeader /> }
 
       <main class="col-start-1 row-start-1">
         <slot />

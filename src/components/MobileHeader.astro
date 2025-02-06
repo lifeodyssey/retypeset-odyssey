@@ -7,11 +7,12 @@ const currentPath = Astro.url.pathname
 const { getLocalizedPath } = getPagePath(currentPath)
 ---
 
-<a
-  class="mt--1.4 text-8.32 c-secondary font-bold font-title"
-  href={getLocalizedPath('/')}
-  transition:name="site-title"
-  data-disable-transition-on-theme
->
-  {title}
-</a>
+<header class="mt-4.7 text-8.6 c-secondary font-bold font-title lg:hidden">
+  <a
+    href={getLocalizedPath('/')}
+    transition:name="site-title"
+    data-disable-transition-on-theme
+  >
+    {title}
+  </a>
+</header>

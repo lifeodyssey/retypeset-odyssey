@@ -4,7 +4,7 @@
 
 .pswp__button--zoom,
 .pswp__button--close {
-  --at-apply: 'mt-2 lg:mt-4 active:scale-92';
+  --at-apply: 'mt-2 lg:mt-4 active:scale-90';
 }
 
 .pswp__button--zoom svg:hover,
