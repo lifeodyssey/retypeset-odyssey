@@ -20,7 +20,7 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 <head>
 <!-- Basic info -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 {favicon.toLowerCase().endsWith('.webp') && <link rel="icon" type="image/webp" href={favicon} />}
 {favicon.toLowerCase().endsWith('.svg') && <link rel="icon" type="image/svg+xml" href={favicon} />}
 {favicon.toLowerCase().endsWith('.png') && <link rel="icon" type="image/png" href={favicon} />}
@@ -28,9 +28,7 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 <meta name="description" content={postDescription || description} />
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
-<meta name="color-scheme" content="light dark" />
-<meta name="theme-color" content={lightMode} media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content={darkMode} media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content={lightMode} />
 <ClientRouter />
 
 <!-- Preload -->
@@ -77,7 +75,23 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 {baidu && <meta name="baidu-site-verification" content={baidu} />}
 
 <!-- Theme Toggle -->
-<script is:inline define:vars={{ defaultMode: themeConfig.color.mode }}>
+<script is:inline define:vars={{ defaultMode: themeConfig.color.mode, lightMode, darkMode }}>
+function getCurrentTheme() {
+  return document.documentElement.classList.contains('dark')
+}
+
+function updateThemeColor(isDark) {
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+  if (metaThemeColor) {
+    metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
+  }
+}
+
+function syncTheme() {
+  const isDark = getCurrentTheme()
+  updateThemeColor(isDark)
+}
+
 function initTheme() {
   const theme = (() => {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -88,7 +102,10 @@ function initTheme() {
     }
     return defaultMode
   })()
-  document.documentElement.classList.toggle('dark', theme === 'dark')
+
+  const isDark = theme === 'dark'
+  document.documentElement.classList.toggle('dark', isDark)
+  updateThemeColor(isDark)
 }
 
 initTheme()
@@ -96,6 +113,25 @@ initTheme()
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   if (!localStorage.getItem('theme')) {
     document.documentElement.classList.toggle('dark', e.matches)
+    updateThemeColor(e.matches)
+  }
+})
+
+document.addEventListener('astro:before-swap', (event) => {
+  const isDark = getCurrentTheme()
+  event.newDocument.documentElement.classList.toggle('dark', isDark)
+  const metaThemeColor = event.newDocument.querySelector('meta[name="theme-color"]')
+  if (metaThemeColor) {
+    metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
+  }
+})
+
+document.addEventListener('theme-changed', syncTheme)
+document.addEventListener('astro:after-swap', syncTheme)
+window.addEventListener('popstate', syncTheme)
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    syncTheme()
   }
 })
 </script>
