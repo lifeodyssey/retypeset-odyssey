@@ -41,8 +41,10 @@ h6 {
 }
 
 article img {
+  --at-apply: 'cursor-zoom-in';
   /* Optimize animation performance of Scrollbar */
-  --at-apply: 'cursor-zoom-in ios-flash-fix';
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* Horizontal reveal animation on theme toggle */
@@ -73,6 +75,9 @@ html:not(.dark) {
 
 html[data-theme-transition] [data-disable-transition-on-theme] {
   view-transition-name: none !important;
+  /* Fix text cut issue on iOS */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 @supports not (view-transition-name: none) {
