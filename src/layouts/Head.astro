@@ -29,7 +29,7 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content={lightMode} />
-<ClientRouter />
+<ClientRouter fallback="swap" />
 
 <!-- Preload -->
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
