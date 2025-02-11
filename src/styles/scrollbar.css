@@ -12,15 +12,15 @@
 }
 
 .scrollbar-light {
-  --os-handle-bg: #C9C4C1;
-  --os-handle-bg-hover: #B8B3B0;
-  --os-handle-bg-active: #B8B3B0;
+  --os-handle-bg: #CFC5BD;
+  --os-handle-bg-hover: #ADA49E;
+  --os-handle-bg-active: #ADA49E;
 }
 
 .scrollbar-dark {
-  --os-handle-bg: #383838;
-  --os-handle-bg-hover: #464646;
-  --os-handle-bg-active: #464646;
+  --os-handle-bg: #2C2C2C;
+  --os-handle-bg-hover: #3C3C3C;
+  --os-handle-bg-active: #3C3C3C;
 }
 
 @media (max-width: 1023px) {
