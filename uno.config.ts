@@ -44,6 +44,10 @@ export default defineConfig({
       'backface-visibility': 'hidden',
       '-webkit-backface-visibility': 'hidden',
     }],
+    ['force-gpu', {
+      'transform': 'translateZ(0)',
+      '-webkit-transform': 'translateZ(0)',
+    }],
   ],
   transformers: [
     transformerDirectives(),
