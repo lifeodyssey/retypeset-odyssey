@@ -16,13 +16,15 @@ const marginBottom = {
 
 <header>
   <h1 class={`${marginBottom} text-12.8 c-primary font-bold font-title`}>
-    <a
-      href={getLocalizedPath('/')}
+    <div
+      class="inline-block"
       transition:name="site-title"
       data-disable-transition-on-theme
     >
-      {title}
-    </a>
+      <a href={getLocalizedPath('/')}>
+        {title}
+      </a>
+      </div>
   </h1>
 
   {subtitle && (
