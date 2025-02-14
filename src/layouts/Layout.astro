@@ -27,13 +27,13 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
 
 <html
   lang={Astro.currentLocale || 'en-US'}
-  class:list={[fontStyle]}
+  class:list={[fontStyle, isPost && 'scroll-smooth ']}
   data-overlayscrollbars-initialize
 >
   <Head {postTitle} {postDescription} {postImage} />
   <body data-overlayscrollbars-initialize>
     <div
-      class="mx-a max-w-492 h-dvh"
+      class="mx-a max-w-492 min-h-dvh"
       p="x-[calc(9.942vw-1.18rem)] y-[calc(7.3vw+0.52rem)] lg:(x-36 y-[max(10.4vh,7.8rem)])"
       lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.83vw-6.27rem),18rem)]"
     >
