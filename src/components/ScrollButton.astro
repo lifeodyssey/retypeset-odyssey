@@ -1,0 +1,91 @@
+<button
+  id="scroll-button"
+  aria-label="Scroll to bottom"
+  class="fixed bottom-8 right-8 h-10 w-10 rounded-full bg-background p-0 opacity-0 transition-all duration-300"
+>
+  <svg
+    class="m-auto h-6 w-6 c-primary transition-transform"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path d="M15 18l-6-6 6-6" />
+  </svg>
+</button>
+
+<script>
+const SCROLL_DISPLAY_THRESHOLD = 200
+const DIRECTION_CHANGE_THRESHOLD = 200
+const BOTTOM_PROXIMITY_THRESHOLD = 50
+
+// Initialize scroll button functionality and return cleanup function
+function initScrollButton(): (() => void) | void {
+  const button = document.getElementById('scroll-button')
+  if (!button)
+    return
+
+  const buttonElement = button as HTMLButtonElement
+  let isScrollingDown = true
+  let lastScrollPosition = window.scrollY
+  let scrollTimeout: number | null = null
+
+  function updateButton() {
+    const currentScrollPosition = window.scrollY
+    const scrollDifference = currentScrollPosition - lastScrollPosition
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+    const isNearBottom = maxScroll - currentScrollPosition < BOTTOM_PROXIMITY_THRESHOLD
+
+    // Update button direction and behavior when scroll direction changes or near bottom
+    if (Math.abs(scrollDifference) > DIRECTION_CHANGE_THRESHOLD || isNearBottom) {
+      isScrollingDown = isNearBottom ? false : scrollDifference > 0
+      lastScrollPosition = currentScrollPosition
+
+      const svg = buttonElement.querySelector('svg')
+      if (svg instanceof SVGElement) {
+        svg.style.transform = isScrollingDown ? 'rotate(-90deg)' : 'rotate(90deg)'
+      }
+
+      buttonElement.setAttribute('aria-label', isScrollingDown ? 'Scroll to bottom' : 'Scroll to top')
+      buttonElement.onclick = () => {
+        window.scrollTo({
+          top: isScrollingDown ? maxScroll : 0,
+          behavior: 'smooth',
+        })
+      }
+    }
+
+    const shouldShow = currentScrollPosition > SCROLL_DISPLAY_THRESHOLD
+    buttonElement.classList.toggle('opacity-100', shouldShow)
+    buttonElement.classList.toggle('invisible', !shouldShow)
+  }
+
+  // Handle scroll events with requestAnimationFrame for performance
+  function scrollHandler() {
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout)
+    }
+    scrollTimeout = window.requestAnimationFrame(updateButton)
+  }
+
+  window.addEventListener('scroll', scrollHandler, { passive: true })
+  updateButton()
+
+  // Return cleanup function to remove event listeners
+  return () => {
+    window.removeEventListener('scroll', scrollHandler)
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout)
+    }
+  }
+}
+
+let cleanup: (() => void) | null = null
+
+document.addEventListener('astro:page-load', () => {
+  cleanup?.()
+  cleanup = initScrollButton() || null
+})
+
+document.addEventListener('astro:before-swap', () => cleanup?.())
+</script>

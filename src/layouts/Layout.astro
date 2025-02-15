@@ -6,6 +6,7 @@ import MobileHeader from '@/components/MobileHeader.astro'
 import Navigation from '@/components/Navbar.astro'
 import PhotoSwipe from '@/components/PhotoSwipe.astro'
 import Scrollbar from '@/components/Scrollbar.astro'
+import ScrollButton from '@/components/ScrollButton.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
@@ -27,7 +28,7 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
 
 <html
   lang={Astro.currentLocale || 'en-US'}
-  class:list={[fontStyle, isPost && 'scroll-smooth ']}
+  class:list={[fontStyle]}
   data-overlayscrollbars-initialize
 >
   <Head {postTitle} {postDescription} {postImage} />
@@ -53,5 +54,6 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
     <LanguageSwitcher />
     <Scrollbar />
     <PhotoSwipe />
+    <ScrollButton />
   </body>
 </html>
