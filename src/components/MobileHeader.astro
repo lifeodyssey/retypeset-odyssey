@@ -7,7 +7,8 @@ const currentPath = Astro.url.pathname
 const { getLocalizedPath } = getPagePath(currentPath)
 ---
 
-<header class="mt-4.7 text-8.6 c-secondary font-bold font-title lg:hidden">
+<header class="mt-4.7 mb-17 text-8.6 c-secondary font-bold font-title lg:hidden">
+  <!-- Fix text cut issue on ios by adding a div tag -->
   <div
     class="box-content inline-block pr-2"
     transition:name="site-title"

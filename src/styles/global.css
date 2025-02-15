@@ -16,32 +16,7 @@ body {
   --at-apply: 'text-1.6rem ios-flash-fix';
 }
 
-h1 {
-  --at-apply: 'text-3.6rem';
-}
-
-h2 {
-  --at-apply: 'text-3rem';
-}
-
-h3 {
-  --at-apply: 'text-2.4rem';
-}
-
-h4 {
-  --at-apply: 'text-2rem';
-}
-
-h5 {
-  --at-apply: 'text-1.8rem';
-}
-
-h6 {
-  --at-apply: 'text-1.6rem';
-}
-
 article img {
-  /* Optimize animation performance of scrollbar */
   --at-apply: 'cursor-zoom-in force-gpu';
 }
 

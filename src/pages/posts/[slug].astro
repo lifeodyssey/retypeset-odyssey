@@ -24,9 +24,9 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postDescription={post.data.description}
   postImage={post.data.image}
 >
-  <article>
-    <h1>{post.data.title}</h1>
-    <time>
+  <article class="heti">
+    <h1 transition:name={`post-title-${post.data.slug}`}>{post.data.title}</h1>
+    <time transition:name={`post-time-${post.data.slug}`}>
       {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
       {remarkPluginFrontmatter.minutes && <span> · {remarkPluginFrontmatter.minutes} min</span>}
     </time>

@@ -20,11 +20,12 @@ import remarkSectionize from 'remark-sectionize'
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config.js'
 // Local plugins
-import { AdmonitionComponent } from './src/plugins/rehype-component-admonition.mjs'
-import { GithubCardComponent } from './src/plugins/rehype-component-github-card.mjs'
+import { AdmonitionComponent } from './src/plugins/rehype-component-admonition.js'
+import { GithubCardComponent } from './src/plugins/rehype-component-github-card.js'
+import { rehypeImgToFigure } from './src/plugins/rehype-img-to-figure.js'
 import { parseDirectiveNode } from './src/plugins/remark-directive-rehype.js'
 import { remarkExcerpt } from './src/plugins/remark-excerpt.js'
-import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
+import { remarkReadingTime } from './src/plugins/remark-reading-time.js'
 import { langMap } from './src/utils/ui'
 
 const { url } = themeConfig.site
@@ -82,6 +83,7 @@ export default defineConfig({
     rehypePlugins: [
       rehypeSlug,
       rehypeKatex,
+      rehypeImgToFigure,
       [
         rehypePrettyCode,
         {

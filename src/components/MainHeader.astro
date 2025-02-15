@@ -14,8 +14,9 @@ const marginBottom = {
   }[titleSpace] || 'mb-3'
 ---
 
-<header>
+<header class="mb-17">
   <h1 class={`${marginBottom} text-12.8 c-primary font-bold font-title`}>
+    <!-- Fix text cut issue on ios by adding a div tag -->
     <div
       class="box-content inline-block pr-2"
       transition:name="site-title"

@@ -2,7 +2,6 @@ import type { Theme } from 'unocss/preset-uno'
 import {
   defineConfig,
   presetAttributify,
-  presetTypography,
   presetUno,
   transformerDirectives,
   transformerVariantGroup,
@@ -16,7 +15,6 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    presetTypography(),
     presetTheme<Theme>({
       theme: {
         dark: {
