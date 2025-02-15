@@ -38,19 +38,23 @@ const postsByYear = await getPostsByYear()
             <li class="mt-7">
               {/* Post Title */}
               <a
-              class="hover:c-primary"
-              href={`/posts/${post.data.slug || post.slug}`}
-              transition:name={`post-title-${post.data.slug}`}>
+                class="hover:c-primary"
+                href={`/posts/${post.data.slug || post.slug}`}
+                transition:name={`post-${post.data.slug || post.slug}`}
+              >
                 {post.data.title}
               </a>
-                {/* Post Date */}
-                <div
-                class="mb-9 block text-5.6 leading-11 font-time lg:ml-4 lg:inline"
-                transition:name={`post-time-${post.data.slug}`}
-                >
+              {/* Post Date */}
+              <div class="mb-9 block text-5.6 leading-11 font-time lg:ml-4 lg:inline">
+                <span transition:name={`date-${post.data.slug || post.slug}`}>
                   {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-                  {post.remarkPluginFrontmatter?.minutes && <span class="ml-2">  {post.remarkPluginFrontmatter.minutes} min</span>}
-                </div>
+                </span>
+                {post.remarkPluginFrontmatter?.minutes && (
+                  <span class="ml-2" transition:name={`time-${post.data.slug || post.slug}`}>
+                    {post.remarkPluginFrontmatter.minutes} min
+                  </span>
+                )}
+              </div>
             </li>
           ))}
         </ul>
