@@ -116,6 +116,7 @@
 	font-weight:600
 }
 .heti h1 {
+  --at-apply: 'font-bold';
 	margin-block-end:24px;
 	font-size:32px;
 	line-height:48px
