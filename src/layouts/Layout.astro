@@ -23,13 +23,13 @@ interface Props {
 }
 
 const { postTitle, postDescription, postImage } = Astro.props
-const fontStyle = `font-${themeConfig.global.fontStyle}`
-const { isHome, isPost } = getPagePath(Astro.url.pathname);
+const { isHome, isPost } = getPagePath(Astro.url.pathname)
+const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 ---
 
 <html
   lang={Astro.currentLocale || 'en-US'}
-  class:list={[fontStyle]}
+  class={fontStyle}
   data-overlayscrollbars-initialize
 >
   <Head {postTitle} {postDescription} {postImage} />
@@ -45,7 +45,7 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
         <Footer />
       </div>
 
-      {!isHome && isPost && <MobileHeader class="lg:hidden" /> }
+      {!isHome && isPost && <MobileHeader /> }
 
       <main class="col-start-1 row-start-1">
         <slot />

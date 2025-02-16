@@ -34,8 +34,8 @@ export const themeConfig: ThemeConfig = {
   global: {
     locale: 'zh', // support 'zh', 'zh-tw', 'ja', 'en', 'es', 'ru'. Default language setting
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. Not fill in the default locale code again
-    fontStyle: 'sans', // support sans or serif. Font styles for post content
-    titleSpace: 3, // support 1, 2 or 3. Space between title and subtitle
+    fontStyle: 'serif', // sans, serif. Font styles for post content
+    titleSpace: 3, // 1, 2, 3. Space between title and subtitle
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
