@@ -26,7 +26,10 @@ const { Content, remarkPluginFrontmatter } = await post.render()
 >
   <article class="heti">
     <h1 class="post-title">
-      <span transition:name={`post-${post.data.slug || post.slug}`}>
+      <span
+        transition:name={`post-${post.data.slug || post.slug}`}
+        data-disable-transition-on-theme
+      >
         {post.data.title}
       </span>
     </h1>
@@ -34,6 +37,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     <div
       class="mb-23.4 block c-primary font-time"
       transition:name={`time-${post.data.slug || post.slug}`}
+      data-disable-transition-on-theme
     >
       <time>
         {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}

@@ -41,6 +41,7 @@ const postsByYear = await getPostsByYear()
                 class="hover:c-primary"
                 href={`/posts/${post.data.slug || post.slug}`}
                 transition:name={`post-${post.data.slug || post.slug}`}
+                data-disable-transition-on-theme
               >
                 {post.data.title}
               </a>
@@ -48,6 +49,7 @@ const postsByYear = await getPostsByYear()
               <div
                 class="mb-9 block text-5.6 leading-11 font-time lg:ml-4 lg:inline"
                 transition:name={`time-${post.data.slug || post.slug}`}
+                data-disable-transition-on-theme
               >
                 <time>
                   {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
