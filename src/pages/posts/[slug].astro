@@ -25,19 +25,23 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postImage={post.data.image}
 >
   <article class="heti">
-    <h1>
+    <h1 class="post-title">
       <span transition:name={`post-${post.data.slug || post.slug}`}>
         {post.data.title}
       </span>
     </h1>
-    <time>
-      <span>
-        {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
+
+    <div
+      class="mb-20.5 block c-primary font-time"
+      transition:name={`time-${post.data.slug || post.slug}`}
+    >
+      <time>
+        {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
+      </time>
+      <span class="ml-2">
+        {remarkPluginFrontmatter.minutes} min
       </span>
-        <span>
-          {remarkPluginFrontmatter.minutes} min
-        </span>
-    </time>
+    </div>
     <Content />
   </article>
 </Layout>

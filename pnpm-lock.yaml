@@ -111,6 +111,9 @@ importers:
       '@unocss/eslint-plugin':
         specifier: ^65.5.0
         version: 65.5.0(eslint@9.20.1(jiti@2.4.2))(typescript@5.7.3)
+      '@unocss/preset-attributify':
+        specifier: ^65.5.0
+        version: 65.5.0
       '@unocss/reset':
         specifier: ^65.5.0
         version: 65.5.0

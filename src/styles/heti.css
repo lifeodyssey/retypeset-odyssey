@@ -115,9 +115,12 @@
 	margin-block-end:12px;
 	font-weight:600
 }
+.heti .post-title {
+  --at-apply: 'c-primary mb-7.1 text-14.4 relative leading-19.2 before:(absolute left-0 top--7 h-0.2 w-16 bg-secondary opacity-25 content-[''])';
+	line-height:48px
+}
 .heti h1 {
-  --at-apply: 'font-bold';
-	margin-block-end:24px;
+  --at-apply: 'mb-9.6';
 	font-size:32px;
 	line-height:48px
 }

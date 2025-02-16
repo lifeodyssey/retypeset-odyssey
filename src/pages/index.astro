@@ -45,11 +45,14 @@ const postsByYear = await getPostsByYear()
                 {post.data.title}
               </a>
               {/* Post Date */}
-              <div class="mb-9 block text-5.6 leading-11 font-time lg:ml-4 lg:inline">
-                <span>
+              <div
+                class="mb-9 block text-5.6 leading-11 font-time lg:ml-4 lg:inline"
+                transition:name={`time-${post.data.slug || post.slug}`}
+              >
+                <time>
                   {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-                </span>
-                <span class="ml-2" transition:name={`time-${post.data.slug || post.slug}`}>
+                </time>
+                <span class="ml-2">
                   {post.remarkPluginFrontmatter?.minutes} min
                 </span>
               </div>

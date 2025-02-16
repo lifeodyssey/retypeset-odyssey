@@ -45,7 +45,7 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname);
         <Footer />
       </div>
 
-      {!isHome && isPost && <MobileHeader /> }
+      {!isHome && isPost && <MobileHeader class="lg:hidden" /> }
 
       <main class="col-start-1 row-start-1">
         <slot />

@@ -50,6 +50,7 @@
     "@types/node": "^22.13.4",
     "@types/sanitize-html": "^2.13.0",
     "@unocss/eslint-plugin": "^65.5.0",
+    "@unocss/preset-attributify": "^65.5.0",
     "@unocss/reset": "^65.5.0",
     "astro-eslint-parser": "^1.2.1",
     "eslint": "^9.20.1",

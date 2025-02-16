@@ -2,25 +2,43 @@
 import themeConfig from '@/config'
 import { getPagePath } from '@/utils/path'
 
-const { title } = themeConfig.site
+const { title, subtitle } = themeConfig.site
+const { titleSpace } = themeConfig.global
 const currentPath = Astro.url.pathname
 const { getLocalizedPath } = getPagePath(currentPath)
+
+const marginBottom = {
+    1: 'mb-2.6',
+    2: 'mb-4.6',
+    3: 'mb-6.6',
+  }[titleSpace] || 'mb-4.6'
 ---
 
-<header class="mt-4.7 mb-17 text-8.6 c-secondary font-bold font-title lg:hidden">
-  <!-- Fix text cut issue on ios by adding a div tag -->
-  <div
-    class="box-content inline-block pr-2"
-    transition:name="site-title"
-    data-disable-transition-on-theme
-  >
-    <a
-      href={getLocalizedPath('/')}
-      onclick="return _handleBack(event)"
+<header class="mb-17">
+  <h3 class={`${marginBottom} mt-4.7 text-8.6 c-secondary font-bold font-title`}>
+    <!-- Fix text cut issue on ios by adding a div tag -->
+    <div
+      class="box-content inline-block pr-2"
+      transition:name="site-title"
+      data-disable-transition-on-theme
     >
-      {title}
-    </a>
-  </div>
+      <a
+        href={getLocalizedPath('/')}
+        onclick="return _handleBack(event)"
+      >
+        {title}
+      </a>
+    </div>
+  </h3>
+
+  {subtitle && (
+    <div
+      class="text-5.6 opacity-0"
+      aria-hidden="true"
+    >
+      {subtitle}
+    </div>
+  )}
 </header>
 
 <script is:inline>
