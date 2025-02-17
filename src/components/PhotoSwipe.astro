@@ -10,6 +10,8 @@
       lightbox.destroy()
       lightbox = null
     }
+    document.removeEventListener('astro:page-load', createPhotoSwipe)
+    document.removeEventListener('astro:before-swap', cleanup)
   }
 
   function createPhotoSwipe() {

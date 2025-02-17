@@ -80,7 +80,7 @@ function getCurrentTheme() {
   return document.documentElement.classList.contains('dark')
 }
 
-function updateThemeColor(isDark) {
+function updateMetaTheme(isDark) {
   const metaThemeColor = document.querySelector('meta[name="theme-color"]')
   if (metaThemeColor) {
     metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
@@ -89,7 +89,7 @@ function updateThemeColor(isDark) {
 
 function syncTheme() {
   const isDark = getCurrentTheme()
-  updateThemeColor(isDark)
+  updateMetaTheme(isDark)
 }
 
 function initTheme() {
@@ -105,7 +105,7 @@ function initTheme() {
 
   const isDark = theme === 'dark'
   document.documentElement.classList.toggle('dark', isDark)
-  updateThemeColor(isDark)
+  updateMetaTheme(isDark)
 }
 
 initTheme()
@@ -113,7 +113,7 @@ initTheme()
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   if (!localStorage.getItem('theme')) {
     document.documentElement.classList.toggle('dark', e.matches)
-    updateThemeColor(e.matches)
+    updateMetaTheme(e.matches)
   }
 })
 
