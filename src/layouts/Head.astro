@@ -111,6 +111,7 @@ function updateTheme() {
   if (metaTheme) {
     metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
   }
+  document.dispatchEvent(new Event('theme-changed'))
 }
 
 // Listen to system theme changes in real-time

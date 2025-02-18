@@ -1,19 +1,19 @@
 <script>
 import { OverlayScrollbars } from 'overlayscrollbars'
 
-let scrollbarsInstance: ReturnType<typeof OverlayScrollbars> | null = null
-
 function initScrollbar() {
   const bodyElement = document.body
+  const scrollbarTheme = document.documentElement.classList.contains('dark') ? 'scrollbar-dark' : 'scrollbar-light'
   if (!bodyElement.hasAttribute('data-scrollbar-initialized')) {
-    scrollbarsInstance = OverlayScrollbars({
+    OverlayScrollbars({
       target: bodyElement,
       cancel: {
+        // don't initialize the overlay scrollbar if there is a native one
         nativeScrollbarsOverlaid: true,
       },
     }, {
       scrollbars: {
-        theme: document.documentElement.classList.contains('dark') ? 'scrollbar-dark' : 'scrollbar-light',
+        theme: scrollbarTheme,
         autoHide: 'scroll',
         autoHideDelay: 800,
       },
@@ -26,24 +26,40 @@ function initScrollbar() {
   }
 }
 
-// Automatically update scrollbar theme
-document.addEventListener('theme-changed', () => {
-  scrollbarsInstance?.options({
-    scrollbars: {
-      theme: document.documentElement.classList.contains('dark') ? 'scrollbar-dark' : 'scrollbar-light',
-    },
-  })
-})
-
-// Cleanup scrollbar instance before page transitions
-document.addEventListener('astro:before-swap', () => {
-  scrollbarsInstance?.destroy()
-  scrollbarsInstance = null
-})
-
-document.addEventListener('astro:page-load', initScrollbar)
+document.addEventListener('theme-changed', initScrollbar)
+document.addEventListener('astro:after-swap', initScrollbar)
+initScrollbar()
 </script>
 
 <style is:global>
-@import '@/styles/scrollbar.css';
+@import 'overlayscrollbars/overlayscrollbars.css';
+
+.scrollbar-light,
+.scrollbar-dark {
+  --os-size: 1rem;
+  --os-padding-perpendicular: 0.2rem;
+  --os-padding-axis: 0.4rem;
+  --os-handle-border-radius: 0.7rem;
+  --os-handle-perpendicular-size-hover: 160%;
+  --os-handle-perpendicular-size-active: 160%;
+  --os-handle-interactive-area-offset: 3px;
+}
+
+.scrollbar-light {
+  --os-handle-bg: #CFC5BD;
+  --os-handle-bg-hover: #ADA49E;
+  --os-handle-bg-active: #ADA49E;
+}
+
+.scrollbar-dark {
+  --os-handle-bg: #2C2C2C;
+  --os-handle-bg-hover: #3C3C3C;
+  --os-handle-bg-active: #3C3C3C;
+}
+
+@media (max-width: 1023px) {
+  .os-scrollbar {
+    display: none !important;
+  }
+}
 </style>
