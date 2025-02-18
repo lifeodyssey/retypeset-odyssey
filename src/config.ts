@@ -90,11 +90,11 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    commentURL: '', // https://comment.example.com/
-    imageHostURL: '', // https://image.example.com/
+    commentURL: '', // https://comment.example.com
+    imageHostURL: 'https://image.radishzz.cc', // https://image.example.com
     // If you proxy analytics requests to the custom domain, you can fill in below
-    customGoogleAnalyticsURL: '', // https://custom.example.com/
-    customUmamiAnalyticsURL: '', // https://custom.example.com/
+    customGoogleAnalyticsURL: '', // https://custom.example.com
+    customUmamiAnalyticsURL: '', // https://custom.example.com
     customUmamiAnalyticsJS: '', // https://custom.example.com/custom.js
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
