@@ -20,7 +20,18 @@ article img {
   --at-apply: 'cursor-zoom-in force-gpu';
 }
 
-/* Horizontal reveal animation on theme toggle */
+/* Horizontal reveal animation during theme switching */
+::view-transition-new(theme-transition) {
+  animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: inset(0 0 0 0);
+  z-index: 99;
+}
+
+::view-transition-old(theme-transition) {
+  animation: none;
+  z-index: -1;
+}
+
 @keyframes reveal {
   from {
     clip-path: inset(var(--from));
@@ -35,21 +46,12 @@ html:not(.dark) {
   --from: 100% 0 0 0;
 }
 
-::view-transition-new(theme-transition) {
-  animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
-  clip-path: inset(0 0 0 0);
-  z-index: 99;
-}
-
-::view-transition-old(theme-transition) {
-  animation: none;
-  z-index: 98;
-}
-
+/* Disable animations for other elements during theme switching */
 html[data-theme-transition] [data-disable-transition-on-theme] {
   view-transition-name: none !important;
 }
 
+/* Fallback animation when view-transition-name is not supported */
 @supports not (view-transition-name: none) {
   html:not([data-restore-theme]) {
     --at-apply: 'transition-colors duration-300 ease-out';

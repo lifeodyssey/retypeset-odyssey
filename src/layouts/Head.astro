@@ -76,64 +76,54 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 
 <!-- Theme Toggle -->
 <script is:inline define:vars={{ defaultMode: themeConfig.color.mode, lightMode, darkMode }}>
-function getCurrentTheme() {
-  return document.documentElement.classList.contains('dark')
-}
-
-function updateMetaTheme(isDark) {
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]')
-  if (metaThemeColor) {
-    metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
-  }
-}
-
-function syncTheme() {
-  const isDark = getCurrentTheme()
-  updateMetaTheme(isDark)
-}
-
+// Initialize theme
 function initTheme() {
   const theme = (() => {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-      return localStorage.getItem('theme')
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark'
-    }
-    return defaultMode
+    const currentTheme = localStorage.getItem('theme')
+    // First priority: theme from localStorage
+    if (currentTheme)
+      return currentTheme
+    // Second priority: user configured default theme
+    if (defaultMode)
+      return defaultMode
+    // Last priority: follow system theme
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
   })()
-
+  // Update website theme
   const isDark = theme === 'dark'
   document.documentElement.classList.toggle('dark', isDark)
-  updateMetaTheme(isDark)
+  // Update meta theme color
+  const metaTheme = document.querySelector('meta[name="theme-color"]')
+  if (metaTheme) {
+    metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
+  }
 }
 
+// Update theme
+function updateTheme() {
+  // Read theme from localStorage
+  const isDark = localStorage.getItem('theme') === 'dark'
+  // Set theme directly instead of toggling
+  document.documentElement.classList.toggle('dark', isDark)
+  const metaTheme = document.querySelector('meta[name="theme-color"]')
+  if (metaTheme) {
+    metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
+  }
+}
+
+// Listen to system theme changes in real-time
+window
+  .matchMedia('(prefers-color-scheme: dark)')
+  .addEventListener('change', ({ matches: isDark }) => {
+    localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    updateTheme()
+  })
+
+// Initialize theme (on first load or page transition)
+document.addEventListener('astro:after-swap', initTheme)
 initTheme()
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem('theme')) {
-    document.documentElement.classList.toggle('dark', e.matches)
-    updateMetaTheme(e.matches)
-  }
-})
-
-document.addEventListener('astro:before-swap', (event) => {
-  const isDark = getCurrentTheme()
-  event.newDocument.documentElement.classList.toggle('dark', isDark)
-  const metaThemeColor = event.newDocument.querySelector('meta[name="theme-color"]')
-  if (metaThemeColor) {
-    metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
-  }
-})
-
-document.addEventListener('theme-changed', syncTheme)
-document.addEventListener('astro:after-swap', syncTheme)
-window.addEventListener('popstate', syncTheme)
-window.addEventListener('pageshow', (event) => {
-  if (event.persisted) {
-    syncTheme()
-  }
-})
 </script>
 
 <!-- Google Analytics -->

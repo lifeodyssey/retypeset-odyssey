@@ -14,7 +14,7 @@ export const themeConfig: ThemeConfig = {
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'light', // light or dark. Matches system theme by default, falls back to configured theme mode if not available.
+    mode: 'light', // light, dark
     light: {
       primary: '#17191A', // accent color for title
       secondary: '#505050', // secondary color for text
