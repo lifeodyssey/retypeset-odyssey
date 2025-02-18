@@ -75,7 +75,10 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 {baidu && <meta name="baidu-site-verification" content={baidu} />}
 
 <!-- Theme Toggle -->
-<script is:inline define:vars={{ defaultMode: themeConfig.color.mode, lightMode, darkMode }}>
+<script
+  is:inline
+  define:vars={{ defaultMode: themeConfig.color.mode, lightMode, darkMode }}
+>
 // Initialize theme
 function initTheme() {
   const theme = (() => {
