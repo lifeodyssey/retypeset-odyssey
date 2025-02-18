@@ -80,57 +80,41 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
   define:vars={{ defaultMode: themeConfig.color.mode, lightMode, darkMode }}
 >
 // Check if current theme is dark mode
+// Priority: Local storage theme > Default theme > System preference
 function isCurrentDark() {
   const currentTheme = localStorage.getItem('theme')
-  // Check local storage theme first
   if (currentTheme)
     return currentTheme === 'dark'
-  // Use configured default theme if available
   if (defaultMode)
     return defaultMode === 'dark'
-  // Finally follow system color scheme preference
   return window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
-// Update site theme
-function updateThemeColor(isDark) {
-  document.documentElement.classList.toggle('dark', isDark)
-}
-
-// Update meta theme color
-function updateMetaThemeColor(isDark) {
-  const metaTheme = document.querySelector('meta[name="theme-color"]')
+// Initialize theme
+function initTheme(doc = document) {
+  const isDark = isCurrentDark()
+  doc.documentElement.classList.toggle('dark', isDark)
+  const metaTheme = doc.querySelector('meta[name="theme-color"]')
   if (metaTheme) {
     metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
   }
 }
 
-// 1.Update meta theme color before page transition to prevent flashing
-document.addEventListener('astro:before-swap', () => {
-  const isDark = isCurrentDark()
-  updateMetaThemeColor(isDark)
-})
-
-// 2.Update site theme after page transition
-document.addEventListener('astro:after-swap', () => {
-  const isDark = isCurrentDark()
-  updateThemeColor(isDark)
-})
-
-// 3.Initialize theme on first load
-const isDark = isCurrentDark()
-updateThemeColor(isDark)
-updateMetaThemeColor(isDark)
-
 // Follow system theme changes automatically
 function followSystemTheme() {
-  const isDark = isCurrentDark()
-  updateDocumentTheme(isDark)
-  updateMetaThemeColor(isDark)
+  initTheme()
   document.dispatchEvent(new Event('theme-changed'))
 }
 
-// 4.Listen to system theme changes in real-time
+// 1.Initialize theme on first load
+initTheme()
+
+// 2.Update theme before page transition to prevent flashing
+document.addEventListener('astro:before-swap', ({ newDocument }) => {
+  initTheme(newDocument)
+})
+
+// 3.Listen to system theme changes in real-time
 window
   .matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', ({ matches: isDark }) => {
