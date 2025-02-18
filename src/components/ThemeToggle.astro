@@ -19,6 +19,22 @@ const { light: { background: lightMode }, dark: { background: darkMode } } = the
 </button>
 
 <script define:vars={{ lightMode, darkMode }}>
+// Update theme
+function updateTheme() {
+  // Toggle website theme
+  document.documentElement.classList.toggle('dark')
+  // Get current theme
+  const isDark = document.documentElement.classList.contains('dark')
+  // Update meta theme color
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+  if (metaThemeColor) {
+    metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
+  }
+  // Update theme configuration in local storage
+  localStorage.setItem('theme', isDark ? 'dark' : 'light')
+  document.dispatchEvent(new Event('theme-changed'))
+}
+
 // Bind click event to the button
 function setupThemeToggle() {
   // Locate theme toggle button
@@ -41,22 +57,6 @@ function setupThemeToggle() {
       document.documentElement.removeAttribute('data-theme-transition')
     })
   })
-}
-
-// Update theme
-function updateTheme() {
-  // Toggle website theme
-  document.documentElement.classList.toggle('dark')
-  // Get current theme
-  const isDark = document.documentElement.classList.contains('dark')
-  // Update meta theme color
-  const metaTheme = document.querySelector('meta[name="theme-color"]')
-  if (metaTheme) {
-    metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
-  }
-  // Update theme configuration in local storage
-  localStorage.setItem('theme', isDark ? 'dark' : 'light')
-  document.dispatchEvent(new Event('theme-changed'))
 }
 
 // Initialize click event (on first load or page transition)

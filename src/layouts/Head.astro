@@ -28,7 +28,7 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
 <meta name="description" content={postDescription || description} />
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
-<meta name="theme-color" content={lightMode} />
+<meta name="theme-color" content="" />
 <ClientRouter fallback="swap" />
 
 <!-- Preload -->
@@ -79,55 +79,64 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsURL = '', custo
   is:inline
   define:vars={{ defaultMode: themeConfig.color.mode, lightMode, darkMode }}
 >
-// Initialize theme
-function initTheme() {
-  const theme = (() => {
-    const currentTheme = localStorage.getItem('theme')
-    // First priority: theme from localStorage
-    if (currentTheme)
-      return currentTheme
-    // Second priority: user configured default theme
-    if (defaultMode)
-      return defaultMode
-    // Last priority: follow system theme
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
-  })()
-  // Update website theme
-  const isDark = theme === 'dark'
+// Check if current theme is dark mode
+function isCurrentDark() {
+  const currentTheme = localStorage.getItem('theme')
+  // Check local storage theme first
+  if (currentTheme)
+    return currentTheme === 'dark'
+  // Use configured default theme if available
+  if (defaultMode)
+    return defaultMode === 'dark'
+  // Finally follow system color scheme preference
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
+// Update site theme
+function updateThemeColor(isDark) {
   document.documentElement.classList.toggle('dark', isDark)
-  // Update meta theme color
+}
+
+// Update meta theme color
+function updateMetaThemeColor(isDark) {
   const metaTheme = document.querySelector('meta[name="theme-color"]')
   if (metaTheme) {
     metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
   }
 }
 
-// Update theme
-function updateTheme() {
-  // Read theme from localStorage
-  const isDark = localStorage.getItem('theme') === 'dark'
-  // Set theme directly instead of toggling
-  document.documentElement.classList.toggle('dark', isDark)
-  const metaTheme = document.querySelector('meta[name="theme-color"]')
-  if (metaTheme) {
-    metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
-  }
+// 1.Update meta theme color before page transition to prevent flashing
+document.addEventListener('astro:before-swap', () => {
+  const isDark = isCurrentDark()
+  updateMetaThemeColor(isDark)
+})
+
+// 2.Update site theme after page transition
+document.addEventListener('astro:after-swap', () => {
+  const isDark = isCurrentDark()
+  updateThemeColor(isDark)
+})
+
+// 3.Initialize theme on first load
+const isDark = isCurrentDark()
+updateThemeColor(isDark)
+updateMetaThemeColor(isDark)
+
+// Follow system theme changes automatically
+function followSystemTheme() {
+  const isDark = isCurrentDark()
+  updateDocumentTheme(isDark)
+  updateMetaThemeColor(isDark)
   document.dispatchEvent(new Event('theme-changed'))
 }
 
-// Listen to system theme changes in real-time
+// 4.Listen to system theme changes in real-time
 window
   .matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', ({ matches: isDark }) => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light')
-    updateTheme()
+    followSystemTheme()
   })
-
-// Initialize theme (on first load or page transition)
-document.addEventListener('astro:after-swap', initTheme)
-initTheme()
 </script>
 
 <!-- Google Analytics -->
