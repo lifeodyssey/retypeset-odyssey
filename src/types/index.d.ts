@@ -79,8 +79,7 @@ export interface ThemeConfig {
   preload: {
     commentURL?: string
     imageHostURL?: string
-    customGoogleAnalyticsURL?: string
-    customUmamiAnalyticsURL?: string
+    customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string
   }
 }

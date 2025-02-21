@@ -62,6 +62,7 @@
     "antfu",
     "astrojs",
     "attributify",
+    "blurhash",
     "bmoji",
     "Frontmatter",
     "gtag",
@@ -86,6 +87,7 @@
     "titlebar",
     "Umami",
     "unocss",
+    "unpic",
     "vite",
     "waline",
     "weibo"

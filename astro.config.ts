@@ -2,6 +2,7 @@ import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
+import { imageService } from '@unpic/astro/service'
 import compress from 'astro-compress'
 import robotsTxt from 'astro-robots-txt'
 import { defineConfig } from 'astro/config'
@@ -22,7 +23,6 @@ import { themeConfig } from './src/config.js'
 // Local plugins
 import { AdmonitionComponent } from './src/plugins/rehype-component-admonition.js'
 import { GithubCardComponent } from './src/plugins/rehype-component-github-card.js'
-import { rehypeImgToFigure } from './src/plugins/rehype-img-to-figure.js'
 import { parseDirectiveNode } from './src/plugins/remark-directive-rehype.js'
 import { remarkExcerpt } from './src/plugins/remark-excerpt.js'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.js'
@@ -31,6 +31,7 @@ import { langMap } from './src/utils/ui'
 const { url } = themeConfig.site
 const { light, dark } = themeConfig.color
 const { locale } = themeConfig.global
+const imageDomain = new URL(themeConfig.preload.imageHostURL as string).hostname
 
 export default defineConfig({
   site: url,
@@ -38,6 +39,13 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',
+  },
+  image: {
+    domains: [imageDomain],
+    remotePatterns: [{ protocol: 'https' }],
+    service: imageService({
+      placeholder: 'blurhash',
+    }),
   },
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
@@ -83,7 +91,6 @@ export default defineConfig({
     rehypePlugins: [
       rehypeSlug,
       rehypeKatex,
-      rehypeImgToFigure,
       [
         rehypePrettyCode,
         {

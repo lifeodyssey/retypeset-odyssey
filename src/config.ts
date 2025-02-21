@@ -92,10 +92,10 @@ export const themeConfig: ThemeConfig = {
   preload: {
     commentURL: '', // https://comment.example.com
     imageHostURL: 'https://image.radishzz.cc', // https://image.example.com
-    // If you proxy analytics requests to the custom domain, you can fill in below
-    customGoogleAnalyticsURL: '', // https://custom.example.com
-    customUmamiAnalyticsURL: '', // https://custom.example.com
-    customUmamiAnalyticsJS: '', // https://custom.example.com/custom.js
+    // If you proxy analytics JavaScript to the custom domain, you can fill in below.
+    // See more at https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738 and https://github.com/umami-software/umami/discussions/1026
+    customGoogleAnalyticsJS: '', // https://custom.example.com/whatever.js
+    customUmamiAnalyticsJS: '', // https://custom.example.com/whatever.js
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }
