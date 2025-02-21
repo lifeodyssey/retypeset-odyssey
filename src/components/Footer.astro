@@ -1,0 +1,40 @@
+---
+import themeConfig from '@/config'
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+const { author } = themeConfig.site
+const {
+  startYear,
+  linkA: { name: linkAName, url: linkAUrl },
+  linkB: { name: linkBName, url: linkBUrl },
+  linkC: { name: linkCName, url: linkCUrl },
+} = themeConfig.footer
+
+const currentYear = new Date().getFullYear()
+const year = Number(startYear) === currentYear
+  ? startYear
+  : `${startYear}-${currentYear}`
+---
+
+<footer
+  class:list={[
+  'bottom-22 text-3.5 leading-4.75 font-navbar',
+  className,
+  ]}
+>
+  <p>
+    <a href={linkAUrl}>{linkAName}</a>
+    <a href={linkBUrl}>{linkBName}</a>
+    <a href={linkCUrl}>{linkCName}</a>
+  </p>
+  <p>
+    Powered by <a href="https://astro.build/">Astro</a> and <a href="https://github.com/radishzzz/astro-theme-retypeset">Retypeset</a>
+  </p>
+  <p>
+    © {year} {author}
+  </p>
+</footer>

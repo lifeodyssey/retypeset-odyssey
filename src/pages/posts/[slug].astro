@@ -35,14 +35,14 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     </h1>
 
     <div
-      class="mb-23.4 block c-primary font-time"
+      class="mb-14.625 block c-primary font-time"
       transition:name={`time-${post.data.slug || post.slug}`}
       data-disable-transition-on-theme
     >
       <time>
         {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
       </time>
-      <span class="ml-2">
+      <span class="ml-1.25">
         {remarkPluginFrontmatter.minutes} min
       </span>
     </div>

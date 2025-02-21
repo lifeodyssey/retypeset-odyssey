@@ -3,11 +3,11 @@ import { themeConfig } from '@/config'
 
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 ---
-
+<!-- [@supports(-webkit-touch-callout:none)]:top-[calc(7.3vw+2.2rem)]  -->
 <button
   id="theme-toggle"
   aria-label="Theme Toggle Button"
-  class="absolute right-[calc(9.94vw-1.18rem)] top-[calc(7.3vw+2.6rem)] z-99 aspect-square w-7 c-secondary [@supports(-webkit-touch-callout:none)]:top-[calc(7.3vw+2.2rem)] active:scale-90"
+  class="z-99 aspect-square w-4.375 c-secondary active:scale-90"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"

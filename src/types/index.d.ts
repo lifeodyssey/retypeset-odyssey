@@ -74,6 +74,7 @@ export interface ThemeConfig {
       name: string
       url: string
     }
+    startYear: string
   }
 
   preload: {

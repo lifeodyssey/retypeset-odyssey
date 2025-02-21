@@ -78,13 +78,14 @@ export const themeConfig: ThemeConfig = {
       url: '/rss.xml',
     },
     linkB: {
-      name: 'Contact',
-      url: '#',
+      name: 'GitHub',
+      url: 'https://github.com/radishzzz/astro-theme-retypeset',
     },
     linkC: {
-      name: 'GitHub',
-      url: '#',
+      name: 'Telegram',
+      url: 'https://t.me/radishzz',
     },
+    startYear: '2024', // The year when website was established
   },
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 

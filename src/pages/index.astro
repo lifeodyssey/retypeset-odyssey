@@ -28,14 +28,14 @@ const postsByYear = await getPostsByYear()
 
     {[...postsByYear.entries()].map(([_year, posts]) => (
       // Year Group
-      <section class="mt-12">
+      <section class="mt-7.5">
         {/* Decorative Line */}
-        <div class="h-0.2 w-16 bg-secondary opacity-25"></div>
+        <div class="h-0.125 w-10 bg-secondary opacity-25"></div>
         {/* Posts List */}
         <ul>
           {posts.map(post => (
             // Single Post
-            <li class="mt-7">
+            <li class="mt-4.375">
 
               <a
                 class="hover:c-primary"
@@ -47,23 +47,23 @@ const postsByYear = await getPostsByYear()
               </a>
 
               <div
-                class="mb-9 text-5.6 leading-11 font-time lg:(hidden)"
+                class="mb-5.625 text-3.5 leading-6.875 font-time lg:(hidden)"
                 transition:name={`time-${post.data.slug || post.slug}`}
                 data-disable-transition-on-theme
               >
                 <time>
                   {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
                 </time>
-                <span class="ml-2">
+                <span class="ml-1.25">
                   {post.remarkPluginFrontmatter?.minutes} min
                 </span>
               </div>
 
-              <div class="mb-9 hidden text-5.6 leading-11 font-time lg:(ml-4 inline)">
+              <div class="mb-5.625 hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)">
                 <time>
                   {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
                 </time>
-                <span class="ml-2">
+                <span class="ml-1.25">
                   {post.remarkPluginFrontmatter?.minutes} min
                 </span>
               </div>

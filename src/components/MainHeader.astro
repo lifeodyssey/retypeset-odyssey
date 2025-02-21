@@ -8,17 +8,20 @@ const currentPath = Astro.url.pathname
 const { getLocalizedPath } = getPagePath(currentPath)
 
 const marginBottom = {
-    1: 'mb-1',
-    2: 'mb-3',
-    3: 'mb-5',
-  }[titleSpace] || 'mb-3'
+    1: 'mb-0.625',
+    2: 'mb-1.875',
+    3: 'mb-3.125',
+  }[titleSpace] || 'mb-3.125'
 ---
 
-<header class="mb-17">
-  <h1 class={`${marginBottom} text-12.8 c-primary font-bold font-title`}>
+<header
+  class="mb-10.625"
+  lg="fixed"
+>
+  <h1 class={`${marginBottom} text-8 c-primary font-bold font-title lg:text-9`}>
     <!-- Fix text cut issue on ios by adding a div tag -->
     <div
-      class="box-content inline-block pr-2"
+      class="box-content inline-block pr-1.25"
       transition:name="site-title"
       data-disable-transition-on-theme
     >
@@ -29,7 +32,7 @@ const marginBottom = {
   </h1>
 
   {subtitle && (
-    <h2 class="text-5.6 c-secondary font-navbar">
+    <h2 class="text-3.5 c-secondary font-navbar lg:text-4">
       {subtitle}
     </h2>
   )}
