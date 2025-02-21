@@ -74,16 +74,16 @@ export const themeConfig: ThemeConfig = {
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   footer: {
     linkA: {
-      name: 'RSS',
-      url: '/rss.xml',
+      name: 'RSS', // Link name
+      url: '/rss.xml', // Link URL
     },
     linkB: {
-      name: 'GitHub',
-      url: 'https://github.com/radishzzz/astro-theme-retypeset',
+      name: 'GitHub', // Link name
+      url: 'https://github.com/radishzzz/astro-theme-retypeset', // Link URL
     },
     linkC: {
-      name: 'Telegram',
-      url: 'https://t.me/radishzz',
+      name: 'Telegram', // Link name
+      url: 'https://t.me/radishzz', // Link URL
     },
     startYear: '2024', // The year when website was established
   },
