@@ -2,7 +2,6 @@ import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
-import { imageService } from '@unpic/astro/service'
 import compress from 'astro-compress'
 import robotsTxt from 'astro-robots-txt'
 import { defineConfig } from 'astro/config'
@@ -43,9 +42,6 @@ export default defineConfig({
   image: {
     domains: [imageDomain],
     remotePatterns: [{ protocol: 'https' }],
-    service: imageService({
-      placeholder: 'blurhash',
-    }),
   },
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
