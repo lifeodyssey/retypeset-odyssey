@@ -74,13 +74,13 @@ export interface ThemeConfig {
       name: string
       url: string
     }
+    startYear: string
   }
 
   preload: {
     commentURL?: string
     imageHostURL?: string
-    customGoogleAnalyticsURL?: string
-    customUmamiAnalyticsURL?: string
+    customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string
   }
 }

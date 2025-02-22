@@ -4,7 +4,6 @@
  * Author:Sivan [sun.sivan@gmail.com]
  */
 .heti {
-	max-width:42em;
 	line-height:1.5;
 	overflow-wrap:break-word;
 	word-wrap:break-word;
@@ -41,13 +40,13 @@
 }
 }
 .heti img {
-  --at-apply: 'my-12.8';
+  --at-apply: 'my-8';
 }
 .heti figure {
-  --at-apply: 'my-12.8 flex flex-col items-center';
+  --at-apply: 'my-8 flex flex-col items-center';
 }
 .heti figure>img {
-  --at-apply: 'mt-0 mb-4.8';
+  --at-apply: 'mt-0 mb-3';
 }
 .heti figure>figcaption {
   --at-apply: 'opacity-75 w-95% text-center';
@@ -116,11 +115,11 @@
 	font-weight:600
 }
 .heti .post-title {
-  --at-apply: 'c-primary mb-7.1 font-bold text-14.4 relative leading-19.2 before:(absolute left-0 top--7 h-0.2 w-16 bg-secondary opacity-25 content-[''])';
+  --at-apply: 'c-primary mb-4.4375 font-bold text-9 relative leading-12 before:(absolute left-0 top--4.375 h-0.125 w-10 bg-secondary opacity-25 content-[''])';
 	line-height:48px
 }
 .heti h1 {
-  --at-apply: 'mb-9.6';
+  --at-apply: 'mb-6';
 	font-size:32px;
 	line-height:48px
 }

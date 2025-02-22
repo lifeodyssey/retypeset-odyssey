@@ -14,7 +14,7 @@ export const themeConfig: ThemeConfig = {
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    mode: 'light', // light or dark. Matches system theme by default, falls back to configured theme mode if not available.
+    mode: 'light', // light, dark
     light: {
       primary: '#17191A', // accent color for title
       secondary: '#505050', // secondary color for text
@@ -34,7 +34,7 @@ export const themeConfig: ThemeConfig = {
   global: {
     locale: 'zh', // support 'zh', 'zh-tw', 'ja', 'en', 'es', 'ru'. Default language setting
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. Not fill in the default locale code again
-    fontStyle: 'serif', // sans, serif. Font styles for post content
+    fontStyle: 'sans', // sans, serif. Font styles for post content
     titleSpace: 3, // 1, 2, 3. Space between title and subtitle
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -74,28 +74,29 @@ export const themeConfig: ThemeConfig = {
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   footer: {
     linkA: {
-      name: 'RSS',
-      url: '/rss.xml',
+      name: 'RSS', // Link name
+      url: '/rss.xml', // Link URL
     },
     linkB: {
-      name: 'Contact',
-      url: '#',
+      name: 'GitHub', // Link name
+      url: 'https://github.com/radishzzz/astro-theme-retypeset', // Link URL
     },
     linkC: {
-      name: 'GitHub',
-      url: '#',
+      name: 'Telegram', // Link name
+      url: 'https://t.me/radishzz', // Link URL
     },
+    startYear: '2024', // The year when website was established
   },
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    commentURL: '', // https://comment.example.com/
-    imageHostURL: '', // https://image.example.com/
-    // If you proxy analytics requests to the custom domain, you can fill in below
-    customGoogleAnalyticsURL: '', // https://custom.example.com/
-    customUmamiAnalyticsURL: '', // https://custom.example.com/
-    customUmamiAnalyticsJS: '', // https://custom.example.com/custom.js
+    commentURL: '', // https://comment.example.com
+    imageHostURL: 'https://image.radishzz.cc', // https://image.example.com
+    // If you proxy analytics JavaScript to the custom domain, you can fill in below.
+    // See more at https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738 and https://github.com/umami-software/umami/discussions/1026
+    customGoogleAnalyticsJS: '', // https://custom.example.com/whatever.js
+    customUmamiAnalyticsJS: '', // https://custom.example.com/whatever.js
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }

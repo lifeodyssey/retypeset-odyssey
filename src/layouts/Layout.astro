@@ -1,12 +1,12 @@
 ---
+// import BackToTop from '@/components/BackToTop.astro'
 import Footer from '@/components/Footer.astro'
 import LanguageSwitcher from '@/components/LanguageSwitcher.astro'
 import MainHeader from '@/components/MainHeader.astro'
 import MobileHeader from '@/components/MobileHeader.astro'
 import Navigation from '@/components/Navbar.astro'
-import PhotoSwipe from '@/components/PhotoSwipe.astro'
-import Scrollbar from '@/components/Scrollbar.astro'
-import ScrollButton from '@/components/ScrollButton.astro'
+// import PhotoSwipe from '@/components/PhotoSwipe.astro'
+// import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
@@ -34,15 +34,16 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
 >
   <Head {postTitle} {postDescription} {postImage} />
   <body data-overlayscrollbars-initialize>
+    <!--  -->
     <div
-      class="mx-a max-w-492 min-h-dvh"
-      p="x-[calc(9.942vw-1.18rem)] y-[calc(7.3vw+0.52rem)] lg:(x-36 y-[max(10.4vh,7.8rem)])"
-      lg="grid cols-[1fr_22rem] rows-1 gap-[min(calc(16.83vw-6.27rem),18rem)]"
+      class="mx-auto max-w-205.848 min-w-80 min-h-dvh"
+      p="x-[min(7.25vw,3.731rem)] y-7 lg:(x-22.5 y-20)"
+      lg="max-w-320 grid cols-[1fr_13.875rem] gap-[min(calc(16.35vw-3.46rem),11.25rem)]"
     >
       <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
         <MainHeader />
         <Navigation />
-        <Footer />
+        <Footer class="fixed hidden lg:block" />
       </div>
 
       {!isHome && isPost && <MobileHeader /> }
@@ -50,11 +51,15 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
       <main class="col-start-1 row-start-1">
         <slot />
       </main>
+      <Footer class="mt-12 block lg:hidden" />
     </div>
-    <ThemeToggle />
-    <LanguageSwitcher />
-    <Scrollbar />
-    <PhotoSwipe />
-    <ScrollButton />
+
+    <div class="absolute right-[min(7.25vw,3.731rem)] top-12.3 flex gap-6">
+      <LanguageSwitcher />
+      <ThemeToggle />
+    </div>
+    <!-- <Scrollbar /> -->
+    <!-- <BackToTop /> -->
+    <!-- <PhotoSwipe /> -->
   </body>
 </html>
