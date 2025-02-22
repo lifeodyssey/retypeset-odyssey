@@ -22,10 +22,7 @@ const marginBottom = {
       transition:name="site-title"
       data-disable-transition-on-theme
     >
-      <a
-        href={getLocalizedPath('/')}
-        onclick="return _handleBack(event)"
-      >
+      <a href={getLocalizedPath('/')}>
         {title}
       </a>
     </div>
@@ -41,7 +38,7 @@ const marginBottom = {
   )}
 </header>
 
-<script is:inline>
+<!-- <script is:inline>
 function _handleBack(e) {
   if (window.history.length > 2) {
     e.preventDefault()
@@ -50,4 +47,4 @@ function _handleBack(e) {
   }
   return true
 }
-</script>
+</script> -->

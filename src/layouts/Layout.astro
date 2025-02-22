@@ -37,7 +37,7 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
     <!--  -->
     <div
       class="mx-auto max-w-205.848 min-w-80 min-h-dvh"
-      p="x-[min(7.25vw,3.731rem)] y-10 lg:(x-22.5 y-20)"
+      p="x-[min(7.25vw,3.731rem)] y-7 lg:(x-22.5 y-20)"
       lg="max-w-320 grid cols-[1fr_13.875rem] gap-[min(calc(16.35vw-3.46rem),11.25rem)]"
     >
       <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
@@ -54,10 +54,7 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
       <Footer class="mt-12 block lg:hidden" />
     </div>
 
-    <div
-      class="absolute right-[min(7.25vw,3.731rem)] top-15 flex gap-6"
-      lg="fixed"
-    >
+    <div class="absolute right-[min(7.25vw,3.731rem)] top-12.3 flex gap-6">
       <LanguageSwitcher />
       <ThemeToggle />
     </div>

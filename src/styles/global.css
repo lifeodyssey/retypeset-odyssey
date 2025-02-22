@@ -16,9 +16,9 @@ body {
   --at-apply: 'ios-flash-fix';
 }
 
-article img {
+/* article img {
   --at-apply: 'cursor-zoom-in force-gpu';
-}
+} */
 
 /* Horizontal reveal animation during theme switching */
 ::view-transition-new(theme-transition) {
