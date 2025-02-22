@@ -33,9 +33,9 @@
 
 ## 📦 部署
 
-1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 克隆仓库。
+1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 克隆本仓库。
 
-2. 点击 `Deploy to Netlify` 或 `Deploy (to Vercel)`。
+2. 点击下方 `Deploy to Netlify` 或 `Deploy (to Vercel)`
 
 &emsp;[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
@@ -44,13 +44,11 @@
 
 参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/) 可选择其它平台进行部署。
 
-##  更新
+## 🔄 更新
 
-1. 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)。
-   
-2. 在克隆仓库中执行 `Sync fork` 同步最新分支。
+1. 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) 在克隆仓库中执行 `Sync fork` 同步最新分支。
 
-3. 不要点击 `Discard Changes` 放弃你的更改。
+2. 不要点击 `Discard Changes` 放弃你的更改。
 
 ## 📄 文档
 
