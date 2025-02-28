@@ -1,71 +1,84 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://placehold.co/1920x1080" />
+  <source media="(prefers-color-scheme: light)" srcset="https://placehold.co/1920x1080" />
+  <img alt="Cover Image" src="https://placehold.co/1920x1080" />
+</picture>
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)"
+            srcset="https://img.shields.io/badge/-English-4593F8?style=for-the-badge" />
+    <source media="(prefers-color-scheme: light)"
+            srcset="https://img.shields.io/badge/-English-0A69DA?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/-English-0A69DA?style=for-the-badge" alt="English">
+  </picture>
+  <a title="zh" href="README.zh.md">
+    <img src="https://img.shields.io/badge/-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-545759?style=for-the-badge" alt="简体中文">
+  </a>
+</div>
+
 # Retypeset
 
-一款基于 [Astro](https://astro.build/) 开发的博客主题。
+A blog theme built with [Astro](https://astro.build/). Details in every sight, elegance in every space.
 
-> 正在开发中，暂不建议使用
+- [Live Demo](https://retypeset.radishzz.cc/)
+- [Mobile design](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)
 
-<!-- 首页宣传图：重新编排，再现版式之美 -->
+## Features
 
-## 🔎 Demo
+- Built with Astro and UnoCSS
+- Support for RSS, Sitemap, OpenGraph, MDX, and LaTeX
+- i18n support
+- Light/Dark mode
+- Elegant view transitions
+- Rich theme customization
+- Optimized typography
+- Responsive design
+- Comment system
 
-- [Retypeset](https://retypeset.radishzz.cc/)
-- [移动端设计稿](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)
-
-## ✨ 特征
-
-- 基于 Astro 与 UnoCSS 开发
-- 支持 RSS、Sitemap、OpenGraph、MDX、LaTeX
-- 亮色/暗色模式
-- i18n 多语言
-- 优雅的过渡动画
-- 中文排版优化
-- 响应式设计
-- 评论系统
-- 高度自定义
-
-## 🚀 性能
+## Performance
 
 <p align="center">
   <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2F">
-    <img width="710" alt="Retypeset Lighthouse Score" src=Retypeset-lighthouse-score.svg>
+    <img width="710" alt="Retypeset Lighthouse Score" src="assets/retypeset-lighthouse-score.svg">
   <a>
 </p>
 
-## 📦 部署
+## Deploy
 
-1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 克隆本仓库。
+1. Click [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) to clone this repository.
 
-2. 点击下方 `Deploy to Netlify` 或 `Deploy (to Vercel)`
+2. Click `Deploy to Netlify` or `Deploy to Vercel` below
 
-&emsp;[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+&emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
+[![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
 
-3. 选择对应仓库，点击 `Deploy` 即可。
+3. Select the repository and click `Deploy`.
 
-参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/) 可选择其它平台进行部署。
+For other platforms, please refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/).
 
-## 🔄 更新
+## Updates
 
-1. 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) 在克隆仓库中执行 `Sync fork` 同步最新分支。
+1. Follow the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork`.
 
-2. 不要点击 `Discard Changes` 放弃你的更改。
+2. Do not click `Discard Changes`.
 
-## 📄 文档
+## Documentation
 
-正在施工中...
+Work in progress...
 
-- [主题配置](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts)
+- [Theme Configuration](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts)
 
-## ❤️ 感谢
+## Credits
 
 - [Typography](https://github.com/moeyua/astro-theme-typography)
 - [Fuwriu](https://github.com/saicaca/fuwari)
 - [Redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
 - [AstroPaper](https://github.com/satnaing/astro-paper)
-- [赫蹏](https://github.com/sivan/heti)
-- [初夏明朝体](https://github.com/GuiWonder/EarlySummerSerif)
+- [赫蹏（hètí）](https://github.com/sivan/heti)
+- [Early Summer Serif](https://github.com/GuiWonder/EarlySummerSerif)
 
-## ⭐ Star History
+## Star History
 
 <p align="center">
 <a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
