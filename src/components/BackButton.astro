@@ -1,0 +1,32 @@
+<button
+  aria-label="Go back"
+  id="back-button"
+  class="aspect-square w-4 c-secondary active:scale-90"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M12.6 2.5 1.7 12.1l10.9 9.5.2 1.4h.8l-.6-5h-.8l.2 2.2L4 12.8h18.3v-1.5H4.8l7.6-6.7-.2 2.1h.8l.6-5.7h-.8z" />
+  </svg>
+</button>
+
+<script>
+function setupBackButton() {
+  const backButton = document.getElementById('back-button')
+  if (backButton) {
+    backButton.addEventListener('click', (e) => {
+      if (window.history.length > 2) {
+        e.preventDefault()
+        window.history.back()
+        return false
+      }
+      return true
+    })
+  }
+}
+
+document.addEventListener('astro:after-swap', setupBackButton)
+setupBackButton()
+</script>

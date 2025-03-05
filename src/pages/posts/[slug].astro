@@ -1,4 +1,5 @@
 ---
+import BackButton from '@/components/BackButton.astro'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
 import { generatePostPaths } from '@/utils/i18n'
@@ -25,8 +26,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postImage={post.data.image}
 >
   <article class="heti">
-    <!-- after:(absolute h-0.25 w-3 origin-left rotate-30 bg-secondary content-empty) before:(absolute h-0.25 w-3 origin-left rotate-330 bg-secondary content-empty) -->
-    <div class="relative h-0.25 w-10 bg-secondary opacity-25"></div>
+    <BackButton />
     <h1 class="post-title">
       <span
         transition:name={`post-${post.data.slug || post.slug}`}
@@ -37,7 +37,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     </h1>
 
     <div
-      class="mb-16.375 block c-primary font-time"
+      class="mb-15 block c-primary font-time"
       transition:name={`time-${post.data.slug || post.slug}`}
       data-disable-transition-on-theme
     >
@@ -51,7 +51,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     <Content />
 
     {post.data.tags && post.data.tags.length > 0 && (
-      <div class="mt-12">
+      <div class="mt-10.625">
         <div class="h-0.125 w-10 bg-secondary opacity-25"></div>
         <div class="mt-4.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6">
           {post.data.tags.map(tag => (
