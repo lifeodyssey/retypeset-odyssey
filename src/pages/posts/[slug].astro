@@ -25,7 +25,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postDescription={post.data.description}
   postImage={post.data.image}
 >
-  <article class="heti -mt-6">
+  <article class="heti">
     <BackButton />
     <h1 class="post-title">
       <span
@@ -37,7 +37,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     </h1>
 
     <div
-      class="mb-15 block c-primary font-time"
+      class="mb-11.75 block c-primary font-time"
       transition:name={`time-${post.data.slug || post.slug}`}
       data-disable-transition-on-theme
     >
@@ -51,7 +51,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     <Content />
 
     {post.data.tags && post.data.tags.length > 0 && (
-      <div class="mt-10.625">
+      <div class="mt-9.75">
         <div class="h-0.125 w-10 bg-secondary opacity-25"></div>
         <div class="mt-4.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6">
           {post.data.tags.map(tag => (
