@@ -115,7 +115,7 @@
 	font-weight:600
 }
 .heti .post-title {
-  --at-apply: 'c-primary mb-4.4375 font-bold text-9 relative leading-12 before:(absolute left-0 top--4.375 h-0.125 w-10 bg-secondary opacity-25 content-[''])';
+  --at-apply: 'mt-4.375 c-primary mb-2.375 font-bold text-9 leading-12';
 	line-height:48px
 }
 .heti h1 {

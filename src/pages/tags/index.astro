@@ -6,10 +6,15 @@ const allTags = await getAllTags()
 ---
 
 <Layout>
-  <div>
+  <div class="h-0.125 w-10 bg-secondary opacity-0"></div>
+  <div class="mt-3.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6 font-medium font-serif">
     {allTags.map(tag => (
-      <a href={`/tags/${tag}/`}>
+      <a
+        href={`/tags/${tag}/`}
+        class="inline-block whitespace-nowrap border border-secondary/25 rounded-full px-3.2 py-0.7 c-secondary transition-colors hover:(border-secondary text-primary)"
+      >
         {tag}
       </a>
     ))}
   </div>
+</Layout>

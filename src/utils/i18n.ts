@@ -31,8 +31,8 @@ export function generateMultiLangPostPaths(posts: CollectionEntry<'posts'>[]) {
 export function generateMultiLangTagPaths(tags: string[]) {
   return themeConfig.global.moreLocale.flatMap(lang =>
     tags.map(tag => ({
-      params: { lang, tags: tag },
-      props: { tags: tag },
+      params: { lang, tag },
+      props: { tag },
     })),
   )
 }

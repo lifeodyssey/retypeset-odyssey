@@ -2,18 +2,18 @@ import type { Theme } from 'unocss/preset-uno'
 import {
   defineConfig,
   presetAttributify,
-  presetUno,
+  presetWind3,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
 import presetTheme from 'unocss-preset-theme'
-import { themeConfig } from './src/config'
+import { themeConfig } from './src/config.ts'
 
 const { light, dark } = themeConfig.color
 
 export default defineConfig({
   presets: [
-    presetUno(),
+    presetWind3(),
     presetAttributify(),
     presetTheme<Theme>({
       theme: {
