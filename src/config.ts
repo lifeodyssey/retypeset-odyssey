@@ -32,24 +32,33 @@ export const themeConfig: ThemeConfig = {
 
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
-    locale: 'zh', // support 'zh', 'zh-tw', 'ja', 'en', 'es', 'ru'. Default language setting
-    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']. Not fill in the default locale code again
-    fontStyle: 'sans', // sans, serif. Font styles for post content
-    titleSpace: 3, // 1, 2, 3. Space between title and subtitle
+    // Default language
+    locale: 'zh', // support 'zh', 'zh-tw', 'ja', 'en', 'es', 'ru'
+    // Not fill in the default locale code again
+    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
+    // Font styles for post content
+    fontStyle: 'sans', // sans, serif
+    // Space between title and subtitle
+    titleSpace: 3, // 1, 2, 3
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
     waline: {
-      serverURL: 'https://comment.radishzz.cc', // Waline server URL
+      // Waline server URL
+      serverURL: 'https://comment.radishzz.cc', // https://comment.example.com
+      // Emoji
       emoji: [
         'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
         // 'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
         // see more at https://waline.js.org/en/guide/features/emoji.html
       ],
-      search: false, // whether to enable GIF search
-      imageUploader: false, // whether to enable image uploader. BUG：
+      // Whether to enable GIF search
+      search: false, // true, false
+      // Whether to enable image uploader
+      // BUG：unable to disable image uploader
+      imageUploader: false, // true, false
     },
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

@@ -1,5 +1,5 @@
 ---
-import Waline from '@/components/Comments/Waline.astro'
+import Comments from '@/components/Comments/index.astro'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
 import { generatePostPaths } from '@/utils/i18n'
@@ -66,5 +66,5 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     )}
   </article>
 
-  <Waline />
+  <Comments />
 </Layout>
