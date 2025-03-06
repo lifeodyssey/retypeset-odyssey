@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
 import { generatePostPaths } from '@/utils/i18n'
 import { getCollection } from 'astro:content'
+import Waline from '@/components/Comments/Waline.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
@@ -35,7 +36,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     </h1>
 
     <div
-      class="mb-15.5 block c-primary font-time"
+      class="mb-17 block c-primary font-time"
       transition:name={`time-${post.data.slug || post.slug}`}
       data-disable-transition-on-theme
     >
@@ -49,7 +50,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     <Content />
 
     {post.data.tags && post.data.tags.length > 0 && (
-      <div class="mt-11.125">
+      <div class="mt-12.625">
         <div class="h-0.25 w-10 bg-secondary opacity-25"></div>
         <div class="mt-4.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6">
           {post.data.tags.map(tag => (
@@ -64,15 +65,6 @@ const { Content, remarkPluginFrontmatter } = await post.render()
       </div>
     )}
   </article>
-</Layout>
 
-<!-- <script is:inline>
-function _handleBack(e) {
-  if (window.history.length > 2) {
-    e.preventDefault()
-    window.history.back()
-    return false
-  }
-  return true
-}
-</script> -->
+  <Waline />
+</Layout>

@@ -1,0 +1,37 @@
+---
+import { themeConfig } from '@/config'
+
+const {
+  serverURL = '',
+  emoji = [],
+  searchGif = false,
+  imageUploader = false,
+} = themeConfig.comment?.waline ?? {}
+---
+{serverURL && (
+  <>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+    <div id="waline"></div>
+    <script
+      is:inline
+      type="module"
+      define:vars={{ serverURL, emoji, searchGif, imageUploader }}
+    >
+      import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js'
+
+      init({
+        el: '#waline',
+        serverURL,
+        lang: 'zh',
+        emoji,
+        dark: 'auto',
+        requiredMeta: ['nick'],
+        imageUploader: false,
+        highlighter: false,
+        texRenderer: false,
+        search: searchGif,
+        reaction: false,
+      })
+    </script>
+  </>
+)}

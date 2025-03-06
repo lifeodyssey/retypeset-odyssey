@@ -42,12 +42,9 @@ export const themeConfig: ThemeConfig = {
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
     waline: {
-      serverURL: '', // Waline server URL
-      emoji: [
-        '//unpkg.com/@waline/emojis@1.2.0/bmoji',
-        '//unpkg.com/@waline/emojis@1.2.0/weibo',
-      ], // see more at https://waline.js.org/guide/features/emoji.html
-      search: false, // whether to enable GIF search
+      serverURL: 'https://comment.radishzz.cc', // Waline server URL
+      emoji: ['https://unpkg.com/@waline/emojis@1.2.0/tw-emoji'], // see more at https://waline.js.org/en/guide/features/emoji.html
+      searchGif: false, // whether to enable GIF search
       imageUploader: false, // whether to enable image uploader
     },
   },
@@ -91,7 +88,7 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    commentURL: '', // https://comment.example.com
+    commentURL: 'https://comment.radishzz.cc', // https://comment.example.com
     imageHostURL: 'https://image.radishzz.cc', // https://image.example.com
     // If you proxy analytics JavaScript to the custom domain, you can fill in below.
     // See more at https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738 and https://github.com/umami-software/umami/discussions/1026
