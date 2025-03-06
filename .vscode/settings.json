@@ -60,10 +60,12 @@
   },
   "cSpell.words": [
     "antfu",
+    "Artículos",
     "astrojs",
     "attributify",
     "blurhash",
     "bmoji",
+    "Etiquetas",
     "Frontmatter",
     "Fuwriu",
     "GSAP",
@@ -86,6 +88,7 @@
     "rehype",
     "Retypeset",
     "Roundhand",
+    "Sobre",
     "srcset",
     "STIX",
     "titlebar",
@@ -94,6 +97,9 @@
     "unpic",
     "vite",
     "waline",
-    "weibo"
+    "weibo",
+    "Посты",
+    "себе",
+    "Теги"
   ]
 }

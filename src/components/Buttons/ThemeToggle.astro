@@ -59,6 +59,6 @@ function setupThemeToggle() {
 }
 
 // Initialize click event (on first load or page transition)
-document.addEventListener('astro:after-swap', setupThemeToggle)
 setupThemeToggle()
+document.addEventListener('astro:after-swap', setupThemeToggle)
 </script>

@@ -1,9 +1,9 @@
 ---
+import Waline from '@/components/Comments/Waline.astro'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
 import { generatePostPaths } from '@/utils/i18n'
 import { getCollection } from 'astro:content'
-import Waline from '@/components/Comments/Waline.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')

@@ -40,7 +40,7 @@ export interface ThemeConfig {
     waline?: {
       serverURL?: string
       emoji?: string[]
-      searchGif?: boolean
+      search?: boolean
       imageUploader?: boolean
     }
   }

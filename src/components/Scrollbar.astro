@@ -26,8 +26,8 @@ function initScrollbar() {
   }
 }
 
-document.addEventListener('astro:after-swap', initScrollbar)
 initScrollbar()
+document.addEventListener('astro:after-swap', initScrollbar)
 </script>
 
 <style is:global>

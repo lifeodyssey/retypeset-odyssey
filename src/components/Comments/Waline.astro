@@ -1,37 +1,48 @@
 ---
 import { themeConfig } from '@/config'
+import { getWalineLang } from '@/utils/ui'
 
 const {
   serverURL = '',
   emoji = [],
-  searchGif = false,
+  search = false,
   imageUploader = false,
 } = themeConfig.comment?.waline ?? {}
----
-{serverURL && (
-  <>
-    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
-    <div id="waline"></div>
-    <script
-      is:inline
-      type="module"
-      define:vars={{ serverURL, emoji, searchGif, imageUploader }}
-    >
-      import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js'
 
-      init({
-        el: '#waline',
-        serverURL,
-        lang: 'zh',
-        emoji,
-        dark: 'auto',
-        requiredMeta: ['nick'],
-        imageUploader: false,
-        highlighter: false,
-        texRenderer: false,
-        search: searchGif,
-        reaction: false,
-      })
-    </script>
-  </>
-)}
+const currentPath = Astro.url.pathname
+const defaultLocale = themeConfig.global.locale
+const walineLang = getWalineLang(currentPath, defaultLocale)
+
+const walineConfigJson = JSON.stringify({
+  serverURL,
+  lang: walineLang,
+  emoji,
+  search,
+  imageUploader,
+});
+---
+<div id="waline" data-config={walineConfigJson}></div>
+
+<script>
+import { init } from '@waline/client'
+import '@waline/client/style'
+
+function initWaline() {
+  const walineEl = document.getElementById('waline')
+  const walineConfig = JSON.parse(walineEl?.dataset.config || '{}')
+
+  init({
+    el: '#waline',
+    path: window.location.pathname.replace(/^\/([a-z]{2}(-[a-z]{2})?)\//, '/'),
+    dark: 'auto',
+    requiredMeta: ['nick'],
+    highlighter: false,
+    texRenderer: false,
+    reaction: [],
+    ...walineConfig,
+  })
+}
+
+initWaline()
+document.addEventListener('astro:after-swap', initWaline)
+</script>

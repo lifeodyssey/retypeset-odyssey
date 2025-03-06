@@ -43,9 +43,13 @@ export const themeConfig: ThemeConfig = {
   comment: {
     waline: {
       serverURL: 'https://comment.radishzz.cc', // Waline server URL
-      emoji: ['https://unpkg.com/@waline/emojis@1.2.0/tw-emoji'], // see more at https://waline.js.org/en/guide/features/emoji.html
-      searchGif: false, // whether to enable GIF search
-      imageUploader: false, // whether to enable image uploader
+      emoji: [
+        'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
+        // 'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
+        // see more at https://waline.js.org/en/guide/features/emoji.html
+      ],
+      search: false, // whether to enable GIF search
+      imageUploader: false, // whether to enable image uploader. BUG：
     },
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
