@@ -17,7 +17,7 @@ export const themeConfig: ThemeConfig = {
     mode: 'light', // light, dark
     light: {
       // title color
-      primary: 'oklch(20% 0.02 60)',
+      primary: 'oklch(25% 0.02 60)',
       // text color
       secondary: 'oklch(40% 0.02 60)',
       // background color

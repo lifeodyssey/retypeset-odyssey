@@ -55,116 +55,11 @@ document.addEventListener('astro:after-swap', initWaline)
 
 <style is:global>
 #waline .wl-panel {
-  margin: 0;
-  border-radius: 0.5rem;
+  --at-apply: 'm-0 rounded-lg'
 }
-
-#waline .wl-editor::placeholder {
-  color: var(--waline-light-grey);
-}
-
-/* #waline .wl-btn.primary {
-  border-color: var(--waline-light-grey);
-  color: var(--waline-color);
-  background: none;
-} */
-
-#waline .wl-text-number {
-  display: none;
-}
-
-#waline .wl-action[title="Markdown Guide"] {
-  display: none;
-}
-
-#waline .wl-emoji-popup {
-  inset-inline-start: 0;
-}
-
-#waline .wl-emoji-popup .wl-tab-wrapper {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-#waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-#waline .wl-emoji-popup .wl-tab-wrapper {
-  margin: 0;
-}
-
-/* #waline .wl-editor {
-  min-height: 6rem;
-} */
-
-/* #waline .wl-card-item {
-  padding-left: 0;
-  padding-right: 0;
-} */
-
-#waline .wl-meta-head {
-  padding-top: 0.75rem;
-  padding-bottom: 0.5rem;
-}
-
-#waline .wl-sort {
-  display: none;
-}
-
-#waline .wl-card {
-  border-bottom: none;
-}
-
-#waline .wl-footer {
-  margin: 0.5rem;
-}
-
-/* #waline .wl-comment {
-  margin-bottom: 2rem;
-} */
 
 #waline .wl-header {
-  padding: 0;
-}
-
-/* #waline .wl-nick,
-#waline .wl-mail,
-#waline .wl-link {
-  padding-left: 1rem;
-  padding-right: 1rem;
-} */
-
-#waline .wl-header.item3 {
-  border-bottom: none;
-}
-
-#waline .wl-user {
-  margin-inline-end: 0.9rem;
-}
-
-#waline .wl-like {
-  margin-right: 0.4rem;
-}
-
-#waline .wl-content p {
-  line-height: 1.5rem;
-}
-
-/* #waline .wl-power {
-  color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
-}
-
-#waline a[href*="walinejs"] {
-  color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
-} */
-
-/* #waline .wl-user-avatar {
-  color: var(--waline-light-grey);
-} */
-
-#waline .wl-time {
-  color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
+  --at-apply: 'p-0';
 }
 
 #waline .wl-header-item {
@@ -172,19 +67,67 @@ document.addEventListener('astro:after-swap', initWaline)
 }
 
 #waline .wl-header label {
-  font-size: 0.75rem;
+  --at-apply: 'text-3';
 }
 
 #waline .wl-header input {
-  font-size: 0.7rem;
+  --at-apply: 'text-2.8';
+}
+
+#waline .wl-card,
+#waline .wl-header.item3 {
+  --at-apply: 'border-b-0';
 }
 
 #waline .wl-editor {
-  min-height: 6rem;
+  --at-apply: 'min-h-24';
+}
+
+#waline .wl-editor::placeholder {
+  color: var(--waline-light-grey);
+}
+
+#waline .wl-footer {
+  --at-apply: 'm-2';
+}
+
+#waline .wl-text-number,
+#waline .wl-action[title="Markdown Guide"],
+#waline .wl-sort,
+#waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar {
+  --at-apply: 'hidden';
+}
+
+#waline .wl-emoji-popup {
+  --at-apply: 'start-0';
+}
+
+#waline .wl-emoji-popup .wl-tab-wrapper {
+  --at-apply: 'scrollbar-hidden m-0';
+}
+
+#waline .wl-meta-head {
+  --at-apply: 'pt-3 pb-2';
+}
+
+#waline .wl-user {
+  --at-apply: 'me-3.6';
 }
 
 #waline .wl-nick {
-  margin-inline-end: 0.6rem;
+  --at-apply: 'me-2.4';
+}
+
+#waline .wl-content p {
+  --at-apply: 'leading-6';
+}
+
+#waline .wl-time {
+  color: color-mix(in oklch, var(--waline-theme-color), transparent 30%);
+}
+
+#waline .wl-like {
+  --at-apply: 'mr-1.6';
 }
 </style>
 
@@ -199,9 +142,6 @@ document.addEventListener('astro:after-swap', initWaline)
 }}
 >
 #waline {
-  /* 字体大小 */
-  --waline-font-size: 16px;
-
   /* 常规颜色 */
   --waline-white: var(--lightBackground);
   --waline-light-grey: color-mix(in oklch, var(--lightPrimary), transparent 75%);
@@ -224,10 +164,6 @@ document.addEventListener('astro:after-swap', initWaline)
   /* 特殊颜色 */
   --waline-bq-color: #f0f0f0;
 
-  /* 头像 */
-  --waline-avatar-size: 3.25rem;
-  --waline-m-avatar-size: calc(var(--waline-avatar-size) * 9 / 13);
-
   /* 徽章 */
   --waline-badge-color: #3498db;
   --waline-badge-font-size: 0.775em;
@@ -238,14 +174,11 @@ document.addEventListener('astro:after-swap', initWaline)
   --waline-info-font-size: 0.625em;
 
   /* 渲染选择 */
-  --waline-border: 1px solid var(--waline-border-color);
   --waline-avatar-radius: 20%;
 }
 
 /* 暗色模式 */
 html.dark #waline {
-  /* 字体大小 */
-  --waline-font-size: 16px;
 
   /* 常规颜色 */
   --waline-white: var(--darkBackground);
@@ -269,10 +202,6 @@ html.dark #waline {
   /* 特殊颜色 */
   --waline-bq-color: #f0f0f0;
 
-  /* 头像 */
-  --waline-avatar-size: 3.25rem;
-  --waline-m-avatar-size: calc(var(--waline-avatar-size) * 9 / 13);
-
   /* 徽章 */
   --waline-badge-color: #3498db;
   --waline-badge-font-size: 0.775em;
@@ -281,8 +210,5 @@ html.dark #waline {
   --waline-info-bg-color: var(--darkBackground);
   --waline-info-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
   --waline-info-font-size: 0.625em;
-
-  /* 渲染选择 */
-  --waline-border: 1px solid var(--waline-border-color);
 }
 </style>
