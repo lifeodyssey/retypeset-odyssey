@@ -49,3 +49,27 @@
   document.addEventListener('astro:page-load', createPhotoSwipe)
   document.addEventListener('astro:before-swap', cleanup)
 </script>
+
+<style is:global>
+  .pswp__button {
+    --at-apply: 'flex items-center justify-center transition';
+  }
+
+  .pswp__button--zoom,
+  .pswp__button--close {
+    --at-apply: 'mt-2 lg:mt-4 active:scale-90';
+  }
+
+  .pswp__button--zoom svg:hover,
+  .pswp__button--close svg:hover {
+    fill: #BEBEBE;
+  }
+
+  .pswp__button--close {
+    --at-apply: 'mr-4 lg:mr-8';
+  }
+
+  .pswp__button--zoom {
+    --at-apply: 'mr--6 lg:mr-0';
+  }
+</style>

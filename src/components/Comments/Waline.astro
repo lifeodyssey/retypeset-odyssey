@@ -19,7 +19,12 @@ const walineConfigJson = JSON.stringify({
   emoji,
   search,
   imageUploader,
-});
+})
+
+const {
+  light: { primary: lightPrimary, secondary: lightSecondary, background: lightBackground },
+  dark: { primary: darkPrimary, secondary: darkSecondary, background: darkBackground },
+} = themeConfig.color
 ---
 <div id="waline" data-config={walineConfigJson}></div>
 
@@ -34,7 +39,7 @@ function initWaline() {
   init({
     el: '#waline',
     path: window.location.pathname.replace(/^\/([a-z]{2}(-[a-z]{2})?)\//, '/'),
-    dark: 'auto',
+    dark: 'html.dark',
     requiredMeta: ['nick', 'mail'],
     highlighter: false,
     texRenderer: false,
@@ -46,3 +51,114 @@ function initWaline() {
 initWaline()
 document.addEventListener('astro:after-swap', initWaline)
 </script>
+
+<style is:global>
+#waline .wl-panel {
+  --at-apply: 'm-0 rounded-2';
+}
+#waline .wl-editor::placeholder {
+  color: var(--waline-light-grey);
+}
+</style>
+
+<style
+  define:vars={{
+  lightPrimary,
+  lightSecondary,
+  lightBackground,
+  darkPrimary,
+  darkSecondary,
+  darkBackground,
+}}
+>
+#waline {
+  /* 字体大小 */
+  --waline-font-size: 16px;
+
+  /* 常规颜色 */
+  --waline-white: var(--lightBackground);
+  --waline-light-grey: color-mix(in oklch, var(--lightPrimary), transparent 75%);
+  --waline-dark-grey: var(--lightSecondary);
+
+  /* 主题色 */
+  --waline-theme-color: var(--lightPrimary);
+  --waline-active-color: var(--lightPrimary);
+
+  /* 布局颜色 */
+  --waline-color: var(--lightSecondary);
+  --waline-bg-color: var(--lightBackground);
+  --waline-bg-color-light: var(--lightBackground);
+  --waline-bg-color-hover: var(--lightBackground);
+  --waline-border-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
+  --waline-disable-bg-color: var(--lightBackground);
+  --waline-disable-color: #bbb;
+  --waline-code-bg-color: #282c34;
+
+  /* 特殊颜色 */
+  --waline-bq-color: #f0f0f0;
+
+  /* 头像 */
+  --waline-avatar-size: 3.25rem;
+  --waline-m-avatar-size: calc(var(--waline-avatar-size) * 9 / 13);
+
+  /* 徽章 */
+  --waline-badge-color: #3498db;
+  --waline-badge-font-size: 0.775em;
+
+  /* 信息 */
+  --waline-info-bg-color: var(--lightBackground);
+  --waline-info-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
+  --waline-info-font-size: 0.625em;
+
+  /* 渲染选择 */
+  --waline-border: 1px solid var(--waline-border-color);
+  --waline-avatar-radius: 50%;
+  --waline-box-shadow: none;
+}
+
+/* 暗色模式 */
+html.dark #waline {
+  /* 字体大小 */
+  --waline-font-size: 16px;
+
+  /* 常规颜色 */
+  --waline-white: var(--darkBackground);
+  --waline-light-grey: color-mix(in oklch, var(--darkPrimary), transparent 75%);
+  --waline-dark-grey: var(--darkSecondary);
+
+  /* 主题色 */
+  --waline-theme-color: var(--darkPrimary);
+  --waline-active-color: var(--darkPrimary);
+
+  /* 布局颜色 */
+  --waline-color: var(--darkSecondary);
+  --waline-bg-color: var(--darkBackground);
+  --waline-bg-color-light: var(--darkBackground);
+  --waline-bg-color-hover: var(--darkBackground);
+  --waline-border-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
+  --waline-disable-bg-color: var(--darkBackground);
+  --waline-disable-color: #bbb;
+  --waline-code-bg-color: #282c34;
+
+  /* 特殊颜色 */
+  --waline-bq-color: #f0f0f0;
+
+  /* 头像 */
+  --waline-avatar-size: 3.25rem;
+  --waline-m-avatar-size: calc(var(--waline-avatar-size) * 9 / 13);
+
+  /* 徽章 */
+  --waline-badge-color: #3498db;
+  --waline-badge-font-size: 0.775em;
+
+  /* 信息 */
+  --waline-info-bg-color: var(--darkBackground);
+  --waline-info-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
+  --waline-info-font-size: 0.625em;
+
+  /* 渲染选择 */
+  --waline-border: 1px solid var(--waline-border-color);
+  --waline-avatar-radius: 50%;
+  --waline-box-shadow: none;
+}
+</style>

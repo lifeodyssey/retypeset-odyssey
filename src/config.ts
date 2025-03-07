@@ -16,16 +16,24 @@ export const themeConfig: ThemeConfig = {
   color: {
     mode: 'light', // light, dark
     light: {
-      primary: '#17191A', // accent color for title
-      secondary: '#505050', // secondary color for text
-      background: '#FAEDE4', // background color
-      codeTheme: 'github-light', // code block theme. See more at https://shiki.style/themes and https://vscodethemes.com/
+      // title color
+      primary: 'oklch(20% 0 0)',
+      // text color
+      secondary: 'oklch(40% 0 0)',
+      // background color
+      background: 'oklch(95% 0.018 57)',
+      // code block theme
+      codeTheme: 'github-light',
     },
     dark: {
-      primary: '#BEBEBE', // accent color for title
-      secondary: '#A0A09F', // secondary color for text
-      background: '#161616', // background color
-      codeTheme: 'github-dark', // code block theme. See more at https://shiki.style/themes and https://vscodethemes.com/
+      // title color
+      primary: 'oklch(80% 0 0)',
+      // text color
+      secondary: 'oklch(70% 0 0)',
+      // background color
+      background: 'oklch(20% 0 0)',
+      // code block theme
+      codeTheme: 'github-dark',
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
