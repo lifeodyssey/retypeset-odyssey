@@ -55,7 +55,7 @@ export const themeConfig: ThemeConfig = {
   comment: {
     waline: {
       // Waline server URL
-      serverURL: 'https://comment.radishzz.cc', // https://comment.example.com
+      serverURL: 'https://retypeset-comment.radishzz.cc', // https://comment.example.com
       // Emoji
       emoji: [
         'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
