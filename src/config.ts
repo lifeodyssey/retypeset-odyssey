@@ -17,19 +17,19 @@ export const themeConfig: ThemeConfig = {
     mode: 'light', // light, dark
     light: {
       // title color
-      primary: 'oklch(20% 0 0)',
+      primary: 'oklch(20% 0.02 60)',
       // text color
-      secondary: 'oklch(40% 0 0)',
+      secondary: 'oklch(40% 0.02 60)',
       // background color
-      background: 'oklch(95% 0.018 57)',
+      background: 'oklch(95% 0.02 60)',
       // code block theme
       codeTheme: 'github-light',
     },
     dark: {
       // title color
-      primary: 'oklch(80% 0 0)',
+      primary: 'oklch(90% 0 0)',
       // text color
-      secondary: 'oklch(70% 0 0)',
+      secondary: 'oklch(75% 0 0)',
       // background color
       background: 'oklch(20% 0 0)',
       // code block theme

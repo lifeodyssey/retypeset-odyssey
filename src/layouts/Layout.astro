@@ -24,6 +24,10 @@ interface Props {
 const { postTitle, postDescription, postImage } = Astro.props
 const { isHome, isPost } = getPagePath(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
+
+const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
+  ? 'mt-8'
+  : 'mt-12'
 ---
 
 <html
@@ -50,7 +54,7 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
       <main class="col-start-1 row-start-1">
         <slot />
       </main>
-      <Footer class="mt-13 block lg:hidden" />
+      <Footer class={`block lg:hidden ${footerMarginClass}`} />
     </div>
 
     <!--  fix position issue on ios   -->
