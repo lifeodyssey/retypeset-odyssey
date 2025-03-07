@@ -56,7 +56,8 @@ document.addEventListener('astro:after-swap', initWaline)
 <style is:global>
 #waline {
   .wl-panel {
-    --at-apply: 'm-0 rounded-2';
+    margin: 0;
+    border-radius: 0.5rem;
   }
   .wl-editor::placeholder {
     color: var(--waline-light-grey);
@@ -153,6 +154,7 @@ document.addEventListener('astro:after-swap', initWaline)
   .wl-nick {
     margin-inline-end: 0.6rem;
   }
+}
 </style>
 
 <style
