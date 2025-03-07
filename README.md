@@ -19,7 +19,8 @@
 
 # Retypeset
 
-A blog theme built with [Astro](https://astro.build/). Details in every sight, elegance in every space.
+A blog theme built with [Astro](https://astro.build/).
+Details in every sight, elegance in every space.
 
 - [Live Demo](https://retypeset.radishzz.cc/)
 - [Mobile design](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)
@@ -75,7 +76,7 @@ Work in progress...
 - [Fuwriu](https://github.com/saicaca/fuwari)
 - [Redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
 - [AstroPaper](https://github.com/satnaing/astro-paper)
-- [赫蹏（hètí）](https://github.com/sivan/heti)
+- [heti](https://github.com/sivan/heti)
 - [Early Summer Serif](https://github.com/GuiWonder/EarlySummerSerif)
 
 ## Star History

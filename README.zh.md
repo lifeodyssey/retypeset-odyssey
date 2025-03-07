@@ -19,7 +19,8 @@
 
 # 重新编排
 
-一款基于 [Astro](https://astro.build/) 框架的博客主题。所见皆为细节，方寸尽显优雅。
+一款基于 [Astro](https://astro.build/) 框架的博客主题。
+所见皆为细节，方寸尽显优雅。
 
 - [在线预览](https://retypeset.radishzz.cc/)
 - [移动端设计稿](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)
@@ -75,7 +76,7 @@
 - [Fuwriu](https://github.com/saicaca/fuwari)
 - [Redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
 - [AstroPaper](https://github.com/satnaing/astro-paper)
-- [赫蹏（hètí）](https://github.com/sivan/heti)
+- [赫蹏](https://github.com/sivan/heti)
 - [初夏明朝體](https://github.com/GuiWonder/EarlySummerSerif)
 
 ## Star History
