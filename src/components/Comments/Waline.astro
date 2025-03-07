@@ -54,106 +54,137 @@ document.addEventListener('astro:after-swap', initWaline)
 </script>
 
 <style is:global>
-#waline {
-  .wl-panel {
-    margin: 0;
-    border-radius: 0.5rem;
-  }
-  .wl-editor::placeholder {
-    color: var(--waline-light-grey);
-  }
-  /* .wl-btn.primary {
-    border-color: var(--waline-light-grey);
-    color: var(--waline-color);
-    background: none;
-  } */
-  .wl-text-number {
-    display: none;
-  }
-  .wl-action[title="Markdown Guide"] {
-    display: none;
-  }
-  .wl-emoji-popup {
-    inset-inline-start: 0;
-    .wl-tab-wrapper {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-  }
-  /* .wl-editor {
-    min-height: 6rem;
-  } */
-  /* .wl-card-item {
-    padding-left: 0;
-    padding-right: 0;
-  } */
-  .wl-meta-head {
-    padding-top: 0.75rem;
-    padding-bottom: 0.5rem;
-  }
-  .wl-sort {
-    display: none;
-  }
-  .wl-card {
-    border-bottom: none;
-  }
-  .wl-footer {
-    margin: 0.5rem;
-  }
-  /* .wl-comment {
-    margin-bottom: 2rem;
-  } */
-  .wl-header {
-    padding: 0;
-  }
-  /* .wl-nick,
-  .wl-mail,
-  .wl-link {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  } */
-  .wl-header.item3 {
-    border-bottom: none;
-  }
-  .wl-user {
-    margin-inline-end: 0.9rem;
-  }
-  .wl-like {
-    margin-right: 0.4rem;
-  }
-  .wl-content p {
-    line-height: 1.5rem;
-  }
-  /* .wl-power{
-    color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
-  }
-  a[href*="walinejs"] {
-    color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
-  } */
-  /* .wl-user-avatar {
-    color: var(--waline-light-grey);
-  } */
-  .wl-time {
-    color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
-  }
-  .wl-header-item {
-    border-bottom: 1px solid var(--waline-border-color);
-  }
-  .wl-header label {
-    font-size: 0.75rem;
-  }
-  .wl-header input {
-    font-size: 0.7rem;
-  }
-  .wl-editor {
-    min-height: 6rem;
-  }
-  .wl-nick {
-    margin-inline-end: 0.6rem;
-  }
+#waline .wl-panel {
+  margin: 0;
+  border-radius: 0.5rem;
+}
+
+#waline .wl-editor::placeholder {
+  color: var(--waline-light-grey);
+}
+
+/* #waline .wl-btn.primary {
+  border-color: var(--waline-light-grey);
+  color: var(--waline-color);
+  background: none;
+} */
+
+#waline .wl-text-number {
+  display: none;
+}
+
+#waline .wl-action[title="Markdown Guide"] {
+  display: none;
+}
+
+#waline .wl-emoji-popup {
+  inset-inline-start: 0;
+}
+
+#waline .wl-emoji-popup .wl-tab-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+#waline .wl-emoji-popup .wl-tab-wrapper {
+  margin: 0;
+}
+
+/* #waline .wl-editor {
+  min-height: 6rem;
+} */
+
+/* #waline .wl-card-item {
+  padding-left: 0;
+  padding-right: 0;
+} */
+
+#waline .wl-meta-head {
+  padding-top: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+
+#waline .wl-sort {
+  display: none;
+}
+
+#waline .wl-card {
+  border-bottom: none;
+}
+
+#waline .wl-footer {
+  margin: 0.5rem;
+}
+
+/* #waline .wl-comment {
+  margin-bottom: 2rem;
+} */
+
+#waline .wl-header {
+  padding: 0;
+}
+
+/* #waline .wl-nick,
+#waline .wl-mail,
+#waline .wl-link {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} */
+
+#waline .wl-header.item3 {
+  border-bottom: none;
+}
+
+#waline .wl-user {
+  margin-inline-end: 0.9rem;
+}
+
+#waline .wl-like {
+  margin-right: 0.4rem;
+}
+
+#waline .wl-content p {
+  line-height: 1.5rem;
+}
+
+/* #waline .wl-power {
+  color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
+}
+
+#waline a[href*="walinejs"] {
+  color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
+} */
+
+/* #waline .wl-user-avatar {
+  color: var(--waline-light-grey);
+} */
+
+#waline .wl-time {
+  color: color-mix(in oklch, var(--waline-theme-color), transparent 40%);
+}
+
+#waline .wl-header-item {
+  border-bottom: 1px solid var(--waline-border-color);
+}
+
+#waline .wl-header label {
+  font-size: 0.75rem;
+}
+
+#waline .wl-header input {
+  font-size: 0.7rem;
+}
+
+#waline .wl-editor {
+  min-height: 6rem;
+}
+
+#waline .wl-nick {
+  margin-inline-end: 0.6rem;
 }
 </style>
 
