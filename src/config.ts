@@ -81,7 +81,7 @@ export const themeConfig: ThemeConfig = {
       baidu: '', // Baidu Search: https://ziyuan.baidu.com
     },
     googleAnalyticsID: '', // Google Analytics: https://analytics.google.com
-    umamiAnalyticsID: '', // Umami Analytics: https://cloud.umami.is
+    umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697', // Umami Analytics: https://cloud.umami.is
     follow: {
       feedID: '', // feed ID
       userID: '', // user ID
@@ -114,7 +114,7 @@ export const themeConfig: ThemeConfig = {
     // If you proxy analytics JavaScript to the custom domain, you can fill in below.
     // See more at https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738 and https://github.com/umami-software/umami/discussions/1026
     customGoogleAnalyticsJS: '', // https://custom.example.com/whatever.js
-    customUmamiAnalyticsJS: '', // https://custom.example.com/whatever.js
+    customUmamiAnalyticsJS: 'https://js.radishzz.cc/jquery.min.js', // https://custom.example.com/whatever.js
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }
