@@ -1,4 +1,4 @@
-import type { langPath } from '@/utils/ui'
+import type { langPath } from '@/utils/i18n/ui'
 
 type Exclude<T, U> = T extends U ? never : T
 

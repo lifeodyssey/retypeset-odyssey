@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
 import themeConfig from '@/config'
-import { langPath } from '@/utils/ui'
+import { langPath } from '@/utils/i18n/ui'
 import { getCollection } from 'astro:content'
 
 // Type definitions
@@ -142,7 +142,7 @@ export async function getPostsGroupByTags(lang?: string) {
 
 // Get all posts by specific tag
 export async function getPostsByTag(tag: string, lang?: string) {
-  const posts = await getRegularPosts(lang)
+  const posts = await getPosts(lang)
   return posts.filter((post: Post) =>
     post.data.tags?.includes(tag),
   )

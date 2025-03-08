@@ -45,7 +45,7 @@ export const themeConfig: ThemeConfig = {
     // Not fill in the default locale code again
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
     // Font styles for post content
-    fontStyle: 'serif', // sans, serif
+    fontStyle: 'sans', // sans, serif
     // Space between title and subtitle
     titleSpace: 3, // 1, 2, 3
   },

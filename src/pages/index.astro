@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
+import PostTitleList from '@/components/PostTitleList.astro'
 
 const pinnedPosts = await getPinnedPosts()
 const postsByYear = await getPostsByYear()
@@ -8,69 +9,18 @@ const postsByYear = await getPostsByYear()
 
 <Layout>
   <main>
+    <!-- Pinned Posts -->
     {pinnedPosts.length > 0 && (
-      <section>
-        <ul>
-          {pinnedPosts.map(post => (
-            <li>
-              <a href={`/posts/${post.data.slug || post.slug}/`}>
-                {post.data.title}
-                <div class="block lg:inline lg:before:content-['_']">
-                  {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
-                  {post.remarkPluginFrontmatter?.minutes && <span>  {post.remarkPluginFrontmatter.minutes} min</span>}
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
+      <section class="mb-7.5">
+        <div class="uno-decorative-line"></div>
+        <PostTitleList posts={pinnedPosts} />
       </section>
     )}
-
+    <!-- Regular Posts -->
     {[...postsByYear.entries()].map(([_year, posts]) => (
-      // Year Group
       <section class="mb-7.5">
-        {/* Decorative Line */}
-        <div class="h-0.25 w-10 bg-secondary opacity-25"></div>
-        {/* Posts List */}
-        <ul>
-          {posts.map(post => (
-            // Single Post
-            <li class="mt-4.375">
-
-              <a
-                class="hover:c-primary"
-                href={`/posts/${post.data.slug || post.slug}`}
-                transition:name={`post-${post.data.slug || post.slug}`}
-                data-disable-transition-on-theme
-              >
-                {post.data.title}
-              </a>
-
-              <div
-                class="mb-5.625 text-3.5 leading-6.875 font-time lg:(hidden)"
-                transition:name={`time-${post.data.slug || post.slug}`}
-                data-disable-transition-on-theme
-              >
-                <time>
-                  {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-                </time>
-                <span class="ml-1.25">
-                  {post.remarkPluginFrontmatter?.minutes} min
-                </span>
-              </div>
-
-              <div class="mb-5.625 hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)">
-                <time>
-                  {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-                </time>
-                <span class="ml-1.25">
-                  {post.remarkPluginFrontmatter?.minutes} min
-                </span>
-              </div>
-
-            </li>
-          ))}
-        </ul>
+        <div class="uno-decorative-line"></div>
+        <PostTitleList posts={posts} />
       </section>
     ))}
   </main>

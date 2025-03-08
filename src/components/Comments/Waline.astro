@@ -1,6 +1,6 @@
 ---
 import { themeConfig } from '@/config'
-import { getWalineLang } from '@/utils/ui'
+import { getWalineLang } from '@/utils/i18n/ui'
 
 const {
   serverURL = '',
@@ -184,7 +184,7 @@ document.addEventListener('astro:after-swap', initWaline)
   --waline-bg-color-light: var(--lightBackground);
   --waline-bg-color-hover: var(--lightBackground);
   --waline-border-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
-  --waline-disable-bg-color: color-mix(in oklch, var(--lightSecondary), transparent 85%);
+  --waline-disable-bg-color: color-mix(in oklch, var(--lightSecondary), transparent 92%);
   --waline-disable-color: var(--lightPrimary);
 
   /* Special Colors */
@@ -214,7 +214,7 @@ html.dark #waline {
   --waline-bg-color-light: var(--darkBackground);
   --waline-bg-color-hover: var(--darkBackground);
   --waline-border-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
-  --waline-disable-bg-color: color-mix(in oklch, var(--darkSecondary), transparent 85%);
+  --waline-disable-bg-color: color-mix(in oklch, var(--darkSecondary), transparent 92%);
   --waline-disable-color: var(--darkPrimary);
 
   /* Special Colors */

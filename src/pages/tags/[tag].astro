@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
+import PostTitleList from '@/components/PostTitleList.astro'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
@@ -16,15 +17,15 @@ const allTags = await getAllTags()
 ---
 
 <Layout>
-  <div class="h-0.25 w-10 bg-secondary opacity-25"></div>
-  <div class="mt-4.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6">
+  <div class="uno-decorative-line"></div>
+  <div class="uno-tags-wrapper">
     {allTags.map(tag => (
       <a
         href={`/tags/${tag}/`}
-        class={`inline-block whitespace-nowrap border rounded-full px-3.2 py-0.7 transition-colors ${
+        class={`uno-tags-style ${
           Astro.props.tag === tag
-            ? "border-secondary text-primary"
-            : "border-secondary/25 c-secondary hover:(border-secondary text-primary)"
+            ? "uno-tag-active"
+            : ""
         }`}
       >
         {tag}
@@ -33,41 +34,6 @@ const allTags = await getAllTags()
   </div>
 
   <div class="mt-10.625">
-    <ul>
-      {posts.map(post => (
-        <li class="mt-4.375">
-          <a
-            class="hover:c-primary"
-            href={`/posts/${post.data.slug || post.slug}`}
-            transition:name={`post-${post.data.slug || post.slug}`}
-            data-disable-transition-on-theme
-          >
-            {post.data.title}
-          </a>
-
-          <div
-            class="mb-5.625 text-3.5 leading-6.875 font-time lg:(hidden)"
-            transition:name={`time-${post.data.slug || post.slug}`}
-            data-disable-transition-on-theme
-          >
-            <time>
-              {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-            </time>
-            <span class="ml-1.25">
-              {post.remarkPluginFrontmatter?.minutes} min
-            </span>
-          </div>
-
-          <div class="mb-5.625 hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)">
-            <time>
-              {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-            </time>
-            <span class="ml-1.25">
-              {post.remarkPluginFrontmatter?.minutes} min
-            </span>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <PostTitleList posts={posts} />
   </div>
 </Layout>

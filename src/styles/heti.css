@@ -24,7 +24,7 @@
 	margin-block-end:0 !important
 }
 .heti a {
-  --at-apply: 'uno-custom-underline';
+  --at-apply: 'uno-article-underline';
 }
 .heti blockquote {
 	margin-block-start:12px;

@@ -33,8 +33,14 @@ export default defineConfig({
     },
   },
   shortcuts: {
-    'uno-custom-underline': 'underline mx-0.3em decoration-secondary/35 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-primary/70 transition)',
-  },
+    'uno-article-underline': 'underline mx-0.3em decoration-secondary/25 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-primary/60 transition)',
+    'uno-tags-style': 'inline-block whitespace-nowrap border border-secondary/25 rounded-full px-3.2 py-0.7 c-secondary transition-colors hover:(border-secondary/60 text-primary)',
+    'uno-tag-active': 'border-secondary/60 text-primary',
+    'uno-decorative-line': 'h-0.25 w-10 bg-secondary opacity-25',
+    'uno-mobile-time': 'mb-5.625 text-3.5 leading-6.875 font-time lg:(hidden)',
+    'uno-desktop-time': 'mb-5.625 hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)',
+    'uno-tags-wrapper': 'mt-4.375 w-95% flex flex-wrap gap-3',
+    },
   rules: [
     ['scrollbar-hidden', {
       'scrollbar-width': 'none',
