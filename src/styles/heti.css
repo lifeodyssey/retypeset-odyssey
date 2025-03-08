@@ -23,6 +23,9 @@
 .heti>*:last-child,.heti section>*:last-child,.heti td>*:last-child {
 	margin-block-end:0 !important
 }
+.heti a {
+  --at-apply: 'uno-custom-underline';
+}
 .heti blockquote {
 	margin-block-start:12px;
 	margin-block-end:24px;

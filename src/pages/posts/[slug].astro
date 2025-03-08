@@ -25,7 +25,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postDescription={post.data.description}
   postImage={post.data.image}
 >
-  <article class="heti mb-16">
+  <article class="heti mb-12.6">
     <h1 class="post-title">
       <span
         transition:name={`post-${post.data.slug || post.slug}`}
@@ -48,23 +48,24 @@ const { Content, remarkPluginFrontmatter } = await post.render()
       </span>
     </div>
     <Content />
-
-    {post.data.tags && post.data.tags.length > 0 && (
-      <div class="mt-12.625">
-        <div class="h-0.25 w-10 bg-secondary opacity-25"></div>
-        <div class="mt-4.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6">
-          {post.data.tags.map(tag => (
-            <a
-              href={`/tags/${tag}/`}
-              class="inline-block whitespace-nowrap border border-secondary/25 rounded-full px-3.2 py-0.7 c-secondary transition-colors hover:(border-secondary text-primary)"
-            >
-              {tag}
-            </a>
-          ))}
-        </div>
-      </div>
-    )}
   </article>
+
+  <!-- Tags -->
+  {post.data.tags && post.data.tags.length > 0 && (
+    <div class="mb-16">
+      <div class="h-0.25 w-10 bg-secondary opacity-25"></div>
+      <div class="mt-4.375 w-95% flex flex-wrap gap-x-3 gap-y-3.6">
+        {post.data.tags.map(tag => (
+          <a
+            href={`/tags/${tag}/`}
+            class="inline-block whitespace-nowrap border border-secondary/25 rounded-full px-3.2 py-0.7 c-secondary transition-colors hover:(border-secondary text-primary)"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
 
   <Comments />
 </Layout>

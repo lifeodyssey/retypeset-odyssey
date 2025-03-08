@@ -19,7 +19,9 @@
 
 # Retypeset
 
-A blog theme based on the <a href="https://astro.build/">Astro</a> framework, inspired by <a href="https://astro-theme-typography.vercel.app/">Typography</a>. This theme is based on the style of Typography, through the establishment of a new visual standard, all the pages are rearranged to create a reading experience like the pages of a paper book, reviving the beauty of traditional layouts. Details in every sight, elegance in every space.
+A static blog theme based on the <a href="https://astro.build/">Astro</a> framework, inspired by <a href="https://astro-theme-typography.vercel.app/">Typography</a>. This theme is based on the style of Typography, through the establishment of a new visual standard, all the pages are rearranged to create a reading experience like the pages of a paper book, reviving the beauty of typography.
+
+Details in every sight, elegance in every space.
 
 - [Live Demo](https://retypeset.radishzz.cc/)
 - [Mobile design](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)

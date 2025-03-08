@@ -32,7 +32,9 @@ export default defineConfig({
       serif: ['STIX', 'EarlySummer', 'Georgia', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
     },
   },
-  shortcuts: {},
+  shortcuts: {
+    'uno-custom-underline': 'underline mx-0.3em decoration-secondary/35 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-primary/50 transition underline-0.1em)',
+  },
   rules: [
     ['scrollbar-hidden', {
       'scrollbar-width': 'none',
