@@ -184,6 +184,8 @@ document.addEventListener('astro:after-swap', initWaline)
   --waline-bg-color-light: var(--lightBackground);
   --waline-bg-color-hover: var(--lightBackground);
   --waline-border-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
+  --waline-disable-bg-color: color-mix(in oklch, var(--lightSecondary), transparent 93%);
+  --waline-disable-color: var(--lightPrimary);
 
   /* Special Colors */
   --waline-bq-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
@@ -212,6 +214,8 @@ html.dark #waline {
   --waline-bg-color-light: var(--darkBackground);
   --waline-bg-color-hover: var(--darkBackground);
   --waline-border-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
+  --waline-disable-bg-color: color-mix(in oklch, var(--darkSecondary), transparent 93%);
+  --waline-disable-color: var(--darkPrimary);
 
   /* Special Colors */
   --waline-bq-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
