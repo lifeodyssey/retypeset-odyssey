@@ -26,7 +26,12 @@ const {
   dark: { primary: darkPrimary, secondary: darkSecondary, background: darkBackground },
 } = themeConfig.color
 ---
-<div id="waline" data-config={walineConfigJson}></div>
+<div
+  id="waline"
+  class="mt-16"
+  data-config={walineConfigJson}
+>
+</div>
 
 <script>
 import { init } from '@waline/client'

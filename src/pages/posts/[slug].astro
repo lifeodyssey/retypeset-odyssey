@@ -52,18 +52,16 @@ const { Content, remarkPluginFrontmatter } = await post.render()
 
   <!-- Tags -->
   {post.data.tags && post.data.tags.length > 0 && (
-    <div class="mb-16">
-      <div class="uno-decorative-line"></div>
-      <div class="uno-tags-wrapper">
-        {post.data.tags.map(tag => (
-          <a
-            href={`/tags/${tag}/`}
-            class="uno-tags-style"
-          >
-            {tag}
-          </a>
-        ))}
-      </div>
+    <div class="uno-decorative-line"></div>
+    <div class="uno-tags-wrapper">
+      {post.data.tags.map(tag => (
+        <a
+          href={`/tags/${tag}/`}
+          class="uno-tags-style"
+        >
+          {tag}
+        </a>
+      ))}
     </div>
   )}
 
