@@ -26,7 +26,7 @@ const { isHome, isPost } = getPagePath(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 
 const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
-  ? 'mt-4'
+  ? 'mt-8'
   : 'mt-12'
 ---
 

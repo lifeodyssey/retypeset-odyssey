@@ -102,16 +102,30 @@ document.addEventListener('astro:after-swap', initWaline)
 #waline .wl-text-number,
 #waline .wl-action[title="Markdown Guide"],
 #waline .wl-sort,
-#waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar {
+#waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar,
+#waline .wl-gallery::-webkit-scrollbar {
   --at-apply: 'hidden';
 }
 
 #waline .wl-emoji-popup {
-  --at-apply: 'start-0';
+  --at-apply: 'start-0 border-secondary/25';
 }
 
-#waline .wl-emoji-popup .wl-tab-wrapper {
-  --at-apply: 'scrollbar-hidden m-0';
+#waline .wl-emoji-popup .wl-tab-wrapper,
+#waline .wl-gallery {
+  --at-apply: 'scrollbar-hidden';
+}
+
+#waline .wl-gif-popup {
+  --at-apply: 'border-secondary/25';
+}
+
+#waline .wl-gif-popup input {
+  --at-apply: 'bg-background border-secondary/25';
+}
+
+#waline .wl-gif-popup input::placeholder {
+  --at-apply: 'c-secondary/30 text-3.5';
 }
 
 #waline .wl-meta-head {
@@ -131,7 +145,7 @@ document.addEventListener('astro:after-swap', initWaline)
 }
 
 #waline .wl-time {
-  color: color-mix(in oklch, var(--waline-theme-color), transparent 30%);
+  color: color-mix(in oklch, var(--waline-theme-color), transparent 20%);
 }
 
 #waline .wl-edit,
@@ -141,10 +155,6 @@ document.addEventListener('astro:after-swap', initWaline)
 
 #waline .wl-like {
   --at-apply: 'mr-1.2';
-}
-
-#waline .wl-empty {
-  --at-apply: 'pt-3 pb-7';
 }
 </style>
 
@@ -176,14 +186,9 @@ document.addEventListener('astro:after-swap', initWaline)
   --waline-border-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
   --waline-disable-bg-color: var(--lightBackground);
   --waline-disable-color: #bbb;
-  --waline-code-bg-color: #282c34;
 
   /* 特殊颜色 */
   --waline-bq-color: #f0f0f0;
-
-  /* 徽章 */
-  --waline-badge-color: #3498db;
-  --waline-badge-font-size: 0.775em;
 
   /* 信息 */
   --waline-info-bg-color: var(--lightBackground);
@@ -214,18 +219,12 @@ html.dark #waline {
   --waline-border-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
   --waline-disable-bg-color: var(--darkBackground);
   --waline-disable-color: #bbb;
-  --waline-code-bg-color: #282c34;
 
   /* 特殊颜色 */
   --waline-bq-color: #f0f0f0;
 
-  /* 徽章 */
-  --waline-badge-color: #3498db;
-  --waline-badge-font-size: 0.775em;
-
   /* 信息 */
   --waline-info-bg-color: var(--darkBackground);
   --waline-info-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
-  --waline-info-font-size: 0.625em;
 }
 </style>
