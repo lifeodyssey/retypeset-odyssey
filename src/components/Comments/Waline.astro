@@ -54,8 +54,16 @@ document.addEventListener('astro:after-swap', initWaline)
 </script>
 
 <style is:global>
+#waline .wl-login-info {
+  --at-apply: 'mt-0 mr-3'
+}
+
+#waline .wl-login-nick:not(:has(img)) {
+  --at-apply: 'leading-3.6 mt-1.4';
+}
+
 #waline .wl-panel {
-  --at-apply: 'm-0 rounded-lg'
+  --at-apply: 'm-0 rounded-lg border-secondary/25'
 }
 
 #waline .wl-header {
@@ -110,12 +118,12 @@ document.addEventListener('astro:after-swap', initWaline)
   --at-apply: 'pt-3 pb-2';
 }
 
-#waline .wl-user {
-  --at-apply: 'me-3.6';
+#waline .wl-card-item {
+  --at-apply: 'px-0';
 }
 
-#waline .wl-nick {
-  --at-apply: 'me-2.4';
+#waline .wl-user-avatar {
+  --at-apply: 'mt-1';
 }
 
 #waline .wl-content p {
@@ -126,8 +134,17 @@ document.addEventListener('astro:after-swap', initWaline)
   color: color-mix(in oklch, var(--waline-theme-color), transparent 30%);
 }
 
+#waline .wl-edit,
+#waline .wl-delete {
+  --at-apply: 'mr-0.4';
+}
+
 #waline .wl-like {
-  --at-apply: 'mr-1.6';
+  --at-apply: 'mr-1.2';
+}
+
+#waline .wl-empty {
+  --at-apply: 'pt-3 pb-7';
 }
 </style>
 
