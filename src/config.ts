@@ -65,7 +65,7 @@ export const themeConfig: ThemeConfig = {
       // Whether to enable GIF search
       search: false, // true, false
       // Whether to enable image uploader
-      // BUG：unable to disable image uploader
+      // BUG：unable to hide image uploader icon
       imageUploader: false, // true, false
     },
   },

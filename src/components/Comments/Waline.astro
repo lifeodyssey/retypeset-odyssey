@@ -169,61 +169,54 @@ document.addEventListener('astro:after-swap', initWaline)
 }}
 >
 #waline {
-  /* 常规颜色 */
+  /* Regular Colors */
   --waline-white: var(--lightBackground);
   --waline-light-grey: color-mix(in oklch, var(--lightPrimary), transparent 75%);
   --waline-dark-grey: var(--lightSecondary);
 
-  /* 主题色 */
+  /* Theme Colors */
   --waline-theme-color: var(--lightPrimary);
   --waline-active-color: var(--lightPrimary);
 
-  /* 布局颜色 */
+  /* Layout Colors */
   --waline-color: var(--lightSecondary);
   --waline-bg-color: var(--lightBackground);
   --waline-bg-color-light: var(--lightBackground);
   --waline-bg-color-hover: var(--lightBackground);
   --waline-border-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
-  --waline-disable-bg-color: var(--lightBackground);
-  --waline-disable-color: #bbb;
 
-  /* 特殊颜色 */
-  --waline-bq-color: #f0f0f0;
+  /* Special Colors */
+  --waline-bq-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
 
-  /* 信息 */
+  /* Information */
   --waline-info-bg-color: var(--lightBackground);
   --waline-info-color: color-mix(in oklch, var(--lightPrimary), transparent 75%);
-  --waline-info-font-size: 0.625em;
 
-  /* 渲染选择 */
+  /* Rendering Options */
   --waline-avatar-radius: 20%;
 }
 
-/* 暗色模式 */
 html.dark #waline {
-
-  /* 常规颜色 */
+  /* Regular Colors */
   --waline-white: var(--darkBackground);
   --waline-light-grey: color-mix(in oklch, var(--darkPrimary), transparent 75%);
   --waline-dark-grey: var(--darkSecondary);
 
-  /* 主题色 */
+  /* Theme Colors */
   --waline-theme-color: var(--darkPrimary);
   --waline-active-color: var(--darkPrimary);
 
-  /* 布局颜色 */
+  /* Layout Colors */
   --waline-color: var(--darkSecondary);
   --waline-bg-color: var(--darkBackground);
   --waline-bg-color-light: var(--darkBackground);
   --waline-bg-color-hover: var(--darkBackground);
   --waline-border-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
-  --waline-disable-bg-color: var(--darkBackground);
-  --waline-disable-color: #bbb;
 
-  /* 特殊颜色 */
-  --waline-bq-color: #f0f0f0;
+  /* Special Colors */
+  --waline-bq-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
 
-  /* 信息 */
+  /* Information */
   --waline-info-bg-color: var(--darkBackground);
   --waline-info-color: color-mix(in oklch, var(--darkPrimary), transparent 75%);
 }
