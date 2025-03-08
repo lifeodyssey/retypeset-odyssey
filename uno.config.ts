@@ -33,7 +33,7 @@ export default defineConfig({
     },
   },
   shortcuts: {
-    'uno-custom-underline': 'underline mx-0.3em decoration-secondary/35 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-primary/50 transition underline-0.1em)',
+    'uno-custom-underline': 'underline mx-0.3em decoration-secondary/35 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-primary/70 transition)',
   },
   rules: [
     ['scrollbar-hidden', {
