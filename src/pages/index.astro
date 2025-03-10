@@ -1,7 +1,7 @@
 ---
+import PostTitleList from '@/components/PostTitleList.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
-import PostTitleList from '@/components/PostTitleList.astro'
 
 const pinnedPosts = await getPinnedPosts()
 const postsByYear = await getPostsByYear()

@@ -43,9 +43,14 @@ const { Content, remarkPluginFrontmatter } = await post.render()
       <time>
         {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
       </time>
-      <span class="ml-1.25">
+      <span class="ml-1.5">
         {remarkPluginFrontmatter.minutes} min
       </span>
+      {post.data.updated && (
+        <span class="ml-1.5">
+          updated {post.data.updated.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
+        </span>
+      )}
     </div>
     <Content />
   </article>

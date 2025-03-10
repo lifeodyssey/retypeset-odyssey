@@ -10,7 +10,7 @@ const postsCollection = defineCollection({
     description: z.string().optional().default(''),
     image: z.string().optional().default(''),
     // Advanced
-    pin: z.boolean().optional().default(false),
+    pin: z.number().int().min(0).max(99).optional().default(0),
     toc: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
     lang: z.string().optional().default(''),

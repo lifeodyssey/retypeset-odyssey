@@ -69,13 +69,15 @@ export async function getPosts(lang?: string) {
 // Get all posts except drafts (not pinned)
 export async function getRegularPosts(lang?: string) {
   const posts = await getPosts(lang)
-  return posts.filter(post => !post.data.pin)
+  return posts.filter(post => !post.data.pin || post.data.pin === 0)
 }
 
 // Get pinned posts
 export async function getPinnedPosts(lang?: string) {
   const posts = await getPosts(lang)
-  return posts.filter(post => post.data.pin)
+  return posts
+    .filter(post => post.data.pin && post.data.pin > 0)
+    .sort((a, b) => (b.data.pin || 0) - (a.data.pin || 0))
 }
 
 // Get posts grouped by year (not pinned)
@@ -107,23 +109,18 @@ export async function getPostsByYear(lang?: string): Promise<PostsGroupByYear> {
   return new Map([...yearMap.entries()].sort((a, b) => b[0] - a[0]))
 }
 
-// Get all tags
+// Get all tags sorted by post count
 export async function getAllTags(lang?: string) {
-  const posts = await getPosts(lang)
-  const tags = new Set<string>()
+  const tagMap = await getPostsGroupByTags(lang)
+  const tagsWithCount = Array.from(tagMap.entries())
 
-  posts.forEach((post: Post) => {
-    post.data.tags?.forEach((tag: string) =>
-      tags.add(tag),
-    )
-  })
-
-  return Array.from(tags)
+  tagsWithCount.sort((a, b) => b[1].length - a[1].length)
+  return tagsWithCount.map(([tag]) => tag)
 }
 
 // Get posts grouped by tags
 export async function getPostsGroupByTags(lang?: string) {
-  const posts = await getRegularPosts(lang)
+  const posts = await getPosts(lang)
   const tagMap = new Map<string, Post[]>()
 
   posts.forEach((post: Post) => {

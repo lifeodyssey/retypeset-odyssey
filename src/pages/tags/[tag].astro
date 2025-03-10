@@ -1,7 +1,7 @@
 ---
+import PostTitleList from '@/components/PostTitleList.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
-import PostTitleList from '@/components/PostTitleList.astro'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
@@ -24,8 +24,8 @@ const allTags = await getAllTags()
         href={`/tags/${tag}/`}
         class={`uno-tags-style ${
           Astro.props.tag === tag
-            ? "uno-tag-active"
-            : ""
+            ? 'uno-tag-active'
+            : ''
         }`}
       >
         {tag}
