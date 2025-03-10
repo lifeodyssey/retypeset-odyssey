@@ -17,21 +17,21 @@ export const themeConfig: ThemeConfig = {
     mode: 'light', // light, dark
     light: {
       // title color
-      primary: 'oklch(25% 0.019 57)',
+      primary: 'oklch(25% 0.005 298)',
       // text color
-      secondary: 'oklch(40% 0.019 57)',
+      secondary: 'oklch(40% 0.005 298)',
       // background color
-      background: 'oklch(95.4% 0.019 57)',
+      background: 'oklch(96% 0.005 298)',
       // code block theme
       codeTheme: 'github-light',
     },
     dark: {
       // title color
-      primary: 'oklch(90% 0 0)',
+      primary: 'oklch(88% 0.005 298)',
       // text color
-      secondary: 'oklch(75% 0 0)',
+      secondary: 'oklch(77% 0.005 298)',
       // background color
-      background: 'oklch(20% 0 0)',
+      background: 'oklch(22% 0.005 298)',
       // code block theme
       codeTheme: 'github-dark',
     },
