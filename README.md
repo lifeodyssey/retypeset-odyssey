@@ -19,9 +19,7 @@
 
 # Retypeset
 
-Retypeset is a static blog theme based on the <a href="https://astro.build/">Astro</a> framework, with design inspiration drawn from <a href="https://astro-theme-typography.vercel.app/">Typography</a>. This theme establishes new visual standards and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.
-
-Details in every sight, elegance in every space.
+Retypeset is a static blog theme based on the <a href="https://astro.build/">Astro</a> framework, inspired by <a href="https://astro-theme-typography.vercel.app/">Typography</a>. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.
 
 - [Live Demo](https://retypeset.radishzz.cc/)
 - [Mobile design](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)
