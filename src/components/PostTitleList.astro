@@ -2,22 +2,22 @@
 // Define props received by the component
 interface Post {
   data: {
-    title: string;
-    slug?: string;
-    published: Date;
-  };
-  slug?: string;
+    title: string
+    abbrlink?: string
+    published: Date
+  }
+  slug?: string
   remarkPluginFrontmatter?: {
-    minutes?: number;
-  };
+    minutes?: number
+  }
 }
 
 // Receive posts parameter passed from outside
-const { posts } = Astro.props;
+const { posts } = Astro.props
 
 // Declare the type of props
 export interface Props {
-  posts: Post[];
+  posts: Post[]
 }
 ---
 <ul>
@@ -27,8 +27,8 @@ export interface Props {
 
       <a
         class="hover:c-primary"
-        href={`/posts/${post.data.slug || post.slug}`}
-        transition:name={`post-${post.data.slug || post.slug}`}
+        href={`/posts/${post.data.abbrlink || post.slug}/`}
+        transition:name={`post-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >
         {post.data.title}
@@ -36,7 +36,7 @@ export interface Props {
 
       <div
         class="uno-mobile-time"
-        transition:name={`time-${post.data.slug || post.slug}`}
+        transition:name={`time-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >
         <time>

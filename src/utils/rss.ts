@@ -46,7 +46,7 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
       description: post.data.description || getExcerpt(post.body),
       // Generate absolute URL with optional language prefix
       link: new URL(
-        `${lang ? `${lang}/` : ''}posts/${post.data.slug || post.slug}/`,
+        `${lang ? `${lang}/` : ''}posts/${post.data.abbrlink || post.slug}/`,
         url,
       ).toString(),
       // Convert markdown content to HTML, allowing img tags

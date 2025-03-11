@@ -14,9 +14,9 @@ const postsCollection = defineCollection({
     toc: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
     lang: z.string().optional().default(''),
-    slug: z.string().optional().default('').refine(
-      slug => !slug || /^[\w\-]*$/.test(slug),
-      { message: 'Slug can only contain letters, numbers, hyphens and underscores' },
+    abbrlink: z.string().optional().default('').refine(
+      abbrlink => !abbrlink || /^[a-z0-9\-]*$/.test(abbrlink),
+      { message: 'Abbrlink can only contain letters, numbers, hyphens and underscores' },
     ),
     minutes: z.number().optional(),
   }),

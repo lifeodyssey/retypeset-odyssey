@@ -20,7 +20,14 @@ export function getLangFromPath(path: string) {
 export function getLocalizedPath(path: string, currentLang?: string) {
   const clean = cleanPath(path)
   const lang = currentLang || getLangFromPath(path)
-  return lang === defaultLocale ? `/${clean}` : `/${lang}/${clean}`
+
+  // 如果是根目录（clean为空），则返回/
+  if (clean === '') {
+    return lang === defaultLocale ? '/' : `/${lang}/`
+  }
+
+  // 其他路径正常处理
+  return lang === defaultLocale ? `/${clean}/` : `/${lang}/${clean}/`
 }
 
 export function isHomePage(path: string) {
@@ -54,4 +61,28 @@ export function getPagePath(path: string) {
     isAbout: isAboutPage(path),
     getLocalizedPath: (targetPath: string) => getLocalizedPath(targetPath, currentLang),
   }
+}
+
+/**
+ * 获取特定文章支持的语言列表
+ * @param post 文章对象
+ * @returns 该文章支持的语言数组，如果未指定则返回所有配置语言
+ */
+export function getAvailableLanguages(post?: { data?: { lang?: string } }) {
+  // 默认支持所有配置的语言
+  const defaultLangs = ['', ...themeConfig.global.moreLocale]
+
+  // 如果没有提供文章对象，返回所有语言
+  if (!post || !post.data) {
+    return defaultLangs
+  }
+
+  // 确定文章支持的语言
+  if (post.data.lang && typeof post.data.lang === 'string' && post.data.lang.trim() !== '') {
+    // 如果lang是字符串
+    return ['', post.data.lang]
+  }
+
+  // 如果没有指定或格式不对，返回所有语言
+  return defaultLangs
 }

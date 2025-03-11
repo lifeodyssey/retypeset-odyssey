@@ -46,7 +46,7 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', custom
 {[locale, ...moreLocale].map(lang => (
   <link
     rel="alternate"
-    href={`${url}${lang === locale ? '' : `/${lang}`}`}
+    href={`${url}${lang === locale ? '' : `/${lang}/`}`}
     hreflang={lang === 'zh-tw' ? 'zh-TW' : lang}
   />
 ))}

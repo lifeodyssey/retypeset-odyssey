@@ -25,7 +25,7 @@ export async function checkSlugDuplication(posts: Post[]): Promise<string[]> {
 
   posts.forEach((post) => {
     const lang = post.data.lang || ''
-    const slug = post.data.slug || post.slug
+    const slug = post.data.abbrlink || post.slug
 
     if (!slugMap.has(lang)) {
       slugMap.set(lang, new Set())

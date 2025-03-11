@@ -1,14 +1,64 @@
 ---
 import themeConfig from '@/config'
+import { getPagePath } from '@/utils/i18n/path'
+import { getCollection } from 'astro:content'
 
-// Language array with empty string as default locale
-const langs = ['', ...themeConfig.global.moreLocale]
-const currentLocale = themeConfig.global.locale
+// 获取当前页面路径信息
+const { isPost } = getPagePath(Astro.url.pathname)
 
-function getLanguageDisplayName(code: string) {
-  if (!code) {
-    return 'Default'
+// 获取默认语言
+const defaultLocale = themeConfig.global.locale
+
+// 定义固定的语言顺序（按照要求的顺序）
+const fixedLangOrder = [defaultLocale, ...themeConfig.global.moreLocale]
+
+// 获取当前文章的可用语言
+let availableLangs: string[] = []
+let currentPostSlug = ''
+
+// 如果是文章页，获取当前文章对象
+if (isPost) {
+  // 从URL中提取文章slug
+  const pathParts = Astro.url.pathname.split('/')
+  const slugIndex = pathParts.findIndex(part => part === 'posts') + 1
+  if (slugIndex > 0 && pathParts.length > slugIndex) {
+    currentPostSlug = pathParts[slugIndex]
+
+    // 获取所有文章
+    const posts = await getCollection('posts')
+
+    // 找到所有具有相同abbrlink或slug的文章
+    const relatedPosts = posts.filter(post =>
+      post.data.abbrlink === currentPostSlug || post.slug === currentPostSlug,
+    )
+
+    if (relatedPosts.length > 0) {
+      // 收集所有相关文章支持的语言
+      const supportedLangs = new Set()
+
+      relatedPosts.forEach((post) => {
+        // 处理lang属性
+        if (typeof post.data.lang === 'string' && post.data.lang.trim() !== '') {
+          supportedLangs.add(post.data.lang)
+        }
+        // 如果没有指定语言，则假定支持默认语言
+        else {
+          supportedLangs.add(defaultLocale)
+        }
+      })
+
+      // 按照固定顺序筛选出可用的语言
+      availableLangs = fixedLangOrder.filter(lang => supportedLangs.has(lang))
+    }
   }
+}
+else {
+  // 非文章页面使用所有语言
+  availableLangs = fixedLangOrder
+}
+
+// 当前语言
+function getLanguageDisplayName(code: string) {
   return new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || code
 }
 ---
@@ -17,7 +67,7 @@ function getLanguageDisplayName(code: string) {
   type="button"
   id="language-switcher"
   class="aspect-square w-4 c-secondary active:scale-90"
-  aria-label={`Current Language: ${getLanguageDisplayName(currentLocale)}. Click to switch to next language.`}
+  aria-label={`Current Language: ${getLanguageDisplayName(defaultLocale)}. Click to switch to next language.`}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +79,7 @@ function getLanguageDisplayName(code: string) {
   </svg>
 </button>
 
-<script is:inline define:vars={{ langs }}>
+<script is:inline define:vars={{ availableLangs, currentPostSlug, isPost, defaultLocale }}>
 document.addEventListener('astro:page-load', () => {
   const langSwitch = document.getElementById('language-switcher')
 
@@ -38,30 +88,53 @@ document.addEventListener('astro:page-load', () => {
     const segments = pathname.split('/').filter(Boolean)
     const firstSegment = segments[0] || ''
 
-    // Get current language or empty string if invalid
-    const currentLang = langs.includes(firstSegment)
-      ? firstSegment
-      : ''
+    // 获取当前语言
+    let currentLang = defaultLocale
+    if (availableLangs.includes(firstSegment) && firstSegment !== defaultLocale) {
+      currentLang = firstSegment
+    }
 
-    const currentIndex = langs.indexOf(currentLang)
-    const nextLang = langs[(currentIndex + 1) % langs.length]
+    // 获取下一个语言
+    const currentIndex = availableLangs.indexOf(currentLang)
+    const nextLang = availableLangs[(currentIndex + 1) % availableLangs.length]
 
-    const newPath = buildNewPath(currentLang, nextLang, segments, pathname) || '/'
+    const newPath = buildNewPath(currentLang, nextLang, segments) || '/'
     window.location.href = `${newPath}${search}${hash}`
   })
 })
 
-function buildNewPath(currentLang, nextLang, segments, pathname) {
-  if (currentLang) {
-    segments[0] = nextLang || segments[0]
+function buildNewPath(currentLang, nextLang, segments) {
+  // 创建一个新的segments数组副本，避免修改原始数组
+  const newSegments = [...segments]
+  const firstSegment = newSegments[0] || ''
 
-    return nextLang
-      ? `/${segments.join('/')}`
-      : `/${segments.slice(1).join('/')}`
+  // 检查第一段是否是语言代码（不包括默认语言）
+  const isFirstSegmentLang = availableLangs.includes(firstSegment) && firstSegment !== defaultLocale
+
+  // 处理不同的情况
+  if (nextLang === defaultLocale) {
+    // 如果下一个语言是默认语言，则移除语言段
+    if (isFirstSegmentLang) {
+      newSegments.shift()
+    }
+  }
+  else {
+    // 如果下一个语言不是默认语言
+    if (isFirstSegmentLang) {
+      // 如果第一段是语言代码，则替换它
+      newSegments[0] = nextLang
+    }
+    else {
+      // 如果第一段不是语言代码，则添加新的语言代码
+      newSegments.unshift(nextLang)
+    }
   }
 
-  return nextLang
-    ? `/${nextLang}${pathname}`
-    : pathname
+  // 返回新路径
+  // 处理空路径的特殊情况，避免生成 // 这样的路径
+  if (newSegments.length === 0) {
+    return '/'
+  }
+  return `/${newSegments.join('/')}/`
 }
 </script>
