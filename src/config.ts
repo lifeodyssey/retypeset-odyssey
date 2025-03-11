@@ -3,17 +3,25 @@ import type { ThemeConfig } from '@/types'
 export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
-    title: 'Retypeset', // site title
-    subtitle: '再现版式之美', // site subtitle (optional)
-    description: 'This is Retypeset, an elegant and open-source Astro blog theme, help you rediscover the beauty of typography.', // site description for SEO
-    author: 'radishzz', // author name
-    url: 'https://retypeset.radishzz.cc', // site url
-    favicon: '/image/logo.svg', // or https://example.com/logo.svg. Support webp, svg or png
+    // site title
+    title: 'Retypeset',
+    // site subtitle (optional)
+    subtitle: '再现版式之美',
+    // site description for SEO
+    description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
+    // author name
+    author: 'radishzz',
+    // site url
+    url: 'https://retypeset.radishzz.cc',
+    // favicon url
+    // support only webp, svg or png
+    favicon: '/image/logo.svg', // https://example.com/logo.svg
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
+    // default theme mode
     mode: 'light', // light, dark
     light: {
       // title color
@@ -23,7 +31,7 @@ export const themeConfig: ThemeConfig = {
       // background color
       background: 'oklch(96% 0.005 298)',
       // code block theme
-      codeTheme: 'github-light',
+      codeTheme: 'github-light', // available themes: https://shiki.style/themes
     },
     dark: {
       // title color
@@ -33,20 +41,21 @@ export const themeConfig: ThemeConfig = {
       // background color
       background: 'oklch(22% 0.005 298)',
       // code block theme
-      codeTheme: 'github-dark',
+      codeTheme: 'github-dark', // available themes: https://shiki.style/themes
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
-    // Default language
-    locale: 'zh', // support 'zh', 'zh-tw', 'ja', 'en', 'es', 'ru'
-    // Not fill in the default locale code again
-    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
-    // Font styles for post content
+    // default language
+    locale: 'zh', // zh, zh-tw, ja, en, es, ru
+    // more languages
+    // not fill in the locale above again
+    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // zh, zh-tw, ja, en, es, ru
+    // font styles for text
     fontStyle: 'sans', // sans, serif
-    // Space between title and subtitle
+    // space between title and subtitle
     titleSpace: 3, // 1, 2, 3
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -54,67 +63,106 @@ export const themeConfig: ThemeConfig = {
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
     waline: {
-      // Waline server URL
-      serverURL: 'https://retypeset-comment.radishzz.cc', // https://comment.example.com
-      // Emoji
+      // waline server url
+      serverURL: 'https://retypeset-comment.radishzz.cc',
+      // emoji url
       emoji: [
         'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
         // 'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
-        // see more at https://waline.js.org/en/guide/features/emoji.html
+        // more emojis: https://waline.js.org/en/guide/features/emoji.html
       ],
-      // Whether to enable GIF search
+      // gif search
       search: false, // true, false
-      // Whether to enable image uploader
-      // BUG：unable to hide image uploader icon
-      imageUploader: false, // true, false
+      // image uploader
+      imageUploader: false, // true, false (BUG：unable to hide image uploader icon)
     },
+    // disqus: TODO
+    // giscus: TODO
+    // twikoo: TODO
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   seo: {
-    twitterID: '', // @twitter ID
+    // @twitter ID
+    twitterID: '',
+    // site verification
     verification: {
-      google: '', // Google Search Console: https://search.google.com/search-console
-      bing: '', // Bing Webmaster Tools: https://www.bing.com/webmasters
-      yandex: '', // Yandex Webmaster: https://webmaster.yandex.com
-      baidu: '', // Baidu Search: https://ziyuan.baidu.com
+      // Google Search Console
+      google: '', // https://search.google.com/search-console
+      // Bing Webmaster Tools
+      bing: '', // https://www.bing.com/webmasters
+      // Yandex Webmaster
+      yandex: '', // https://webmaster.yandex.com
+      // Baidu Search
+      baidu: '', // https://ziyuan.baidu.com
     },
-    googleAnalyticsID: '', // Google Analytics: https://analytics.google.com
-    umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697', // Umami Analytics: https://cloud.umami.is
+    // Google Analytics
+    googleAnalyticsID: '', // https://analytics.google.com
+    // Umami Analytics
+    umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697', // https://cloud.umami.is
+    // follow verification
+    // https://follow.is/
     follow: {
-      feedID: '', // feed ID
-      userID: '', // user ID
+      // feed ID
+      feedID: '',
+      // user ID
+      userID: '',
     },
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
+  // NAVBAR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
+  // navbar: {
+  //   linkA: {
+  //     // link name
+  //     name: 'RSS',
+  //     // link url
+  //     url: '/rss.xml', // rss.xml or atom.xml
+  //   },
+  // },
+  // NAVBAR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
+
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   footer: {
-    linkA: {
-      name: 'RSS', // Link name
-      url: '/rss.xml', // Link URL
-    },
-    linkB: {
-      name: 'GitHub', // Link name
-      url: 'https://github.com/radishzzz/astro-theme-retypeset', // Link URL
-    },
-    linkC: {
-      name: 'Telegram', // Link name
-      url: 'https://t.me/radishzz', // Link URL
-    },
-    startYear: '2024', // The year when website was established
+    // social links
+    links: [
+      {
+        name: 'RSS',
+        url: '/rss.xml', // rss.xml or atom.xml
+      },
+      {
+        name: 'GitHub',
+        url: 'https://github.com/radishzzz/astro-theme-retypeset',
+      },
+      {
+        name: 'Views',
+        url: 'https://views.radishzz.cc/share/uoGMvehDKafqkMC3/retypeset.radishzz.cc',
+      },
+      // {
+      //   name: 'Mail',
+      //   url: 'https://example@gmail.com',
+      // }
+    ],
+    // year of website start
+    startYear: 2024,
   },
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    commentURL: 'https://comment.radishzz.cc', // https://comment.example.com
-    imageHostURL: 'https://image.radishzz.cc', // https://image.example.com
-    // If you proxy analytics JavaScript to the custom domain, you can fill in below.
-    // See more at https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738 and https://github.com/umami-software/umami/discussions/1026
+    // link prefetch strategy
+    // details: https://docs.astro.build/en/guides/prefetch/#prefetch-strategies
+    linkPrefetch: 'viewport', // hover, tap, viewport, load
+    // comment server url
+    commentURL: 'https://comment.radishzz.cc',
+    // image hosting domain
+    imageHostURL: 'https://image.radishzz.cc',
+    // If you proxy analytics js to the custom domain, you can fill in below.
+    // See https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738
     customGoogleAnalyticsJS: '', // https://custom.example.com/whatever.js
-    customUmamiAnalyticsJS: 'https://js.radishzz.cc/jquery.min.js', // https://custom.example.com/whatever.js
+    // see https://github.com/umami-software/umami/discussions/1026
+    customUmamiAnalyticsJS: '', // https://custom.example.com/whatever.js
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }

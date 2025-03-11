@@ -6,13 +6,9 @@ interface Props {
 }
 
 const { class: className } = Astro.props
+
 const { author } = themeConfig.site
-const {
-  startYear,
-  linkA: { name: nameA, url: urlA },
-  linkB: { name: nameB, url: urlB },
-  linkC: { name: nameC, url: urlC },
-} = themeConfig.footer
+const { links, startYear } = themeConfig.footer
 
 const currentYear = new Date().getFullYear()
 const year = Number(startYear) === currentYear
@@ -22,20 +18,25 @@ const year = Number(startYear) === currentYear
 
 <footer
   class:list={[
-  'bottom-22 text-3 lg:text-3.5 leading-4.75 font-navbar',
-  className,
+    'bottom-22 text-3 lg:text-3.5 leading-4.75 font-navbar',
+    className,
   ]}
 >
   <p>
-    <a class="hover:(c-primary transition-colors)" href={urlA}>{nameA}</a> /
-    <a class="hover:(c-primary transition-colors)" href={urlB}>{nameB}</a> /
-    <a class="hover:(c-primary transition-colors)" href={urlC}>{nameC}</a>
+    {links.map((link, index) => (
+      <>
+        <a class="hover:(c-primary transition-colors)" href={link.url}>
+          {link.name}
+        </a>
+        {index < links.length - 1 && ' / '}
+      </>
+    ))}
   </p>
 
   <p>
     Powered by <a class="hover:(c-primary transition-colors)" href="https://astro.build/">Astro</a> and <a class="hover:(c-primary transition-colors)" href="https://github.com/radishzzz/astro-theme-retypeset">Retypeset</a>
   </p>
-  
+
   <p>
     © {year} {author}
   </p>

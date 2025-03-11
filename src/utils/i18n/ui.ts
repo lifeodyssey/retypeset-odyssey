@@ -8,21 +8,12 @@ export const langMap: Record<string, string[]> = {
   'ru': ['ru-RU'],
 }
 
-// Waline Language Map
-// See more at https://waline.js.org/guide/i18n.html
-export const walineLocaleMap: Record<string, string> = {
-  'zh': 'zh-CN',
-  'zh-tw': 'zh-TW',
-  'ja': 'jp-JP', // Waline uses jp-JP not ja-JP
-  'en': 'en-US',
-  'es': 'es-ES',
-  'ru': 'ru-RU',
-}
-
-// Standard Language Code
+// Standard Language Code (Unused)
 export const langCode = Object.values(langMap).flat()
+
 // Abbreviated Language Code
 export const langPath = Object.keys(langMap).flat()
+
 // UI Translation
 export const ui = {
   'zh': {
@@ -55,6 +46,17 @@ export const ui = {
     tags: 'Теги',
     about: 'О себе',
   },
+}
+
+// Waline Language Map
+// See more at https://waline.js.org/guide/i18n.html
+export const walineLocaleMap: Record<string, string> = {
+  'zh': 'zh-CN',
+  'zh-tw': 'zh-TW',
+  'ja': 'jp-JP', // Waline uses jp-JP not ja-JP
+  'en': 'en-US',
+  'es': 'es-ES',
+  'ru': 'ru-RU',
 }
 
 /**

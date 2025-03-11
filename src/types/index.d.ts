@@ -62,22 +62,15 @@ export interface ThemeConfig {
   }
 
   footer: {
-    linkA: {
+    links: {
       name: string
       url: string
-    }
-    linkB: {
-      name: string
-      url: string
-    }
-    linkC: {
-      name: string
-      url: string
-    }
-    startYear: string
+    }[]
+    startYear: number
   }
 
   preload: {
+    linkPrefetch: 'hover' | 'tap' | 'viewport' | 'load'
     commentURL?: string
     imageHostURL?: string
     customGoogleAnalyticsJS?: string

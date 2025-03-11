@@ -27,9 +27,10 @@ import { remarkExcerpt } from './src/plugins/remark-excerpt.js'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.js'
 import { langMap } from './src/utils/i18n/ui.js'
 
-const { url } = themeConfig.site
+const url = themeConfig.site.url
 const { light, dark } = themeConfig.color
-const { locale } = themeConfig.global
+const locale = themeConfig.global.locale
+const linkPrefetch = themeConfig.preload.linkPrefetch
 const imageDomain = new URL(themeConfig.preload.imageHostURL as string).hostname
 
 export default defineConfig({
@@ -38,7 +39,7 @@ export default defineConfig({
   trailingSlash: 'always',
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: 'viewport',
+    defaultStrategy: linkPrefetch,
   },
   image: {
     domains: [imageDomain],
