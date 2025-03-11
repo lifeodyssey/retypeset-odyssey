@@ -15,7 +15,7 @@ export const themeConfig: ThemeConfig = {
     url: 'https://retypeset.radishzz.cc',
     // favicon url
     // support only webp, svg or png
-    favicon: '/image/logo.svg', // https://example.com/logo.svg
+    favicon: '/image/Logo.svg', // https://example.com/logo.svg
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -55,6 +55,8 @@ export const themeConfig: ThemeConfig = {
     moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // zh, zh-tw, ja, en, es, ru
     // font styles for text
     fontStyle: 'sans', // sans, serif
+    // date format for posts
+    dateFormat: 'MONTH DAY YYYY', // YYYY-MM-DD, MM-DD-YYYY, DD-MM-YYYY, MONTH DAY YYYY, DAY MONTH YYYY
     // space between title and subtitle
     titleSpace: 3, // 1, 2, 3
   },
@@ -151,12 +153,12 @@ export const themeConfig: ThemeConfig = {
 
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
-    // link prefetch strategy
-    // details: https://docs.astro.build/en/guides/prefetch/#prefetch-strategies
+    // link prefetch
+    // docs: https://docs.astro.build/en/guides/prefetch/#prefetch-strategies
     linkPrefetch: 'viewport', // hover, tap, viewport, load
     // comment server url
     commentURL: 'https://comment.radishzz.cc',
-    // image hosting domain
+    // image hosting url
     imageHostURL: 'https://image.radishzz.cc',
     // If you proxy analytics js to the custom domain, you can fill in below.
     // See https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738

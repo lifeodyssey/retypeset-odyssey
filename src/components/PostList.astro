@@ -1,5 +1,6 @@
 ---
-// Define props received by the component
+import PostTime from '@/components/PostTime.astro'
+
 interface Post {
   data: {
     title: string
@@ -31,9 +32,9 @@ function getPostUrl(post: Post) {
 ---
 <ul>
   {posts.map(post => (
-    // Single Post
     <li class="mt-4.375">
 
+      {/* post title */}
       <a
         class="hover:c-primary"
         href={getPostUrl(post)}
@@ -43,26 +44,24 @@ function getPostUrl(post: Post) {
         {post.data.title}
       </a>
 
+      {/* mobile post time */}
       <div
         class="uno-mobile-time"
         transition:name={`time-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >
-        <time>
-          {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-        </time>
-        <span class="ml-1.25">
-          {post.remarkPluginFrontmatter?.minutes} min
-        </span>
+        <PostTime
+          date={post.data.published}
+          minutes={post.remarkPluginFrontmatter?.minutes}
+        />
       </div>
 
+      {/* desktop post time */}
       <div class="uno-desktop-time">
-        <time>
-          {post.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
-        </time>
-        <span class="ml-1.25">
-          {post.remarkPluginFrontmatter?.minutes} min
-        </span>
+        <PostTime
+          date={post.data.published}
+          minutes={post.remarkPluginFrontmatter?.minutes}
+        />
       </div>
 
     </li>

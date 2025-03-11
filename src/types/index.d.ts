@@ -33,6 +33,7 @@ export interface ThemeConfig {
     locale: typeof langPath[number]
     moreLocale: typeof langPath[number][]
     fontStyle: 'sans' | 'serif'
+    dateFormat: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MONTH DAY YYYY' | 'DAY MONTH YYYY'
     titleSpace: 1 | 2 | 3
   }
 

@@ -25,7 +25,7 @@ const { Content, remarkPluginFrontmatter } = await post.render()
     <h1>{post.data.title}</h1>
     <time>
       {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
-      {remarkPluginFrontmatter.minutes && <span> · {remarkPluginFrontmatter.minutes} min</span>}
+        {remarkPluginFrontmatter.minutes && <span> {remarkPluginFrontmatter.minutes} min</span>}
     </time>
     <Content />
   </article>
