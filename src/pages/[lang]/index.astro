@@ -1,4 +1,5 @@
 ---
+import PostList from '@/components/PostList.astro'
 import { themeConfig } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
@@ -16,44 +17,18 @@ const postsByYear = await getPostsByYear(lang)
 
 <Layout>
   <main>
+    <!-- Pinned Posts -->
     {pinnedPosts.length > 0 && (
-      <section>
-        <ul>
-          {pinnedPosts.map(post => (
-            <li>
-              <a href={`/${lang}/posts/${post.data.abbrlink || post.slug}/`}>
-                {post.data.title}
-                <time class="block lg:inline lg:before:content-['_']">
-                  {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
-                  {post.remarkPluginFrontmatter?.minutes && <span> · {post.remarkPluginFrontmatter.minutes} min</span>}
-                </time>
-              </a>
-            </li>
-          ))}
-        </ul>
+      <section class="mb-7.5">
+        <div class="uno-decorative-line"></div>
+        <PostList posts={pinnedPosts} lang={lang} />
       </section>
     )}
-
-    {[...postsByYear.entries()].map(([year, posts]) => (
-      // Year Group
-      <section class="mt-8">
-        {/* Year */}
-        <time class="text-8 font-navbar">{year}</time>
-        {/* Posts List */}
-        <ul>
-          {posts.map(post => (
-            // Single Post
-            <li class="mt-6">
-              {/* Post Title */}
-              <a href={`/${lang}/posts/${post.data.abbrlink || post.slug}/`}>{post.data.title}</a>
-                {/* Post Date */}
-                <time class="block text-5.6 leading-7 font-navbar opacity-30 lg:inline lg:before:content-['_']">
-                  {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
-                  {post.remarkPluginFrontmatter?.minutes && <span class="ml-2">  {post.remarkPluginFrontmatter.minutes} min</span>}
-                </time>
-            </li>
-          ))}
-        </ul>
+    <!-- Regular Posts -->
+    {[...postsByYear.entries()].map(([_year, posts]) => (
+      <section class="mb-7.5">
+        <div class="uno-decorative-line"></div>
+        <PostList posts={posts} lang={lang} />
       </section>
     ))}
   </main>

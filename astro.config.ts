@@ -35,6 +35,7 @@ const imageDomain = new URL(themeConfig.preload.imageHostURL as string).hostname
 export default defineConfig({
   site: url,
   base: '/',
+  trailingSlash: 'always',
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',

@@ -5,6 +5,7 @@ interface Post {
     title: string
     abbrlink?: string
     published: Date
+    lang?: string
   }
   slug?: string
   remarkPluginFrontmatter?: {
@@ -13,11 +14,19 @@ interface Post {
 }
 
 // Receive posts parameter passed from outside
-const { posts } = Astro.props
+const { posts, lang: pageLang } = Astro.props
 
 // Declare the type of props
 export interface Props {
   posts: Post[]
+  lang?: string
+}
+
+// 构建正确的链接路径
+function getPostUrl(post: Post) {
+  const postPath = post.data.abbrlink || post.slug
+  // 如果是在语言文件夹下的页面，添加语言前缀
+  return pageLang ? `/${pageLang}/posts/${postPath}/` : `/posts/${postPath}/`
 }
 ---
 <ul>
@@ -27,7 +36,7 @@ export interface Props {
 
       <a
         class="hover:c-primary"
-        href={`/posts/${post.data.abbrlink || post.slug}/`}
+        href={getPostUrl(post)}
         transition:name={`post-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >

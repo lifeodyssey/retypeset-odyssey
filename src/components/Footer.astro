@@ -9,9 +9,9 @@ const { class: className } = Astro.props
 const { author } = themeConfig.site
 const {
   startYear,
-  linkA: { name: linkAName, url: linkAUrl },
-  linkB: { name: linkBName, url: linkBUrl },
-  linkC: { name: linkCName, url: linkCUrl },
+  linkA: { name: nameA, url: urlA },
+  linkB: { name: nameB, url: urlB },
+  linkC: { name: nameC, url: urlC },
 } = themeConfig.footer
 
 const currentYear = new Date().getFullYear()
@@ -27,13 +27,15 @@ const year = Number(startYear) === currentYear
   ]}
 >
   <p>
-    <a class="hover:(c-primary transition-colors)" href={linkAUrl}>{linkAName}</a> /
-    <a class="hover:(c-primary transition-colors)" href={linkBUrl}>{linkBName}</a> /
-    <a class="hover:(c-primary transition-colors)" href={linkCUrl}>{linkCName}</a>
+    <a class="hover:(c-primary transition-colors)" href={urlA}>{nameA}</a> /
+    <a class="hover:(c-primary transition-colors)" href={urlB}>{nameB}</a> /
+    <a class="hover:(c-primary transition-colors)" href={urlC}>{nameC}</a>
   </p>
+
   <p>
     Powered by <a class="hover:(c-primary transition-colors)" href="https://astro.build/">Astro</a> and <a class="hover:(c-primary transition-colors)" href="https://github.com/radishzzz/astro-theme-retypeset">Retypeset</a>
   </p>
+  
   <p>
     © {year} {author}
   </p>

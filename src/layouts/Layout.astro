@@ -4,7 +4,7 @@ import Footer from '@/components/Footer.astro'
 import MainHeader from '@/components/MainHeader.astro'
 import MobileHeader from '@/components/MobileHeader.astro'
 import Navigation from '@/components/Navbar.astro'
-import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
+// import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
 // import PhotoSwipe from '@/components/PhotoSwipe.astro'
 // import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
@@ -59,7 +59,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
 
     <!--  fix position issue on ios   -->
     <div class="absolute right-[min(7.25vw,3.731rem)] top-13.5 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.5">
-      <LanguageSwitcher />
+      <!-- <LanguageSwitcher /> -->
       <ThemeToggle />
     </div>
     <!-- <Scrollbar /> -->

@@ -1,5 +1,5 @@
 ---
-import PostTitleList from '@/components/PostTitleList.astro'
+import PostList from '@/components/PostList.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
 
@@ -13,14 +13,14 @@ const postsByYear = await getPostsByYear()
     {pinnedPosts.length > 0 && (
       <section class="mb-7.5">
         <div class="uno-decorative-line"></div>
-        <PostTitleList posts={pinnedPosts} />
+        <PostList posts={pinnedPosts} />
       </section>
     )}
     <!-- Regular Posts -->
     {[...postsByYear.entries()].map(([_year, posts]) => (
       <section class="mb-7.5">
         <div class="uno-decorative-line"></div>
-        <PostTitleList posts={posts} />
+        <PostList posts={posts} />
       </section>
     ))}
   </main>

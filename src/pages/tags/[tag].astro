@@ -1,5 +1,5 @@
 ---
-import PostTitleList from '@/components/PostTitleList.astro'
+import PostList from '@/components/PostList.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
 
@@ -34,6 +34,6 @@ const allTags = await getAllTags()
   </div>
 
   <div class="mt-10.625">
-    <PostTitleList posts={posts} />
+    <PostList posts={posts} />
   </div>
 </Layout>

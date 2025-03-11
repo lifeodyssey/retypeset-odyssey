@@ -3,51 +3,41 @@ import themeConfig from '@/config'
 const defaultLocale = themeConfig.global.locale
 const moreLocales = themeConfig.global.moreLocale
 
-export function cleanPath(path: string) {
-  return path.replace(/^\/+|\/+$/g, '')
-}
-
+// Get the language code in the path
 export function getLangFromPath(path: string) {
-  const secondaryLang = moreLocales.find(
-    lang =>
-      path.startsWith(`/${lang}/`)
-      || path === `/${lang}`
-      || path === `/${lang}/`,
-  )
-  return secondaryLang || defaultLocale
+  const lang = path.split('/')[1]
+  return moreLocales.includes(lang) ? lang : defaultLocale
 }
 
+// Get the localized path
 export function getLocalizedPath(path: string, currentLang?: string) {
-  const clean = cleanPath(path)
+  const pathWithoutSlashes = path.replace(/^\/+|\/+$/g, '')
   const lang = currentLang || getLangFromPath(path)
 
-  // 如果是根目录（clean为空），则返回/
-  if (clean === '') {
+  if (pathWithoutSlashes === '') {
     return lang === defaultLocale ? '/' : `/${lang}/`
   }
 
-  // 其他路径正常处理
-  return lang === defaultLocale ? `/${clean}/` : `/${lang}/${clean}/`
+  return lang === defaultLocale ? `/${pathWithoutSlashes}/` : `/${lang}/${pathWithoutSlashes}/`
 }
 
 export function isHomePage(path: string) {
-  const clean = cleanPath(path)
-  return clean === '' || moreLocales.includes(clean)
+  return path === '/' || moreLocales.some(lang => path === `/${lang}/`)
 }
 
 export function isPostPage(path: string) {
-  const clean = cleanPath(path)
-  return clean.startsWith('posts') || moreLocales.some(lang => clean.startsWith(`${lang}/posts`))
+  // 简化：检查路径是否包含posts
+  return path.includes('/posts/')
 }
 
 export function isTagPage(path: string) {
-  const clean = cleanPath(path)
-  return clean.startsWith('tags') || moreLocales.some(lang => clean.startsWith(`${lang}/tags`))
+  // 简化：检查路径是否包含tags
+  return path.includes('/tags/')
 }
 
 export function isAboutPage(path: string) {
-  const clean = cleanPath(path)
-  return clean.startsWith('about') || moreLocales.some(lang => clean.startsWith(`${lang}/about`))
+  // 简化：检查路径是否包含about
+  return path.includes('/about/')
 }
 
 export function getPagePath(path: string) {

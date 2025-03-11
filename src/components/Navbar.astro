@@ -9,7 +9,29 @@ const currentUI = ui[currentLang as keyof typeof ui]
 
 const isPostActive = isHome || isPost
 const isTagActive = isTag
-const isAboutActive = isAbout;
+const isAboutActive = isAbout
+
+function getNavItemClass(isActive: boolean) {
+  return isActive ? 'font-bold c-primary' : 'hover:c-primary hover:font-bold'
+}
+
+const navItems = [
+  {
+    href: '/',
+    label: currentUI.posts,
+    className: getNavItemClass(isPostActive),
+  },
+  {
+    href: '/tags/',
+    label: currentUI.tags,
+    className: getNavItemClass(isTagActive),
+  },
+  {
+    href: '/about/',
+    label: currentUI.about,
+    className: getNavItemClass(isAboutActive),
+  },
+]
 ---
 
 <nav
@@ -17,41 +39,15 @@ const isAboutActive = isAbout;
   lg="fixed bottom-40 text-4 leading-9.72"
 >
   <ul>
-    <li>
-      <a
-        href={getLocalizedPath('/')}
-        class:list={[
-          isPostActive
-            ? 'font-bold c-primary'
-            : 'hover:c-primary hover:font-bold',
-        ]}
-      >
-        {currentUI.posts}
-      </a>
-    </li>
-    <li>
-      <a
-        href={getLocalizedPath('/tags')}
-        class:list={[
-          isTagActive
-            ? 'font-bold c-primary'
-            : 'hover:c-primary hover:font-bold',
-        ]}
-      >
-        {currentUI.tags}
-      </a>
-    </li>
-    <li>
-      <a
-        href={getLocalizedPath('/about')}
-        class:list={[
-          isAboutActive
-            ? 'font-bold c-primary'
-            : 'hover:c-primary hover:font-bold',
-        ]}
-      >
-        {currentUI.about}
-      </a>
-    </li>
+    {navItems.map(item => (
+      <li>
+        <a
+          href={getLocalizedPath(item.href)}
+          class={item.className}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
   </ul>
 </nav>
