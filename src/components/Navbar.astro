@@ -12,7 +12,7 @@ const isTagActive = isTag
 const isAboutActive = isAbout
 
 function getNavItemClass(isActive: boolean) {
-  return isActive ? 'font-bold c-primary' : 'hover:c-primary hover:font-bold'
+  return isActive ? 'font-bold c-primary' : 'hover:(c-primary font-bold) transition-all'
 }
 
 const navItems = [

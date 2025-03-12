@@ -3,39 +3,47 @@ import themeConfig from '@/config'
 const defaultLocale = themeConfig.global.locale
 const moreLocales = themeConfig.global.moreLocale
 
-// Get the language code from the path
-export function getLangFromPath(path: string) {
-  const lang = path.split('/')[1]
-  return moreLocales.includes(lang) ? lang : defaultLocale
+export function cleanPath(path: string) {
+  return path.replace(/^\/|\/$/g, '')
 }
 
-// Get the localized path
-export function getLocalizedPath(path: string) {
-  const pathWithoutSlashes = path.replace(/^\/+|\/+$/g, '')
-  const lang = getLangFromPath(path)
+export function getLangFromPath(path: string) {
+  const secondaryLang = moreLocales.find(
+    lang =>
+      path.startsWith(`/${lang}/`),
+  )
+  return secondaryLang || defaultLocale
+}
 
-  if (pathWithoutSlashes === '') {
+export function getLocalizedPath(path: string, currentLang?: string) {
+  const clean = cleanPath(path)
+  const lang = currentLang || getLangFromPath(path)
+
+  if (clean === '') {
     return lang === defaultLocale ? '/' : `/${lang}/`
   }
 
-  return lang === defaultLocale ? `/${pathWithoutSlashes}/` : `/${lang}/${pathWithoutSlashes}/`
+  return lang === defaultLocale ? `/${clean}/` : `/${lang}/${clean}/`
 }
 
-// Checking the current path to the page
 export function isHomePage(path: string) {
-  return path === '/' || moreLocales.some(lang => path === `/${lang}/`)
+  const clean = cleanPath(path)
+  return clean === '' || moreLocales.includes(clean)
 }
 
 export function isPostPage(path: string) {
-  return path.includes('/posts/')
+  const clean = cleanPath(path)
+  return clean.startsWith('posts') || moreLocales.some(lang => clean.startsWith(`${lang}/posts`))
 }
 
 export function isTagPage(path: string) {
-  return path.includes('/tags/')
+  const clean = cleanPath(path)
+  return clean.startsWith('tags') || moreLocales.some(lang => clean.startsWith(`${lang}/tags`))
 }
 
 export function isAboutPage(path: string) {
-  return path.includes('/about/')
+  const clean = cleanPath(path)
+  return clean.startsWith('about') || moreLocales.some(lang => clean.startsWith(`${lang}/about`))
 }
 
 export function getPagePath(path: string) {
@@ -47,6 +55,6 @@ export function getPagePath(path: string) {
     isPost: isPostPage(path),
     isTag: isTagPage(path),
     isAbout: isAboutPage(path),
-    getLocalizedPath: (targetPath: string) => getLocalizedPath(targetPath),
+    getLocalizedPath: (targetPath: string) => getLocalizedPath(targetPath, currentLang),
   }
 }
