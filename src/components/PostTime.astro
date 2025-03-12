@@ -12,8 +12,7 @@ const { date, updatedDate, minutes } = Astro.props
 const format = themeConfig.global.dateFormat
 const currentPath = Astro.url.pathname
 const isPost = isPostPage(currentPath)
-const updatedTimeMarginClass = isPost ? 'ml-1.75' : 'ml-1.5'
-const readingTimeMarginClass = isPost ? 'ml-1.75' : 'ml-1.5'
+const timeSpacingClass = isPost ? 'ml-1.75' : 'ml-1.5'
 
 function formatDate(date: Date, format: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MONTH DAY YYYY' | 'DAY MONTH YYYY') {
   const options: Intl.DateTimeFormatOptions = {
@@ -65,14 +64,14 @@ function formatDate(date: Date, format: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYY
 
 <!-- updated time -->
 {updatedDate && (
-  <time datetime={updatedDate.toISOString().split('T')[0]} class={updatedTimeMarginClass}>
+  <time datetime={updatedDate.toISOString().split('T')[0]} class={timeSpacingClass}>
     updated {formatDate(updatedDate, format)}
   </time>
 )}
 
 <!-- reading time -->
 {minutes !== undefined && (
-  <span class={readingTimeMarginClass}>
+  <span class={timeSpacingClass}>
     {minutes} min
   </span>
 )}

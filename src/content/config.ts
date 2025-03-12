@@ -17,9 +17,8 @@ const postsCollection = defineCollection({
       { message: 'Abbrlink can only contain lowercase letters, numbers and hyphens' },
     ),
     // Auto-generated
-    minutes: z.number().optional(),
-    image: z.string().optional().default(''),
     description: z.string().optional().default(''),
+    image: z.string().optional().default(''),
   }),
 })
 

@@ -1,4 +1,3 @@
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { toString } from 'mdast-util-to-string'
 import getReadingTime from 'reading-time'
 
@@ -10,6 +9,5 @@ export function remarkReadingTime() {
       1,
       Math.round(readingTime.minutes),
     )
-    data.astro.frontmatter.words = readingTime.words
   }
 }

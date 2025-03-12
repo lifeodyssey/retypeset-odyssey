@@ -114,17 +114,6 @@ export const themeConfig: ThemeConfig = {
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
-  // NAVBAR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  // navbar: {
-  //   linkA: {
-  //     // link name
-  //     name: 'RSS',
-  //     // link url
-  //     url: '/rss.xml', // rss.xml or atom.xml
-  //   },
-  // },
-  // NAVBAR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   footer: {
     // social links
@@ -138,11 +127,11 @@ export const themeConfig: ThemeConfig = {
         url: 'https://github.com/radishzzz/astro-theme-retypeset',
       },
       {
-        name: 'Views',
-        url: 'https://views.radishzz.cc/share/uoGMvehDKafqkMC3/retypeset.radishzz.cc',
+        name: 'Twitter',
+        url: 'https://x.com/astrodotbuild',
       },
       // {
-      //   name: 'Mail',
+      //   name: 'Email',
       //   url: 'https://example@gmail.com',
       // }
     ],
@@ -162,9 +151,9 @@ export const themeConfig: ThemeConfig = {
     imageHostURL: 'https://image.radishzz.cc',
     // If you proxy analytics js to the custom domain, you can fill in below.
     // See https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738
-    customGoogleAnalyticsJS: '', // https://custom.example.com/whatever.js
+    customGoogleAnalyticsJS: '',
     // see https://github.com/umami-software/umami/discussions/1026
-    customUmamiAnalyticsJS: '', // https://custom.example.com/whatever.js
+    customUmamiAnalyticsJS: '',
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }
