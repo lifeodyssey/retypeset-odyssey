@@ -9,13 +9,18 @@ interface Props {
 }
 
 const { postTitle, postDescription, postImage } = Astro.props
+
 const { title, subtitle, description, author, url, favicon } = themeConfig.site
 const { mode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
-const initMetaTheme = mode === 'dark' ? darkMode : lightMode
 const { locale, moreLocale } = themeConfig.global
 const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
+
+const initMetaTheme = mode === 'dark' ? darkMode : lightMode
+const pageTitle = postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`
+const pageDescription = postDescription || description
+const pageImage = postImage || favicon
 ---
 
 <head>
@@ -25,8 +30,8 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', custom
 {favicon.toLowerCase().endsWith('.webp') && <link rel="icon" type="image/webp" href={favicon} />}
 {favicon.toLowerCase().endsWith('.svg') && <link rel="icon" type="image/svg+xml" href={favicon} />}
 {favicon.toLowerCase().endsWith('.png') && <link rel="icon" type="image/png" href={favicon} />}
-<title>{postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`}</title>
-<meta name="description" content={postDescription || description} />
+<title>{pageTitle}</title>
+<meta name="description" content={pageDescription} />
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content={initMetaTheme} />
@@ -52,18 +57,18 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', custom
 ))}
 
 <!-- Facebook Open Graph -->
-<meta property="og:title" content={postTitle || title} />
+<meta property="og:title" content={pageTitle} />
 <meta property="og:type" content={postTitle ? 'article' : 'website'} />
-<meta property="og:image" content={postImage || favicon} />
+<meta property="og:image" content={pageImage} />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:description" content={postDescription || subtitle} />
+<meta property="og:description" content={pageDescription} />
 <meta property="og:site_name" content={title} />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content={postTitle || title} />
-<meta name="twitter:description" content={postDescription || subtitle} />
-<meta name="twitter:image" content={postImage || favicon} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={pageImage} />
 {twitterID && (
   <>
     <meta name="twitter:site" content={twitterID} />

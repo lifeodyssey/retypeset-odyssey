@@ -3,6 +3,7 @@ import Comments from '@/components/Comments/index.astro'
 import PostTime from '@/components/PostTime.astro'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
+import { generateDescription } from '@/utils/description'
 import { generatePostPaths } from '@/utils/i18n/route'
 import { getCollection } from 'astro:content'
 
@@ -18,12 +19,13 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
+const description = generateDescription(post)
 const { Content, remarkPluginFrontmatter } = await post.render()
 ---
 
 <Layout
   postTitle={post.data.title}
-  postDescription={post.data.description}
+  postDescription={description}
   postImage={post.data.image}
 >
   <article class="heti mb-12.6">
