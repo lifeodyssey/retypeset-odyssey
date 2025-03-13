@@ -2,6 +2,7 @@
 import Waline from '@/components/Comments/Waline.astro'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
+import { generateDescription } from '@/utils/description'
 import { generateMultiLangPostPaths } from '@/utils/i18n/route'
 import { getCollection } from 'astro:content'
 
@@ -17,10 +18,15 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
+const description = generateDescription(post)
 const { Content, remarkPluginFrontmatter } = await post.render()
 ---
 
-<Layout>
+<Layout
+  postTitle={post.data.title}
+  postDescription={description}
+  postSlug={post.slug}
+>
   <article>
     <h1>{post.data.title}</h1>
     <time>

@@ -14,8 +14,8 @@ export const themeConfig: ThemeConfig = {
     // site url
     url: 'https://retypeset.radishzz.cc',
     // favicon url
-    // support only webp, svg or png
-    favicon: '/image/Logo.svg', // https://example.com/logo.svg
+    // support only ico or png for best compatibility with Open Graph and RSS avatar
+    favicon: '/image/Astro-Icon.png', // https://example.com/logo.png
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 

@@ -19,7 +19,7 @@
 
 # 重新编排
 
-Retypeset 是一款基于 <a href="https://astro.build/">Astro</a> 框架的静态博客主题，设计灵感来自 <a href="https://astro-theme-typography.vercel.app/">Typography</a>。本主题通过建立全新的视觉规范，对所有页面进行重新编排，打造纸质书页般的阅读体验，再现版式之美。所见皆为细节，方寸尽显优雅。
+Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主题，设计灵感来自 [Typography](https://astro-theme-typography.vercel.app/)。本主题通过建立全新的视觉规范，对所有页面进行重新编排，打造纸质书页般的阅读体验，再现版式之美。所见皆为细节，方寸尽显优雅。
 
 - [在线预览](https://retypeset.radishzz.cc/)
 - [移动端设计稿](https://mastergo.com/file/151079538766773?fileOpenFrom=home&page_id=M&source=link_share&shareId=151079538766773)

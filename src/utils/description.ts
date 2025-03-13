@@ -5,7 +5,7 @@ import sanitizeHtml from 'sanitize-html'
 const parser = new MarkdownIt()
 
 // Generate an excerpt from Markdown content
-export function generateExcerpt(content: string, length: number = 100): string {
+export function generateExcerpt(content: string, length: number = 98): string {
   if (!content)
     return ''
 
