@@ -1,15 +1,9 @@
-import { themeConfig } from '@/config'
 import { generateDescription } from '@/utils/description'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
 
 // eslint-disable-next-line antfu/no-top-level-await
 const blogEntries = await getCollection('posts')
-
-// 确定favicon路径是完整URL还是相对路径
-const logoPath = themeConfig.site.favicon.startsWith('http')
-  ? themeConfig.site.favicon
-  : `./public${themeConfig.site.favicon}`
 
 // Convert to page data objects
 const pages = Object.fromEntries(
@@ -30,7 +24,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
     title: page.title,
     description: page.description,
     logo: {
-      path: logoPath,
+      path: './public/image/Astro-Icon-Dark.png',
       size: [80],
     },
     font: {

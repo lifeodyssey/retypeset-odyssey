@@ -14,8 +14,8 @@ export const themeConfig: ThemeConfig = {
     // site url
     url: 'https://retypeset.radishzz.cc',
     // favicon url
-    // support only ico or png for best compatibility with Open Graph and RSS avatar
-    favicon: '/image/Astro-Icon.png', // https://example.com/logo.png
+    // support only SVG, PNG and ICO
+    favicon: '/image/Astro-Icon-Dark.svg', // https://example.com/favicon.svg
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -121,10 +121,8 @@ export const themeConfig: ThemeConfig = {
       userID: '',
     },
     // Open Graph
-    openGraph: {
-      // image url (1200x630)
-      url: '', // https://placehold.co/1200x630
-    },
+    // Screenshot of home page for Open Graph: ./public/image/Screenshot.png
+    // Logo on the Open Graph: ./public/image/Astro-Icon-Dark.png
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
