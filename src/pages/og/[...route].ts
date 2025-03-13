@@ -7,7 +7,7 @@ const blogEntries = await getCollection('posts')
 // Convert to page data objects
 const pages = Object.fromEntries(
   blogEntries.map(({ slug, data }) => [
-    data.abbrlink || slug, // Prioritize using abbrlink instead of slug
+    slug,
     {
       title: data.title,
       description: data.description || '',

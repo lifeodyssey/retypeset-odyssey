@@ -60,6 +60,9 @@ export interface ThemeConfig {
       feedID?: string
       userID?: string
     }
+    openGraph?: {
+      url?: string
+    }
   }
 
   footer: {

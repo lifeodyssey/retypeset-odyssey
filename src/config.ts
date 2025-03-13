@@ -31,7 +31,8 @@ export const themeConfig: ThemeConfig = {
       // background color
       background: 'oklch(96% 0.005 298)',
       // code block theme
-      codeTheme: 'github-light', // available themes: https://shiki.style/themes
+      // available themes: https://shiki.style/themes
+      codeTheme: 'github-light',
     },
     dark: {
       // title color
@@ -41,7 +42,8 @@ export const themeConfig: ThemeConfig = {
       // background color
       background: 'oklch(22% 0.005 298)',
       // code block theme
-      codeTheme: 'github-dark', // available themes: https://shiki.style/themes
+      // available themes: https://shiki.style/themes
+      codeTheme: 'github-dark',
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -52,7 +54,7 @@ export const themeConfig: ThemeConfig = {
     locale: 'zh', // zh, zh-tw, ja, en, es, ru
     // more languages
     // not fill in the locale above again
-    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // zh, zh-tw, ja, en, es, ru
+    moreLocale: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
     // font styles for text
     fontStyle: 'sans', // sans, serif
     // date format for posts
@@ -76,7 +78,8 @@ export const themeConfig: ThemeConfig = {
       // gif search
       search: false, // true, false
       // image uploader
-      imageUploader: false, // true, false (BUG：unable to hide image uploader icon)
+      // bug: unable to hide image uploader icon
+      imageUploader: false, // true, false
     },
     // disqus: TODO
     // giscus: TODO
@@ -91,25 +94,36 @@ export const themeConfig: ThemeConfig = {
     // site verification
     verification: {
       // Google Search Console
-      google: '', // https://search.google.com/search-console
+      // docs: https://search.google.com/search-console
+      google: '',
       // Bing Webmaster Tools
-      bing: '', // https://www.bing.com/webmasters
+      // docs: https://www.bing.com/webmasters
+      bing: '',
       // Yandex Webmaster
-      yandex: '', // https://webmaster.yandex.com
+      // docs: https://webmaster.yandex.com
+      yandex: '',
       // Baidu Search
-      baidu: '', // https://ziyuan.baidu.com
+      // docs: https://ziyuan.baidu.com
+      baidu: '',
     },
     // Google Analytics
-    googleAnalyticsID: '', // https://analytics.google.com
+    // docs: https://analytics.google.com
+    googleAnalyticsID: '',
     // Umami Analytics
-    umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697', // https://cloud.umami.is
+    // docs: https://cloud.umami.is
+    umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697',
     // follow verification
-    // https://follow.is/
+    // docs: https://follow.is/
     follow: {
       // feed ID
       feedID: '',
       // user ID
       userID: '',
+    },
+    // Open Graph
+    openGraph: {
+      // image url (1200x630)
+      url: '', // https://placehold.co/1200x630
     },
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -120,7 +134,7 @@ export const themeConfig: ThemeConfig = {
     links: [
       {
         name: 'RSS',
-        url: '/rss.xml', // rss.xml or atom.xml
+        url: '/rss.xml', // rss.xml, atom.xml
       },
       {
         name: 'GitHub',

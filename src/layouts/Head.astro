@@ -1,39 +1,27 @@
 ---
 import themeConfig from '@/config'
-import { isPostPage } from '@/utils/path'
 import { ClientRouter } from 'astro:transitions'
 
 interface Props {
   postTitle?: string
   postDescription?: string
+  postSlug?: string
 }
 
-const { postTitle, postDescription } = Astro.props
+const { postTitle, postDescription, postSlug } = Astro.props
 
 const { title, subtitle, description, author, url, favicon } = themeConfig.site
 const { mode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const { locale, moreLocale } = themeConfig.global
-const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '' } = themeConfig.seo ?? {}
+// TODO: Change openGraph image fallback url
+const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '', openGraph = 'https://placehold.co/1200x630' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
 
 const initMetaTheme = mode === 'dark' ? darkMode : lightMode
 const pageTitle = postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`
 const pageDescription = postDescription || description
-
-// Determine the OG image for the page
-// Check if the current page is a post
-const currentPath = Astro.url.pathname
-const isPost = isPostPage(currentPath)
-
-// Extract slug from URL as the post identifier
-const pathParts = currentPath.split('/').filter(part => part !== '')
-const slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : ''
-
-// Prioritize auto-generated OG image, otherwise use fallback OG image
-const pageImage = isPost && slug
-  ? `${url}/og/${slug}.png`
-  : (favicon.startsWith('http') ? favicon : `${url}${favicon}`)
+const pageImage = postSlug ? `${url}/og/${postSlug}.png` : `${openGraph}`
 ---
 <head>
 <!-- Basic info -->

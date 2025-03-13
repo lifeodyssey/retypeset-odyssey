@@ -18,9 +18,10 @@ import '@/styles/heti.css'
 interface Props {
   postTitle?: string
   postDescription?: string
+  postSlug?: string
 }
 
-const { postTitle, postDescription } = Astro.props
+const { postTitle, postDescription, postSlug } = Astro.props
 const { isHome, isPost } = getPagePath(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 
@@ -34,7 +35,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
   class={fontStyle}
   data-overlayscrollbars-initialize
 >
-  <Head {postTitle} {postDescription} />
+  <Head {postTitle} {postDescription} {postSlug} />
   <body data-overlayscrollbars-initialize>
     <!--  -->
     <div
