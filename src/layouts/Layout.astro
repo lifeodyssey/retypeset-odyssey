@@ -37,11 +37,17 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
 >
   <Head {postTitle} {postDescription} {postSlug} />
   <body data-overlayscrollbars-initialize>
-    <!--  -->
+    <!-- mobile -->
+    <!-- mobile width: 393px / suitable words number: 21 / content width: 21*16px=336px / padding: (393px-336px)/2=28.5px=（28.5px/393px）=7.25vw -->
+    <!-- max mobile width: 1024px / max word number: 42+2=44 / max content width: 44*16px=704px / max div width: 704px/(100vw-7.25vw*2)=823.3918px/4=205.848 / max padding: 823.3918px-704px=119.3918px/2=59.6959px/16=3.731rem -->
+    <!-- desktop -->
+    <!-- desktop min div width: 1024px-90px*2=844px / min words number: 32 / min content width: 32*16px=512px/16=32rem / title width: 14*16px=224px/16=14rem / min-gap: 844px-512px-224px=108px -->
+    <!-- desktop max div width: 1100px+90px*2=1280px/4=320 / max words number: 42+2=44 / max content width: 44*16px=704px / title width: 14*16px=224px / max-gap: 1100px-704px-224px=172px/16=10.75rem -->
+    <!-- content width: calc(32rem+(100vw-1024px)*(44rem-32rem)/(1280-1024))=calc(75vw-16rem) / gap width: calc(6.75rem+(100vw-1024px)*(10.75rem-6.75rem)/(1280-1024))=calc(25vw-9.25rem) -->
     <div
-      class="mx-auto max-w-205.848 min-w-80 min-h-dvh"
+      class="mx-auto max-w-205.848 min-h-vh min-w-80 min-h-dvh w-full"
       p="x-[min(7.25vw,3.731rem)] y-8 lg:(x-22.5 y-20)"
-      lg="max-w-320 grid cols-[1fr_13.875rem] gap-[min(calc(16.35vw-3.46rem),11.25rem)]"
+      lg="max-w-320 grid cols-[min(calc(75vw-16rem),44rem)_14rem] gap-[min(calc(25vw-9.25rem),10.75rem)]"
     >
       <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
         <MainHeader />
