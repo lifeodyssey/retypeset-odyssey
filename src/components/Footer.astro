@@ -1,4 +1,6 @@
 ---
+import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
+import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
 import themeConfig from '@/config'
 
 interface Props {
@@ -21,6 +23,12 @@ const year = Number(startYear) === currentYear
     className,
   ]}
 >
+  <!-- only show on desktop -->
+  <div class="mb-11.5 ml-1.5 hidden gap-7 lg:flex">
+    <ThemeToggle />
+    <LanguageSwitcher />
+  </div>
+
   <p>
     {links.map((link, index) => (
       <>

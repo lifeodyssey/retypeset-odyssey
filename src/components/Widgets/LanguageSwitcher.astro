@@ -1,73 +1,73 @@
 ---
-import themeConfig from '@/config'
-import { getPagePath } from '@/utils/path'
-import { getCollection } from 'astro:content'
+// import themeConfig from '@/config'
+// import { getPagePath } from '@/utils/path'
+// import { getCollection } from 'astro:content'
 
-// 获取当前页面路径信息
-const { isPost } = getPagePath(Astro.url.pathname)
+// // 获取当前页面路径信息
+// const { isPost } = getPagePath(Astro.url.pathname)
 
-// 获取默认语言
-const defaultLocale = themeConfig.global.locale
+// // 获取默认语言
+// const defaultLocale = themeConfig.global.locale
 
-// 定义固定的语言顺序（按照要求的顺序）
-const fixedLangOrder = [defaultLocale, ...themeConfig.global.moreLocale]
+// // 定义固定的语言顺序（按照要求的顺序）
+// const fixedLangOrder = [defaultLocale, ...themeConfig.global.moreLocale]
 
-// 获取当前文章的可用语言
-let availableLangs: string[] = []
-let currentPostSlug = ''
+// // 获取当前文章的可用语言
+// let availableLangs: string[] = []
+// let currentPostSlug = ''
 
-// 如果是文章页，获取当前文章对象
-if (isPost) {
-  // 从URL中提取文章slug
-  const pathParts = Astro.url.pathname.split('/')
-  const slugIndex = pathParts.findIndex(part => part === 'posts') + 1
-  if (slugIndex > 0 && pathParts.length > slugIndex) {
-    currentPostSlug = pathParts[slugIndex]
+// // 如果是文章页，获取当前文章对象
+// if (isPost) {
+//   // 从URL中提取文章slug
+//   const pathParts = Astro.url.pathname.split('/')
+//   const slugIndex = pathParts.findIndex(part => part === 'posts') + 1
+//   if (slugIndex > 0 && pathParts.length > slugIndex) {
+//     currentPostSlug = pathParts[slugIndex]
 
-    // 获取所有文章
-    const posts = await getCollection('posts')
+//     // 获取所有文章
+//     const posts = await getCollection('posts')
 
-    // 找到所有具有相同abbrlink或slug的文章
-    const relatedPosts = posts.filter(post =>
-      post.data.abbrlink === currentPostSlug || post.slug === currentPostSlug,
-    )
+//     // 找到所有具有相同abbrlink或slug的文章
+//     const relatedPosts = posts.filter(post =>
+//       post.data.abbrlink === currentPostSlug || post.slug === currentPostSlug,
+//     )
 
-    if (relatedPosts.length > 0) {
-      // 收集所有相关文章支持的语言
-      const supportedLangs = new Set()
+//     if (relatedPosts.length > 0) {
+//       // 收集所有相关文章支持的语言
+//       const supportedLangs = new Set()
 
-      relatedPosts.forEach((post) => {
-        // 处理lang属性
-        if (typeof post.data.lang === 'string' && post.data.lang.trim() !== '') {
-          supportedLangs.add(post.data.lang)
-        }
-        // 如果没有指定语言，则假定支持默认语言
-        else {
-          supportedLangs.add(defaultLocale)
-        }
-      })
+//       relatedPosts.forEach((post) => {
+//         // 处理lang属性
+//         if (typeof post.data.lang === 'string' && post.data.lang.trim() !== '') {
+//           supportedLangs.add(post.data.lang)
+//         }
+//         // 如果没有指定语言，则假定支持默认语言
+//         else {
+//           supportedLangs.add(defaultLocale)
+//         }
+//       })
 
-      // 按照固定顺序筛选出可用的语言
-      availableLangs = fixedLangOrder.filter(lang => supportedLangs.has(lang))
-    }
-  }
-}
-else {
-  // 非文章页面使用所有语言
-  availableLangs = fixedLangOrder
-}
+//       // 按照固定顺序筛选出可用的语言
+//       availableLangs = fixedLangOrder.filter(lang => supportedLangs.has(lang))
+//     }
+//   }
+// }
+// else {
+//   // 非文章页面使用所有语言
+//   availableLangs = fixedLangOrder
+// }
 
-// 当前语言
-function getLanguageDisplayName(code: string) {
-  return new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || code
-}
+// // 当前语言
+// function getLanguageDisplayName(code: string) {
+//   return new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || code
+// }
 ---
 
 <button
   type="button"
   id="language-switcher"
-  class="aspect-square w-4 c-secondary active:scale-90"
-  aria-label={`Current Language: ${getLanguageDisplayName(defaultLocale)}. Click to switch to next language.`}
+  class="uno-button"
+  aria-label="Click to switch to next language"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ function getLanguageDisplayName(code: string) {
   </svg>
 </button>
 
-<script is:inline define:vars={{ availableLangs, currentPostSlug, isPost, defaultLocale }}>
+<!-- <script is:inline define:vars={{ availableLangs, currentPostSlug, isPost, defaultLocale }}>
 document.addEventListener('astro:page-load', () => {
   const langSwitch = document.getElementById('language-switcher')
 
@@ -137,4 +137,4 @@ function buildNewPath(currentLang, nextLang, segments) {
   }
   return `/${newSegments.join('/')}/`
 }
-</script>
+</script> -->
