@@ -5,6 +5,7 @@ import { transformerCopyButton } from '@rehype-pretty/transformers'
 import compress from 'astro-compress'
 import robotsTxt from 'astro-robots-txt'
 import { defineConfig } from 'astro/config'
+
 // Rehype plugins
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeComponents from 'rehype-components'
@@ -12,6 +13,7 @@ import rehypeExternalLinks from 'rehype-external-links'
 import rehypeKatex from 'rehype-katex'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
+
 // Remark plugins
 import remarkDirective from 'remark-directive'
 import remarkGithubAdmonitionsToDirectives from 'remark-github-admonitions-to-directives'
@@ -19,6 +21,7 @@ import remarkMath from 'remark-math'
 import remarkSectionize from 'remark-sectionize'
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config.js'
+
 // Local plugins
 import { AdmonitionComponent } from './src/plugins/rehype-component-admonition.js'
 import { GithubCardComponent } from './src/plugins/rehype-component-github-card.js'
