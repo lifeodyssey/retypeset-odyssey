@@ -8,7 +8,7 @@ export const themeConfig: ThemeConfig = {
     // site subtitle (optional)
     subtitle: '再现版式之美',
     // site description for SEO
-    description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
+    description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
     // author name
     author: 'radishzz',
     // site url

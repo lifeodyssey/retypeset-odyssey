@@ -31,9 +31,10 @@ const pathParts = currentPath.split('/').filter(part => part !== '')
 const slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : ''
 
 // Prioritize auto-generated OG image, otherwise use fallback OG image
-const pageImage = isPost && slug ? `${url}/og/${slug}` : favicon
+const pageImage = isPost && slug
+  ? `${url}/og/${slug}.png`
+  : (favicon.startsWith('http') ? favicon : `${url}${favicon}`)
 ---
-
 <head>
 <!-- Basic info -->
 <meta charset="utf-8" />
