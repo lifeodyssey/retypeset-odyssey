@@ -24,18 +24,18 @@ export const { getStaticPaths, GET } = OGImageRoute({
     title: page.title,
     description: page.description,
     logo: {
-      path: './public/image/Astro-Icon-Dark.png',
-      size: [80],
+      path: './public/image/Logo-On-OpenGraph.png', // Required local path and PNG format
+      size: [70],
     },
     font: {
       title: {
-        families: ['Noto Sans SC'],
+        families: ['Noto Sans SC'], // or Noto Serif SC
         weight: 'Bold',
         color: [34, 33, 36],
         lineHeight: 1.5,
       },
       description: {
-        families: ['Noto Sans SC'],
+        families: ['Noto Sans SC'], // or Noto Serif SC
         color: [72, 71, 74],
         lineHeight: 1.5,
       },
@@ -43,6 +43,8 @@ export const { getStaticPaths, GET } = OGImageRoute({
     fonts: [
       'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/SubsetOTF/SC/NotoSansSC-Bold.otf',
       'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf',
+      // 'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Serif/SubsetOTF/SC/NotoSerifSC-Bold.otf',
+      // 'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Serif/SubsetOTF/SC/NotoSerifSC-Regular.otf',
     ],
     bgGradient: [[242, 241, 245]],
   }),
