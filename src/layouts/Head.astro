@@ -22,7 +22,7 @@ const initMetaTheme = mode === 'dark' ? darkMode : lightMode
 const pageTitle = postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`
 const pageDescription = postDescription || description
 // TODO: Change openGraph image fallback url
-const pageImage = postSlug ? `${url}/og/${postSlug}.png` : 'https://placehold.co/1200x630'
+const pageImage = postSlug ? `${url}/opengraph/${postSlug}.png` : 'https://placehold.co/1200x630'
 ---
 <head>
 <!-- Basic info -->

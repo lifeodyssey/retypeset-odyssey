@@ -1,20 +1,16 @@
 import type { APIContext } from 'astro'
-import themeConfig from '@/config'
-import { getMultiLangRoutes } from '@/i18n/route'
+import { moreLocales } from '@/i18n/config'
 import { generateRSS } from '@/utils/rss'
-
-const { moreLocales } = themeConfig.global
-
-// Type for supported non-default languages
-type SupportedLanguage = typeof moreLocales[number]
 
 // Generate static paths for all supported languages
 export function getStaticPaths() {
-  return getMultiLangRoutes()
+  return moreLocales.map(lang => ({
+    params: { lang },
+  }))
 }
 
 export async function GET({ params }: APIContext) {
-  const lang = params.lang as SupportedLanguage
+  const lang = params.lang as typeof moreLocales[number]
 
   // Return 404 if language is not supported
   if (!moreLocales.includes(lang)) {

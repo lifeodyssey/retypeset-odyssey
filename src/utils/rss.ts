@@ -1,5 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
 import themeConfig from '@/config'
+import { defaultLocale } from '@/i18n/config'
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import MarkdownIt from 'markdown-it'
@@ -8,7 +9,6 @@ import sanitizeHtml from 'sanitize-html'
 const parser = new MarkdownIt()
 const { title, description, url } = themeConfig.site
 const followConfig = themeConfig.seo?.follow
-const defaultLang = themeConfig.global.locale
 
 // Returns first 50 chars with proper truncation
 function getExcerpt(content: string): string {
@@ -32,7 +32,7 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
   const posts = await getCollection(
     'posts',
     ({ data }: { data: CollectionEntry<'posts'>['data'] }) =>
-      (!data.draft && (data.lang === lang || data.lang === '' || (lang === undefined && data.lang === defaultLang))),
+      (!data.draft && (data.lang === lang || data.lang === '' || (lang === undefined && data.lang === defaultLocale))),
   )
 
   return rss({
@@ -45,7 +45,7 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
       description: post.data.description || getExcerpt(post.body),
       // Generate absolute URL with correct language prefix based on post language
       link: new URL(
-        `${post.data.lang !== defaultLang && post.data.lang !== '' ? `${post.data.lang}/` : ''}posts/${post.data.abbrlink || post.slug}/`,
+        `${post.data.lang !== defaultLocale && post.data.lang !== '' ? `${post.data.lang}/` : ''}posts/${post.data.abbrlink || post.slug}/`,
         url,
       ).toString(),
       // Convert markdown content to HTML, allowing img tags
