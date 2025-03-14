@@ -1,12 +1,12 @@
 ---
 import PostList from '@/components/PostList.astro'
-import { generateMultiLangTagPaths } from '@/i18n/route'
+import { getMultiLangTagRoutes } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
-  return generateMultiLangTagPaths(tags)
+  return getMultiLangTagRoutes(tags)
 }
 
 const { lang } = Astro.params

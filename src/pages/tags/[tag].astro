@@ -1,12 +1,12 @@
 ---
 import PostList from '@/components/PostList.astro'
-import { generateTagPaths } from '@/i18n/route'
+import { getTagRoutes } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
-  return generateTagPaths(tags)
+  return getTagRoutes(tags)
 }
 
 const { tag } = Astro.props

@@ -1,16 +1,16 @@
 import type { CollectionEntry } from 'astro:content'
 import { allLocales, defaultLocale, moreLocales } from '@/i18n/config'
 
-// 生成默认语言标签页面的路径配置
-export function generateTagPaths(tags: string[]) {
+// 生成默认语言标签页面的路由配置
+export function getTagRoutes(tags: string[]) {
   return tags.map(tag => ({
     params: { tag },
     props: { tag },
   }))
 }
 
-// 生成默认语言文章页面的路径配置
-export function generatePostPaths(posts: CollectionEntry<'posts'>[]) {
+// 生成默认语言文章页面的路由配置
+export function getPostRoutes(posts: CollectionEntry<'posts'>[]) {
   // 创建slug到语言的映射
   const slugToLangs: Record<string, string[]> = {}
 
@@ -45,15 +45,15 @@ export function generatePostPaths(posts: CollectionEntry<'posts'>[]) {
   }))
 }
 
-// 生成更多语言静态路径
-export function generateMultiLangPaths() {
+// 生成更多语言静态路由
+export function getMultiLangRoutes() {
   return moreLocales.map(lang => ({
     params: { lang },
   }))
 }
 
-// 生成更多语言标签页面的路径配置
-export function generateMultiLangTagPaths(tags: string[]) {
+// 生成更多语言标签页面的路由配置
+export function getMultiLangTagRoutes(tags: string[]) {
   return moreLocales.flatMap(lang => (
     tags.map(tag => ({
       params: { lang, tag },
@@ -62,8 +62,8 @@ export function generateMultiLangTagPaths(tags: string[]) {
   ))
 }
 
-// 生成更多语言文章页面的路径配置
-export function generateMultiLangPostPaths(posts: CollectionEntry<'posts'>[]) {
+// 生成更多语言文章页面的路由配置
+export function getMultiLangPostRoutes(posts: CollectionEntry<'posts'>[]) {
   // 创建slug到语言的映射
   const slugToLangs: Record<string, string[]> = {}
 

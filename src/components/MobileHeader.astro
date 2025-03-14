@@ -1,11 +1,10 @@
 ---
 import themeConfig from '@/config'
-import { getPagePath } from '@/i18n/path'
+import { getPageInfo } from '@/i18n/path'
 
 const { title, subtitle } = themeConfig.site
 const { titleSpace } = themeConfig.global
-const currentPath = Astro.url.pathname
-const { getLocalizedPath } = getPagePath(currentPath)
+const { getLocalizedPath } = getPageInfo(Astro.url.pathname)
 
 const marginBottom = {
     1: 'mb-1.625',

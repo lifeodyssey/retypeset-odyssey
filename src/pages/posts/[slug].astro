@@ -1,7 +1,7 @@
 ---
 import Comments from '@/components/Comments/index.astro'
 import PostTime from '@/components/PostTime.astro'
-import { generatePostPaths } from '@/i18n/route'
+import { getPostRoutes } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
 import { generateDescription } from '@/utils/description'
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
     throw new Error(`Slug conflicts found:\n${duplicates.join('\n')}`)
   }
 
-  return generatePostPaths(posts)
+  return getPostRoutes(posts)
 }
 
 const { post, supportedLangs = [] } = Astro.props

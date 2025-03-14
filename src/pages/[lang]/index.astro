@@ -1,11 +1,11 @@
 ---
 import PostList from '@/components/PostList.astro'
-import { generateMultiLangPaths } from '@/i18n/route'
+import { getMultiLangRoutes } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
 
 export function getStaticPaths() {
-  return generateMultiLangPaths()
+  return getMultiLangRoutes()
 }
 
 const { lang } = Astro.params

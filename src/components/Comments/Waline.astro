@@ -17,9 +17,6 @@ const {
   imageUploader = false,
 } = themeConfig.comment?.waline ?? {}
 
-// Get current path
-const currentPath = Astro.url.pathname
-
 // Get the language code of Waline
 function getWalineLang(currentPath: string, defaultLocale: string): string {
   // Extract language code from path
@@ -32,7 +29,7 @@ function getWalineLang(currentPath: string, defaultLocale: string): string {
 }
 
 // Get Waline language and generate configuration
-const walineLang = getWalineLang(currentPath, defaultLocale)
+const walineLang = getWalineLang(Astro.url.pathname, defaultLocale)
 const walineConfigJson = JSON.stringify({
   serverURL,
   lang: walineLang,
@@ -49,8 +46,7 @@ const walineConfigJson = JSON.stringify({
 >
 </div>
 
-<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<!-- Not use is:inline or define:vars -->
+<!-- Not use is:inline or define:vars >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script>
 import { init } from '@waline/client'
 import '@waline/client/style'
@@ -76,7 +72,7 @@ initWaline()
 document.addEventListener('astro:after-swap', initWaline)
 </script>
 
-<!-- Custom css styles >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<!-- Custom css styles >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <style is:global>
 #waline .wl-login-info {
   --at-apply: 'mt-0 mr-3'

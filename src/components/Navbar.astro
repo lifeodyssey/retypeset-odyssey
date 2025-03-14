@@ -1,10 +1,9 @@
 ---
-import { getPagePath } from '@/i18n/path'
+import { getPageInfo } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
 
-const currentPath = Astro.url.pathname
 const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath }
-  = getPagePath(currentPath)
+  = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui]
 
 const isPostActive = isHome || isPost

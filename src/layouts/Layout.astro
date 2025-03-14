@@ -9,7 +9,7 @@ import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
 // import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
 import themeConfig from '@/config'
-import { getPagePath } from '@/i18n/path'
+import { getPageInfo } from '@/i18n/path'
 import Head from '@/layouts/Head.astro'
 
 import '@/styles/font.css'
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
-const { isHome, isPost } = getPagePath(Astro.url.pathname)
+const { isHome, isPost } = getPageInfo(Astro.url.pathname)
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
