@@ -48,7 +48,7 @@ function getPostPath(post: Post) {
       {/* mobile post time */}
       <div
         class="uno-mobile-time"
-        transition:name={`time-${post.data.abbrlink || post.slug}`}
+        transition:name={`mobile-time-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >
         <PostTime
@@ -58,7 +58,11 @@ function getPostPath(post: Post) {
       </div>
 
       {/* desktop post time */}
-      <div class="uno-desktop-time">
+      <div
+        class="uno-desktop-time"
+        transition:name={`desktop-time-${post.data.abbrlink || post.slug}`}
+        data-disable-transition-on-theme
+      >
         <PostTime
           date={post.data.published}
           minutes={post.remarkPluginFrontmatter?.minutes}
