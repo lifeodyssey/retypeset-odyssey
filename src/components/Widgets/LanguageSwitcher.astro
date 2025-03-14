@@ -1,11 +1,19 @@
 ---
-import { getNextLangUrl } from '@/utils/i18n/lang'
+import { getNextLangUrl, getPostNextLangUrl } from '@/i18n/lang'
+import { isPostPage } from '@/i18n/path'
 
-// 获取当前路径
+interface Props {
+  supportedLangs?: string[] // 文章支持的语言列表
+}
+
+const { supportedLangs = [] } = Astro.props
 const currentPath = Astro.url.pathname
+const isPost = isPostPage(currentPath)
 
-// 直接获取下一个语言的URL
-const nextUrl = getNextLangUrl(currentPath)
+// 根据页面类型选择不同的URL获取函数
+const nextUrl = isPost && supportedLangs.length > 0
+  ? getPostNextLangUrl(currentPath, supportedLangs)
+  : getNextLangUrl(currentPath)
 ---
 
 <a

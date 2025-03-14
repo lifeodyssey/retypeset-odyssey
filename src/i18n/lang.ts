@@ -1,4 +1,8 @@
-import { themeConfig } from '@/config'
+import themeConfig from '@/config'
+
+// 从配置中获取默认语言和更多语言配置
+const defaultLocale = themeConfig.global.locale
+// const moreLocale = themeConfig.global.moreLocale
 
 /**
  * 获取下一个语言代码
@@ -90,6 +94,24 @@ export function getLangFromPath(currentPath: string): string {
 }
 
 /**
+ * 获取文章支持的语言
+ * @param lang 文章的语言属性
+ * @returns 支持的语言数组
+ */
+export function getSupportedLangs(lang?: string): string[] {
+  const defaultLocale = themeConfig.global.locale
+  const allLocales = [defaultLocale, ...themeConfig.global.moreLocale]
+
+  // 如果指定了语言且不为空
+  if (lang && typeof lang === 'string' && lang.trim() !== '') {
+    return [lang]
+  }
+
+  // 否则返回所有支持的语言
+  return allLocales
+}
+
+/**
  * 直接从当前路径获取下一个语言的URL
  * @param currentPath 当前页面路径
  * @returns 下一个语言的URL
@@ -100,6 +122,39 @@ export function getNextLangUrl(currentPath: string): string {
 
   // 获取下一个语言
   const nextLang = getNextLang(currentLang)
+
+  // 构建下一个语言的URL
+  return buildNextLangUrl(currentPath, currentLang, nextLang)
+}
+
+/**
+ * 根据支持的语言列表获取下一个语言的URL
+ * @param currentPath 当前路径
+ * @param supportedLangs 文章支持的语言列表
+ * @returns 下一个可用语言的URL
+ */
+export function getPostNextLangUrl(currentPath: string, supportedLangs: string[]): string {
+  // 从路径提取当前语言
+  const currentLang = getLangFromPath(currentPath)
+
+  // 如果没有提供支持的语言或列表为空，使用普通的语言切换
+  if (!supportedLangs || supportedLangs.length === 0) {
+    return getNextLangUrl(currentPath)
+  }
+
+  // 找到当前语言在支持的语言中的索引
+  const currentIndex = supportedLangs.indexOf(currentLang)
+
+  // 如果当前语言不在支持的语言中，或者路径是根路径，返回第一个支持的语言
+  if (currentIndex === -1 || currentPath === '/') {
+    const nextLang = supportedLangs[0]
+    // 如果下一个语言是默认语言，返回根路径
+    return nextLang === defaultLocale ? '/' : `/${nextLang}/`
+  }
+
+  // 计算下一个语言的索引
+  const nextIndex = (currentIndex + 1) % supportedLangs.length
+  const nextLang = supportedLangs[nextIndex]
 
   // 构建下一个语言的URL
   return buildNextLangUrl(currentPath, currentLang, nextLang)

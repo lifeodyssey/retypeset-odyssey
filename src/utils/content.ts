@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
 import themeConfig from '@/config'
-import { langPath } from '@/utils/i18n/ui'
+import { langPath } from '@/i18n/ui'
 import { getCollection } from 'astro:content'
 
 // Type definitions

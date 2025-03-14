@@ -5,9 +5,10 @@ import themeConfig from '@/config'
 
 interface Props {
   class?: string
+  supportedLangs?: string[] // 文章支持的语言列表
 }
 
-const { class: className } = Astro.props
+const { class: className, supportedLangs = [] } = Astro.props
 const { author } = themeConfig.site
 const { links, startYear } = themeConfig.footer
 
@@ -26,7 +27,7 @@ const year = Number(startYear) === currentYear
   <!-- only show on desktop -->
   <div class="mb-11.5 ml-1.5 hidden gap-7 lg:flex">
     <ThemeToggle />
-    <LanguageSwitcher />
+    <LanguageSwitcher supportedLangs={supportedLangs} />
   </div>
 
   <p>

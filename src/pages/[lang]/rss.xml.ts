@@ -1,5 +1,6 @@
 import type { APIContext } from 'astro'
 import themeConfig from '@/config'
+import { generateMultiLangPaths } from '@/i18n/route'
 import { generateRSS } from '@/utils/rss'
 
 const { moreLocale } = themeConfig.global
@@ -9,7 +10,7 @@ type SupportedLanguage = typeof moreLocale[number]
 
 // Generate static paths for all supported languages
 export function getStaticPaths() {
-  return moreLocale.map((lang: SupportedLanguage) => ({ params: { lang } }))
+  return generateMultiLangPaths()
 }
 
 export async function GET({ params }: APIContext) {

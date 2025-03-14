@@ -1,12 +1,13 @@
+// Astro integrations
 import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
 import compress from 'astro-compress'
 import robotsTxt from 'astro-robots-txt'
-import { defineConfig } from 'astro/config'
 
-// Rehype plugins
+// Rehype plugins (HTML processors)
+import { defineConfig } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeComponents from 'rehype-components'
 import rehypeExternalLinks from 'rehype-external-links'
@@ -14,21 +15,21 @@ import rehypeKatex from 'rehype-katex'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 
-// Remark plugins
+// Remark plugins (Markdown processors)
 import remarkDirective from 'remark-directive'
 import remarkGithubAdmonitionsToDirectives from 'remark-github-admonitions-to-directives'
 import remarkMath from 'remark-math'
 import remarkSectionize from 'remark-sectionize'
-import UnoCSS from 'unocss/astro'
-import { themeConfig } from './src/config.js'
 
-// Local plugins
-import { AdmonitionComponent } from './src/plugins/rehype-component-admonition.js'
-import { GithubCardComponent } from './src/plugins/rehype-component-github-card.js'
-import { parseDirectiveNode } from './src/plugins/remark-directive-rehype.js'
-import { remarkExcerpt } from './src/plugins/remark-excerpt.js'
-import { remarkReadingTime } from './src/plugins/remark-reading-time.js'
-import { langMap } from './src/utils/i18n/ui.js'
+// Project configuration and utilities
+import UnoCSS from 'unocss/astro'
+import { themeConfig } from './src/config'
+import { langMap } from './src/i18n/ui'
+import { AdmonitionComponent } from './src/plugins/rehype-component-admonition'
+import { GithubCardComponent } from './src/plugins/rehype-component-github-card'
+import { parseDirectiveNode } from './src/plugins/remark-directive-rehype'
+import { remarkExcerpt } from './src/plugins/remark-excerpt'
+import { remarkReadingTime } from './src/plugins/remark-reading-time'
 
 const url = themeConfig.site.url
 const { light, dark } = themeConfig.color

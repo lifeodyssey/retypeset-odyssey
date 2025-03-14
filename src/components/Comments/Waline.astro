@@ -1,6 +1,6 @@
 ---
 import { themeConfig } from '@/config'
-import { getWalineLang } from '@/utils/i18n/ui'
+import { getWalineLang } from '@/i18n/ui'
 
 const {
   serverURL = '',
@@ -33,8 +33,7 @@ const {
 >
 </div>
 
-<!-- Not use 'is:inline' or 'define:vars' -->
-<!-- 'define:vars' ≈ 'is:inline' -->
+<!-- Not use is:inline or define:vars -->
 <script>
 import { init } from '@waline/client'
 import '@waline/client/style'

@@ -1,10 +1,10 @@
 ---
+import { generateMultiLangPaths } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags } from '@/utils/content'
-import { generateLanguagePaths } from '@/utils/i18n/route'
 
 export function getStaticPaths() {
-  return generateLanguagePaths()
+  return generateMultiLangPaths()
 }
 
 const { lang } = Astro.params

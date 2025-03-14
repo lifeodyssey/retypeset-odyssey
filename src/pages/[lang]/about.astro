@@ -1,9 +1,9 @@
 ---
+import { generateMultiLangPaths } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
-import { generateLanguagePaths } from '@/utils/i18n/route'
 
 export function getStaticPaths() {
-  return generateLanguagePaths()
+  return generateMultiLangPaths()
 }
 ---
 

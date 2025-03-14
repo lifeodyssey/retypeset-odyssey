@@ -1,13 +1,11 @@
 ---
 import PostList from '@/components/PostList.astro'
-import { themeConfig } from '@/config'
+import { generateMultiLangPaths } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
 
 export function getStaticPaths() {
-  return themeConfig.global.moreLocale.map(lang => ({
-    params: { lang },
-  }))
+  return generateMultiLangPaths()
 }
 
 const { lang } = Astro.params

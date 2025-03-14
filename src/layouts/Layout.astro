@@ -9,8 +9,8 @@ import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
 // import Scrollbar from '@/components/Scrollbar.astro'
 import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
 import themeConfig from '@/config'
+import { getPagePath } from '@/i18n/path'
 import Head from '@/layouts/Head.astro'
-import { getPagePath } from '@/utils/i18n/path'
 
 import '@/styles/font.css'
 import '@/styles/global.css'
@@ -20,9 +20,10 @@ interface Props {
   postTitle?: string
   postDescription?: string
   postSlug?: string
+  supportedLangs?: string[]
 }
 
-const { postTitle, postDescription, postSlug } = Astro.props
+const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
 const { isHome, isPost } = getPagePath(Astro.url.pathname)
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
@@ -55,7 +56,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
         <MainHeader />
         <Navigation />
         <!-- only show footer on desktop-->
-        <Footer class="fixed hidden lg:block" />
+        <Footer class="fixed hidden lg:block" supportedLangs={supportedLangs} />
       </div>
 
       <!-- show simple header on mobile for post pages -->
@@ -67,7 +68,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
       </main>
 
       <!-- show footer on mobile -->
-      <Footer class={`block lg:hidden ${footerMarginClass}`} />
+      <Footer class={`block lg:hidden ${footerMarginClass}`} supportedLangs={supportedLangs} />
     </div>
     <!-- <Scrollbar /> -->
     <!-- <BackToTop /> -->
@@ -75,7 +76,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
 
     <!-- only show on mobile (fix position issue on ios / fix right distance)-->
     <div class="absolute right-7.25vw top-13.5 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.5 min-[823px]:right-[calc(50vw-22rem)] lg:hidden">
-      <LanguageSwitcher />
+      <LanguageSwitcher supportedLangs={supportedLangs} />
       <ThemeToggle />
     </div>
 

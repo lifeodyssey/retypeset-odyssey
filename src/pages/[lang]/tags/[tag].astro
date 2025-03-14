@@ -1,7 +1,7 @@
 ---
+import { generateMultiLangTagPaths } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
-import { generateMultiLangTagPaths } from '@/utils/i18n/route'
 
 export async function getStaticPaths() {
   const tags = await getAllTags()
