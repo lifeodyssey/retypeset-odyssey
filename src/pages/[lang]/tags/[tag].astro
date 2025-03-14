@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params
 const { tag } = Astro.props
-const posts = await getPostsByTag(tag)
+const posts = await getPostsByTag(tag, lang)
 const allTags = await getAllTags()
 ---
 

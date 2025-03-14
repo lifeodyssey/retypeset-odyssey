@@ -1,6 +1,6 @@
 ---
-import { getPageInfo } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
+import { getPageInfo } from '@/utils/page'
 
 const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath }
   = getPageInfo(Astro.url.pathname)

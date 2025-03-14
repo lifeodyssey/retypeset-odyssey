@@ -19,13 +19,9 @@ export const walineLocaleMap: Record<string, string> = {
   'ru': 'ru-RU',
 }
 
-// Standard Language Code (Unused)
-export const langCode = Object.values(langMap).flat()
+// Supported Languages
+export const supportedLangs = Object.keys(langMap).flat()
 
-// Abbreviated Language Code
-export const langPath = Object.keys(langMap).flat()
-
-// UI Translation
 export const ui = {
   'zh': {
     posts: '文章',

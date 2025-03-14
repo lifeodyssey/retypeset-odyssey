@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
 import themeConfig from '@/config'
-import { langPath } from '@/i18n/ui'
+import { supportedLangs } from '@/i18n/ui'
 import { getCollection } from 'astro:content'
 
 // Type definitions
@@ -52,7 +52,7 @@ export async function getPosts(lang?: string) {
     'posts',
     ({ data }: Post) => {
       const shouldInclude = import.meta.env.DEV || !data.draft
-      if (!langPath.includes(currentLang)) {
+      if (!supportedLangs.includes(currentLang)) {
         return shouldInclude && data.lang === ''
       }
       return shouldInclude && (data.lang === currentLang || data.lang === '')
