@@ -5,7 +5,7 @@ import themeConfig from '@/config'
 
 interface Props {
   class?: string
-  supportedLangs?: string[] // 文章支持的语言列表
+  supportedLangs: string[]
 }
 
 const { class: className, supportedLangs = [] } = Astro.props

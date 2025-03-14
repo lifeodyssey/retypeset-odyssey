@@ -154,19 +154,3 @@ export function getPostNextLangUrl(currentPath: string, supportedLangs: string[]
   // 构建下一个语言的URL
   return buildNextLangUrl(currentPath, currentLang, nextLang)
 }
-
-/**
- * Get the language code of Waline
- * @param currentPath Current page path
- * @param defaultLocale Default language
- * @returns Corresponding Waline language code
- */
-export function getWalineLang(currentPath: string, defaultLocale: string): string {
-  // Extract language code from path
-  const pathLang = Object.keys(walineLocaleMap).find(code =>
-    currentPath.startsWith(`/${code}/`),
-  )
-  // Return found path language or default language
-  const lang = pathLang || defaultLocale
-  return walineLocaleMap[lang as keyof typeof walineLocaleMap]
-}

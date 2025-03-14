@@ -27,17 +27,14 @@ export function isHomePage(path: string) {
   const clean = cleanPath(path)
   return clean === '' || moreLocales.includes(clean)
 }
-
 export function isPostPage(path: string) {
   const clean = cleanPath(path)
   return clean.startsWith('posts') || moreLocales.some(lang => clean.startsWith(`${lang}/posts`))
 }
-
 export function isTagPage(path: string) {
   const clean = cleanPath(path)
   return clean.startsWith('tags') || moreLocales.some(lang => clean.startsWith(`${lang}/tags`))
 }
-
 export function isAboutPage(path: string) {
   const clean = cleanPath(path)
   return clean.startsWith('about') || moreLocales.some(lang => clean.startsWith(`${lang}/about`))
