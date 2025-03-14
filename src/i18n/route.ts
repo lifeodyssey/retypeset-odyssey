@@ -1,11 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
-import { themeConfig } from '@/config'
-
-// 默认语言和更多语言
-const defaultLocale = themeConfig.global.locale
-const moreLocale = themeConfig.global.moreLocale
-// 所有支持的语言
-const allLocales = [defaultLocale, ...moreLocale]
+import { allLocales, defaultLocale, moreLocales } from '@/i18n/config'
 
 // 生成默认语言标签页面的路径配置
 export function generateTagPaths(tags: string[]) {
@@ -53,14 +47,14 @@ export function generatePostPaths(posts: CollectionEntry<'posts'>[]) {
 
 // 生成更多语言静态路径
 export function generateMultiLangPaths() {
-  return moreLocale.map(lang => ({
+  return moreLocales.map(lang => ({
     params: { lang },
   }))
 }
 
 // 生成更多语言标签页面的路径配置
 export function generateMultiLangTagPaths(tags: string[]) {
-  return moreLocale.flatMap(lang => (
+  return moreLocales.flatMap(lang => (
     tags.map(tag => ({
       params: { lang, tag },
       props: { tag },
@@ -111,7 +105,7 @@ export function generateMultiLangPostPaths(posts: CollectionEntry<'posts'>[]) {
     // 确定文章的语言支持
     const postLang = post.data.lang && typeof post.data.lang === 'string' && post.data.lang.trim() !== ''
       ? [post.data.lang]
-      : moreLocale
+      : moreLocales
 
     // 获取这篇文章支持的所有语言
     const supportedLangs = slugToLangs[slug] || []

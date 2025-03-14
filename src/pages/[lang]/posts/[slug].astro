@@ -1,5 +1,6 @@
 ---
-import Waline from '@/components/Comments/Waline.astro'
+import Comments from '@/components/Comments/index.astro'
+import PostTime from '@/components/PostTime.astro'
 import { generateMultiLangPostPaths } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
@@ -17,6 +18,7 @@ export async function getStaticPaths() {
   return generateMultiLangPostPaths(posts)
 }
 
+const { lang } = Astro.params
 const { post, supportedLangs = [] } = Astro.props
 const description = generateDescription(post)
 const { Content, remarkPluginFrontmatter } = await post.render()
@@ -28,13 +30,45 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postSlug={post.slug}
   supportedLangs={supportedLangs}
 >
-  <article>
-    <h1>{post.data.title}</h1>
-    <time>
-      {post.data.published.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace('/', '-')}
-        {remarkPluginFrontmatter.minutes && <span> {remarkPluginFrontmatter.minutes} min</span>}
-    </time>
+  <article class="heti mb-12.6">
+    <h1 class="post-title">
+      <span
+        transition:name={`post-${post.data.abbrlink || post.slug}`}
+        data-disable-transition-on-theme
+      >
+        {post.data.title}
+      </span>
+    </h1>
+
+    <div
+      class="mb-17 block c-primary font-time"
+      transition:name={`time-${post.data.abbrlink || post.slug}`}
+      data-disable-transition-on-theme
+    >
+      <!-- published and updated time -->
+      <PostTime
+        date={post.data.published}
+        updatedDate={post.data.updated}
+        minutes={remarkPluginFrontmatter.minutes}
+      />
+    </div>
     <Content />
   </article>
-  <Waline />
+
+  <!-- Tags -->
+  {post.data.tags && post.data.tags.length > 0 && (
+    <div class="uno-decorative-line"></div>
+    <div class="uno-tags-wrapper">
+      {post.data.tags.map(tag => (
+        <a
+          href={`/${lang}/tags/${tag}/`}
+          class="uno-tags-style"
+        >
+          {tag}
+        </a>
+      ))}
+    </div>
+  )}
+
+  <Comments />
 </Layout>

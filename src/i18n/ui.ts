@@ -8,6 +8,17 @@ export const langMap: Record<string, string[]> = {
   'ru': ['ru-RU'],
 }
 
+// Waline Language Map
+// docs: https://waline.js.org/guide/i18n.html
+export const walineLocaleMap: Record<string, string> = {
+  'zh': 'zh-CN',
+  'zh-tw': 'zh-TW',
+  'ja': 'jp-JP', // Waline uses jp-JP not ja-JP
+  'en': 'en-US',
+  'es': 'es-ES',
+  'ru': 'ru-RU',
+}
+
 // Standard Language Code (Unused)
 export const langCode = Object.values(langMap).flat()
 
@@ -46,31 +57,4 @@ export const ui = {
     tags: 'Теги',
     about: 'О себе',
   },
-}
-
-// Waline Language Map
-// See more at https://waline.js.org/guide/i18n.html
-export const walineLocaleMap: Record<string, string> = {
-  'zh': 'zh-CN',
-  'zh-tw': 'zh-TW',
-  'ja': 'jp-JP', // Waline uses jp-JP not ja-JP
-  'en': 'en-US',
-  'es': 'es-ES',
-  'ru': 'ru-RU',
-}
-
-/**
- * Get the language code of Waline
- * @param currentPath Current page path
- * @param defaultLocale Default language
- * @returns Corresponding Waline language code
- */
-export function getWalineLang(currentPath: string, defaultLocale: string): string {
-  // Extract language code from path
-  const pathLang = Object.keys(walineLocaleMap).find(code =>
-    currentPath.startsWith(`/${code}/`),
-  )
-  // Return found path language or default language
-  const lang = pathLang || defaultLocale
-  return walineLocaleMap[lang as keyof typeof walineLocaleMap]
 }

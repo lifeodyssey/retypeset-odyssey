@@ -12,9 +12,13 @@ const allTags = await getAllTags()
 ---
 
 <Layout>
-  <div>
+  <div class="uno-decorative-line"></div>
+  <div class="uno-tags-wrapper">
     {allTags.map(tag => (
-      <a href={`/${lang}/tags/${tag}/`}>
+      <a
+        href={`/${lang}/tags/${tag}/`}
+        class="uno-tags-style"
+      >
         {tag}
       </a>
     ))}

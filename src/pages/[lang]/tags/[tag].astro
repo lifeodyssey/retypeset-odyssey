@@ -1,4 +1,5 @@
 ---
+import PostList from '@/components/PostList.astro'
 import { generateMultiLangTagPaths } from '@/i18n/route'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
@@ -15,21 +16,23 @@ const allTags = await getAllTags()
 ---
 
 <Layout>
-  <div>
+  <div class="uno-decorative-line"></div>
+  <div class="uno-tags-wrapper">
     {allTags.map(tag => (
-      <a href={`/${lang}/tags/${tag}/`}>
+      <a
+        href={`/${lang}/tags/${tag}/`}
+        class={`uno-tags-style ${
+          Astro.props.tag === tag
+            ? 'uno-tag-active'
+            : ''
+        }`}
+      >
         {tag}
       </a>
     ))}
   </div>
 
-  <div>
-    <ul>
-      {posts.map(post => (
-        <li>
-          <a href={`/${lang}/posts/${post.data.abbrlink || post.slug}/`}>{post.data.title}</a>
-        </li>
-      ))}
-    </ul>
+  <div class="mt-10.625">
+    <PostList posts={posts} lang={lang} />
   </div>
 </Layout>

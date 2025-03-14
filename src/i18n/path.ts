@@ -1,7 +1,4 @@
-import themeConfig from '@/config'
-
-const defaultLocale = themeConfig.global.locale
-const moreLocales = themeConfig.global.moreLocale
+import { defaultLocale, moreLocales } from '@/i18n/config'
 
 export function cleanPath(path: string) {
   return path.replace(/^\/|\/$/g, '')

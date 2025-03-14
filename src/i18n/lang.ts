@@ -1,8 +1,5 @@
-import themeConfig from '@/config'
-
-// 从配置中获取默认语言和更多语言配置
-const defaultLocale = themeConfig.global.locale
-// const moreLocale = themeConfig.global.moreLocale
+import { allLocales, defaultLocale, moreLocales } from '@/i18n/config'
+import { walineLocaleMap } from '@/i18n/ui'
 
 /**
  * 获取下一个语言代码
@@ -11,8 +8,7 @@ const defaultLocale = themeConfig.global.locale
  */
 export function getNextLang(currentLang: string): string {
   // 获取默认语言和所有支持的语言
-  const defaultLocale = themeConfig.global.locale
-  const allLocales = [defaultLocale, ...themeConfig.global.moreLocale]
+  // 直接使用导入的变量
 
   // 找到当前语言在列表中的索引
   const currentIndex = allLocales.indexOf(currentLang)
@@ -37,7 +33,7 @@ export function getNextLang(currentLang: string): string {
  * @returns 下一个语言的URL
  */
 export function buildNextLangUrl(currentPath: string, currentLang: string, nextLang: string): string {
-  const defaultLocale = themeConfig.global.locale
+  // 直接使用导入的变量
   let nextUrl = ''
 
   if (nextLang === defaultLocale) {
@@ -74,11 +70,11 @@ export function buildNextLangUrl(currentPath: string, currentLang: string, nextL
  * @returns 当前语言代码
  */
 export function getLangFromPath(currentPath: string): string {
-  const defaultLocale = themeConfig.global.locale
+  // 直接使用导入的变量
   let currentLang = ''
 
   // 检查路径是否以/xx/开始，其中xx是支持的语言代码
-  for (const lang of themeConfig.global.moreLocale) {
+  for (const lang of moreLocales) {
     if (currentPath.startsWith(`/${lang}/`) || currentPath === `/${lang}`) {
       currentLang = lang
       break
@@ -99,8 +95,7 @@ export function getLangFromPath(currentPath: string): string {
  * @returns 支持的语言数组
  */
 export function getSupportedLangs(lang?: string): string[] {
-  const defaultLocale = themeConfig.global.locale
-  const allLocales = [defaultLocale, ...themeConfig.global.moreLocale]
+  // 直接使用导入的变量
 
   // 如果指定了语言且不为空
   if (lang && typeof lang === 'string' && lang.trim() !== '') {
@@ -158,4 +153,20 @@ export function getPostNextLangUrl(currentPath: string, supportedLangs: string[]
 
   // 构建下一个语言的URL
   return buildNextLangUrl(currentPath, currentLang, nextLang)
+}
+
+/**
+ * Get the language code of Waline
+ * @param currentPath Current page path
+ * @param defaultLocale Default language
+ * @returns Corresponding Waline language code
+ */
+export function getWalineLang(currentPath: string, defaultLocale: string): string {
+  // Extract language code from path
+  const pathLang = Object.keys(walineLocaleMap).find(code =>
+    currentPath.startsWith(`/${code}/`),
+  )
+  // Return found path language or default language
+  const lang = pathLang || defaultLocale
+  return walineLocaleMap[lang as keyof typeof walineLocaleMap]
 }

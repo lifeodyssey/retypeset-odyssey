@@ -3,10 +3,10 @@ import themeConfig from '@/config'
 import { generateMultiLangPaths } from '@/i18n/route'
 import { generateRSS } from '@/utils/rss'
 
-const { moreLocale } = themeConfig.global
+const { moreLocales } = themeConfig.global
 
 // Type for supported non-default languages
-type SupportedLanguage = typeof moreLocale[number]
+type SupportedLanguage = typeof moreLocales[number]
 
 // Generate static paths for all supported languages
 export function getStaticPaths() {
@@ -17,7 +17,7 @@ export async function GET({ params }: APIContext) {
   const lang = params.lang as SupportedLanguage
 
   // Return 404 if language is not supported
-  if (!moreLocale.includes(lang)) {
+  if (!moreLocales.includes(lang)) {
     return new Response(null, {
       status: 404,
       statusText: 'Not found',
