@@ -36,7 +36,7 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
   )
 
   return rss({
-    title: lang ? `${title} (${lang})` : title,
+    title: lang ? `${title}_${lang}` : title,
     description,
     site: url,
     items: posts.map((post: CollectionEntry<'posts'>) => ({

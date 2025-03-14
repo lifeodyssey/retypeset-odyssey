@@ -1,0 +1,57 @@
+---
+import { allLocales, defaultLocale } from '@/i18n/config'
+import Layout from '@/layouts/Layout.astro'
+import { getAllTags } from '@/utils/content'
+
+export async function getStaticPaths() {
+  // 定义路径数组的类型
+  type PathItem = {
+    params: { tags: string }
+    props: { lang: string }
+  }
+
+  const paths: PathItem[] = []
+
+  // 默认语言的标签索引页
+  paths.push({
+    params: { tags: 'tags' },
+    props: { lang: defaultLocale },
+  })
+
+  // 更多语言的标签索引页
+  allLocales.forEach((lang: string) => {
+    if (lang !== defaultLocale) {
+      paths.push({
+        params: { tags: `${lang}/tags` },
+        props: { lang },
+      })
+    }
+  })
+
+  return paths
+}
+
+const { lang } = Astro.props
+const allTags = await getAllTags()
+
+// 构建标签链接
+function getTagUrl(tagName: string): string {
+  return lang === defaultLocale
+    ? `/tags/${tagName}/`
+    : `/${lang}/tags/${tagName}/`
+}
+---
+
+<Layout>
+  <div class="uno-decorative-line"></div>
+  <div class="uno-tags-wrapper">
+    {allTags.map(tagName => (
+      <a
+        href={getTagUrl(tagName)}
+        class="uno-tags-style"
+      >
+        {tagName}
+      </a>
+    ))}
+  </div>
+</Layout>

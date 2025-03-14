@@ -1,5 +1,6 @@
 ---
 import PostTime from '@/components/PostTime.astro'
+import { defaultLocale } from '@/i18n/config'
 
 interface Post {
   data: {
@@ -27,8 +28,8 @@ export interface Props {
 function getPostPath(post: Post) {
   // If abbrlink is set, it will be used instead of slug
   const postPath = post.data.abbrlink || post.slug
-  // Add language prefix to URL if current page is in a language subdirectory
-  return lang ? `/${lang}/posts/${postPath}/` : `/posts/${postPath}/`
+  // Add language prefix to URL if current page is in a language subdirectory and not the default language
+  return lang && lang !== defaultLocale ? `/${lang}/posts/${postPath}/` : `/posts/${postPath}/`
 }
 ---
 <ul>

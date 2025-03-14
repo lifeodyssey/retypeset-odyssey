@@ -1,0 +1,47 @@
+---
+import { allLocales, defaultLocale } from '@/i18n/config'
+import Layout from '@/layouts/Layout.astro'
+
+export async function getStaticPaths() {
+  // 定义路径数组的类型
+  type PathItem = {
+    params: { about: string }
+    props: { lang: string }
+  }
+
+  const paths: PathItem[] = []
+
+  // 默认语言的关于页面
+  paths.push({
+    params: { about: 'about' },
+    props: { lang: defaultLocale },
+  })
+
+  // 更多语言的关于页面
+  allLocales.forEach((lang: string) => {
+    if (lang !== defaultLocale) {
+      paths.push({
+        params: { about: `${lang}/about` },
+        props: { lang },
+      })
+    }
+  })
+
+  return paths
+}
+
+const { lang } = Astro.props
+---
+
+<Layout>
+  <div class="uno-decorative-line"></div>
+  <div class="heti mt-4.375">
+    {lang === 'en'
+? (
+      <p>Retypeset is a static blog theme based on the <a href="https://astro.build/">Astro</a> framework, inspired by <a href="https://astro-theme-typography.vercel.app/">Typography</a>. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.</p>
+    )
+: (
+      <p>Retypeset 是一款基于<a href="https://astro.build/">Astro</a>框架的静态博客主题，设计灵感来自<a href="https://astro-theme-typography.vercel.app/">Typography</a>。本主题通过建立全新的视觉规范，对所有页面进行重新编排，打造纸质书页般的阅读体验，再现版式之美。所见皆为细节，方寸尽显优雅。</p>
+    )}
+  </div>
+</Layout>

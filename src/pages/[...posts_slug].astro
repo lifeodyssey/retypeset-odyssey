@@ -1,0 +1,145 @@
+---
+import Comments from '@/components/Comments/index.astro'
+import PostTime from '@/components/PostTime.astro'
+import { allLocales, defaultLocale } from '@/i18n/config'
+import Layout from '@/layouts/Layout.astro'
+import { checkSlugDuplication } from '@/utils/content'
+import { generateDescription } from '@/utils/description'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts')
+
+  const duplicates = await checkSlugDuplication(posts)
+  if (duplicates.length > 0) {
+    throw new Error(`Slug conflicts found:\n${duplicates.join('\n')}`)
+  }
+
+  // 创建slug到语言的映射
+  const slugToLangs: Record<string, string[]> = {}
+
+  // 填充映射
+  posts.forEach((post) => {
+    const slug = post.data.abbrlink || post.slug
+    const lang = post.data.lang || defaultLocale
+
+    // 如果文章没有指定语言，初始化为所有支持的语言
+    if (!slugToLangs[slug]) {
+      if (!post.data.lang) {
+        slugToLangs[slug] = [...allLocales] // 文章支持所有语言
+      }
+      else {
+        slugToLangs[slug] = [defaultLocale] // 仅默认语言和指定语言
+      }
+    }
+
+    if (!slugToLangs[slug].includes(lang)) {
+      slugToLangs[slug].push(lang)
+    }
+  })
+
+  // 定义路径数组的类型
+  type PathItem = {
+    params: { posts_slug: string }
+    props: { post: any, lang: string, supportedLangs: string[] }
+  }
+
+  const paths: PathItem[] = []
+
+  // 默认语言的文章页面 (没有语言前缀)
+  posts.forEach((post) => {
+    if (!post.data.draft) {
+      const slug = post.data.abbrlink || post.slug
+      paths.push({
+        params: { posts_slug: `posts/${slug}` },
+        props: {
+          post,
+          lang: defaultLocale,
+          supportedLangs: slugToLangs[slug] || [],
+        },
+      })
+    }
+  })
+
+  // 更多语言的文章页面 (有语言前缀)
+  allLocales.forEach((lang: string) => {
+    if (lang !== defaultLocale) {
+      posts.forEach((post) => {
+        if (!post.data.draft && (post.data.lang === lang || post.data.lang === '')) {
+          const slug = post.data.abbrlink || post.slug
+          paths.push({
+            params: { posts_slug: `${lang}/posts/${slug}` },
+            props: {
+              post,
+              lang,
+              supportedLangs: slugToLangs[slug] || [],
+            },
+          })
+        }
+      })
+    }
+  })
+
+  return paths
+}
+
+const { post, lang, supportedLangs } = Astro.props
+const description = generateDescription(post)
+const { Content, remarkPluginFrontmatter } = await post.render()
+
+// 构建标签链接
+function getTagUrl(tagName: string): string {
+  return lang === defaultLocale
+    ? `/tags/${tagName}/`
+    : `/${lang}/tags/${tagName}/`
+}
+---
+
+<Layout
+  postTitle={post.data.title}
+  postDescription={description}
+  postSlug={post.slug}
+  supportedLangs={supportedLangs}
+>
+  <article class="heti mb-12.6">
+    <h1 class="post-title">
+      <span
+        transition:name={`post-${post.data.abbrlink || post.slug}`}
+        data-disable-transition-on-theme
+      >
+        {post.data.title}
+      </span>
+    </h1>
+
+    <div
+      class="mb-17 block c-primary font-time"
+      transition:name={`time-${post.data.abbrlink || post.slug}`}
+      data-disable-transition-on-theme
+    >
+      <!-- published and updated time -->
+      <PostTime
+        date={post.data.published}
+        updatedDate={post.data.updated}
+        minutes={remarkPluginFrontmatter.minutes}
+      />
+    </div>
+    <Content />
+  </article>
+
+  <!-- Tags -->
+  {post.data.tags && post.data.tags.length > 0 && (
+    <div class="uno-decorative-line"></div>
+    <div class="uno-tags-wrapper">
+      {post.data.tags.map((tag: string) => (
+        <a
+          href={getTagUrl(tag)}
+          class="uno-tags-style"
+        >
+          {tag}
+        </a>
+      ))}
+    </div>
+  )}
+
+  <Comments />
+</Layout>

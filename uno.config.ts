@@ -33,7 +33,7 @@ export default defineConfig({
     },
   },
   shortcuts: {
-    'uno-article-underline': 'underline mx-0.25em decoration-secondary/50 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-primary/75 transition)',
+    'uno-article-underline': 'underline mx-0.25em decoration-secondary/25 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-secondary/75 transition)',
     'uno-tags-style': 'inline-block whitespace-nowrap border border-secondary/25 rounded-full px-3.2 py-0.7 c-secondary transition-colors hover:(border-secondary/75 text-primary)',
     'uno-tag-active': 'border-secondary/75 text-primary',
     'uno-decorative-line': 'h-0.25 w-10 bg-secondary opacity-25',
