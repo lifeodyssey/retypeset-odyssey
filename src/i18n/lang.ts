@@ -1,4 +1,4 @@
-import { allLocales, defaultLocale, moreLocales } from '@/i18n/config'
+import { allLocales, defaultLocale, moreLocales } from '@/config'
 
 // Gets the language code from the current path
 export function getLangFromPath(path: string) {

@@ -1,9 +1,8 @@
 ---
-import { allLocales, defaultLocale } from '@/i18n/config'
+import { allLocales, defaultLocale } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 
 export async function getStaticPaths() {
-  // 定义路径数组的类型
   type PathItem = {
     params: { about: string }
     props: { lang: string }
@@ -11,13 +10,13 @@ export async function getStaticPaths() {
 
   const paths: PathItem[] = []
 
-  // 默认语言的关于页面
+  // Default locale
   paths.push({
     params: { about: 'about' },
     props: { lang: defaultLocale },
   })
 
-  // 更多语言的关于页面
+  // More locales
   allLocales.forEach((lang: string) => {
     if (lang !== defaultLocale) {
       paths.push({

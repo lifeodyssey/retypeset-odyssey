@@ -1,4 +1,4 @@
-import { moreLocales } from '@/i18n/config'
+import { moreLocales } from '@/config'
 import { getLangFromPath } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 

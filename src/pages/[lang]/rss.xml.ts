@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro'
-import { moreLocales } from '@/i18n/config'
+import { moreLocales } from '@/config'
 import { generateRSS } from '@/utils/rss'
 
 // Generate static paths for all supported languages

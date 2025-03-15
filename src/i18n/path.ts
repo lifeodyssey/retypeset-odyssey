@@ -1,4 +1,4 @@
-import { defaultLocale } from '@/i18n/config'
+import { defaultLocale } from '@/config'
 import { getLangFromPath, getNextLang } from '@/i18n/lang'
 import { cleanPath } from '@/utils/page'
 

@@ -1,6 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
-import themeConfig from '@/config'
-import { defaultLocale } from '@/i18n/config'
+import themeConfig, { defaultLocale } from '@/config'
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import MarkdownIt from 'markdown-it'
@@ -10,7 +9,7 @@ const parser = new MarkdownIt()
 const { title, description, url } = themeConfig.site
 const followConfig = themeConfig.seo?.follow
 
-// Returns first 50 chars with proper truncation
+// Returns first 98 chars with proper truncation
 function getExcerpt(content: string): string {
   if (!content)
     return ''
@@ -19,8 +18,8 @@ function getExcerpt(content: string): string {
     allowedTags: [],
     allowedAttributes: {},
   })
-  const excerpt = plainText.slice(0, 50).trim()
-  return excerpt.length === 50 ? `${excerpt}...` : excerpt
+  const excerpt = plainText.slice(0, 98).trim()
+  return excerpt.length === 98 ? `${excerpt}...` : excerpt
 }
 
 interface GenerateRSSOptions {

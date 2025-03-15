@@ -24,7 +24,7 @@ import remarkSectionize from 'remark-sectionize'
 // Project configuration and utilities
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config'
-import { langMap } from './src/i18n/ui'
+import { langMap } from './src/i18n/config'
 import { AdmonitionComponent } from './src/plugins/rehype-component-admonition'
 import { GithubCardComponent } from './src/plugins/rehype-component-github-card'
 import { parseDirectiveNode } from './src/plugins/remark-directive-rehype'

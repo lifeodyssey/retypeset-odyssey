@@ -1,4 +1,4 @@
-import type { supportedLangs } from '@/i18n/ui'
+import type { supportedLangs } from '@/i18n/config'
 
 type Exclude<T, U> = T extends U ? never : T
 

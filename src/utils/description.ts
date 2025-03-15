@@ -19,8 +19,7 @@ export function generateExcerpt(content: string, length: number = 98): string {
   const normalizedText = plainText.replace(/\s+/g, ' ')
   const excerpt = normalizedText.slice(0, length).trim()
   // Add ellipsis if text was truncated
-  const needsEllipsis = normalizedText.length > length
-  return needsEllipsis ? `${excerpt}...` : excerpt
+  return normalizedText.length > length ? `${excerpt}...` : excerpt
 }
 
 // Automatically generate a description for the article
