@@ -1,11 +1,20 @@
 ---
 import themeConfig from '@/config'
+import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
 
-const { title, subtitle } = themeConfig.site
-const { titleSpace } = themeConfig.global
-const { getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const { currentLang, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const currentUI = ui[currentLang as keyof typeof ui]
 
+const { title, subtitle } = themeConfig.site
+const headerTitle = title || currentUI.title
+const headerSubtitle = !subtitle
+  ? ''
+  : (subtitle === 'Revive the beauty of typography'
+      ? currentUI.subtitle
+      : subtitle)
+
+const { titleSpace } = themeConfig.global
 const marginBottom = {
     1: 'mb-0.625',
     2: 'mb-1.875',
@@ -13,26 +22,23 @@ const marginBottom = {
   }[titleSpace] || 'mb-3.125'
 ---
 
-<header
-  class="mb-10.625"
-  lg="fixed"
->
+<header class="mb-10.625 lg:fixed">
   <h1 class={`${marginBottom} text-8 c-primary font-bold font-title lg:text-9`}>
     <!-- Fix text cropping issues during view transition on ios by adding a div tag -->
     <div
       class="box-content inline-block pr-1.25"
-      transition:name="site-title"
+      transition:name={`site-title-${currentLang}`}
       data-disable-transition-on-theme
     >
       <a href={getLocalizedPath('/')}>
-        {title}
+        {headerTitle}
       </a>
     </div>
   </h1>
 
-  {subtitle && (
+  {headerSubtitle && (
     <h2 class="text-3.5 c-secondary font-navbar lg:text-4">
-      {subtitle}
+      {headerSubtitle}
     </h2>
   )}
 </header>

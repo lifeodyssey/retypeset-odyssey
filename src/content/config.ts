@@ -1,3 +1,4 @@
+import { allLocales } from '@/config'
 import { defineCollection, z } from 'astro:content'
 
 const postsCollection = defineCollection({
@@ -13,7 +14,7 @@ const postsCollection = defineCollection({
     draft: z.boolean().optional().default(false),
     pin: z.number().int().min(0).max(99).optional().default(0),
     toc: z.boolean().optional().default(false),
-    lang: z.string().optional().default(''),
+    lang: z.enum(['', ...allLocales]).optional().default(''),
     abbrlink: z.string().optional().default('').refine(
       abbrlink => !abbrlink || /^[a-z0-9\-]*$/.test(abbrlink),
       { message: 'Abbrlink can only contain lowercase letters, numbers and hyphens' },
@@ -21,6 +22,13 @@ const postsCollection = defineCollection({
   }),
 })
 
+const aboutCollection = defineCollection({
+  schema: z.object({
+    lang: z.enum(['', ...allLocales]).optional().default(''),
+  }),
+})
+
 export const collections = {
   posts: postsCollection,
+  about: aboutCollection,
 }
