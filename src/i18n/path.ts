@@ -1,4 +1,4 @@
-import { defaultLocale } from '@/config'
+import { defaultLocale, moreLocales } from '@/config'
 import { getLangFromPath, getNextLang } from '@/i18n/lang'
 import { cleanPath } from '@/utils/page'
 
@@ -84,19 +84,26 @@ export function getPostNextLangUrl(currentPath: string, supportedLangs: string[]
     return getNextLangUrl(currentPath)
   }
 
+  // 确保supportedLangs按照allLocales的顺序排序
+  const sortedLangs = [...supportedLangs].sort((a, b) => {
+    // 使用导入的allLocales变量
+    const allLocales = [defaultLocale, ...moreLocales]
+    return allLocales.indexOf(a) - allLocales.indexOf(b)
+  })
+
   // 找到当前语言在支持的语言中的索引
-  const currentIndex = supportedLangs.indexOf(currentLang)
+  const currentIndex = sortedLangs.indexOf(currentLang)
 
   // 如果当前语言不在支持的语言中，或者路径是根路径，返回第一个支持的语言
   if (currentIndex === -1 || currentPath === '/') {
-    const nextLang = supportedLangs[0]
+    const nextLang = sortedLangs[0]
     // 如果下一个语言是默认语言，返回根路径
     return nextLang === defaultLocale ? '/' : `/${nextLang}/`
   }
 
   // 计算下一个语言的索引
-  const nextIndex = (currentIndex + 1) % supportedLangs.length
-  const nextLang = supportedLangs[nextIndex]
+  const nextIndex = (currentIndex + 1) % sortedLangs.length
+  const nextLang = sortedLangs[nextIndex]
 
   // 构建下一个语言的URL
   return buildNextLangUrl(currentPath, currentLang, nextLang)

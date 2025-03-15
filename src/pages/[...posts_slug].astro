@@ -38,6 +38,14 @@ export async function getStaticPaths() {
     }
   })
 
+  // 对每个文章的supportedLangs按照allLocales的顺序排序
+  Object.keys(slugToLangs).forEach((slug) => {
+    // 按照allLocales的顺序排序
+    slugToLangs[slug].sort((a, b) => {
+      return allLocales.indexOf(a) - allLocales.indexOf(b)
+    })
+  })
+
   // 定义路径数组的类型
   type PathItem = {
     params: { posts_slug: string }
