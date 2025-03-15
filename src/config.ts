@@ -5,11 +5,11 @@ export const themeConfig: ThemeConfig = {
   site: {
     // site title
     title: 'Retypeset',
-    // site subtitle (optional)
-    subtitle: 'Revive the beauty of typography',
+    // site subtitle
+    subtitle: '再现版式之美',
     // use i18n title/subtitle from src/i18n/ui.ts instead of static ones above
     i18nTitle: true,
-    // site description for SEO
+    // site description
     description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
     // author name
     author: 'radishzz',
@@ -17,16 +17,17 @@ export const themeConfig: ThemeConfig = {
     url: 'https://retypeset.radishzz.cc',
     // favicon url
     // support only SVG, PNG and ICO
-    favicon: '/image/Favicon.svg', // https://example.com/favicon.svg
+    favicon: '/image/Favicon.svg', // or https://example.com/favicon.svg
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    // default theme mode
+    // theme mode
     mode: 'light', // light, dark
     light: {
       // title color
+      // oklch color picker: https://oklch.com/
       primary: 'oklch(25% 0.005 298)',
       // text color
       secondary: 'oklch(40% 0.005 298)',
@@ -38,6 +39,7 @@ export const themeConfig: ThemeConfig = {
     },
     dark: {
       // title color
+      // oklch color picker: https://oklch.com/
       primary: 'oklch(88% 0.005 298)',
       // text color
       secondary: 'oklch(77% 0.005 298)',
@@ -55,21 +57,23 @@ export const themeConfig: ThemeConfig = {
     // default language
     locale: 'zh', // zh, zh-tw, ja, en, es, ru
     // more languages
-    // not fill in the locale above again
+    // not fill in the locale code above again
     moreLocales: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
     // font styles for text
     fontStyle: 'sans', // sans, serif
     // date format for posts
     dateFormat: 'YYYY-MM-DD', // YYYY-MM-DD, MM-DD-YYYY, DD-MM-YYYY, MONTH DAY YYYY, DAY MONTH YYYY
-    // space between title and subtitle
-    titleSpace: 2, // 1, 2, 3
+    // gap between title and subtitle
+    titleGap: 2, // 1, 2, 3
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
+    // waline comment system
+    // docs: https://waline.js.org/en/
     waline: {
-      // waline server url
+      // server url
       serverURL: 'https://retypeset-comment.radishzz.cc',
       // emoji url
       emoji: [
@@ -83,35 +87,32 @@ export const themeConfig: ThemeConfig = {
       // bug: unable to hide image uploader icon
       imageUploader: false, // true, false
     },
-    // disqus: TODO
-    // giscus: TODO
-    // twikoo: TODO
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   seo: {
     // @twitter ID
-    twitterID: '',
+    twitterID: '@astrodotbuild',
     // site verification
     verification: {
-      // Google Search Console
+      // google search console
       // docs: https://search.google.com/search-console
       google: '',
-      // Bing Webmaster Tools
+      // bing webmaster tools
       // docs: https://www.bing.com/webmasters
       bing: '',
-      // Yandex Webmaster
+      // yandex webmaster
       // docs: https://webmaster.yandex.com
       yandex: '',
-      // Baidu Search
+      // baidu search
       // docs: https://ziyuan.baidu.com
       baidu: '',
     },
-    // Google Analytics
+    // google analytics
     // docs: https://analytics.google.com
     googleAnalyticsID: '',
-    // Umami Analytics
+    // umami analytics
     // docs: https://cloud.umami.is
     umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697',
     // follow verification
@@ -122,9 +123,6 @@ export const themeConfig: ThemeConfig = {
       // user ID
       userID: '',
     },
-    // Open Graph
-    // Screenshot of home page for Open Graph: ./public/image/Screenshot.png
-    // Logo on the Open Graph: ./public/image/Astro-Icon-Dark.png
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -163,11 +161,14 @@ export const themeConfig: ThemeConfig = {
     commentURL: 'https://comment.radishzz.cc',
     // image hosting url
     imageHostURL: 'https://image.radishzz.cc',
-    // If you proxy analytics js to the custom domain, you can fill in below.
+    // custom google analytics js
+    // for users who route analytics javascript to a customized domain
     // See https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738
     customGoogleAnalyticsJS: '',
+    // custom umami analytics js
+    // for users who deploy umami on their own, or route analytics javascript to a customized domain
     // see https://github.com/umami-software/umami/discussions/1026
-    customUmamiAnalyticsJS: 'https://views.radishzz.cc/script.js',
+    customUmamiAnalyticsJS: 'https://js.radishzz.cc/jquery.min.js',
   },
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }

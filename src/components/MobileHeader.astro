@@ -10,12 +10,12 @@ const { title, subtitle, i18nTitle } = themeConfig.site
 const headerTitle = i18nTitle ? currentUI.title : title
 const headerSubtitle = i18nTitle ? currentUI.subtitle : subtitle
 
-const { titleSpace } = themeConfig.global
+const { titleGap } = themeConfig.global
 const marginBottom = {
     1: 'mb-1.625',
     2: 'mb-2.875',
     3: 'mb-4.125',
-  }[titleSpace] || 'mb-2.875'
+  }[titleGap] || 'mb-2.875'
 ---
 
 <header class="mb-10.625 lg:hidden">
