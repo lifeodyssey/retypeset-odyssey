@@ -107,6 +107,9 @@
 .heti:not(:lang(zh)):not(:lang(zh-TW)):not(:lang(ja)):not(:lang(ko)) {
 	letter-spacing:0
 }
+.heti:not(:lang(zh)):not(:lang(zh-TW)):not(:lang(ja)):not(:lang(ko)) {
+  line-height: 1.3;
+}
 .heti a,.heti abbr,.heti code,.heti heti-spacing,.heti [lang=en-US] {
 	letter-spacing:normal
 }
