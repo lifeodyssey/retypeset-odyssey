@@ -1,5 +1,7 @@
 ---
 import { allLocales, defaultLocale, themeConfig } from '@/config'
+import { ui } from '@/i18n/ui'
+import { getPageInfo } from '@/utils/page'
 import { ClientRouter } from 'astro:transitions'
 
 interface Props {
@@ -9,16 +11,19 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug } = Astro.props
+const { currentLang } = getPageInfo(Astro.url.pathname)
+const currentUI = ui[currentLang as keyof typeof ui]
 
-const { title, subtitle, description, author, url, favicon } = themeConfig.site
+const { title, subtitle, description, author, url, favicon, i18nTitle } = themeConfig.site
 const { mode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
-// const { locale, moreLocales } = themeConfig.global
 const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
 
 const initMetaTheme = mode === 'dark' ? darkMode : lightMode
-const pageTitle = postTitle ? `${postTitle} | ${title}` : `${title} - ${subtitle}`
+const headTitle = i18nTitle ? currentUI.title : title
+const headSubtitle = i18nTitle ? currentUI.subtitle : subtitle
+const pageTitle = postTitle ? `${postTitle} | ${headTitle}` : `${headTitle} - ${headSubtitle}`
 const pageDescription = postDescription || description
 // TODO: Change openGraph image fallback url
 const pageImage = postSlug ? `${url}/opengraph/${postSlug}.png` : 'https://placehold.co/1200x630'
@@ -69,12 +74,8 @@ const pageImage = postSlug ? `${url}/opengraph/${postSlug}.png` : 'https://place
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={pageDescription} />
 <meta name="twitter:image" content={pageImage} />
-{twitterID && (
-  <>
-    <meta name="twitter:site" content={twitterID} />
-    <meta name="twitter:creator" content={twitterID} />
-  </>
-)}
+{twitterID && <meta name="twitter:site" content={twitterID} />}
+{twitterID && <meta name="twitter:creator" content={twitterID} />}
 
 <!-- Site Verification -->
 {google && <meta name="google-site-verification" content={google} />}

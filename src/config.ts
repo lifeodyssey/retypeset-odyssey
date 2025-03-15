@@ -6,7 +6,7 @@ export const themeConfig: ThemeConfig = {
     // site title
     title: 'Retypeset',
     // site subtitle
-    subtitle: '再现版式之美',
+    subtitle: 'Revive the beauty of typography',
     // use i18n title/subtitle from src/i18n/ui.ts instead of static ones above
     i18nTitle: true,
     // site description
