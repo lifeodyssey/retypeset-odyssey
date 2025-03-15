@@ -5,8 +5,6 @@ import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/utils/content'
 
 export async function getStaticPaths() {
-  const tags = await getAllTags()
-
   // 定义路径数组的类型
   type PathItem = {
     params: { tags_tag: string }
@@ -16,7 +14,8 @@ export async function getStaticPaths() {
   const paths: PathItem[] = []
 
   // 默认语言的标签页面 (没有语言前缀)
-  tags.forEach((tag: string) => {
+  const defaultTags = await getAllTags(defaultLocale)
+  defaultTags.forEach((tag: string) => {
     paths.push({
       params: { tags_tag: `tags/${tag}` },
       props: { tag, lang: defaultLocale },
@@ -24,16 +23,17 @@ export async function getStaticPaths() {
   })
 
   // 更多语言的标签页面 (有语言前缀)
-  allLocales.forEach((lang: string) => {
+  for (const lang of allLocales) {
     if (lang !== defaultLocale) {
-      tags.forEach((tag: string) => {
+      const langTags = await getAllTags(lang)
+      langTags.forEach((tag: string) => {
         paths.push({
           params: { tags_tag: `${lang}/tags/${tag}` },
           props: { tag, lang },
         })
       })
     }
-  })
+  }
 
   return paths
 }
@@ -41,6 +41,16 @@ export async function getStaticPaths() {
 const { tag, lang } = Astro.props
 const posts = await getPostsByTag(tag, lang)
 const allTags = await getAllTags(lang)
+
+// 获取当前标签在每种语言下是否有文章
+const tagSupportedLangs = await Promise.all(
+  allLocales.map(async (locale) => {
+    const postsInLang = await getPostsByTag(tag, locale)
+    return postsInLang.length > 0 ? locale : null
+  }),
+)
+// 过滤出支持当前标签的语言列表
+const supportedLangs = tagSupportedLangs.filter(Boolean) as string[]
 
 // 构建标签链接
 function getTagUrl(tagName: string): string {
@@ -50,7 +60,7 @@ function getTagUrl(tagName: string): string {
 }
 ---
 
-<Layout>
+<Layout supportedLangs={supportedLangs}>
   <div class="uno-decorative-line"></div>
   <div class="uno-tags-wrapper">
     {allTags.map(tagName => (
