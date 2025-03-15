@@ -1,5 +1,5 @@
 ---
-import { getNextLangUrl, getPostNextLangUrl } from '@/i18n/path'
+import { getNextLangUrl, getNextSupportedLangUrl } from '@/i18n/path'
 import { isPostPage, isTagPage } from '@/utils/page'
 
 interface Props {
@@ -11,13 +11,13 @@ const currentPath = Astro.url.pathname
 const isPost = isPostPage(currentPath)
 const isTag = isTagPage(currentPath)
 
-// 检查是否应使用受限的语言列表
-const useFilteredLangs = isPost || (isTag && supportedLangs.length > 0)
+// Check if only the supported language switch list is used
+const useSupportedLangs = isPost || (isTag && supportedLangs.length > 0)
 
-// 根据页面类型选择合适的语言切换方式
-const nextUrl = useFilteredLangs
-  ? getPostNextLangUrl(currentPath, supportedLangs) // 只在有内容的语言间切换
-  : getNextLangUrl(currentPath) // 在所有语言间切换
+// Choose a language switch list according to the page type
+const nextUrl = useSupportedLangs
+  ? getNextSupportedLangUrl(currentPath, supportedLangs) // Switch between supported languages
+  : getNextLangUrl(currentPath) // Switch between all languages
 ---
 
 <a

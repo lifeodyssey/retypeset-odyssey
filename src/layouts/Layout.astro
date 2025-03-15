@@ -48,7 +48,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
     <!-- content width: calc(32rem+(100vw-1024px)*(44rem-32rem)/(1280-1024))=calc(75vw-16rem) / gap width: calc(6.75rem+(100vw-1024px)*(10.75rem-6.75rem)/(1280-1024))=calc(25vw-9.25rem) -->
     <div
       class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
-      p="x-[min(7.25vw,3.731rem)] y-8 lg:(x-22.5 y-20)"
+      p="x-[min(7.25vw,3.731rem)] y-9 lg:(x-22.5 y-20)"
       lg="max-w-320 grid cols-[min(calc(75vw-16rem),44rem)_14rem] gap-[min(calc(25vw-9.25rem),10.75rem)]"
     >
       <!-- hide header and navigation on mobile for post pages -->
@@ -75,7 +75,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
     <!-- <PhotoSwipe /> -->
 
     <!-- only show on mobile (fix position issue on ios / fix right distance)-->
-    <div class="absolute right-7.25vw top-13.5 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.5 min-[823px]:right-[calc(50vw-22rem)] lg:hidden">
+    <div class="absolute right-7.25vw top-13.6 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.6 min-[823px]:right-[calc(50vw-22rem)] lg:hidden">
       <LanguageSwitcher supportedLangs={supportedLangs} />
       <ThemeToggle />
     </div>

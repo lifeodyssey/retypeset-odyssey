@@ -75,7 +75,7 @@ export function getNextLangUrl(currentPath: string): string {
  * @param supportedLangs 文章支持的语言列表
  * @returns 下一个可用语言的URL
  */
-export function getPostNextLangUrl(currentPath: string, supportedLangs: string[]): string {
+export function getNextSupportedLangUrl(currentPath: string, supportedLangs: string[]): string {
   // 从路径提取当前语言
   const currentLang = getLangFromPath(currentPath)
 
