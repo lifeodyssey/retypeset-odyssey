@@ -24,11 +24,11 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 ## Demo
 
 - [Retypeset](https://retypeset.radishzz.cc/en/)
-- [Retipografía](https://retypeset.radishzz.cc/en/)
-- [Переверстка](https://retypeset.radishzz.cc/en/)
-- [重新编排](https://retypeset.radishzz.cc/en/)
-- [重新編排](https://retypeset.radishzz.cc/en/)
-- [再組版](https://retypeset.radishzz.cc/en/)
+- [Retipografía](https://retypeset.radishzz.cc/es/)
+- [Переверстка](https://retypeset.radishzz.cc/ru/)
+- [重新编排](https://retypeset.radishzz.cc/)
+- [重新編排](https://retypeset.radishzz.cc/zh-tw/)
+- [再組版](https://retypeset.radishzz.cc/ja/)
 
 ## Features
 
