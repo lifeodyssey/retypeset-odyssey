@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 
 const { tag, lang } = Astro.props
 const posts = await getPostsByTag(tag, lang)
-const allTags = await getAllTags()
+const allTags = await getAllTags(lang)
 
 // 构建标签链接
 function getTagUrl(tagName: string): string {

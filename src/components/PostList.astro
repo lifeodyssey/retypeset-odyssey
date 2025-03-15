@@ -1,5 +1,5 @@
 ---
-import PostTime from '@/components/PostTime.astro'
+import PostDate from '@/components/PostDate.astro'
 import { defaultLocale } from '@/config'
 
 interface Post {
@@ -38,7 +38,7 @@ function getPostPath(post: Post) {
       <a
         class="hover:c-primary"
         href={getPostPath(post)}
-        transition:name={`post-${post.data.abbrlink || post.slug}`}
+        transition:name={`post-${post.data.abbrlink || post.slug}-${lang}`}
         data-disable-transition-on-theme
       >
         {post.data.title}
@@ -47,10 +47,10 @@ function getPostPath(post: Post) {
       {/* mobile post time */}
       <div
         class="uno-mobile-time"
-        transition:name={`mobile-time-${post.data.abbrlink || post.slug}`}
+        transition:name={`time-${post.data.abbrlink || post.slug}-${lang}`}
         data-disable-transition-on-theme
       >
-        <PostTime
+        <PostDate
           date={post.data.published}
           minutes={post.remarkPluginFrontmatter?.minutes}
         />
@@ -59,10 +59,10 @@ function getPostPath(post: Post) {
       {/* desktop post time */}
       <div
         class="uno-desktop-time"
-        transition:name={`desktop-time-${post.data.abbrlink || post.slug}`}
+        transition:name={`time-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >
-        <PostTime
+        <PostDate
           date={post.data.published}
           minutes={post.remarkPluginFrontmatter?.minutes}
         />

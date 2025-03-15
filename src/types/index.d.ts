@@ -7,6 +7,7 @@ export interface ThemeConfig {
   site: {
     title: string
     subtitle: string
+    i18nTitle: boolean
     description: string
     author: string
     url: string

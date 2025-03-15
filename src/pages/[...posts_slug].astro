@@ -1,6 +1,6 @@
 ---
 import Comments from '@/components/Comments/index.astro'
-import PostTime from '@/components/PostTime.astro'
+import PostDate from '@/components/PostDate.astro'
 import { allLocales, defaultLocale } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { checkSlugDuplication } from '@/utils/content'
@@ -48,16 +48,21 @@ export async function getStaticPaths() {
 
   // 默认语言的文章页面 (没有语言前缀)
   posts.forEach((post) => {
-    if (!post.data.draft) {
+    if (import.meta.env.DEV || !post.data.draft) {
       const slug = post.data.abbrlink || post.slug
-      paths.push({
-        params: { posts_slug: `posts/${slug}` },
-        props: {
-          post,
-          lang: defaultLocale,
-          supportedLangs: slugToLangs[slug] || [],
-        },
-      })
+      const postLang = post.data.lang || defaultLocale
+
+      // 只有当文章语言是默认语言或没有指定语言时才生成默认语言路径
+      if (postLang === defaultLocale || post.data.lang === '') {
+        paths.push({
+          params: { posts_slug: `posts/${slug}` },
+          props: {
+            post,
+            lang: defaultLocale,
+            supportedLangs: slugToLangs[slug] || [],
+          },
+        })
+      }
     }
   })
 
@@ -65,7 +70,7 @@ export async function getStaticPaths() {
   allLocales.forEach((lang: string) => {
     if (lang !== defaultLocale) {
       posts.forEach((post) => {
-        if (!post.data.draft && (post.data.lang === lang || post.data.lang === '')) {
+        if ((import.meta.env.DEV || !post.data.draft) && (post.data.lang === lang || post.data.lang === '')) {
           const slug = post.data.abbrlink || post.slug
           paths.push({
             params: { posts_slug: `${lang}/posts/${slug}` },
@@ -104,7 +109,7 @@ function getTagUrl(tagName: string): string {
   <article class="heti mb-12.6">
     <h1 class="post-title">
       <span
-        transition:name={`post-${post.data.abbrlink || post.slug}`}
+        transition:name={`post-${post.data.abbrlink || post.slug}-${lang}`}
         data-disable-transition-on-theme
       >
         {post.data.title}
@@ -113,11 +118,11 @@ function getTagUrl(tagName: string): string {
 
     <div
       class="mb-17 block c-primary font-time"
-      transition:name={`time-${post.data.abbrlink || post.slug}`}
+      transition:name={`time-${post.data.abbrlink || post.slug}-${lang}`}
       data-disable-transition-on-theme
     >
       <!-- published and updated time -->
-      <PostTime
+      <PostDate
         date={post.data.published}
         updatedDate={post.data.updated}
         minutes={remarkPluginFrontmatter.minutes}

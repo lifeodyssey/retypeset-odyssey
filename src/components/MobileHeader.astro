@@ -6,13 +6,9 @@ import { getPageInfo } from '@/utils/page'
 const { currentLang, getLocalizedPath } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui]
 
-const { title, subtitle } = themeConfig.site
-const headerTitle = title || currentUI.title
-const headerSubtitle = !subtitle
-  ? ''
-  : (subtitle === 'Revive the beauty of typography'
-      ? currentUI.subtitle
-      : subtitle)
+const { title, subtitle, i18nTitle } = themeConfig.site
+const headerTitle = i18nTitle ? currentUI.title : title
+const headerSubtitle = i18nTitle ? currentUI.subtitle : subtitle
 
 const { titleSpace } = themeConfig.global
 const marginBottom = {
