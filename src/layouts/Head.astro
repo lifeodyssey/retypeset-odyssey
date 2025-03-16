@@ -13,6 +13,7 @@ interface Props {
 const { postTitle, postDescription, postSlug } = Astro.props
 const { currentLang } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui]
+const langCode = currentLang === defaultLocale ? '' : `/${currentLang}`
 
 const { title, subtitle, description, author, url, favicon, i18nTitle } = themeConfig.site
 const { mode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
@@ -29,8 +30,8 @@ const pageDescription = postDescription || description
 const pageImage = postSlug
   ? `${url}/opengraph/${postSlug}.png`
   : apiflashKey
-    ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${url}&format=png&width=1500&height=788&ttl=86400&wait_until=network_idle&no_tracking=true`
-    : 'https://api.apiflash.com/v1/urltoimage?access_key=02a837b6188f4ba0a7fd9fbeff03a83e&url=https://retypeset.radishzz.cc&format=png&width=1500&height=788&ttl=86400&wait_until=network_idle&no_tracking=true'
+    ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${url}${langCode}&format=png&width=1500&height=788&ttl=86400&wait_until=network_idle&no_tracking=true`
+    : `https://api.apiflash.com/v1/urltoimage?access_key=02a837b6188f4ba0a7fd9fbeff03a83e&url=https://retypeset.radishzz.cc${langCode}&format=png&width=1500&height=788&ttl=604800&wait_until=network_idle&no_tracking=true`
 ---
 <head>
 <!-- Basic info -->
@@ -66,20 +67,21 @@ const pageImage = postSlug
 ))}
 
 <!-- Facebook Open Graph -->
-<meta property="og:title" content={pageTitle} />
 <meta property="og:type" content={postTitle ? 'article' : 'website'} />
-<meta property="og:image" content={pageImage} />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:description" content={pageDescription} />
 <meta property="og:site_name" content={title} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:image" content={pageImage} />
+<meta property="og:logo" content={favicon} />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
+{twitterID && <meta name="twitter:site" content={twitterID} />}
+{twitterID && <meta name="twitter:creator" content={twitterID} />}
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={pageDescription} />
 <meta name="twitter:image" content={pageImage} />
-{twitterID && <meta name="twitter:site" content={twitterID} />}
-{twitterID && <meta name="twitter:creator" content={twitterID} />}
 
 <!-- Site Verification -->
 {google && <meta name="google-site-verification" content={google} />}
