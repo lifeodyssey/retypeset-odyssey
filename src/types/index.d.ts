@@ -61,6 +61,7 @@ export interface ThemeConfig {
       feedID?: string
       userID?: string
     }
+    apiflashKey?: string
   }
 
   footer: {

@@ -98,7 +98,7 @@ export const themeConfig: ThemeConfig = {
     verification: {
       // google search console
       // docs: https://search.google.com/search-console
-      google: '',
+      google: 'AUCrz5F1e5qbnmKKDXl2Sf8u6y0kOpEO1wLs6HMMmlM',
       // bing webmaster tools
       // docs: https://www.bing.com/webmasters
       bing: '',
@@ -123,6 +123,10 @@ export const themeConfig: ThemeConfig = {
       // user ID
       userID: '',
     },
+    // apiflash access key
+    // automatically generate website screenshots for open graph preview images
+    // get your access key at: https://apiflash.com/
+    apiflashKey: '',
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
