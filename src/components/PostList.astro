@@ -46,7 +46,7 @@ function getPostPath(post: Post) {
 
       {/* mobile post time */}
       <div
-        class="uno-mobile-time"
+        class="mb-5.625 text-3.5 leading-6.875 font-time lg:(hidden)"
         transition:name={`time-${post.data.abbrlink || post.slug}-${lang}`}
         data-disable-transition-on-theme
       >
@@ -58,7 +58,7 @@ function getPostPath(post: Post) {
 
       {/* desktop post time */}
       <div
-        class="uno-desktop-time"
+        class="mb-5.625 hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)"
         transition:name={`time-${post.data.abbrlink || post.slug}`}
         data-disable-transition-on-theme
       >

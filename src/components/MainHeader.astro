@@ -19,7 +19,7 @@ const marginBottom = {
 ---
 
 <header class="mb-10.625 lg:fixed">
-  <h1 class={`${marginBottom} text-8 c-primary font-bold font-title lg:text-9 w-75% lg:w-full`}>
+  <h1 class={`${marginBottom} text-8 c-primary font-bold font-title lg:(text-9 w-full) w-75%`}>
     <!-- Fix text cropping issues during view transition on ios by adding a div tag -->
     <div
       class="box-content inline-block pr-1.25"
@@ -33,7 +33,7 @@ const marginBottom = {
   </h1>
 
   {headerSubtitle && (
-    <h2 class="w-75% text-balance text-3.5 c-secondary font-navbar lg:text-4">
+    <h2 class="w-75% text-balance text-3.5 c-secondary font-navbar lg:(w-full text-4)">
       {headerSubtitle}
     </h2>
   )}

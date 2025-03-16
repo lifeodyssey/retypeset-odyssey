@@ -24,7 +24,7 @@
 	margin-block-end:0 !important
 }
 .heti a {
-  --at-apply: 'uno-article-underline';
+  --at-apply: 'underline mx-0.25em decoration-secondary/25 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-secondary/75 transition)';
 }
 .heti blockquote {
 	margin-block-start:12px;
