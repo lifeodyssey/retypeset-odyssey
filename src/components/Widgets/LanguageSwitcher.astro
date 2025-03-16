@@ -1,5 +1,5 @@
 ---
-import { getNextLangUrl, getNextSupportedLangUrl } from '@/i18n/path'
+import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
 import { isPostPage, isTagPage } from '@/utils/page'
 
 interface Props {
@@ -16,8 +16,8 @@ const useSupportedLangs = isPost || (isTag && supportedLangs.length > 0)
 
 // Choose a language switch list according to the page type
 const nextUrl = useSupportedLangs
-  ? getNextSupportedLangUrl(currentPath, supportedLangs) // Switch between supported languages
-  : getNextLangUrl(currentPath) // Switch between all languages
+  ? getNextSupportedLangPath(currentPath, supportedLangs) // Switch between supported languages
+  : getNextGlobalLangPath(currentPath) // Switch between all languages
 ---
 
 <a

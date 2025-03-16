@@ -6,6 +6,7 @@ import { getLocalizedPath } from '@/i18n/path'
 export function cleanPath(path: string) {
   return path.replace(/^\/|\/$/g, '')
 }
+
 // Checks if the current path is the home/post/tag/about page
 export function isHomePage(path: string) {
   const clean = cleanPath(path)
