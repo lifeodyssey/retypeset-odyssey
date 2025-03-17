@@ -27,7 +27,7 @@ const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.prop
 const { isHome, isPost } = getPageInfo(Astro.url.pathname)
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
-const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
+const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
   ? 'mt-8'
   : 'mt-12'
 ---
@@ -39,13 +39,16 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
 >
   <Head {postTitle} {postDescription} {postSlug} />
   <body data-overlayscrollbars-initialize>
-    <!-- mobile -->
+
+    <!-- Layout Calculation -->
+    <!-- Mobile -->
     <!-- mobile width: 393px / suitable words number: 21 / content width: 21*16px=336px / padding: (393px-336px)/2=28.5px=（28.5px/393px）=7.25vw -->
     <!-- max mobile width: 1024px / max word number: 42+2=44 / max content width: 44*16px=704px / max div width: 704px/(100vw-7.25vw*2)=823.3918px/4=205.848 / max padding: 823.3918px-704px=119.3918px/2=59.6959px/16=3.731rem -->
-    <!-- desktop -->
+    <!-- Desktop -->
     <!-- desktop min div width: 1024px-90px*2=844px / min words number: 32 / min content width: 32*16px=512px/16=32rem / title width: 14*16px=224px/16=14rem / min-gap: 844px-512px-224px=108px -->
     <!-- desktop max div width: 1100px+90px*2=1280px/4=320 / max words number: 42+2=44 / max content width: 44*16px=704px / title width: 14*16px=224px / max-gap: 1100px-704px-224px=172px/16=10.75rem -->
     <!-- content width: calc(32rem+(100vw-1024px)*(44rem-32rem)/(1280-1024))=calc(75vw-16rem) / gap width: calc(6.75rem+(100vw-1024px)*(10.75rem-6.75rem)/(1280-1024))=calc(25vw-9.25rem) -->
+
     <div
       class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
       p="x-[min(7.25vw,3.731rem)] y-9 lg:(x-22.5 y-20)"
@@ -55,7 +58,7 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
       <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
         <MainHeader />
         <Navigation />
-        <!-- only show footer on desktop-->
+        <!-- Desktop footer -->
         <Footer class="fixed hidden lg:block" supportedLangs={supportedLangs} />
       </div>
 
@@ -67,14 +70,15 @@ const footerMarginClass = isPost && themeConfig.comment?.waline?.serverURL
         <slot />
       </main>
 
-      <!-- show footer on mobile -->
-      <Footer class={`block lg:hidden ${footerMarginClass}`} supportedLangs={supportedLangs} />
+      <!-- Mobile footer -->
+      <Footer class={`block lg:hidden ${mobileFooterMargin}`} supportedLangs={supportedLangs} />
     </div>
+
     <!-- <Scrollbar /> -->
     <!-- <BackToTop /> -->
     <!-- <PhotoSwipe /> -->
 
-    <!-- only show on mobile (fix position issue on ios / fix right distance)-->
+    <!-- Mobile widget (fix position issue on ios / fix right distance)-->
     <div class="absolute right-7.25vw top-13.6 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.6 min-[823px]:right-[calc(50vw-22rem)] lg:hidden">
       <LanguageSwitcher supportedLangs={supportedLangs} />
       <ThemeToggle />

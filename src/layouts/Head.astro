@@ -24,15 +24,16 @@ const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', custom
 const initMetaTheme = mode === 'dark' ? darkMode : lightMode
 const headTitle = i18nTitle ? currentUI.title : title
 const headSubtitle = i18nTitle ? currentUI.subtitle : subtitle
+
 const pageTitle = postTitle ? `${postTitle} | ${headTitle}` : `${headTitle} - ${headSubtitle}`
 const pageDescription = postDescription || description
-// TODO: Change openGraph image fallback url
 const pageImage = postSlug
   ? `${url}/og/${postSlug}.png`
   : apiflashKey
     ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${url}${langCode}&format=png&width=1500&height=788&ttl=86400&wait_until=network_idle&no_tracking=true`
     : `https://api.apiflash.com/v1/urltoimage?access_key=02a837b6188f4ba0a7fd9fbeff03a83e&url=https://retypeset.radishzz.cc${langCode}&format=png&width=1500&height=788&ttl=604800&wait_until=network_idle&no_tracking=true`
 ---
+
 <head>
 <!-- Basic info -->
 <meta charset="utf-8" />

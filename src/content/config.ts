@@ -1,6 +1,7 @@
 import { allLocales } from '@/config'
 import { defineCollection, z } from 'astro:content'
 
+// Posts collection
 const postsCollection = defineCollection({
   schema: z.object({
     // required
@@ -22,6 +23,7 @@ const postsCollection = defineCollection({
   }),
 })
 
+// About page
 const aboutCollection = defineCollection({
   schema: z.object({
     lang: z.enum(['', ...allLocales]).optional().default(''),
