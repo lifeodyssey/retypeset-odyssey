@@ -1,7 +1,8 @@
 ---
 import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
 import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
-import themeConfig from '@/config'
+import { defaultLocale, themeConfig } from '@/config'
+import { getLangFromPath } from '@/i18n/lang'
 
 interface Props {
   class?: string
@@ -10,7 +11,19 @@ interface Props {
 
 const { class: className, supportedLangs = [] } = Astro.props
 const { author } = themeConfig.site
-const { links, startYear } = themeConfig.footer
+const { links: configLinks, startYear } = themeConfig.footer
+
+// i18n rss path
+const currentLang = getLangFromPath(Astro.url.pathname)
+const links = configLinks.map((link) => {
+  if (link.name === 'RSS') {
+    return {
+      ...link,
+      url: currentLang === defaultLocale ? link.url : `/${currentLang}${link.url}/`,
+    }
+  }
+  return link
+})
 
 const currentYear = new Date().getFullYear()
 const year = Number(startYear) === currentYear

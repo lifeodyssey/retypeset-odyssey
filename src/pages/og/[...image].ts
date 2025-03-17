@@ -1,3 +1,4 @@
+import type { CollectionEntry } from 'astro:content'
 import { generateDescription } from '@/utils/description'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
@@ -7,11 +8,11 @@ const blogEntries = await getCollection('posts')
 
 // Convert to page data objects
 const pages = Object.fromEntries(
-  blogEntries.map(post => [
+  blogEntries.map((post: CollectionEntry<'posts'>) => [
     post.slug,
     {
       title: post.data.title,
-      description: post.data.description || generateDescription(post),
+      description: post.data.description || generateDescription(post, 'og'),
     },
   ]),
 )

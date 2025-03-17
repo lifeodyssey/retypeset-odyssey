@@ -98,7 +98,7 @@ export async function getStaticPaths() {
 }
 
 const { post, lang, supportedLangs } = Astro.props
-const description = generateDescription(post)
+const description = generateDescription(post, 'meta')
 const { Content, remarkPluginFrontmatter } = await post.render()
 
 // 构建标签链接

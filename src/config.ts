@@ -4,13 +4,13 @@ export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
     // site title
-    title: 'Retypeset',
+    title: '重新编排',
     // site subtitle
-    subtitle: 'Revive the beauty of typography',
+    subtitle: '再现版式之美',
     // use i18n title/subtitle from src/i18n/ui.ts instead of static ones above
     i18nTitle: true,
     // site description
-    description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
+    description: 'Retypeset 是一款基于Astro框架的静态博客主题，设计灵感来自Typography。本主题通过建立全新的视觉规范，对所有页面进行重新编排，打造纸质书页般的阅读体验，再现版式之美。所见皆为细节，方寸尽显优雅。',
     // author name
     author: 'radishzz',
     // site url
