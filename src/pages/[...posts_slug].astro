@@ -2,52 +2,48 @@
 import type { CollectionEntry } from 'astro:content'
 import Comments from '@/components/Comments/index.astro'
 import PostDate from '@/components/PostDate.astro'
-import { allLocales, defaultLocale } from '@/config'
+import { allLocales, defaultLocale, moreLocales } from '@/config'
+import { getTagPath } from '@/i18n/path'
 import Layout from '@/layouts/Layout.astro'
-import { checkSlugDuplication } from '@/utils/content'
+import { checkPostSlugDuplication } from '@/utils/content'
 import { generateDescription } from '@/utils/description'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
 
-  const duplicates = await checkSlugDuplication(posts)
+  // Check if there are duplicate post slugs
+  const duplicates = await checkPostSlugDuplication(posts)
   if (duplicates.length > 0) {
-    throw new Error(`Slug conflicts found:\n${duplicates.join('\n')}`)
+    throw new Error(`Duplicate post slugs:\n${duplicates.join('\n')}`)
   }
 
-  // 创建slug到语言的映射
-  const slugToLangs: Record<string, string[]> = {}
-
-  // 填充映射
-  posts.forEach((post: CollectionEntry<'posts'>) => {
+  // Use a Map to store the relationship between post slugs and their supported languages
+  // Set is used to store the supported languages for each post
+  const slugToLangsMap = posts.reduce((map, post) => {
     const slug = post.data.abbrlink || post.slug
-    const lang = post.data.lang || defaultLocale
+    const lang = post.data.lang
 
-    // 如果文章没有指定语言，初始化为所有支持的语言
-    if (!slugToLangs[slug]) {
-      if (!post.data.lang) {
-        slugToLangs[slug] = [...allLocales] // 文章支持所有语言
-      }
-      else {
-        slugToLangs[slug] = [defaultLocale] // 仅默认语言和指定语言
-      }
+    if (!map.has(slug)) {
+      map.set(slug, new Set(lang ? [lang] : allLocales))
+    }
+ else if (lang) {
+      map.get(slug)?.add(lang)
     }
 
-    if (!slugToLangs[slug].includes(lang)) {
-      slugToLangs[slug].push(lang)
-    }
-  })
+    return map
+  }, new Map<string, Set<string>>())
 
-  // 对每个文章的supportedLangs按照allLocales的顺序排序
-  Object.keys(slugToLangs).forEach((slug) => {
-    // 按照allLocales的顺序排序
-    slugToLangs[slug].sort((a, b) => {
-      return allLocales.indexOf(a) - allLocales.indexOf(b)
-    })
-  })
+  // Convert Map<slug, Set<langs>> to Record<slug, langs[]> structure
+  // Sort languages according to the order defined in allLocales
+  const slugToLangs = Object.fromEntries(
+    Array.from(slugToLangsMap.entries()).map(([slug, langs]) => [
+      slug,
+      [...langs].sort((a, b) => allLocales.indexOf(a) - allLocales.indexOf(b)),
+    ]),
+  )
 
-  // 定义路径数组的类型
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   type PathItem = {
     params: { posts_slug: string }
     props: { post: any, lang: string, supportedLangs: string[] }
@@ -55,16 +51,16 @@ export async function getStaticPaths() {
 
   const paths: PathItem[] = []
 
-  // 默认语言的文章页面 (没有语言前缀)
+  // Default locale
   posts.forEach((post: CollectionEntry<'posts'>) => {
+    // Show drafts in dev mode only
     if (import.meta.env.DEV || !post.data.draft) {
       const slug = post.data.abbrlink || post.slug
-      const postLang = post.data.lang || defaultLocale
+      const lang = post.data.lang
 
-      // 只有当文章语言是默认语言或没有指定语言时才生成默认语言路径
-      if (postLang === defaultLocale || post.data.lang === '') {
+      if (lang === defaultLocale || lang === '') {
         paths.push({
-          params: { posts_slug: `posts/${slug}` },
+          params: { posts_slug: `posts/${slug}/` },
           props: {
             post,
             lang: defaultLocale,
@@ -75,23 +71,22 @@ export async function getStaticPaths() {
     }
   })
 
-  // 更多语言的文章页面 (有语言前缀)
-  allLocales.forEach((lang: string) => {
-    if (lang !== defaultLocale) {
-      posts.forEach((post: CollectionEntry<'posts'>) => {
-        if ((import.meta.env.DEV || !post.data.draft) && (post.data.lang === lang || post.data.lang === '')) {
-          const slug = post.data.abbrlink || post.slug
-          paths.push({
-            params: { posts_slug: `${lang}/posts/${slug}` },
-            props: {
-              post,
-              lang,
-              supportedLangs: slugToLangs[slug] || [],
-            },
-          })
-        }
-      })
-    }
+  // More locales
+  moreLocales.forEach((lang: string) => {
+    posts.forEach((post: CollectionEntry<'posts'>) => {
+      // Process posts with matching language or no language specified
+      if ((import.meta.env.DEV || !post.data.draft) && (post.data.lang === lang || post.data.lang === '')) {
+        const slug = post.data.abbrlink || post.slug
+        paths.push({
+          params: { posts_slug: `${lang}/posts/${slug}/` },
+          props: {
+            post,
+            lang,
+            supportedLangs: slugToLangs[slug] || [],
+          },
+        })
+      }
+    })
   })
 
   return paths
@@ -100,13 +95,6 @@ export async function getStaticPaths() {
 const { post, lang, supportedLangs } = Astro.props
 const description = generateDescription(post, 'meta')
 const { Content, remarkPluginFrontmatter } = await post.render()
-
-// 构建标签链接
-function getTagUrl(tagName: string): string {
-  return lang === defaultLocale
-    ? `/tags/${tagName}/`
-    : `/${lang}/tags/${tagName}/`
-}
 ---
 
 <Layout
@@ -148,7 +136,7 @@ function getTagUrl(tagName: string): string {
     <div class="uno-tags-wrapper">
       {post.data.tags.map((tag: string) => (
         <a
-          href={getTagUrl(tag)}
+          href={getTagPath(tag, lang)}
           class="uno-tags-style"
         >
           {tag}

@@ -18,8 +18,12 @@ async function getPostMeta(post: CollectionEntry<'posts'>): Promise<Post> {
   return { ...post, remarkPluginFrontmatter }
 }
 
-// Check if the slug is duplicated under the same language
-export async function checkSlugDuplication(posts: Post[]): Promise<string[]> {
+/**
+ * Check if the post slug is duplicated under the same language
+ * @param posts Array of blog posts
+ * @returns Array of duplicate slugs with language information
+ */
+export async function checkPostSlugDuplication(posts: Post[]): Promise<string[]> {
   const slugMap = new Map<string, Set<string>>()
   const duplicates: string[] = []
 
@@ -33,7 +37,12 @@ export async function checkSlugDuplication(posts: Post[]): Promise<string[]> {
 
     const slugSet = slugMap.get(lang)!
     if (slugSet.has(slug)) {
-      duplicates.push(`Duplicate slug "${slug}" found in language "${lang || 'default'}"`)
+      if (!lang) {
+        duplicates.push(`Duplicate slug "${slug}" found in universal post (applies to all languages)`)
+      }
+      else {
+        duplicates.push(`Duplicate slug "${slug}" found in "${lang}" language post`)
+      }
     }
     else {
       slugSet.add(slug)

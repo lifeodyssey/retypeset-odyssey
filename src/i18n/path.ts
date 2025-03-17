@@ -2,6 +2,18 @@ import { defaultLocale, moreLocales } from '@/config'
 import { getLangFromPath, getNextGlobalLang } from '@/i18n/lang'
 import { cleanPath } from '@/utils/page'
 
+/**
+ * Get path to tag page with language support
+ * @param tagName Tag name
+ * @param lang Current language code
+ * @returns Path to tag page
+ */
+export function getTagPath(tagName: string, lang: string): string {
+  return lang === defaultLocale
+    ? `/tags/${tagName}/`
+    : `/${lang}/tags/${tagName}/`
+}
+
 // Generates a localized path based on current language
 export function getLocalizedPath(path: string, currentLang?: string) {
   const clean = cleanPath(path)
