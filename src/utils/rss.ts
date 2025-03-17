@@ -1,5 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
-import themeConfig, { defaultLocale } from '@/config'
+import { defaultLocale, themeConfig } from '@/config'
+import { generateDescription } from '@/utils/description'
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import MarkdownIt from 'markdown-it'
@@ -8,19 +9,6 @@ import sanitizeHtml from 'sanitize-html'
 const parser = new MarkdownIt()
 const { title, description, url } = themeConfig.site
 const followConfig = themeConfig.seo?.follow
-
-// Returns first 98 chars with proper truncation
-function getExcerpt(content: string): string {
-  if (!content)
-    return ''
-  // Convert markdown to plain text by removing all HTML tags
-  const plainText = sanitizeHtml(parser.render(content), {
-    allowedTags: [],
-    allowedAttributes: {},
-  })
-  const excerpt = plainText.slice(0, 98).trim()
-  return excerpt.length === 98 ? `${excerpt}...` : excerpt
-}
 
 interface GenerateRSSOptions {
   lang?: string
@@ -36,34 +24,34 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
 
   return rss({
     title: lang ? `${title}_${lang}` : title,
-    description,
     site: url,
+    description,
+    customData: `
+    <copyright>Copyright © ${new Date().getFullYear()} ${themeConfig.site.author}</copyright>
+    <language>${lang || themeConfig.global.locale}</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    ${followConfig?.feedID && followConfig?.userID
+        ? `<follow_challenge>
+          <feedId>${followConfig.feedID}</feedId>
+          <userId>${followConfig.userID}</userId>
+        </follow_challenge>`
+        : ''
+    }
+  `.trim(),
     items: posts.map((post: CollectionEntry<'posts'>) => ({
       title: post.data.title,
-      pubDate: post.data.published,
-      description: post.data.description || getExcerpt(post.body),
-      // Generate absolute URL with correct language prefix based on post language
+      // Generate URL with language prefix and abbrlink/slug
       link: new URL(
         `${post.data.lang !== defaultLocale && post.data.lang !== '' ? `${post.data.lang}/` : ''}posts/${post.data.abbrlink || post.slug}/`,
         url,
       ).toString(),
-      // Convert markdown content to HTML, allowing img tags
+      description: generateDescription(post, 'rss'),
+      pubDate: post.data.published,
       content: post.body
         ? sanitizeHtml(parser.render(post.body), {
             allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
           })
         : '',
     })),
-    // Add XML namespaces for language and follow challenge
-    customData: `
-      <language>${lang || themeConfig.global.locale}</language>
-      ${followConfig?.feedID && followConfig?.userID
-          ? `<follow_challenge>
-            <feedId>${followConfig.feedID}</feedId>
-            <userId>${followConfig.userID}</userId>
-          </follow_challenge>`
-          : ''
-      }
-    `.trim(),
   })
 }

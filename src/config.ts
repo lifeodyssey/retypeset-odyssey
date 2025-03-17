@@ -4,7 +4,7 @@ export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
     // site title
-    title: '重新编排',
+    title: 'Retypeset',
     // site subtitle
     subtitle: '再现版式之美',
     // use i18n title/subtitle from src/i18n/ui.ts instead of static ones above
@@ -126,6 +126,7 @@ export const themeConfig: ThemeConfig = {
     // apiflash access key
     // automatically generate website screenshots for open graph preview images
     // get your access key at: https://apiflash.com/
+    // check your open graph at: https://orcascan.com/tools/open-graph-validator
     apiflashKey: '',
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

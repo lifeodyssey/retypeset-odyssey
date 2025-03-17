@@ -5,7 +5,7 @@ import sanitizeHtml from 'sanitize-html'
 
 const parser = new MarkdownIt()
 
-type ExcerptScene = 'list' | 'meta' | 'og'
+type ExcerptScene = 'list' | 'meta' | 'og' | 'rss'
 
 // Excerpt length in different scenarios
 const EXCERPT_LENGTHS: Record<ExcerptScene, {
@@ -23,6 +23,10 @@ const EXCERPT_LENGTHS: Record<ExcerptScene, {
   og: {
     cjk: 75,
     other: 150,
+  },
+  rss: {
+    cjk: 120,
+    other: 240,
   },
 }
 

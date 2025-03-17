@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content'
 // eslint-disable-next-line antfu/no-top-level-await
 const blogEntries = await getCollection('posts')
 
-// Convert to page data objects
+// Convert blog entries into a lookup object with slug as key and title/description as value
 const pages = Object.fromEntries(
   blogEntries.map((post: CollectionEntry<'posts'>) => [
     post.slug,
