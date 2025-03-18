@@ -121,7 +121,7 @@
 	font-weight:600
 }
 .heti .post-title {
-  --at-apply: 'c-primary mb-2 font-bold text-9 leading-12 text-balance lg:mbs-0';
+  --at-apply: 'c-primary mb-2 font-bold text-9 leading-12 text-balance mbs-0';
 }
 .heti h1 {
   --at-apply: 'mb-6';

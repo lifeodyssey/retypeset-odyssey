@@ -21,8 +21,8 @@ const EXCERPT_LENGTHS: Record<ExcerptScene, {
     other: 240,
   },
   og: {
-    cjk: 75,
-    other: 150,
+    cjk: 70,
+    other: 140,
   },
   rss: {
     cjk: 120,
