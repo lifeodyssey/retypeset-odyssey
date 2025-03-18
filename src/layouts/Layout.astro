@@ -24,7 +24,8 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
-const { isHome, isPost } = getPageInfo(Astro.url.pathname)
+const { isHome, isPost, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const localizedHome = getLocalizedPath('/')
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
@@ -147,6 +148,23 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
     // Initialize click event (on first load or page transition)
     setupThemeToggle()
     document.addEventListener('astro:after-swap', setupThemeToggle)
+    </script>
+
+    <!-- Back home >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+    <script define:vars={{ localizedHome }}>
+    function setupBackButton() {
+      document.getElementById('back-button')?.addEventListener('click', () => {
+        if (document.referrer) {
+          window.history.back()
+        }
+        else {
+          window.location.href = localizedHome
+        }
+      })
+    }
+
+    setupBackButton()
+    document.addEventListener('astro:after-swap', setupBackButton)
     </script>
 
   </body>

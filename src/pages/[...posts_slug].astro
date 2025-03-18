@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content'
 import Comments from '@/components/Comments/index.astro'
 import PostDate from '@/components/PostDate.astro'
+import BackHome from '@/components/Widgets/BackHome.astro'
 import { allLocales, defaultLocale, moreLocales } from '@/config'
 import { getTagPath } from '@/i18n/path'
 import Layout from '@/layouts/Layout.astro'
@@ -18,6 +19,7 @@ export async function getStaticPaths() {
     throw new Error(`Duplicate post slugs:\n${duplicates.join('\n')}`)
   }
 
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // Use a Map to store the relationship between post slugs and their supported languages
   // Set is used to store the supported languages for each post
   const slugToLangsMap = posts.reduce((map, post) => {
@@ -43,7 +45,7 @@ export async function getStaticPaths() {
     ]),
   )
 
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   type PathItem = {
     params: { posts_slug: string }
     props: { post: any, lang: string, supportedLangs: string[] }
@@ -104,15 +106,19 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   supportedLangs={supportedLangs}
 >
   <article class="heti mb-12.6">
-    <!-- Title -->
-    <h1 class="post-title">
-      <span
-        transition:name={`post-${post.data.abbrlink || post.slug}-${lang}`}
-        data-disable-transition-on-theme
-      >
-        {post.data.title}
-      </span>
-    </h1>
+    <div class="relative">
+      <!-- Back home -->
+      <BackHome />
+      <!-- Title -->
+      <h1 class="post-title">
+        <span
+          transition:name={`post-${post.data.abbrlink || post.slug}-${lang}`}
+          data-disable-transition-on-theme
+        >
+          {post.data.title}
+        </span>
+      </h1>
+    </div>
 
     <!-- Date -->
     <div
