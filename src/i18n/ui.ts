@@ -2,6 +2,7 @@ export const ui = {
   'zh': {
     title: '重新编排',
     subtitle: '再现版式之美',
+    description: 'Retypeset，中文名为重新编排，是一款基于Astro框架的静态博客主题，设计灵感来自Typography。本主题通过建立全新的视觉规范，对所有页面进行重新编排，打造纸质书页般的阅读体验，再现版式之美。所见皆为细节，方寸尽显优雅。',
     posts: '文章',
     tags: '标签',
     about: '关于',
@@ -9,6 +10,7 @@ export const ui = {
   'zh-tw': {
     title: '重新編排',
     subtitle: '再現版式之美',
+    description: 'Retypeset，中文名為重新編排，是一款基於Astro框架的靜態部落格主題，設計靈感來自Typography。本主題通過建立全新的視覺規範，對所有頁面進行重新編排，打造紙質書頁般的閱讀體驗，再現版式之美。所見皆為細節，方寸盡顯優雅。',
     posts: '文章',
     tags: '標籤',
     about: '關於',
@@ -16,6 +18,7 @@ export const ui = {
   'ja': {
     title: '再組版',
     subtitle: '印刷の美を甦らせる',
+    description: 'Retypeset、日本語では「再組版」と呼ばれる、Astroフレームワークをベースにした静的ブログテーマで、Typographyからインスピレーションを得ています。新しい視覚的な規範を確立し、すべてのページのレイアウトを再構成することで、紙の書籍のような読書体験を提供し、版面の美しさを蘇らせます。細部にまでこだわり、限られたスペースの中に洗練された優雅さを表現しています。',
     posts: '記事',
     tags: 'タグ',
     about: '概要',
@@ -23,6 +26,7 @@ export const ui = {
   'en': {
     title: 'Retypeset',
     subtitle: 'Revive the beauty of typography',
+    description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
     posts: 'Posts',
     tags: 'Tags',
     about: 'About',
@@ -30,6 +34,7 @@ export const ui = {
   'es': {
     title: 'Retipografía',
     subtitle: 'Reviviendo la belleza tipográfica',
+    description: 'Retypeset es un tema de blog estático basado en el framework Astro, inspirado en Typography. Retypeset establece un nuevo estándar visual y reimagina la disposición de todas las páginas, ofreciendo una experiencia de lectura similar a la de los libros impresos, reviviendo la belleza de la tipografía. Detalles en cada mirada, elegancia en cada espacio.',
     posts: 'Artículos',
     tags: 'Etiquetas',
     about: 'Sobre',
@@ -37,6 +42,7 @@ export const ui = {
   'ru': {
     title: 'Переверстка',
     subtitle: 'Возрождая красоту типографики',
+    description: 'Retypeset — это статическая тема блога, основанная на фреймворке Astro и вдохновленная Typography. Retypeset устанавливает новый визуальный стандарт и переосмысливает компоновку всех страниц, предлагая опыт чтения, подобный бумажным книгам, возрождая красоту типографики. Детали в каждом взгляде, элегантность в каждом пространстве.',
     posts: 'Посты',
     tags: 'Теги',
     about: 'О себе',

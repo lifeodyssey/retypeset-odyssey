@@ -22,11 +22,12 @@ const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
 
 const initMetaTheme = mode === 'dark' ? darkMode : lightMode
-const headTitle = i18nTitle ? currentUI.title : title
-const headSubtitle = i18nTitle ? currentUI.subtitle : subtitle
+const siteTitle = i18nTitle ? currentUI.title : title
+const siteSubtitle = i18nTitle ? currentUI.subtitle : subtitle
+const siteDescription = i18nTitle ? currentUI.description : description
 
-const pageTitle = postTitle ? `${postTitle} | ${headTitle}` : `${headTitle} - ${headSubtitle}`
-const pageDescription = postDescription || description
+const pageTitle = postTitle ? `${postTitle} | ${siteTitle}` : `${siteTitle} - ${siteSubtitle}`
+const pageDescription = postDescription || siteDescription
 const pageImage = postSlug
   ? `${url}/og/${postSlug}.png`
   : apiflashKey

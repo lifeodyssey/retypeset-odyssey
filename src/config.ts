@@ -6,11 +6,11 @@ export const themeConfig: ThemeConfig = {
     // site title
     title: 'Retypeset',
     // site subtitle
-    subtitle: '再现版式之美',
-    // use i18n title/subtitle from src/i18n/ui.ts instead of static ones above
-    i18nTitle: true,
+    subtitle: 'Revive the beauty of typography',
     // site description
-    description: 'Retypeset 是一款基于Astro框架的静态博客主题，设计灵感来自Typography。本主题通过建立全新的视觉规范，对所有页面进行重新编排，打造纸质书页般的阅读体验，再现版式之美。所见皆为细节，方寸尽显优雅。',
+    description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
+    // use i18n title/subtitle/description from src/i18n/ui.ts instead of static ones above
+    i18nTitle: true,
     // author name
     author: 'radishzz',
     // site url
@@ -93,7 +93,7 @@ export const themeConfig: ThemeConfig = {
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   seo: {
     // @twitter ID
-    twitterID: '@astrodotbuild',
+    twitterID: '@radishzz_',
     // site verification
     verification: {
       // google search console
@@ -101,7 +101,7 @@ export const themeConfig: ThemeConfig = {
       google: 'AUCrz5F1e5qbnmKKDXl2Sf8u6y0kOpEO1wLs6HMMmlM',
       // bing webmaster tools
       // docs: https://www.bing.com/webmasters
-      bing: '',
+      bing: '64708CD514011A7965C84DDE1D169F87',
       // yandex webmaster
       // docs: https://webmaster.yandex.com
       yandex: '',
@@ -126,7 +126,6 @@ export const themeConfig: ThemeConfig = {
     // apiflash access key
     // automatically generate website screenshots for open graph preview images
     // get your access key at: https://apiflash.com/
-    // check your open graph at: https://orcascan.com/tools/open-graph-validator
     apiflashKey: '',
   },
   // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -145,7 +144,7 @@ export const themeConfig: ThemeConfig = {
       },
       {
         name: 'Twitter',
-        url: 'https://x.com/astrodotbuild',
+        url: 'https://x.com/radishzz_',
       },
       // {
       //   name: 'Email',
@@ -163,7 +162,7 @@ export const themeConfig: ThemeConfig = {
     // docs: https://docs.astro.build/en/guides/prefetch/#prefetch-strategies
     linkPrefetch: 'viewport', // hover, tap, viewport, load
     // comment server url
-    commentURL: 'https://comment.radishzz.cc',
+    commentURL: 'https://retypeset-comment.radishzz.cc',
     // image hosting url
     imageHostURL: 'https://image.radishzz.cc',
     // custom google analytics js

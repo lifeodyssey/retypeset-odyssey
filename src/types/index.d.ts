@@ -7,8 +7,8 @@ export interface ThemeConfig {
   site: {
     title: string
     subtitle: string
-    i18nTitle: boolean
     description: string
+    i18nTitle: boolean
     author: string
     url: string
     favicon: string
