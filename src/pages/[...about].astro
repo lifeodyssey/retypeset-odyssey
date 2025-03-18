@@ -38,8 +38,13 @@ const { Content } = aboutEntry ? await aboutEntry.render() : { Content: null }
 ---
 
 <Layout>
+
+  <!-- Decorative line -->
   <div class="uno-decorative-line"></div>
+
+  <!-- About page content -->
   <div class="heti">
     {Content && <Content />}
   </div>
+
 </Layout>

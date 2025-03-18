@@ -96,5 +96,4 @@ html[data-theme-transition] [data-disable-transition-on-theme] {
   src: url("/font/EarlySummer-Subset.woff2") format("woff2-variations");
   font-display: swap;
   font-weight: 400 700;
-  unicode-range: U+91cd,U+65b0,U+7f16,U+6392,U+518d,U+73b0,U+7248,U+5f0f,U+4e4b,U+7f8e,U+6587,U+7ae0,U+6807,U+7b7e,U+5173,U+4e8e,U+6a19,U+7c64,U+95dc,U+65bc,U+8a18,U+4e8b,U+30bf,U+30b0,U+6982,U+8981;
 }

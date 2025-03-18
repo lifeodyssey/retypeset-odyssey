@@ -53,7 +53,11 @@ const supportedLangs = tagSupportedLangs.filter(Boolean) as string[]
 ---
 
 <Layout supportedLangs={supportedLangs}>
+
+  <!-- Decorative line -->
   <div class="uno-decorative-line"></div>
+
+  <!-- Tags list -->
   <div class="uno-tags-wrapper">
     {allTags.map(tagName => (
       <a
@@ -69,7 +73,9 @@ const supportedLangs = tagSupportedLangs.filter(Boolean) as string[]
     ))}
   </div>
 
+  <!-- Posts list -->
   <div class="mt-10.5">
     <PostList posts={posts} lang={lang} />
   </div>
+
 </Layout>
