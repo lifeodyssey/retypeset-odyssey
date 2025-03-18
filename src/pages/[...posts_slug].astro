@@ -103,9 +103,8 @@ const { Content, remarkPluginFrontmatter } = await post.render()
   postSlug={post.slug}
   supportedLangs={supportedLangs}
 >
-
-  <!-- Title -->
   <article class="heti mb-12.6">
+    <!-- Title -->
     <h1 class="post-title">
       <span
         transition:name={`post-${post.data.abbrlink || post.slug}-${lang}`}
@@ -127,6 +126,8 @@ const { Content, remarkPluginFrontmatter } = await post.render()
         minutes={remarkPluginFrontmatter.minutes}
       />
     </div>
+
+    <!-- Content -->
     <Content />
   </article>
 

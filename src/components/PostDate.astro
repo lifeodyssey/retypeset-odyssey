@@ -63,7 +63,10 @@ function formatDate(date: Date, format: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYY
 
 <!-- updated date -->
 {updatedDate && (
-  <time datetime={updatedDate.toISOString().split('T')[0]} class={timeSpacingClass}>
+  <time
+    datetime={updatedDate.toISOString().split('T')[0]}
+    class={timeSpacingClass}
+  >
     updated {formatDate(updatedDate, format)}
   </time>
 )}

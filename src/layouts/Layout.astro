@@ -59,7 +59,10 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
         <MainHeader />
         <Navigation />
         <!-- Desktop footer -->
-        <Footer class="fixed hidden lg:block" supportedLangs={supportedLangs} />
+        <Footer
+          class="fixed hidden lg:block"
+          supportedLangs={supportedLangs}
+        />
       </div>
 
       <!-- show simple header on mobile for post pages -->
@@ -71,7 +74,10 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
       </main>
 
       <!-- Mobile footer -->
-      <Footer class={`block lg:hidden ${mobileFooterMargin}`} supportedLangs={supportedLangs} />
+      <Footer
+        class={`block lg:hidden ${mobileFooterMargin}`}
+        supportedLangs={supportedLangs}
+      />
     </div>
 
     <!-- <Scrollbar /> -->
@@ -79,7 +85,10 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
     <!-- <PhotoSwipe /> -->
 
     <!-- Mobile widget (fix position issue on ios / fix right distance)-->
-    <div class="absolute right-7.25vw top-13.6 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.6 min-[823px]:right-[calc(50vw-22rem)] lg:hidden">
+    <div
+      class="absolute right-7.25vw top-13.6 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-12.6 min-[823px]:right-[calc(50vw-22rem)]"
+      lg="hidden"
+    >
       <LanguageSwitcher supportedLangs={supportedLangs} />
       <ThemeToggle />
     </div>
