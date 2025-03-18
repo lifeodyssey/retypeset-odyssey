@@ -158,7 +158,10 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
           window.history.back()
         }
         else {
-          window.location.href = localizedHome
+          const siteTitle = document.querySelector(`h1 a[href="${localizedHome}"]`)
+          if (siteTitle) {
+            siteTitle.click()
+          }
         }
       })
     }
