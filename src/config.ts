@@ -10,26 +10,28 @@ export const themeConfig: ThemeConfig = {
     // site description
     description: 'Retypeset is a static blog theme based on the Astro framework, inspired by Typography. Retypeset establishes a new visual standard and reimagines the layout of all pages, offering a reading experience similar to paper books, reviving the beauty of typography. Details in every sight, elegance in every space.',
     // use i18n title/subtitle/description from src/i18n/ui.ts instead of static ones above
-    i18nTitle: true,
+    i18nTitle: true, // true, false
     // author name
     author: 'radishzz',
     // site url
     url: 'https://retypeset.radishzz.cc',
     // favicon url
-    // support only SVG, PNG and ICO
-    favicon: '/image/favicon.svg', // or https://example.com/favicon.svg
+    // recommended formats: SVG, PNG and ICO
+    favicon: '/assets/favicon.svg', // or https://example.com/favicon.svg
   },
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   color: {
-    // theme mode
+    // default theme mode
     mode: 'light', // light, dark
     light: {
-      // title color
+      // primary color
+      // used for title, hover, etc
       // oklch color picker: https://oklch.com/
       primary: 'oklch(25% 0.005 298)',
-      // text color
+      // secondary color
+      // used for post text
       secondary: 'oklch(40% 0.005 298)',
       // background color
       background: 'oklch(96% 0.005 298)',
@@ -38,10 +40,12 @@ export const themeConfig: ThemeConfig = {
       codeTheme: 'github-light',
     },
     dark: {
-      // title color
+      // primary color
+      // used for title, hover, etc
       // oklch color picker: https://oklch.com/
       primary: 'oklch(88% 0.005 298)',
-      // text color
+      // secondary color
+      // used for post text
       secondary: 'oklch(77% 0.005 298)',
       // background color
       background: 'oklch(22% 0.005 298)',
@@ -59,7 +63,7 @@ export const themeConfig: ThemeConfig = {
     // more languages
     // not fill in the locale code above again
     moreLocales: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
-    // font styles for text
+    // font styles for post text
     fontStyle: 'sans', // sans, serif
     // date format for posts
     dateFormat: 'YYYY-MM-DD', // YYYY-MM-DD, MM-DD-YYYY, DD-MM-YYYY, MONTH DAY YYYY, DAY MONTH YYYY
@@ -71,7 +75,7 @@ export const themeConfig: ThemeConfig = {
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
     // waline comment system
-    // docs: https://waline.js.org/en/
+    // https://waline.js.org/en/
     waline: {
       // server url
       serverURL: 'https://retypeset-comment.radishzz.cc',
@@ -97,26 +101,26 @@ export const themeConfig: ThemeConfig = {
     // site verification
     verification: {
       // google search console
-      // docs: https://search.google.com/search-console
+      // https://search.google.com/search-console
       google: 'AUCrz5F1e5qbnmKKDXl2Sf8u6y0kOpEO1wLs6HMMmlM',
       // bing webmaster tools
-      // docs: https://www.bing.com/webmasters
+      // https://www.bing.com/webmasters
       bing: '64708CD514011A7965C84DDE1D169F87',
       // yandex webmaster
-      // docs: https://webmaster.yandex.com
+      // https://webmaster.yandex.com
       yandex: '',
       // baidu search
-      // docs: https://ziyuan.baidu.com
+      // https://ziyuan.baidu.com
       baidu: '',
     },
     // google analytics
-    // docs: https://analytics.google.com
+    // https://analytics.google.com
     googleAnalyticsID: '',
     // umami analytics
-    // docs: https://cloud.umami.is
+    // https://cloud.umami.is
     umamiAnalyticsID: '520af332-bfb7-4e7c-9386-5f273ee3d697',
     // follow verification
-    // docs: https://follow.is/
+    // https://follow.is/
     follow: {
       // feed ID
       feedID: '',
@@ -124,7 +128,7 @@ export const themeConfig: ThemeConfig = {
       userID: '',
     },
     // apiflash access key
-    // automatically generate website screenshots for open graph preview images
+    // automatically generate website screenshots for open graph images
     // get your access key at: https://apiflash.com/
     apiflashKey: '',
   },

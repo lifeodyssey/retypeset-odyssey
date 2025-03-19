@@ -1,8 +1,4 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://placehold.co/1920x1080" />
-  <source media="(prefers-color-scheme: light)" srcset="https://placehold.co/1920x1080" />
-  <img alt="Cover Image" src="https://placehold.co/1920x1080" />
-</picture>
+<img alt="Cover Image" src="https://placehold.co/1920x1080?text=Comming-Soon"/>
 
 <div align="center">
   <picture>
@@ -33,7 +29,7 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 ## Features
 
 - Built with Astro and UnoCSS
-- Support for RSS, Sitemap, OpenGraph, MDX, and LaTeX
+- Support for SEO, Sitemap, OpenGraph, TOC, RSS, MDX and LaTeX
 - i18n support
 - Light/Dark mode
 - Elegant view transitions

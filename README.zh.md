@@ -1,8 +1,4 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://placehold.co/1920x1080" />
-  <source media="(prefers-color-scheme: light)" srcset="https://placehold.co/1920x1080" />
-  <img alt="Cover Image" src="https://placehold.co/1920x1080" />
-</picture>
+<img alt="Cover Image" src="https://placehold.co/1920x1080?text=Comming-Soon"/>
 
 <div align="center">
   <a title="en" href="README.md">
@@ -33,7 +29,7 @@ Retypeset，中文名为重新编排，是一款基于 [Astro](https://astro.bui
 ## 特征
 
 - 基于 Astro 与 UnoCSS 开发
-- 支持 RSS、Sitemap、OpenGraph、MDX、LaTeX
+- 支持 SEO、 Sitemap、 OpenGraph、 TOC、 RSS、 MDX 和 LaTeX
 - i18n 多语言
 - 亮色/暗色模式
 - 优雅的过渡动画
