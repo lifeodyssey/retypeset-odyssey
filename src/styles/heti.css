@@ -10,6 +10,11 @@
 	hyphens:auto;
 	letter-spacing:.02em
 }
+.heti:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
+  letter-spacing: 0;
+  hyphens: none;
+  line-height: 1.4;
+}
 .heti::before,.heti::after {
 	content:"";
 	display:table
@@ -103,12 +108,6 @@
 	border-radius:0;
 	background-color:rgba(0,0,0,0);
 	color:inherit
-}
-.heti:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
-	letter-spacing:0
-}
-.heti:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
-  line-height: 1.4;
 }
 .heti a,.heti abbr,.heti code,.heti heti-spacing,.heti [lang=en-US] {
 	letter-spacing:normal
