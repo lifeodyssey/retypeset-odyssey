@@ -142,10 +142,15 @@ window
 {googleAnalyticsID && (
   <>
     <script
+      is:inline
       type="text/partytown"
       src={customGoogleAnalyticsJS || `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID}`}
     />
-    <script type="text/partytown" define:vars={{ googleAnalyticsID, customGoogleAnalyticsJS }}>
+    <script
+      is:inline
+      type="text/partytown"
+      define:vars={{ googleAnalyticsID, customGoogleAnalyticsJS }}
+    >
       window.dataLayer = window.dataLayer || []
       function gtag(...args) {
         dataLayer.push(args)
@@ -167,6 +172,7 @@ window
 <!-- Umami Analytics -->
 {umamiAnalyticsID && (
   <script
+    is:inline
     type="text/partytown"
     crossorigin="anonymous"
     data-website-id={umamiAnalyticsID}

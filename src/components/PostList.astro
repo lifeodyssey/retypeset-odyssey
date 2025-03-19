@@ -6,8 +6,8 @@ import { generateDescription } from '@/utils/description'
 import { isTagPage } from '@/utils/page'
 
 type Post = CollectionEntry<'posts'> & {
-  remarkPluginFrontmatter?: {
-    minutes?: number
+  remarkPluginFrontmatter: {
+    minutes: number
   }
 }
 
@@ -52,7 +52,7 @@ function getPostPath(post: Post) {
       >
         <PostDate
           date={post.data.published}
-          minutes={post.remarkPluginFrontmatter?.minutes}
+          minutes={post.remarkPluginFrontmatter.minutes}
         />
       </div>
 
@@ -64,7 +64,7 @@ function getPostPath(post: Post) {
       >
         <PostDate
           date={post.data.published}
-          minutes={post.remarkPluginFrontmatter?.minutes}
+          minutes={post.remarkPluginFrontmatter.minutes}
         />
       </div>
 

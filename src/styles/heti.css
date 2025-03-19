@@ -29,7 +29,7 @@
 	margin-block-end:0 !important
 }
 .heti a {
-  --at-apply: 'underline mx-0.25em decoration-secondary/25 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-secondary/75 transition)';
+  --at-apply: 'underline mx-0.25em decoration-secondary/25 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-secondary/75 transition) lg:underline-0.1em';
 }
 .heti blockquote {
 	margin-block-start:12px;
@@ -82,7 +82,7 @@
 .heti p:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
 	text-align:start
 }
-.heti pre {
+/* .heti pre {
 	margin-block-start:12px;
 	margin-block-end:12px;
 	margin-inline-start:0;
@@ -108,7 +108,7 @@
 	border-radius:0;
 	background-color:rgba(0,0,0,0);
 	color:inherit
-}
+} */
 .heti a,.heti abbr,.heti code,.heti heti-spacing,.heti [lang=en-US] {
 	letter-spacing:normal
 }

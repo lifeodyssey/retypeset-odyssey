@@ -95,7 +95,7 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
     </div>
 
     <!-- Theme toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-    <script define:vars={{ lightMode, darkMode }}>
+    <script is:inline define:vars={{ lightMode, darkMode }}>
     // Update theme
     function updateTheme() {
       // Toggle website theme
@@ -151,7 +151,7 @@ const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
     </script>
 
     <!-- Back home >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-    <script define:vars={{ localizedHome }}>
+    <script is:inline define:vars={{ localizedHome }}>
     function setupBackButton() {
       document.getElementById('back-button')?.addEventListener('click', () => {
         if (document.referrer) {
