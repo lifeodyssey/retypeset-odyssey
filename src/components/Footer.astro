@@ -19,7 +19,7 @@ const links = configLinks.map((link) => {
   if (link.name === 'RSS') {
     return {
       ...link,
-      url: currentLang === defaultLocale ? link.url : `/${currentLang}${link.url}/`,
+      url: currentLang === defaultLocale ? link.url : `/${currentLang}${link.url}`,
     }
   }
   return link

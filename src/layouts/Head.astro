@@ -56,7 +56,8 @@ const pageImage = postSlug
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
 {imageHostURL && <link rel="preconnect" href={imageHostURL} crossorigin />}
 {imageHostURL && <link rel="dns-prefetch" href={imageHostURL} />}
-<link rel="alternate" href="/rss.xml" type="application/rss+xml" title="RSS" />
+<link rel="alternate" href="/rss.xml" type="application/rss+xml" title="RSS Feed" />
+<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Atom Feed" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="canonical" href={Astro.url} />
 

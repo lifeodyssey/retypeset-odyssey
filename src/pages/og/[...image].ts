@@ -25,7 +25,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
     title: page.title,
     description: page.description,
     logo: {
-      path: './public/image/og-logo.png', // Required local path and PNG format
+      path: './public/icon/og-logo.png', // Required local path and PNG format
       size: [250],
     },
     border: {
