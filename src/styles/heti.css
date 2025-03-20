@@ -22,8 +22,8 @@
   --at-apply: 'mb-6 text-justify';
 }
 .heti a {
-  --at-apply: 'mx-0.15em font-medium transition-colors hover:(c-primary decoration-secondary/60) ';
   --at-apply: 'underline decoration-secondary/25 underline-0.075em underline-offset-0.2em lg:underline-0.1em';
+  --at-apply: 'font-medium transition-colors hover:(c-primary decoration-secondary/60) ';
 }
 
 /* Heading style */
