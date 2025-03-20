@@ -1,5 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
 import { defaultLocale, themeConfig } from '@/config'
+import { ui } from '@/i18n/ui'
 import { generateDescription } from '@/utils/description'
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
@@ -15,6 +16,10 @@ interface GenerateRSSOptions {
 }
 
 export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
+  const currentUI = ui[lang as keyof typeof ui] || ui[defaultLocale as keyof typeof ui]
+  const siteTitle = themeConfig.site.i18nTitle ? currentUI.title : title
+  const siteDescription = themeConfig.site.i18nTitle ? currentUI.description : description
+
   // Get posts for specific language (including universal posts and default language when lang is undefined)
   const posts = await getCollection(
     'posts',
@@ -23,9 +28,10 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
   )
 
   return rss({
-    title: lang ? `${title}_${lang}` : title,
-    site: url,
-    description,
+    title: siteTitle,
+    site: lang ? `${url}/${lang}` : url,
+    description: siteDescription,
+    stylesheet: '/rss/rss-style.min.xsl',
     customData: `
     <copyright>Copyright © ${new Date().getFullYear()} ${themeConfig.site.author}</copyright>
     <language>${lang || themeConfig.global.locale}</language>
