@@ -3,34 +3,70 @@
  * URL:https://github.com/sivan/heti
  * Author:Sivan [sun.sivan@gmail.com]
  */
+
+/*!
+ * .heti = CJK text
+ * .heti not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) = non-CJK text
+ */
+
+ /* Global setting */
 .heti {
-	line-height:1.5;
-	overflow-wrap:break-word;
-	word-wrap:break-word;
-	hyphens:auto;
-	letter-spacing:.02em
+  --at-apply: 'leading-1.5em break-words hyphens-auto tracking-0.02em';
 }
 .heti:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
-  letter-spacing: 0;
-  hyphens: none;
-  line-height: 1.4;
+  --at-apply: 'leading-1.4em tracking-0';
 }
-.heti::before,.heti::after {
-	content:"";
-	display:table
-}
-.heti::after {
-	clear:both
-}
-.heti>*:first-child,.heti section>*:first-child,.heti td>*:first-child {
-	margin-block-start:0 !important
-}
-.heti>*:last-child,.heti section>*:last-child,.heti td>*:last-child {
-	margin-block-end:0 !important
+
+/* Common tags style */
+.heti p {
+  --at-apply: 'mb-6 text-justify';
 }
 .heti a {
-  --at-apply: 'underline mx-0.25em decoration-secondary/25 font-medium underline-0.075em underline-offset-0.2em hover:(c-primary decoration-secondary/75 transition) lg:underline-0.1em';
+  --at-apply: 'mx-0.15em font-medium transition-colors hover:(c-primary decoration-secondary/60) ';
+  --at-apply: 'underline decoration-secondary/25 underline-0.075em underline-offset-0.2em lg:underline-0.1em';
 }
+
+/* Heading style */
+.heti .post-title {
+  --at-apply: 'c-primary mb-2 font-bold text-9 leading-12 text-balance mbs-0';
+}
+.heti h1 {
+  --at-apply: 'text-8';
+}
+.heti h2 {
+  --at-apply: 'text-6';
+}
+.heti h3 {
+  --at-apply: 'text-5';
+}
+.heti h4 {
+  --at-apply: 'text-4.5';
+}
+.heti h5 {
+  --at-apply: 'text-4';
+}
+.heti h6 {
+  --at-apply: 'text-3.5';
+}
+
+.heti h1,.heti h2,.heti h3 {
+	--at-apply: 'tracking-0.04em';
+}
+.heti h1:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),
+.heti h2:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),
+.heti h3:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
+	--at-apply: 'tracking-0';
+}
+
+.heti h1,.heti h2,.heti h3,.heti h4,.heti h5,.heti h6 {
+  --at-apply: 'font-semibold mt-6 mb-3';
+}
+/* .heti h1+h2 {
+  --at-apply: 'mbs-4.5';
+}
+.heti h2+h3,.heti h3+h4,.heti h4+h5,.heti h5+h6 {
+  --at-apply: 'mbs-3';
+} */
 .heti blockquote {
 	margin-block-start:12px;
 	margin-block-end:24px;
@@ -74,16 +110,12 @@
 	background-color:#404040
 }
 }
-.heti p {
-	margin-block-start:12px;
-	margin-block-end:24px;
-	text-align:justify
-}
+
 .heti p:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
 	text-align:start
 }
 .heti pre {
-  --at-apply: 'bg-primary/3!';
+  --at-apply: 'bg-secondary/8! scrollbar-hidden';
 	margin-block-start:12px;
 	margin-block-end:12px;
 	margin-inline-start:0;
@@ -98,10 +130,10 @@
 	border-radius:4px;
 }
 html.dark .heti pre {
-  --at-apply: 'bg-primary/3!';
+  --at-apply: 'bg-secondary/8!';
 }
 html.dark .astro-code span {
-  --at-apply: 'bg-primary/0!';
+  --at-apply: 'bg-secondary/0!';
 }
 .heti pre code {
 	margin:0;
@@ -112,50 +144,8 @@ html.dark .astro-code span {
 .heti a,.heti abbr,.heti code,.heti heti-spacing,.heti [lang=en-US] {
 	letter-spacing:normal
 }
-.heti h1,.heti h2,.heti h3,.heti h4,.heti h5,.heti h6 {
-	position:relative;
-	margin:0;
-	margin-block-start:24px;
-	margin-block-end:12px;
-	font-weight:600
-}
-.heti .post-title {
-  --at-apply: 'c-primary mb-2 font-bold text-9 leading-12 text-balance mbs-0';
-}
-.heti h1 {
-  --at-apply: 'mb-6';
-	font-size:32px;
-	line-height:48px
-}
-.heti h2 {
-	font-size:24px;
-	line-height:36px
-}
-.heti h3 {
-	font-size:20px;
-	line-height:36px
-}
-.heti h4 {
-	font-size:18px;
-	line-height:24px
-}
-.heti h5 {
-	font-size:16px;
-	line-height:24px
-}
-.heti h6 {
-	font-size:14px;
-	line-height:24px
-}
-.heti h1,.heti h2,.heti h3 {
-	letter-spacing:.05em
-}
-.heti h1:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti h1:not(:lang(zh)),.heti h2:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti h2:not(:lang(zh)),.heti h3:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti h3:not(:lang(zh)) {
-	letter-spacing:0
-}
-.heti h1+h2,.heti h2+h3,.heti h3+h4,.heti h4+h5,.heti h5+h6 {
-	margin-block-start:12px
-}
+
+
 .heti ul,.heti ol,.heti dl {
 	margin-block-start:12px;
 	margin-block-end:24px
