@@ -20,13 +20,11 @@ export interface ThemeConfig {
       primary: string
       secondary: string
       background: string
-      codeTheme: string
     }
     dark: {
       primary: string
       secondary: string
       background: string
-      codeTheme: string
     }
   }
 

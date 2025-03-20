@@ -82,7 +82,8 @@
 .heti p:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
 	text-align:start
 }
-/* .heti pre {
+.heti pre {
+  --at-apply: 'bg-primary/3!';
 	margin-block-start:12px;
 	margin-block-end:12px;
 	margin-inline-start:0;
@@ -95,20 +96,19 @@
 	white-space:pre;
 	word-wrap:normal;
 	border-radius:4px;
-	background-color:rgba(0,0,0,.054)
 }
-@media(prefers-color-scheme:dark) {
-	.heti pre {
-	background-color:rgba(255,255,255,.054)
+html.dark .heti pre {
+  --at-apply: 'bg-primary/3!';
 }
-}.heti pre code {
+html.dark .astro-code span {
+  --at-apply: 'bg-primary/0!';
+}
+.heti pre code {
 	margin:0;
 	padding:0;
 	border:0;
 	border-radius:0;
-	background-color:rgba(0,0,0,0);
-	color:inherit
-} */
+}
 .heti a,.heti abbr,.heti code,.heti heti-spacing,.heti [lang=en-US] {
 	letter-spacing:normal
 }

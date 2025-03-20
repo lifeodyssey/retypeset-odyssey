@@ -35,9 +35,6 @@ export const themeConfig: ThemeConfig = {
       secondary: 'oklch(40% 0.005 298)',
       // background color
       background: 'oklch(96% 0.005 298)',
-      // code block theme
-      // available themes: https://shiki.style/themes
-      codeTheme: 'one-light ',
     },
     dark: {
       // primary color
@@ -49,9 +46,6 @@ export const themeConfig: ThemeConfig = {
       secondary: 'oklch(77% 0.005 298)',
       // background color
       background: 'oklch(22% 0.005 298)',
-      // code block theme
-      // available themes: https://shiki.style/themes
-      codeTheme: 'one-dark-pro',
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
