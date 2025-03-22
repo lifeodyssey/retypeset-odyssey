@@ -1,21 +1,18 @@
 ---
-import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
-import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
 import { defaultLocale, themeConfig } from '@/config'
 import { getLangFromPath } from '@/i18n/lang'
 
-interface Props {
-  class?: string
-  supportedLangs: string[]
-}
-
-const { class: className, supportedLangs = [] } = Astro.props
 const { author } = themeConfig.site
-const { links: configLinks, startYear } = themeConfig.footer
+const { links: socialLinks, startYear } = themeConfig.footer
+
+const currentYear = new Date().getFullYear()
+const year = Number(startYear) === currentYear
+  ? startYear
+  : `${startYear}-${currentYear}`
 
 // i18n rss path
 const currentLang = getLangFromPath(Astro.url.pathname)
-const links = configLinks.map((link) => {
+const links = socialLinks.map((link) => {
   if (link.name === 'RSS') {
     return {
       ...link,
@@ -24,25 +21,12 @@ const links = configLinks.map((link) => {
   }
   return link
 })
-
-const currentYear = new Date().getFullYear()
-const year = Number(startYear) === currentYear
-  ? startYear
-  : `${startYear}-${currentYear}`
 ---
 
 <footer
-  class:list={[
-    'bottom-22 text-3 lg:text-3.5 leading-4.75 font-navbar',
-    className,
-  ]}
+  class="text-3 leading-4.75 font-navbar lg:text-3.5"
+  lg="uno-desktop-column bottom-20"
 >
-  <!-- Desktop widget -->
-  <div class="mb-11.5 ml-1.5 hidden gap-7 lg:flex">
-    <ThemeToggle />
-    <LanguageSwitcher supportedLangs={supportedLangs} />
-  </div>
-
   <p>
     {links.map((link, index) => (
       <>

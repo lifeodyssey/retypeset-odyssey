@@ -34,10 +34,8 @@ const allTags = await getAllTags(lang)
 ---
 
 <Layout>
-
   <!-- Decorative line -->
   <div class="uno-decorative-line"></div>
-
   <!-- Tags list -->
   <div class="uno-tags-wrapper">
     {allTags.map(tag => (
@@ -49,5 +47,4 @@ const allTags = await getAllTags(lang)
       </a>
     ))}
   </div>
-
 </Layout>

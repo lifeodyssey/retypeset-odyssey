@@ -1,17 +1,11 @@
 ---
-// import BackToTop from '@/components/BackToTop.astro'
 import Footer from '@/components/Footer.astro'
-import MainHeader from '@/components/MainHeader.astro'
-import MobileHeader from '@/components/MobileHeader.astro'
-import Navigation from '@/components/Navbar.astro'
-import LanguageSwitcher from '@/components/Widgets/LanguageSwitcher.astro'
-// import PhotoSwipe from '@/components/PhotoSwipe.astro'
-// import Scrollbar from '@/components/Scrollbar.astro'
-import ThemeToggle from '@/components/Widgets/ThemeToggle.astro'
+import Header from '@/components/Header.astro'
+import Navbar from '@/components/Navbar.astro'
+import Button from '@/components/Button.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
-
 import '@/styles/font.css'
 import '@/styles/global.css'
 import '@/styles/heti.css'
@@ -24,74 +18,32 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
-const { isHome, isPost, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const { getLocalizedPath, isPost } = getPageInfo(Astro.url.pathname)
 const localizedHome = getLocalizedPath('/')
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
-const mobileFooterMargin = isPost && themeConfig.comment?.waline?.serverURL
-  ? 'mt-8'
-  : 'mt-12'
 ---
 
 <html
-  lang={Astro.currentLocale || 'en-US'}
+  lang={Astro.currentLocale}
   class={fontStyle}
   data-overlayscrollbars-initialize
 >
   <Head {postTitle} {postDescription} {postSlug} />
   <body data-overlayscrollbars-initialize>
 
-    <!-- Layout Calculation -->
-    <!-- Mobile -->
-    <!-- mobile width: 393px / suitable words number: 21 / content width: 21*16px=336px / padding: (393px-336px)/2=28.5px=（28.5px/393px）=7.25vw -->
-    <!-- max mobile width: 1024px / max word number: 42+2=44 / max content width: 44*16px=704px / max div width: 704px/(100vw-7.25vw*2)=823.3918px/4=205.848 / max padding: 823.3918px-704px=119.3918px/2=59.6959px/16=3.731rem -->
-    <!-- Desktop -->
-    <!-- desktop min div width: 1024px-90px*2=844px / min words number: 32 / min content width: 32*16px=512px/16=32rem / title width: 14*16px=224px/16=14rem / min-gap: 844px-512px-224px=108px -->
-    <!-- desktop max div width: 1100px+90px*2=1280px/4=320 / max words number: 42+2=44 / max content width: 44*16px=704px / title width: 14*16px=224px / max-gap: 1100px-704px-224px=172px/16=10.75rem -->
-    <!-- content width: calc(32rem+(100vw-1024px)*(44rem-32rem)/(1280-1024))=calc(75vw-16rem) / gap width: calc(6.75rem+(100vw-1024px)*(10.75rem-6.75rem)/(1280-1024))=calc(25vw-9.25rem) -->
-
     <div
       class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
-      p="x-[min(7.25vw,3.731rem)] y-9 lg:(x-22.5 y-20)"
-      lg="max-w-320 grid cols-[min(calc(75vw-16rem),44rem)_14rem] gap-[min(calc(25vw-9.25rem),10.75rem)]"
+      p="x-[min(7.25vw,3.731rem)] y-9"
+      lg="p-0 max-w-[min(calc(75vw-16rem),44rem)] mx-[max(5.625rem,calc(50vw-34.375rem))] my-20"
     >
-      <!-- hide header and navigation on mobile for post pages -->
-      <div class={!isHome && isPost ? 'hidden lg:block' : ''}>
-        <MainHeader />
-        <Navigation />
-        <!-- Desktop footer -->
-        <Footer
-          class="fixed hidden lg:block"
-          supportedLangs={supportedLangs}
-        />
-      </div>
-
-      <!-- show simple header on mobile for post pages -->
-      {!isHome && isPost && <MobileHeader />}
-
-      <!-- main content area -->
-      <main class="col-start-1 row-start-1">
+      <Header />
+      <Navbar />
+      <main class="mb-10.5">
         <slot />
       </main>
-
-      <!-- Mobile footer -->
-      <Footer
-        class={`block lg:hidden ${mobileFooterMargin}`}
-        supportedLangs={supportedLangs}
-      />
-    </div>
-
-    <!-- <Scrollbar /> -->
-    <!-- <BackToTop /> -->
-    <!-- <PhotoSwipe /> -->
-
-    <!-- Mobile widget (fix position issue on ios / fix right distance)-->
-    <div
-      class="absolute right-7.25vw top-14.5 flex gap-6 [@supports(-webkit-touch-callout:none)]:top-13.5 min-[823px]:right-[calc(50vw-22rem)]"
-      lg="hidden"
-    >
-      <LanguageSwitcher supportedLangs={supportedLangs} />
-      <ThemeToggle />
+      <Button supportedLangs={supportedLangs} />
+      <Footer />
     </div>
 
     <!-- Theme toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
