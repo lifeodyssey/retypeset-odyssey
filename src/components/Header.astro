@@ -28,8 +28,10 @@ const SubtitleTag = isPost ? 'div' : 'h2'
 ---
 
 <header
-  class="mb-10.5"
-  lg="uno-desktop-column top-20"
+  class:list={[
+    isPost ? 'mb-10.8' : 'mb-10.5',
+    'lg:(uno-desktop-column top-20)',
+  ]}
 >
   <TitleTag
     class:list={[
