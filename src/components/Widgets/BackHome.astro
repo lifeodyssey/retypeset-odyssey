@@ -17,7 +17,7 @@
 <script>
 function setupBackButton() {
   document.getElementById('back-button')?.addEventListener('click', () => {
-    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+    if (window.history.length > 1) {
       window.history.back()
     }
     else {
