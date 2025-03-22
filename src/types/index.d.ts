@@ -36,7 +36,8 @@ export interface ThemeConfig {
     titleGap: 1 | 2 | 3
   }
 
-  comment?: {
+  comment: {
+    enabled: boolean
     waline?: {
       serverURL?: string
       emoji?: string[]

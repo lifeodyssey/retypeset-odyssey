@@ -22,6 +22,9 @@ const { getLocalizedPath, isPost } = getPageInfo(Astro.url.pathname)
 const localizedHome = getLocalizedPath('/')
 const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
+const MarginBottom = isPost && themeConfig.comment?.enabled
+  ? 'mb-10' // Post page with comment system
+  : 'mb-12' // Other pages
 ---
 
 <html
@@ -39,7 +42,7 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
     >
       <Header />
       <Navbar />
-      <main class="mb-10.5">
+      <main class={MarginBottom}>
         <slot />
       </main>
       <Button supportedLangs={supportedLangs} />
@@ -55,7 +58,6 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
 
       // Get current theme
       const isDark = document.documentElement.classList.contains('dark')
-
       // Update meta theme color
       const metaThemeColor = document.querySelector('meta[name="theme-color"]')
       if (metaThemeColor) {
@@ -71,7 +73,6 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
     function setupThemeToggle() {
       // Locate theme toggle button
       const themeToggleButtons = document.querySelectorAll('.button-theme-toggle')
-
       // Add click listener to each button
       themeToggleButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -87,7 +88,6 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
 
           // If browser supports View Transitions API, use it to update theme
           const themeTransition = document.startViewTransition(updateTheme)
-
           // Remove markers after animation
           themeTransition.finished.then(() => {
             document.documentElement.style.removeProperty('view-transition-name')
@@ -121,6 +121,5 @@ const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'fon
     setupBackButton()
     document.addEventListener('astro:after-swap', setupBackButton)
     </script>
-
   </body>
 </html>

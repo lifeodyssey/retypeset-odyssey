@@ -5,21 +5,23 @@
 import Waline from '@/components/Comments/Waline.astro'
 import { themeConfig } from '@/config'
 
+const enableComments = themeConfig.comment?.enabled ?? false
+
 // Disqus
 // const disqusShortname = themeConfig.comment?.disqus?.shortname || ''
-// const showDisqus = disqusShortname.trim() !== ''
+// const showDisqus = enableComments && disqusShortname.trim() !== ''
 
 // Giscus
 // const giscusRepo = themeConfig.comment?.giscus?.repo || ''
-// const showGiscus = giscusRepo.trim() !== ''
+// const showGiscus = enableComments && giscusRepo.trim() !== ''
 
 // Twikoo
 // const twikooEnvId = themeConfig.comment?.twikoo?.envId || ''
-// const showTwikoo = twikooEnvId.trim() !== ''
+// const showTwikoo = enableComments && twikooEnvId.trim() !== ''
 
 // Waline
 const walineURL = themeConfig.comment?.waline?.serverURL || ''
-const showWaline = walineURL.trim() !== ''
+const showWaline = enableComments && walineURL.trim() !== ''
 ---
 <!-- {showDisqus && <Disqus />} -->
 <!-- {showGiscus && <Giscus />} -->

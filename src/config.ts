@@ -68,6 +68,8 @@ export const themeConfig: ThemeConfig = {
 
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   comment: {
+    // enable comment system
+    enabled: true, // true, false
     // waline comment system
     // https://waline.js.org/en/
     waline: {
