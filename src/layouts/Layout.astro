@@ -1,8 +1,8 @@
 ---
+import Button from '@/components/Button.astro'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import Navbar from '@/components/Navbar.astro'
-import Button from '@/components/Button.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
@@ -18,9 +18,7 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
-const { getLocalizedPath, isPost } = getPageInfo(Astro.url.pathname)
-const localizedHome = getLocalizedPath('/')
-const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
+const { isPost } = getPageInfo(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 const MarginBottom = isPost && themeConfig.comment?.enabled
   ? 'mb-10' // Post page with comment system
@@ -45,81 +43,8 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
       <main class={MarginBottom}>
         <slot />
       </main>
-      <Button supportedLangs={supportedLangs} />
       <Footer />
     </div>
-
-    <!-- Theme toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-    <script is:inline define:vars={{ lightMode, darkMode }}>
-    // Update theme
-    function updateTheme() {
-      // Toggle website theme
-      document.documentElement.classList.toggle('dark')
-
-      // Get current theme
-      const isDark = document.documentElement.classList.contains('dark')
-      // Update meta theme color
-      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
-      if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
-      }
-
-      // Update theme configuration in local storage
-      localStorage.setItem('theme', isDark ? 'dark' : 'light')
-      document.dispatchEvent(new Event('theme-changed'))
-    }
-
-    // Bind click event to the button
-    function setupThemeToggle() {
-      // Locate theme toggle button
-      const themeToggleButtons = document.querySelectorAll('.button-theme-toggle')
-      // Add click listener to each button
-      themeToggleButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          // If browser doesn't support View Transitions API, update theme directly
-          if (!document.startViewTransition) {
-            updateTheme()
-            return
-          }
-
-          // Temporarily add markers during animation to implement view transition and disable CSS transitions
-          document.documentElement.style.setProperty('view-transition-name', 'theme-transition')
-          document.documentElement.setAttribute('data-theme-transition', '')
-
-          // If browser supports View Transitions API, use it to update theme
-          const themeTransition = document.startViewTransition(updateTheme)
-          // Remove markers after animation
-          themeTransition.finished.then(() => {
-            document.documentElement.style.removeProperty('view-transition-name')
-            document.documentElement.removeAttribute('data-theme-transition')
-          })
-        })
-      })
-    }
-
-    // Initialize click event (on first load or page transition)
-    setupThemeToggle()
-    document.addEventListener('astro:after-swap', setupThemeToggle)
-    </script>
-
-    <!-- Back home >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-    <script is:inline define:vars={{ localizedHome }}>
-    function setupBackButton() {
-      document.getElementById('back-button')?.addEventListener('click', () => {
-        if (document.referrer) {
-          window.history.back()
-        }
-        else {
-          const siteTitle = document.querySelector(`h1 a[href="${localizedHome}"]`)
-          if (siteTitle) {
-            siteTitle.click()
-          }
-        }
-      })
-    }
-
-    setupBackButton()
-    document.addEventListener('astro:after-swap', setupBackButton)
-    </script>
+    <Button supportedLangs={supportedLangs} />
   </body>
 </html>
