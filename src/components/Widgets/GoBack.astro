@@ -14,6 +14,7 @@
   </svg>
 </button>
 
+<!-- Go Back Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script>
 function setupBackButton() {
   document.getElementById('back-button')?.addEventListener('click', () => {
@@ -21,6 +22,7 @@ function setupBackButton() {
       window.history.back()
     }
     else {
+      // Click site title link to trigger view transition when no history
       const titleLink = document.getElementById('site-title-link') as HTMLAnchorElement
       if (titleLink) {
         titleLink.click()

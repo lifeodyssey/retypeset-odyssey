@@ -26,6 +26,7 @@ function getPostPath(post: Post) {
   return lang && lang !== defaultLocale ? `/${lang}/posts/${postPath}/` : `/posts/${postPath}/`
 }
 ---
+
 <ul>
   {posts.map(post => (
     <li

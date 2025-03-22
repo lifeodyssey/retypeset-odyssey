@@ -42,6 +42,7 @@ const postsByYear = await getPostsByYear(lang)
       <PostList posts={pinnedPosts} lang={lang} />
     </section>
   )}
+
   <!-- Regular Posts -->
   {[...postsByYear.entries()].map(([_year, posts]) => (
     <section class="mb-7.5">

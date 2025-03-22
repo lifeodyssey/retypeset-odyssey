@@ -10,7 +10,7 @@ const year = Number(startYear) === currentYear
   ? startYear
   : `${startYear}-${currentYear}`
 
-// i18n rss path
+// i18n RSS Path
 const currentLang = getLangFromPath(Astro.url.pathname)
 const links = socialLinks.map((link) => {
   if (link.name === 'RSS') {

@@ -2,13 +2,11 @@
 import { defaultLocale, themeConfig } from '@/config'
 import { walineLocaleMap } from '@/i18n/config'
 
-// Theme color configuration
 const {
   light: { primary: lightPrimary, secondary: lightSecondary, background: lightBackground },
   dark: { primary: darkPrimary, secondary: darkSecondary, background: darkBackground },
 } = themeConfig.color
 
-// Waline configuration
 const {
   serverURL = '',
   emoji = [],
@@ -27,7 +25,7 @@ function getWalineLang(currentPath: string, defaultLocale: string): string {
   return walineLocaleMap[lang as keyof typeof walineLocaleMap]
 }
 
-// Get Waline language and generate configuration
+// Get Waline language and generate configuration json
 const walineLang = getWalineLang(Astro.url.pathname, defaultLocale)
 const walineConfigJson = JSON.stringify({
   serverURL,
@@ -71,7 +69,7 @@ initWaline()
 document.addEventListener('astro:after-swap', initWaline)
 </script>
 
-<!-- Custom css styles >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<!-- Custom CSS Styles >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <style is:global>
 #waline .wl-login-info {
   --at-apply: 'mt-0 mr-3'
@@ -177,8 +175,8 @@ document.addEventListener('astro:after-swap', initWaline)
 }
 </style>
 
-<!-- Official css variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<!-- Docs: https://waline.js.org/reference/client/style.html -->
+<!-- Official CSS Variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<!-- https://waline.js.org/reference/client/style.html -->
 <style
   define:vars={{
   lightPrimary,

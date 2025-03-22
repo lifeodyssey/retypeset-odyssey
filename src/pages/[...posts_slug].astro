@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content'
 import Comments from '@/components/Comments/index.astro'
 import PostDate from '@/components/PostDate.astro'
-import BackHome from '@/components/Widgets/BackHome.astro'
+import GoBack from '@/components/Widgets/GoBack.astro'
 import { allLocales, defaultLocale, moreLocales } from '@/config'
 import { getTagPath } from '@/i18n/path'
 import Layout from '@/layouts/Layout.astro'
@@ -107,8 +107,8 @@ const { Content, remarkPluginFrontmatter } = await post.render()
 >
   <article class="heti mb-12.6">
     <div class="relative">
-      <!-- Desktop back home button -->
-      <BackHome />
+      <!-- Go Back Button On Desktop -->
+      <GoBack />
       <!-- Title -->
       <h1 class="post-title">
         <span

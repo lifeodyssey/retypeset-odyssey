@@ -1,4 +1,4 @@
-<img alt="Cover Image" src="https://placehold.co/1920x1080?text=Comming+Soon"/>
+<img alt="Cover Image" src="https://placehold.co/1920x1080?text=Work+In+Progress"/>
 
 <div align="center">
   <a title="en" href="README.md">

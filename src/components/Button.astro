@@ -16,10 +16,8 @@ const isTag = isTagPage(currentPath)
 
 // Check if there are other languages to switch
 const showLanguageSwitcher = moreLocales.length > 0
-
 // Check if only the supported language switch list is used
 const useSupportedLangs = isPost || (isTag && supportedLangs.length > 0)
-
 // Choose a language switch list according to the page type
 const nextUrl = useSupportedLangs
   ? getNextSupportedLangPath(currentPath, supportedLangs) // Switch between supported languages
@@ -33,7 +31,7 @@ const nextUrl = useSupportedLangs
   'lg:(fixed w-14rem top-auto bottom-47 right-[max(5.625rem,calc(50vw-34.375rem))])',
 ]}
 >
-  <!-- Language switcher -->
+  <!-- Language Switcher -->
   {showLanguageSwitcher && (
     <a
       href={nextUrl}
@@ -52,7 +50,7 @@ const nextUrl = useSupportedLangs
     </a>
   )}
 
-  <!-- Theme toggle -->
+  <!-- Theme Toggle -->
   <button
     aria-label="Switch light/dark theme"
     class="button-theme-toggle aspect-square w-4.2 c-secondary active:scale-90 hover:c-primary"
@@ -68,7 +66,7 @@ const nextUrl = useSupportedLangs
   </button>
 </div>
 
-<!-- Theme toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<!-- Theme Toggle Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script is:inline define:vars={{ lightMode, darkMode }}>
 // Update theme
 function updateTheme() {
