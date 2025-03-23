@@ -1,11 +1,11 @@
 import type { CollectionEntry } from 'astro:content'
 import { defaultLocale } from '@/config'
 import MarkdownIt from 'markdown-it'
-import sanitizeHtml from 'sanitize-html'
-
-const parser = new MarkdownIt()
 
 type ExcerptScene = 'list' | 'meta' | 'og' | 'rss'
+
+const parser = new MarkdownIt()
+const isCJKLang = (lang: string) => ['zh', 'zh-tw', 'ja'].includes(lang)
 
 // Excerpt length in different scenarios
 const EXCERPT_LENGTHS: Record<ExcerptScene, {
@@ -30,8 +30,6 @@ const EXCERPT_LENGTHS: Record<ExcerptScene, {
   },
 }
 
-const isCJKLang = (lang: string) => ['zh', 'zh-tw', 'ja'].includes(lang)
-
 // Generate an excerpt from Markdown content
 export function generateExcerpt(
   content: string,
@@ -45,11 +43,15 @@ export function generateExcerpt(
     ? EXCERPT_LENGTHS[scene].cjk
     : EXCERPT_LENGTHS[scene].other
 
-  // Convert Markdown to plain text
-  const plainText = sanitizeHtml(parser.render(content), {
-    allowedTags: [],
-    allowedAttributes: {},
-  })
+  // Remove all HTML tags and decode HTML entities
+  const plainText = parser.render(content)
+    .replace(/<[^>]*>/g, '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, '\'')
+    .replace(/&nbsp;/g, ' ')
 
   // Replace line breaks with spaces
   const normalizedText = plainText.replace(/\s+/g, ' ')
