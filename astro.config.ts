@@ -7,7 +7,6 @@ import { defineConfig } from 'astro/config'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
-import remarkSectionize from 'remark-sectionize'
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
@@ -54,7 +53,6 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkMath,
-      remarkSectionize,
       remarkReadingTime,
     ],
     rehypePlugins: [

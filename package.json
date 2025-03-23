@@ -46,7 +46,6 @@
     "lint-staged": "^15.5.0",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
-    "remark-sectionize": "^2.1.0",
     "sharp": "^0.33.5",
     "typescript": "~5.8.2",
     "unocss": "66.1.0-beta.6",
