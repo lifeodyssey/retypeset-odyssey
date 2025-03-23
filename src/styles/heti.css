@@ -1,314 +1,320 @@
 /*!
- * Project:Heti
- * URL:https://github.com/sivan/heti
- * Author:Sivan [sun.sivan@gmail.com]
+ * Project: Heti
+ * URL: https://github.com/sivan/heti
+ * Author: Sivan [sun.sivan@gmail.com]
  */
 
-/*!
- * .heti = CJK text
- * .heti not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) = non-CJK text
- */
-
- /* Global setting */
 .heti {
   --at-apply: 'leading-1.5em break-words hyphens-auto tracking-0.02em';
 }
-.heti:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
-  --at-apply: 'leading-1.4em tracking-0';
+.heti:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti:not(:lang(zh)) {
+  --at-apply: 'tracking-0';
 }
 
-/* Common tags style */
-.heti p {
-  --at-apply: 'mb-6 text-justify';
-}
-.heti a {
-  --at-apply: 'underline decoration-secondary/25 underline-0.075em underline-offset-0.2em lg:underline-0.1em';
-  --at-apply: 'font-medium transition-colors hover:(c-primary decoration-secondary/60) ';
-}
-
-/* Heading style */
+/* 文章标题 */
 .heti .post-title {
   --at-apply: 'c-primary mb-2 font-bold text-9 leading-12 text-balance mbs-0';
 }
-.heti h1 {
-  --at-apply: 'text-8';
-}
-.heti h2 {
-  --at-apply: 'text-6';
-}
-.heti h3 {
-  --at-apply: 'text-5';
-}
-.heti h4 {
-  --at-apply: 'text-4.5';
-}
-.heti h5 {
-  --at-apply: 'text-4';
-}
-.heti h6 {
-  --at-apply: 'text-3.5';
+
+/* 链接 */
+.heti a {
+  --at-apply: 'underline decoration-secondary/25 underline-0.075em underline-offset-0.2em lg:underline-0.1em';
+  --at-apply: 'font-medium transition-colors tracking-0 hover:(c-primary decoration-secondary/60) ';
 }
 
-.heti h1,.heti h2,.heti h3 {
-	--at-apply: 'tracking-0.04em';
+/* 段落 */
+.heti p {
+  --at-apply: 'mt-3 mb-4 text-justify';
 }
-.heti h1:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),
-.heti h2:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),
-.heti h3:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
-	--at-apply: 'tracking-0';
+.heti p:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti p:not(:lang(zh)) {
+  --at-apply: 'text-start';
 }
 
-.heti h1,.heti h2,.heti h3,.heti h4,.heti h5,.heti h6 {
-  --at-apply: 'font-semibold mt-6 mb-3';
-}
-/* .heti h1+h2 {
-  --at-apply: 'mbs-4.5';
-}
-.heti h2+h3,.heti h3+h4,.heti h4+h5,.heti h5+h6 {
-  --at-apply: 'mbs-3';
-} */
+/* 引用 */
 .heti blockquote {
-	margin-block-start:12px;
-	margin-block-end:24px;
-	margin-inline-start:32px;
-	margin-inline-end:32px;
-	padding-block-start:12px;
-	padding-block-end:12px;
-	padding-inline-start:16px;
-	padding-inline-end:16px;
-	background-color:rgba(0,0,0,.054)
+  --at-apply: 'mt-3 mb-6 px-4 py-3';
+  --at-apply: 'border-l-4 border-solid border-secondary/25 bg-secondary/5';
 }
-@media(prefers-color-scheme:dark) {
-	.heti blockquote {
-	background-color:rgba(255,255,255,.054)
+.heti blockquote blockquote {
+  --at-apply: 'my-3';
 }
-}
-.heti img {
-  --at-apply: 'my-8';
-}
-.heti figure {
-  --at-apply: 'my-8 flex flex-col items-center';
-}
-.heti figure>img {
-  --at-apply: 'mt-0 mb-3';
-}
-.heti figure>figcaption {
-  --at-apply: 'opacity-75 w-95% text-center';
-}
-.heti hr {
-	width:30%;
-	height:1px;
-	margin-block-start:48px;
-	margin-block-end:47px;
-	margin-inline-start:auto;
-	margin-inline-end:auto;
-	border:0;
-	background-color:#ccc
-}
-@media(prefers-color-scheme:dark) {
-	.heti hr {
-	background-color:#404040
-}
+.heti blockquote p {
+  --at-apply: 'my-2';
 }
 
-.heti p:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)) {
-	text-align:start
-}
+/* 代码块 */
 .heti pre {
-  --at-apply: 'bg-secondary/8! scrollbar-hidden';
-	margin-block-start:12px;
-	margin-block-end:12px;
-	margin-inline-start:0;
-	margin-inline-end:0;
-	padding-block-start:12px;
-	padding-block-end:12px;
-	padding-inline-start:16px;
-	padding-inline-end:16px;
-	overflow:auto;
-	white-space:pre;
-	word-wrap:normal;
-	border-radius:4px;
-}
-html.dark .heti pre {
-  --at-apply: 'bg-secondary/8!';
-}
-html.dark .astro-code span {
-  --at-apply: 'bg-secondary/0!';
+  --at-apply: 'my-3 px-4 py-3 rounded bg-secondary/5!';
+  --at-apply: 'overflow-auto whitespace-pre scrollbar-hidden';
 }
 .heti pre code {
-	margin:0;
-	padding:0;
-	border:0;
-	border-radius:0;
+  --at-apply: 'mx-0 bg-secondary/0 tracking-0';
 }
-.heti a,.heti abbr,.heti code,.heti heti-spacing,.heti [lang=en-US] {
-	letter-spacing:normal
+html.dark .heti pre span {
+  --at-apply: 'text-[var(--shiki-dark)]!';
 }
 
-
-.heti ul,.heti ol,.heti dl {
-	margin-block-start:12px;
-	margin-block-end:24px
-}
-.heti ul,.heti ol {
-	padding-inline-start:32px
-}
-.heti ul ul,.heti ul ol,.heti ol ul,.heti ol ol {
-	margin-block-start:0;
-	margin-block-end:0
-}
-.heti ul {
-	list-style-type:disc
-}
-.heti ol {
-	list-style-type:decimal
-}
-.heti ul ul,.heti ol ul {
-	list-style-type:circle
-}
-.heti ul ul ul,.heti ul ol ul,.heti ol ul ul,.heti ol ol ul {
-	list-style-type:square
-}
-.heti li {
-	list-style-type:unset
-}
-.heti table {
-	box-sizing:border-box;
-	table-layout:fixed;
-	margin-block-start:12px;
-	margin-block-end:24px;
-	margin-inline-start:auto;
-	margin-inline-end:auto;
-	border-collapse:collapse;
-	border-width:1px;
-	border-style:solid;
-	border-color:#ccc;
-	word-break:break-word
-}
-@media(prefers-color-scheme:dark) {
-	.heti table {
-	border-color:#404040
-}
-}.heti th,.heti td {
-	padding-block-start:6px;
-	padding-block-end:6px;
-	padding-inline-start:8px;
-	padding-inline-end:8px;
-	border-width:1px;
-	border-style:solid;
-	border-color:#ccc
-}
-@media(prefers-color-scheme:dark) {
-	.heti th,.heti td {
-	border-color:#404040
-}
-}.heti caption {
-	caption-side:bottom;
-	margin-block-start:2px;
-	margin-block-end:-4px;
-	font-size:14px;
-	line-height:24px
-}
-.heti b,.heti strong {
-	font-weight:600
-}
+/* 代码 */
 .heti code {
-	margin-inline-start:.25em;
-	margin-inline-end:.25em;
-	font-size:.875em
+  --at-apply: 'mx-1 bg-secondary/5 rounded text-0.875em';
 }
-.heti dfn {
-	font-weight:600
+
+/* 分割线 */
+.heti hr {
+  --at-apply: 'border-secondary/25';
 }
-.heti dfn:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti dfn:not(:lang(zh)) {
-	font-weight:400
+
+/* 标题 */
+.heti h1,
+.heti h2,
+.heti h3,
+.heti h4,
+.heti h5,
+.heti h6 {
+  --at-apply: 'mt-6 mb-3 font-semibold';
 }
-.heti em {
-	font-weight:600
+.heti h1 {
+  --at-apply: 'mb-6 text-8 leading-12';
 }
-.heti figcaption {
-	display:inline-block;
-	vertical-align:top;
-	font-size:14px;
-	text-align:start
+.heti h2 {
+  --at-apply: 'text-6 leading-9';
 }
-.heti i {
-	font-style:italic
+.heti h3 {
+  --at-apply: 'text-5 leading-9';
 }
-.heti ins,.heti u {
-	padding-block-end:1px;
-	border-block-end:1px solid;
-	text-decoration:none
+.heti h4 {
+  --at-apply: 'text-4.5 leading-6';
 }
+.heti h5 {
+  --at-apply: 'text-4 leading-6';
+}
+.heti h6 {
+  --at-apply: 'text-3.5 leading-6';
+}
+.heti h1,
+.heti h2,
+.heti h3 {
+  --at-apply: 'tracking-0.05em';
+}
+.heti h1:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti h1:not(:lang(zh)),
+.heti h2:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti h2:not(:lang(zh)),
+.heti h3:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti h3:not(:lang(zh)) {
+  --at-apply: 'tracking-0';
+}
+.heti h1 + h2,
+.heti h2 + h3,
+.heti h3 + h4,
+.heti h4 + h5,
+.heti h5 + h6 {
+  --at-apply: 'mt-3';
+}
+
+/* 高亮 */
 .heti mark {
-	padding-block-start:2px;
-	padding-block-end:2px;
-	padding-inline-start:1px;
-	padding-inline-end:1px;
-	margin-inline-start:1px;
-	margin-inline-end:1px;
-	background-color:rgba(255,247,0,.88);
-	color:inherit
+  --at-apply: 'mx-0.25 px-0.25 py-0.5 text-inherit bg-#ff0';
 }
-@media(prefers-color-scheme:dark) {
-	.heti mark {
-	background-color:rgba(77,74,0,.88)
+html.dark .heti mark {
+  --at-apply: 'bg-#4d4a00e0';
 }
-}.heti q {
-	quotes:"「" "」" "『" "』"
+
+/* 键盘输入文本 */
+.heti kbd {
+  --at-apply: 'bg-secondary/5 rounded-0.75 border border-solid border-secondary/40 text-secondary';
+  --at-apply: 'inline-block text-0.85em font-bold leading-none px-1 py-0.5 whitespace-nowrap';
+  box-shadow:
+  0 1px 1px color-mix(in oklch, var(--uno-colors-secondary) 25%, transparent),
+  0 2px 0 0 var(--uno-colors-background) inset;
 }
-.heti q:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti q:not(:lang(zh)) {
-	quotes:initial;
-	quotes:auto
-}
-.heti rt {
-	font-size:.875em;
-	font-weight:400
-}
-.heti small {
-	font-size:.875em
-}
-.heti strong {
-	font-weight:600
-}
-.heti sub,.heti sup {
-	position:relative;
-	margin-inline-start:.25em;
-	margin-inline-end:.25em;
-	font-size:.75em;
-	font-style:normal;
-	line-height:1;
-	vertical-align:baseline
+
+/* 上标和下标 */
+.heti sub,
+.heti sup {
+  --at-apply: 'mx-0.15em relative text-0.75em leading-1 align-baseline';
 }
 .heti sub {
-	bottom:-0.25em
+  --at-apply: 'bottom--0.25em';
 }
 .heti sup {
-	top:-0.5em
+  --at-apply: 'top--0.5em';
 }
-.heti sup:target,.heti sup a:target {
-	background-color:#dbedff
+.heti sub a,
+.heti sup a {
+  --at-apply: 'no-underline';
 }
-@media(prefers-color-scheme:dark) {
-	.heti sup:target,.heti sup a:target {
-	background-color:#3a6188
+.heti sup:target,
+.heti sup a:target {
+  --at-apply: 'bg-#ff0';
 }
-}.heti summary {
-	padding-inline-start:1em;
-	outline:0;
-	cursor:pointer
+html.dark .heti sup:target,
+html.dark .heti sup a:target {
+  --at-apply: 'bg-#4d4a00e0';
+}
+
+.heti figure {
+  display: block;
+  text-align: center;
+}
+.heti figure > img {
+  display: block;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.heti abbr {
+  letter-spacing: normal;
+}
+
+.heti ul,
+.heti ol,
+.heti dl {
+  margin-block-start: 12px;
+  margin-block-end: 24px;
+}
+.heti ul,
+.heti ol {
+  padding-inline-start: 32px;
+}
+.heti ul ul,
+.heti ul ol,
+.heti ol ul,
+.heti ol ol {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.heti ul {
+  list-style-type: disc;
+}
+.heti ol {
+  list-style-type: decimal;
+}
+.heti ul ul,
+.heti ol ul {
+  list-style-type: circle;
+}
+.heti ul ul ul,
+.heti ul ol ul,
+.heti ol ul ul,
+.heti ol ol ul {
+  list-style-type: square;
+}
+.heti li {
+  list-style-type: unset;
+}
+.heti table {
+  box-sizing: border-box;
+  table-layout: fixed;
+  margin-block-start: 12px;
+  margin-block-end: 24px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  border-collapse: collapse;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+  word-break: break-word;
+}
+.heti th,
+.heti td {
+  padding-block-start: 6px;
+  padding-block-end: 6px;
+  padding-inline-start: 8px;
+  padding-inline-end: 8px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+}
+.heti caption {
+  caption-side: bottom;
+  margin-block-start: 2px;
+  margin-block-end: -4px;
+  font-size: 14px;
+  line-height: 24px;
+}
+.heti abbr[title] {
+  padding-block-end: 1px;
+  border-block-end: 1px dotted;
+  text-decoration: none;
+  cursor: help;
+}
+.heti b,
+.heti strong {
+  font-weight: 600;
+}
+
+.heti em {
+  font-weight: 600;
+}
+.heti figcaption {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  text-align: start;
+}
+.heti i {
+  font-style: italic;
+}
+.heti u {
+  padding-block-end: 1px;
+  border-block-end: 1px solid;
+  text-decoration: none;
+}
+
+.heti q {
+  quotes: "「" "」" "『" "』";
+}
+.heti q:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti q:not(:lang(zh)) {
+  quotes: initial;
+  quotes: auto;
+}
+.heti rt {
+  font-size: 0.875em;
+  font-weight: 400;
+}
+.heti small {
+  font-size: 0.875em;
+}
+.heti strong {
+  font-weight: 600;
+}
+
+
+/* 折叠 */
+/* .heti summary {
+  padding-inline-start: 1em;
+  outline: 0;
+  cursor: pointer;
 }
 .heti summary::-webkit-details-marker {
-	width:.6em;
-	margin-inline-end:.4em
+  width: 0.6em;
+  margin-inline-end: 0.4em;
+} */
+
+.heti u[title] {
+  cursor: help;
+  border-block-end-width: 3px;
+  border-block-end-style: double;
+  border-block-end-color: rgba(0, 0, 0, 0.54);
 }
-.heti address,.heti cite,.heti dfn,.heti dt,.heti em {
-	font-style:normal
+.heti dt,
+.heti em {
+  font-style: normal;
 }
-.heti address:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti address:not(:lang(zh)),.heti cite:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti cite:not(:lang(zh)),.heti dfn:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti dfn:not(:lang(zh)),.heti dt:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti dt:not(:lang(zh)),.heti em:not(:lang(zh-CN)):not(:lang(zh-TW)):not(:lang(ja-JP)):not(:lang(ko-KR)),.heti em:not(:lang(zh)) {
-	font-style:italic
+.heti dt:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti dt:not(:lang(zh)),
+.heti em:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)),
+.heti em:not(:lang(zh)) {
+  font-style: italic;
 }
-.heti .heti del,.heti ins,.heti s,.heti u {
-	margin-inline-start:1px;
-	margin-inline-end:1px
+.heti abbr[title],
+.heti del,
+.heti s,
+.heti u {
+  margin-inline-start: 1px;
+  margin-inline-end: 1px;
 }

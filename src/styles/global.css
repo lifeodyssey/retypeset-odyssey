@@ -20,12 +20,6 @@ body {
   --at-apply: 'cursor-zoom-in force-gpu';
 } */
 
-html.dark .astro-code,
-html.dark .astro-code span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-}
-
 /* View Transition with Theme Toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 ::view-transition-new(theme-transition) {
   animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
