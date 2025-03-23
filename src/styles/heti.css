@@ -246,6 +246,9 @@ html.dark .heti mark {
 .heti u {
   --at-apply: 'mx-0.25 underline decoration-wavy decoration-red underline-offset-4';
 }
+html.dark .heti u {
+  --at-apply: 'decoration-#A14F50';
+}
 
 /* Strikethrough */
 .heti del,
