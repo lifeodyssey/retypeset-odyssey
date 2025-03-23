@@ -71,8 +71,8 @@ export default defineConfig({
     shikiConfig: {
       // available themes: https://shiki.style/themes
       themes: {
-        light: 'one-light',
-        dark: 'one-dark-pro',
+        light: 'github-light',
+        dark: 'github-dark',
       },
     },
   },
