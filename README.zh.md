@@ -1,4 +1,5 @@
-<img alt="Cover Image" src="https://placehold.co/1920x1080?text=Work+In+Progress"/>
+<img alt="Cover Image" src="assets/retypeset-zh-desktop.webp"/>
+<img alt="Cover Image" src="assets/retypeset-zh-mobile.webp"/>
 
 <div align="center">
   <a title="en" href="README.md">

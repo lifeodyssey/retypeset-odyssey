@@ -1,4 +1,5 @@
-<img alt="Cover Image" src="https://placehold.co/1920x1080?text=Work+In+Progress"/>
+<img alt="Cover Image" src="assets/retypeset-en-desktop.webp"/>
+<img alt="Cover Image" src="assets/retypeset-en-mobile.webp"/>
 
 <div align="center">
   <picture>
