@@ -69,6 +69,6 @@ export function generateDescription(
   if (post.data.description)
     return post.data.description
 
-  const lang = post.data.lang ?? defaultLocale
+  const lang = (!post.data.lang || post.data.lang === '') ? defaultLocale : post.data.lang
   return generateExcerpt(post.body, scene, lang)
 }
