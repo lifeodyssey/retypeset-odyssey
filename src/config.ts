@@ -40,7 +40,7 @@ export const themeConfig: ThemeConfig = {
       // primary color
       // used for title, hover, etc
       // oklch color picker: https://oklch.com/
-      primary: 'oklch(88% 0.005 298)',
+      primary: 'oklch(92% 0.005 298)',
       // secondary color
       // used for post text
       secondary: 'oklch(77% 0.005 298)',
