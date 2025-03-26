@@ -68,9 +68,8 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 ## 文档
 
-正在施工中...
-
-- [主题配置](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts)
+- [主题指南](https://retypeset.radishzz.cc/posts/markdown-style-guide/)
+- [主题配置文件](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts)
 
 ## 鸣谢
 
