@@ -91,7 +91,7 @@
 /* Code Blocks */
 .heti :where(pre) {
   --at-apply: 'mt-3 mb-4 px-4 py-3 rounded bg-secondary/5! border border-solid border-secondary/5';
-  --at-apply: 'overflow-auto whitespace-pre scrollbar-hidden';
+  --at-apply: 'overflow-auto whitespace-pre';
 }
 .heti pre :where(code) {
   --at-apply: 'p-0 bg-secondary/0 tracking-0 border-none';
