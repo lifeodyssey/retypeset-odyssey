@@ -27,9 +27,6 @@ function setupScrollbar() {
     if (!pre.hasAttribute('data-scrollbar-initialized')) {
       OverlayScrollbars({
         target: pre,
-        cancel: {
-          nativeScrollbarsOverlaid: true,
-        },
       }, {
         scrollbars: {
           theme: 'scrollbar-widget',
@@ -47,9 +44,6 @@ function setupScrollbar() {
   if (tocElement && !tocElement.hasAttribute('data-scrollbar-initialized')) {
     OverlayScrollbars({
       target: tocElement,
-      cancel: {
-        nativeScrollbarsOverlaid: true,
-      },
     }, {
       scrollbars: {
         theme: 'scrollbar-widget',
