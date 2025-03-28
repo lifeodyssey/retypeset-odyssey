@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 import Comments from '@/components/Comments/index.astro'
 import PostDate from '@/components/PostDate.astro'
 import GoBack from '@/components/Widgets/GoBack.astro'
+import TOC from '@/components/Widgets/TOC.astro'
 import { allLocales, defaultLocale, moreLocales } from '@/config'
 import { getTagPath } from '@/i18n/path'
 import Layout from '@/layouts/Layout.astro'
@@ -96,7 +97,7 @@ export async function getStaticPaths() {
 
 const { post, lang, supportedLangs } = Astro.props
 const description = generateDescription(post, 'meta')
-const { Content, remarkPluginFrontmatter } = await post.render()
+const { Content, headings, remarkPluginFrontmatter } = await post.render()
 ---
 
 <Layout
@@ -132,6 +133,8 @@ const { Content, remarkPluginFrontmatter } = await post.render()
         minutes={remarkPluginFrontmatter.minutes}
       />
     </div>
+    <!-- TOC -->
+    {post.data.toc && <TOC headings={headings} />}
     <!-- Content -->
     <Content />
   </article>

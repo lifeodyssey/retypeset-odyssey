@@ -6,6 +6,7 @@ export const ui = {
     posts: '文章',
     tags: '标签',
     about: '关于',
+    toc: '目录',
   },
   'zh-tw': {
     title: '重新編排',
@@ -14,6 +15,7 @@ export const ui = {
     posts: '文章',
     tags: '標籤',
     about: '關於',
+    toc: '目錄',
   },
   'ja': {
     title: '再組版',
@@ -22,6 +24,7 @@ export const ui = {
     posts: '記事',
     tags: 'タグ',
     about: '概要',
+    toc: '目次',
   },
   'en': {
     title: 'Retypeset',
@@ -30,6 +33,7 @@ export const ui = {
     posts: 'Posts',
     tags: 'Tags',
     about: 'About',
+    toc: 'Table of Contents',
   },
   'es': {
     title: 'Retipografía',
@@ -38,6 +42,7 @@ export const ui = {
     posts: 'Artículos',
     tags: 'Etiquetas',
     about: 'Sobre',
+    toc: 'Índice',
   },
   'ru': {
     title: 'Переверстка',
@@ -46,5 +51,6 @@ export const ui = {
     posts: 'Посты',
     tags: 'Теги',
     about: 'О себе',
+    toc: 'Оглавление',
   },
 }

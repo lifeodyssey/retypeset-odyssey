@@ -2,6 +2,7 @@
 import { OverlayScrollbars } from 'overlayscrollbars'
 
 function setupScrollbar() {
+  // Add scrollbar to body
   const bodyElement = document.body
   if (!bodyElement.hasAttribute('data-scrollbar-initialized')) {
     OverlayScrollbars({
@@ -20,6 +21,7 @@ function setupScrollbar() {
     bodyElement.setAttribute('data-scrollbar-initialized', 'true')
   }
 
+  // Add scrollbar to code blocks
   const preElements = document.querySelectorAll('pre')
   preElements.forEach((pre) => {
     if (!pre.hasAttribute('data-scrollbar-initialized')) {
@@ -30,7 +32,7 @@ function setupScrollbar() {
         },
       }, {
         scrollbars: {
-          theme: 'scrollbar-code',
+          theme: 'scrollbar-widget',
           autoHide: 'leave',
           autoHideDelay: 500,
         },
@@ -39,6 +41,25 @@ function setupScrollbar() {
       pre.setAttribute('data-scrollbar-initialized', 'true')
     }
   })
+
+  // Add scrollbar to TOC content
+  const tocElement = document.getElementById('toc-content')
+  if (tocElement && !tocElement.hasAttribute('data-scrollbar-initialized')) {
+    OverlayScrollbars({
+      target: tocElement,
+      cancel: {
+        nativeScrollbarsOverlaid: true,
+      },
+    }, {
+      scrollbars: {
+        theme: 'scrollbar-widget',
+        autoHide: 'leave',
+        autoHideDelay: 500,
+      },
+    })
+
+    tocElement.setAttribute('data-scrollbar-initialized', 'true')
+  }
 }
 
 setupScrollbar()
@@ -64,7 +85,7 @@ document.addEventListener('astro:after-swap', setupScrollbar)
   --os-handle-min-size: 12%;
 }
 
-.scrollbar-code {
+.scrollbar-widget {
   --os-size: 0.6rem;
   --os-padding-perpendicular: 0.1rem;
   --os-padding-axis: 0.2rem;
@@ -80,7 +101,7 @@ document.addEventListener('astro:after-swap', setupScrollbar)
 }
 
 @media (max-width: 1023px) {
-  .os-scrollbar {
+  .os-scrollbar.scrollbar-body {
     display: none !important;
   }
 }

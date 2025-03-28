@@ -1,0 +1,112 @@
+---
+import type { MarkdownHeading } from 'astro'
+import { ui } from '@/i18n/ui'
+import { getPageInfo } from '@/utils/page'
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+const { currentLang } = getPageInfo(Astro.url.pathname)
+const currentUI = ui[currentLang as keyof typeof ui]
+
+const { headings = [] } = Astro.props
+const filteredHeadings = headings.filter(heading =>
+  heading.depth >= 2
+  && heading.depth <= 4
+  && heading.text !== 'Footnotes',
+)
+---
+
+{filteredHeadings.length > 0 && (
+  <div
+    class="relative mb-6 bg-secondary/5"
+    border="~ secondary/5 rounded solid"
+    transition="~ duration-300 ease-in-out"
+  >
+    {/* Accordion toggle for expandable TOC */}
+    <input
+      type="checkbox"
+      id="toc-toggle"
+      class="accordion-toggle"
+      hidden
+    />
+    <label
+      for="toc-toggle"
+      class="absolute inset-0 z-99 cursor-pointer"
+    ></label>
+
+    {/* TOC title bar */}
+    <div class="h-12 w-full flex items-center bg-secondary/0">
+      <span class="toc-title">
+        {currentUI.toc}
+      </span>
+    </div>
+
+    {/* Expandable content wrapper */}
+    <div class="accordion-wrapper">
+      <nav
+        id="toc-content"
+        class="accordion-content"
+        aria-label="Table of Contents"
+      >
+        <ul class="toc-list">
+          {filteredHeadings.map(heading => (
+            <li
+              class:list={{
+                'ml-0': heading.depth === 2,
+                'ml-4': heading.depth === 3,
+                'ml-8': heading.depth === 4,
+              }}
+            >
+              <a
+                href={`#${heading.slug}`}
+                class:list={[
+                  { 'toc-link-h2': heading.depth === 2 },
+                  { 'toc-link-h3': heading.depth === 3 },
+                  { 'toc-link-h4': heading.depth === 4 },
+                ]}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+)}
+
+<!-- Override heti default styles -->
+<style>
+.toc-title {
+  --at-apply: 'font-semibold pl-4 px-4 py-3';
+}
+.toc-list {
+  --at-apply: 'list-none pl-0 space-y-2 mt-1 mb-4';
+}
+.toc-link-h2 {
+  --at-apply: 'text-sm no-underline font-semibold';
+}
+.toc-link-h3 {
+  --at-apply: 'text-sm no-underline font-normal';
+}
+.toc-link-h4 {
+  --at-apply: 'text-sm no-underline font-normal';
+}
+/* Initial collapsed state with zero height grid row */
+.accordion-wrapper {
+  --at-apply: 'grid rows-[0fr] duration-300 ease-in-out';
+}
+.accordion-content {
+    --at-apply: 'overflow-hidden max-h-66 lg:max-h-82 z-99 pl-4';
+  }
+
+/* When toggle is checked, expand the wrapper to show content */
+.accordion-toggle:checked ~ .accordion-wrapper {
+  grid-template-rows: 1fr;
+}
+.accordion-toggle:checked ~ .accordion-wrapper .accordion-content {
+    --at-apply: 'overflow-y-auto';
+  }
+</style>
