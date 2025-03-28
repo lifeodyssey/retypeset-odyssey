@@ -5,7 +5,7 @@
 }
 
 html {
-  --at-apply: 'bg-background c-secondary antialiased scroll-smooth';
+  --at-apply: 'bg-background c-secondary antialiased';
 }
 
 body {

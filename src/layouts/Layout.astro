@@ -28,7 +28,7 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
 
 <html
   lang={Astro.currentLocale}
-  class={fontStyle}
+  class:list={[fontStyle, { 'scroll-smooth': isPost }]}
   data-overlayscrollbars-initialize
 >
   <Head {postTitle} {postDescription} {postSlug} />
