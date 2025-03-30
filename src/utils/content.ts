@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content'
 import { defaultLocale } from '@/config'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 // Type definitions
 export type Post = CollectionEntry<'posts'> & {
@@ -11,7 +11,7 @@ export type Post = CollectionEntry<'posts'> & {
 
 // Add metadata including reading time to post
 async function addMetaToPost(post: CollectionEntry<'posts'>): Promise<Post> {
-  const { remarkPluginFrontmatter } = await post.render()
+  const { remarkPluginFrontmatter } = await render(post)
   return { ...post, remarkPluginFrontmatter: remarkPluginFrontmatter as { minutes: number } }
 }
 
@@ -26,7 +26,7 @@ export async function checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]
 
   posts.forEach((post) => {
     const lang = post.data.lang
-    const slug = post.data.abbrlink || post.slug
+    const slug = post.data.abbrlink || post.id
 
     if (!slugMap.has(lang)) {
       slugMap.set(lang, new Set())

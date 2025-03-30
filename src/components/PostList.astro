@@ -21,7 +21,7 @@ export interface Props {
 
 function getPostPath(post: Post) {
   // Prioritize abbrlink over slug
-  const postPath = post.data.abbrlink || post.slug
+  const postPath = post.data.abbrlink || post.id
   // Add language prefix to URL if current page is in a language subdirectory and not the default language
   return lang && lang !== defaultLocale ? `/${lang}/posts/${postPath}/` : `/posts/${postPath}/`
 }
@@ -40,7 +40,7 @@ function getPostPath(post: Post) {
           class="hover:c-primary"
           lg={isTag ? '' : 'font-medium text-4.5'}
           href={getPostPath(post)}
-          transition:name={`post-${post.data.abbrlink || post.slug}-${lang}`}
+          transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
           data-disable-transition-on-theme
         >
           {post.data.title}
@@ -50,7 +50,7 @@ function getPostPath(post: Post) {
       {/* mobile post time */}
       <div
         class="text-3.5 leading-6.875 font-time lg:hidden"
-        transition:name={`time-${post.data.abbrlink || post.slug}-${lang}`}
+        transition:name={`time-${post.data.abbrlink || post.id}-${lang}`}
         data-disable-transition-on-theme
       >
         <PostDate
@@ -62,7 +62,7 @@ function getPostPath(post: Post) {
       {/* desktop post time */}
       <div
         class="hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)"
-        transition:name={`time-${post.data.abbrlink || post.slug}`}
+        transition:name={`time-${post.data.abbrlink || post.id}`}
         data-disable-transition-on-theme
       >
         <PostDate

@@ -9,7 +9,7 @@ const blogEntries = await getCollection('posts')
 // Convert blog entries into a lookup object with slug as key and title/description as value
 const pages = Object.fromEntries(
   blogEntries.map((post: CollectionEntry<'posts'>) => [
-    post.slug,
+    post.id,
     {
       title: post.data.title,
       description: post.data.description || generateDescription(post, 'og'),

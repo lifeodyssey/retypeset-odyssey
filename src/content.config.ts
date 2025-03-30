@@ -1,8 +1,9 @@
 import { allLocales } from '@/config'
+import { glob } from 'astro/loaders'
 import { defineCollection, z } from 'astro:content'
 
-// Posts Collection
-const postsCollection = defineCollection({
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: z.object({
     // required
     title: z.string(),
@@ -23,14 +24,11 @@ const postsCollection = defineCollection({
   }),
 })
 
-// About Page
-const aboutCollection = defineCollection({
+const about = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/about' }),
   schema: z.object({
     lang: z.enum(['', ...allLocales]).optional().default(''),
   }),
 })
 
-export const collections = {
-  posts: postsCollection,
-  about: aboutCollection,
-}
+export const collections = { posts, about }
