@@ -93,4 +93,10 @@ document.addEventListener('astro:after-swap', setupScrollbar)
   --os-handle-bg-active: oklch(var(--un-preset-theme-colors-secondary) / 0.35);
   --os-handle-min-size: 12%;
 }
+
+@media (min-width: 1536px) {
+  #toc-content .os-scrollbar {
+    --at-apply: 'hidden';
+  }
+}
 </style>
