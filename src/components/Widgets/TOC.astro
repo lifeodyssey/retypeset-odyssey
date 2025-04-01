@@ -20,7 +20,7 @@ const filteredHeadings = headings.filter(heading =>
 
 {filteredHeadings.length > 0 && (
   <div
-    class="mb-6 bg-secondary/5 2xl:(fixed left-0 top-53 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-transparent)"
+    class="mb-6 bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-transparent)"
     border="~ secondary/5 rounded solid"
   >
     <input
@@ -32,7 +32,7 @@ const filteredHeadings = headings.filter(heading =>
     <div class="relative h-12 w-full bg-transparent">
       <label
         for="toc-toggle"
-        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static h-max w-max flex c-secondary/60 transition-colors ease-in hover:c-secondary)"
+        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static h-max w-max flex c-secondary/25 transition-colors ease-out hover:c-secondary/60)"
       >
         <span class="toc-title">
           {currentUI.toc}
@@ -45,7 +45,7 @@ const filteredHeadings = headings.filter(heading =>
           fill="currentColor"
           class="ml-4 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
         >
-          <path d="m12 1c-6.1 0-11 4.9-11 11s4.9 11 11 11 11-4.9 11-11-4.9-11-11-11m0 20c-5.8 0-10.5-4-10.5-9s4.7-9 10.5-9 10.5 4 10.5 9-4.7 9-10.5 9" />
+          <path d="M22.2 2.3H1.8v1.6h19.8zM1.8 21.7h19.8l.6-1.6H1.8zM15.5 11.2H1.8v1.6h13.1z" />
         </svg>
       </label>
     </div>
