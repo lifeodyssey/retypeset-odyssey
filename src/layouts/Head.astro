@@ -3,6 +3,7 @@ import { allLocales, defaultLocale, themeConfig } from '@/config'
 import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
 import { ClientRouter } from 'astro:transitions'
+import katexCSS from 'katex/dist/katex.min.css?url'
 
 interface Props {
   postTitle?: string
@@ -53,8 +54,7 @@ const pageImage = postSlug
 <link rel="preload" href="/font/Snell-Black.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/font/EarlySummer-Subset.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/font/Snell-Bold.woff2" as="font" type="font/woff2" crossorigin />
-{katex && <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />}
-{katex && <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" crossorigin />}
+{katex && <link rel="stylesheet" href={katexCSS} />}
 {commentURL && <link rel="preconnect" href={commentURL} crossorigin />}
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
 {imageHostURL && <link rel="preconnect" href={imageHostURL} crossorigin />}
