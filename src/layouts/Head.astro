@@ -17,6 +17,7 @@ const langCode = currentLang === defaultLocale ? '' : `/${currentLang}`
 
 const { title, subtitle, description, author, url, favicon, i18nTitle } = themeConfig.site
 const { mode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
+const { katex } = themeConfig.global
 const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '', apiflashKey = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { commentURL = '', imageHostURL = '', customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload
@@ -52,6 +53,8 @@ const pageImage = postSlug
 <link rel="preload" href="/font/Snell-Black.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/font/EarlySummer-Subset.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/font/Snell-Bold.woff2" as="font" type="font/woff2" crossorigin />
+{katex && <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />}
+{katex && <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" crossorigin />}
 {commentURL && <link rel="preconnect" href={commentURL} crossorigin />}
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
 {imageHostURL && <link rel="preconnect" href={imageHostURL} crossorigin />}
