@@ -16,6 +16,9 @@ function setupScrollbar() {
         autoHide: 'scroll',
         autoHideDelay: 800,
       },
+      overflow: {
+        x: 'hidden',
+      },
     })
 
     bodyElement.setAttribute('data-scrollbar-initialized', 'true')
@@ -33,6 +36,9 @@ function setupScrollbar() {
           autoHide: 'leave',
           autoHideDelay: 500,
         },
+        overflow: {
+          y: 'hidden',
+        },
       })
 
       pre.setAttribute('data-scrollbar-initialized', 'true')
@@ -49,6 +55,9 @@ function setupScrollbar() {
         theme: 'scrollbar-widget',
         autoHide: 'leave',
         autoHideDelay: 500,
+      },
+      overflow: {
+        x: 'hidden',
       },
     })
 
