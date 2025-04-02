@@ -39,7 +39,7 @@ const postsByYear = await getPostsByYear(lang)
   {pinnedPosts.length > 0 && (
     <section class="mb-7.5">
       <div class="uno-decorative-line"></div>
-      <PostList posts={pinnedPosts} lang={lang} />
+      <PostList posts={pinnedPosts} lang={lang} pinned={true} />
     </section>
   )}
 
