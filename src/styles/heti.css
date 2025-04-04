@@ -6,10 +6,10 @@
 
  /* Global Styles */
 .heti {
-  --at-apply: 'leading-1.5em break-words hyphens-auto tracking-0.02em';
+  --at-apply: 'leading-1.55em break-words hyphens-auto tracking-0.02em';
 }
 .heti:not(:lang(zh)):not(:lang(ja)):not(:lang(ko)) {
-  --at-apply: 'tracking-0';
+  --at-apply: 'leading-1.5em tracking-0';
 }
 
 /* Article Title */
