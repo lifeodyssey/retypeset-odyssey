@@ -15,7 +15,7 @@ export interface ThemeConfig {
   }
 
   color: {
-    mode: 'light' | 'dark'
+    mode: 'light' | 'dark' | 'auto'
     light: {
       primary: string
       secondary: string
