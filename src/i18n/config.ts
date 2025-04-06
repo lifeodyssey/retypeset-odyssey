@@ -19,5 +19,14 @@ export const walineLocaleMap: Record<string, string> = {
   'ru': 'ru-RU',
 }
 
+export const giscusLocaleMap: Record<string, string> = {
+  'zh': 'zh-CN',
+  'zh-tw': 'zh-TW',
+  'ja': 'ja',
+  'en': 'en',
+  'es': 'es',
+  'ru': 'ru',
+}
+
 // Supported Languages
 export const supportedLangs = Object.keys(langMap).flat()

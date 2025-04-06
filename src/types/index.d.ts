@@ -53,7 +53,6 @@ export interface ThemeConfig {
       categoryID: string
       mapping: 'pathname' | 'url' | 'title'
       inputPosition: 'top' | 'bottom'
-      lang: Exclude<typeof supportedLangs[number], 'zh-CN'>,
       loading: 'lazy' | 'embed'
     }
   }

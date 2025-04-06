@@ -1,6 +1,19 @@
 ---
-import { themeConfig } from "@/config";
+import { defaultLocale, themeConfig } from '@/config'
+import { giscusLocaleMap } from '@/i18n/config'
 
+// Get the language code of Giscus
+function getGiscusLang(currentPath: string, defaultLocale: string): string {
+  // Extract language code from path
+  const pathLang = Object.keys(giscusLocaleMap).find(code =>
+    currentPath.startsWith(`/${code}/`),
+  )
+  // Return found path language or default language
+  const lang = pathLang || defaultLocale
+  return giscusLocaleMap[lang as keyof typeof giscusLocaleMap]
+}
+
+const giscusLang = getGiscusLang(Astro.url.pathname, defaultLocale)
 const {
   repo = "",
   repoID = "",
@@ -8,7 +21,6 @@ const {
   categoryID = "",
   mapping = "pathname",
   inputPosition = "top",
-  lang = "zh-CN",
   loading = "lazy",
 } = themeConfig.comment?.giscus ?? {};
 ---
@@ -24,7 +36,7 @@ const {
     categoryID,
     mapping,
     inputPosition,
-    lang,
+    giscusLang,
     loading,
   }}
 >
@@ -53,7 +65,7 @@ const {
     script.setAttribute("data-theme", theme);
     script.setAttribute("data-emit-metadata", "0");
     script.setAttribute("data-input-position", inputPosition);
-    script.setAttribute("data-lang", lang);
+    script.setAttribute("data-lang", giscusLang);
     script.setAttribute("data-loading", loading);
     script.crossOrigin = "anonymous";
     script.async = true;
