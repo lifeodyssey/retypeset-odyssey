@@ -72,7 +72,7 @@ export const themeConfig: ThemeConfig = {
   comment: {
     // enable comment system
     enabled: true, // true, false
-    provider: 'giscus', // giscus, waline
+    provider: 'waline', // giscus, waline
     // waline comment system
     // https://waline.js.org/en/
     waline: {
@@ -89,16 +89,6 @@ export const themeConfig: ThemeConfig = {
       // image uploader
       // bug: unable to hide image uploader icon
       imageUploader: false, // true, false
-    },
-    giscus: {
-      repo: "senshinya/blog",
-      repoID: "R_kgDOLAV3QQ",
-      category: "Announcements",
-      categoryID: "DIC_kwDOLAV3Qc4CcKlC",
-      mapping: "pathname",
-      inputPosition: "top",
-      lang: "zh-CN",
-      loading: "lazy",
     }
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
