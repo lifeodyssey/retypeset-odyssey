@@ -114,7 +114,6 @@ function isCurrentDark() {
     return false
   if (defaultMode === 'dark')
     return true
-  // Auto mode or undefined, use system preference
   return window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
