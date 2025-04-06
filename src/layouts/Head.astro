@@ -14,7 +14,7 @@ interface Props {
 const { postTitle, postDescription, postSlug } = Astro.props
 const { currentLang } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui]
-const langCode = currentLang === defaultLocale ? '' : `/${currentLang}`
+const langCode = currentLang === defaultLocale ? '' : `${currentLang}/`
 
 const { title, subtitle, description, author, url, favicon, i18nTitle } = themeConfig.site
 const { mode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
@@ -33,8 +33,8 @@ const pageDescription = postDescription || siteDescription
 const pageImage = postSlug
   ? `${url}/og/${postSlug}.png`
   : apiflashKey
-    ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${url}${langCode}&format=png&width=1500&height=788&ttl=86400&wait_until=network_idle&no_tracking=true`
-    : `https://api.apiflash.com/v1/urltoimage?access_key=02a837b6188f4ba0a7fd9fbeff03a83e&url=https://retypeset.radishzz.cc${langCode}&format=png&width=1500&height=788&ttl=604800&wait_until=network_idle&no_tracking=true`
+    ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${url}/${langCode}&format=png&width=1500&height=788&ttl=86400&wait_until=network_idle&no_tracking=true`
+    : `https://api.apiflash.com/v1/urltoimage?access_key=02a837b6188f4ba0a7fd9fbeff03a83e&url=https://retypeset.radishzz.cc/${langCode}&format=png&width=1500&height=788&ttl=172800&wait_until=network_idle&no_tracking=true`
 ---
 
 <head>
