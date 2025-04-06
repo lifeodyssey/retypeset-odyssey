@@ -110,8 +110,10 @@ function isCurrentDark() {
   const currentTheme = localStorage.getItem('theme')
   if (currentTheme)
     return currentTheme === 'dark'
-  if (defaultMode)
-    return defaultMode === 'dark'
+  if (defaultMode === 'light')
+    return false
+  if (defaultMode === 'dark')
+    return true
   return window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
