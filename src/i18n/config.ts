@@ -13,7 +13,7 @@ export const langMap: Record<string, string[]> = {
 export const walineLocaleMap: Record<string, string> = {
   'zh': 'zh-CN',
   'zh-tw': 'zh-TW',
-  'ja': 'jp-JP', // Waline uses jp-JP not ja-JP
+  'ja': 'jp-JP', // Waline uses jp-JP instead of ja-JP
   'en': 'en-US',
   'es': 'es-ES',
   'ru': 'ru-RU',
