@@ -30,7 +30,7 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 ## 特征
 
 - 基于 Astro 与 UnoCSS 开发
-- 支持 SEO、Sitemap、OpenGraph、TOC、RSS、MDX 和 LaTeX
+- 支持 SEO、Sitemap、OpenGraph、TOC、RSS、MDX 和 KaTeX
 - i18n 多语言
 - 亮色/暗色模式
 - 优雅的过渡动画

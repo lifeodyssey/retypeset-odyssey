@@ -1,4 +1,4 @@
-import type { Theme } from 'unocss/preset-uno'
+import type { Preset } from 'unocss'
 import {
   defineConfig,
   presetAttributify,
@@ -15,13 +15,13 @@ export default defineConfig({
   presets: [
     presetWind3(),
     presetAttributify(),
-    presetTheme<Theme>({
+    presetTheme({
       theme: {
         dark: {
           colors: dark,
         },
       },
-    }),
+    }) as Preset<object>,
   ],
   theme: {
     colors: light,

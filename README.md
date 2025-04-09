@@ -30,9 +30,9 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 ## Features
 
 - Built with Astro and UnoCSS
-- Support for SEO, Sitemap, OpenGraph, TOC, RSS, MDX and LaTeX
+- Support for SEO, Sitemap, OpenGraph, TOC, RSS, MDX and KaTeX
 - i18n support
-- Light/Dark mode
+- Light / Dark mode
 - Elegant view transitions
 - Rich theme customization
 - Optimized typography
@@ -78,7 +78,7 @@ For other platforms, please refer to the [Astro Deployment Guides](https://docs.
 - [Redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
 - [AstroPaper](https://github.com/satnaing/astro-paper)
 - [heti](https://github.com/sivan/heti)
-- [Early Summer Serif](https://github.com/GuiWonder/EarlySummerSerif)
+- [EarlySummerSerif](https://github.com/GuiWonder/EarlySummerSerif)
 
 ## Star History
 
