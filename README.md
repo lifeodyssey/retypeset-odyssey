@@ -41,6 +41,8 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 
 ## Performance
 
+<br>
+
 <p align="center">
   <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2F">
     <img width="710" alt="Retypeset Lighthouse Score" src="assets/retypeset-lighthouse-score.svg">
@@ -55,10 +57,10 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 
    ```bash
    # Clone the remote repository to your local machine
-   git clone <repository-url>
+   git clone repository-url
 
    # Navigate to the repository directory
-   cd <repository-name>
+   cd repository-name
 
    # Install pnpm globally (if not already installed)
    npm install -g pnpm
@@ -86,16 +88,16 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 
 1. Click `Deploy to Netlify` or `Deploy to Vercel` below.
 
-[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
-[![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
+&emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
+ [![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
 
-1. Follow the instructions, select your repository, and click `Deploy` to start deployment.
+2. Follow the instructions, select your repository, and click `Deploy` to start deployment.
 
-2. For other platforms, please refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/).
+3. For other platforms, please refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/).
 
 ## Updates
 
-Retypeset releases new features and bug fixes from time to time. You can refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork` in your forked repository to synchronize with the latest branch. Be careful not to click `Discard Changes`, or you will lose your modifications.
+Theme Retypeset releases new features and bug fixes from time to time. You can refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork` in your forked repository to synchronize with the latest branch. Be careful not to click `Discard Changes`, or you will lose your modifications.
 
 ## Commands
 

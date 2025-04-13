@@ -41,6 +41,8 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 ## 性能
 
+<br>
+
 <p align="center">
   <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2F">
     <img width="710" alt="Retypeset Lighthouse Score" src="assets/retypeset-lighthouse-score.svg">
@@ -55,10 +57,10 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
    ```bash
    # 克隆远程仓库至本地
-   git clone <仓库地址>
+   git clone 仓库地址
 
    # 进入本地仓库根目录
-   cd <仓库名称>
+   cd 仓库名称
 
    # 全局安装 pnpm（若未安装）
    npm install -g pnpm
@@ -86,16 +88,16 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 1. 点击下方 `Deploy to Netlify` 或 `Deploy to Vercel`。
 
-[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
-[![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
+&emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
+ [![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
 
-1. 跟随指示，选择对应仓库，再点击 `Deploy` 即可开始部署。
+2. 跟随指示，选择对应仓库，再点击 `Deploy` 即可开始部署。
 
-2. 其它平台请参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
+3. 其它平台请参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
 
 ## 更新
 
-Retypeset 会不定期发布新功能和问题修复。你可以参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在复刻仓库中执行 `Sync fork` 同步最新分支。注意不要点击 `Discard Changes`，否则会丢失你的更改。
+Retypeset 主题会不定期发布新功能和问题修复。你可以参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在复刻仓库中执行 `Sync fork` 同步最新分支。注意，不要点击 `Discard Changes`，否则会丢失你的更改。
 
 ## 指令
 
@@ -121,7 +123,7 @@ Retypeset 会不定期发布新功能和问题修复。你可以参考 [GitHub �
 
 ## Star History
 
-谢谢每一位 star 的朋友，你们的支持是我持续维护项目的动力！
+感谢每一位 star 的朋友，你们的支持是我持续维护项目的动力！
 
 <p align="center">
 <a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
