@@ -16,7 +16,6 @@ import { remarkReadingTime } from './src/plugins/remark-reading-time'
 const url = themeConfig.site.url
 const locale = themeConfig.global.locale
 const linkPrefetch = themeConfig.preload.linkPrefetch
-const imageDomain = new URL(themeConfig.preload.imageHostURL as string).hostname
 
 export default defineConfig({
   site: url,
@@ -25,10 +24,6 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
     defaultStrategy: linkPrefetch,
-  },
-  image: {
-    domains: [imageDomain],
-    remotePatterns: [{ protocol: 'https' }],
   },
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
