@@ -116,5 +116,5 @@ function setupThemeToggle() {
 
 // Initialize click event (on first load or page transition)
 setupThemeToggle()
-document.addEventListener('astro:after-swap', setupThemeToggle)
+document.addEventListener('astro:page-load', setupThemeToggle)
 </script>

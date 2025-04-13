@@ -69,7 +69,8 @@ For other platforms, please refer to the [Astro Deployment Guides](https://docs.
 ## Documentation
 
 - [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/)
-- [Theme Configuration File](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts)
+- [Markdown Style Guide](https://retypeset.radishzz.cc/en/posts/markdown-style-guide/)
+- [Theme Color Schemes](https://retypeset.radishzz.cc/en/posts/theme-color-schemes/)
 
 ## Credits
 
