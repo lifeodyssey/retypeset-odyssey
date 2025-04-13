@@ -47,30 +47,68 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
   <a>
 </p>
 
-## 部署
+## 用法
 
-1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 克隆本仓库。
+1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 复刻此仓库，或使用此模版创建新仓库。
 
-2. 点击下方 `Deploy to Netlify` 或 `Deploy to Vercel`
+2. 在复刻仓库中点击 `Code` 按钮，复制 `HTTPS` 仓库地址，并在终端中执行：
 
-&emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
-[![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
+   ```bash
+   # 克隆远程仓库至本地
+   git clone <仓库地址>
 
-3. 选择对应仓库，点击 `Deploy` 即可。
+   # 进入本地仓库根目录
+   cd <仓库名称>
 
-其它平台请参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
+   # 全局安装 pnpm（若未安装）
+   npm install -g pnpm
 
-## 更新
+   # 安装项目依赖
+   pnpm install
 
-1. 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) 在克隆仓库中执行 `Sync fork` 同步最新分支。
+   # 启动本地开发服务器
+   pnpm dev
+   ```
 
-2. 不要点击 `Discard Changes` 放弃你的更改。
+3. 在浏览器中打开 [http://localhost:4321/](http://localhost:4321/)，即可实时预览主题效果。
+
+4. 修改主题配置文件 [src/config.ts](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts) 来自定义你的博客。
+
+5. 提交并推送你的修改至远程仓库。
 
 ## 文档
 
 - [主题上手指南](https://retypeset.radishzz.cc/posts/theme-guide/)
 - [Markdown 样式指南](https://retypeset.radishzz.cc/posts/markdown-style-guide/)
 - [主题配色指南](https://retypeset.radishzz.cc/posts/theme-color-schemes/)
+
+## 部署
+
+1. 点击下方 `Deploy to Netlify` 或 `Deploy to Vercel`。
+
+[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
+[![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
+
+1. 跟随指示，选择对应仓库，再点击 `Deploy` 即可开始部署。
+
+2. 其它平台请参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
+
+## 更新
+
+Retypeset 会不定期发布新功能和问题修复。你可以参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在复刻仓库中执行 `Sync fork` 同步最新分支。注意不要点击 `Discard Changes`，否则会丢失你的更改。
+
+## 指令
+
+以下指令均需要在项目根目录执行：
+
+| 指令                   | 作用                                   |
+| :--------------------- | :------------------------------------- |
+| `pnpm install`         | 安装项目依赖                           |
+| `pnpm dev`             | 在 `localhost:4321` 启动本地开发服务器 |
+| `pnpm build`           | 构建网站至 `./dist/`                   |
+| `pnpm preview`         | 本地预览已构建的网站                   |
+| `pnpm astro ...`       | 执行 `astro add`, `astro check` 等命令 |
+| `pnpm astro -- --help` | 获取 Astro CLI 帮助信息                |
 
 ## 鸣谢
 
@@ -82,6 +120,8 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 - [初夏明朝體](https://github.com/GuiWonder/EarlySummerSerif)
 
 ## Star History
+
+谢谢每一位 star 的朋友，你们的支持是我持续维护项目的动力！
 
 <p align="center">
 <a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
