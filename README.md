@@ -30,7 +30,7 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 ## Features
 
 - Built with Astro and UnoCSS
-- Support for SEO, Sitemap, OpenGraph, TOC, RSS, MDX and KaTeX
+- Support for SEO, Sitemap, OpenGraph, TOC, RSS, MDX and LaTeX
 - i18n support
 - Light / Dark mode
 - Elegant view transitions
@@ -49,55 +49,43 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
   <a>
 </p>
 
-## Usage
+## Getting Started
 
-1. [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) this repository, or use this template to create a new repository.
+1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) this repository, or use this template to create a new repository.
 
-2. In your forked repository, click the `Code` button, copy the `HTTPS` repository URL, and run the following commands in your terminal:
+2. Click the `Code` button, copy the `HTTPS` URL, and run the following commands in your terminal:
 
    ```bash
-   # Clone the remote repository to your local machine
+   # Clone the repository
    git clone repository-url
 
-   # Navigate to the repository directory
+   # Navigate to the project directory
    cd repository-name
 
    # Install pnpm globally (if not already installed)
    npm install -g pnpm
 
-   # Install project dependencies
+   # Install dependencies
    pnpm install
 
-   # Start the local development server
+   # Start the development server
    pnpm dev
    ```
 
-3. Open [http://localhost:4321/](http://localhost:4321/) in your browser to preview the theme in real-time.
+3. Open [localhost:4321](http://localhost:4321/) in your browser to see a live preview of your website.
 
-4. Modify the theme configuration file [src/config.ts](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts) to customize your blog.
+4. Refer to the [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/) to customize your blog and create new articles.
 
-5. Commit and push your changes to the remote repository.
-
-## Documentation
-
-- [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/)
-- [Markdown Style Guide](https://retypeset.radishzz.cc/en/posts/markdown-style-guide/)
-- [Theme Color Schemes](https://retypeset.radishzz.cc/en/posts/theme-color-schemes/)
-
-## Deploy
-
-1. Click `Deploy to Netlify` or `Deploy to Vercel` below.
+5. Refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) to deploy your blog to Netlify, Vercel, or other platforms.
 
 &emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
  [![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
 
-2. Follow the instructions, select your repository, and click `Deploy` to start deployment.
-
-3. For other platforms, please refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/).
-
 ## Updates
 
-Theme Retypeset releases new features and bug fixes from time to time. You can refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork` in your forked repository to synchronize with the latest branch. Be careful not to click `Discard Changes`, or you will lose your modifications.
+- Refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork` in your repository to sync with the latest branch.
+
+- Do not click `Discard Changes`, or you will lose your modifications.
 
 ## Commands
 
@@ -105,7 +93,7 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                | Action                                           |
 | :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Install project dependencies                     |
+| `pnpm install`         | Install dependencies                             |
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |

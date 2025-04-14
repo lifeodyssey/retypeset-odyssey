@@ -30,7 +30,7 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 ## 特征
 
 - 基于 Astro 与 UnoCSS 开发
-- 支持 SEO、Sitemap、OpenGraph、TOC、RSS、MDX 和 KaTeX
+- 支持 SEO、Sitemap、OpenGraph、TOC、RSS、MDX 和 LaTeX
 - i18n 多语言
 - 亮色/暗色模式
 - 优雅的过渡动画
@@ -49,55 +49,43 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
   <a>
 </p>
 
-## 用法
+## 开始
 
-1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 复刻此仓库，或使用此模版创建新仓库。
+1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) 此仓库，或使用此模版创建新仓库。
 
-2. 在复刻仓库中点击 `Code` 按钮，复制 `HTTPS` 仓库地址，并在终端中执行：
+2. 点击 `Code` 按钮，复制 `HTTPS` 地址，在终端执行：
 
    ```bash
-   # 克隆远程仓库至本地
+   # 克隆仓库
    git clone 仓库地址
 
-   # 进入本地仓库根目录
+   # 进入项目目录
    cd 仓库名称
 
-   # 全局安装 pnpm（若未安装）
+   # 全局安装 pnpm（如果未安装）
    npm install -g pnpm
 
-   # 安装项目依赖
+   # 安装依赖
    pnpm install
 
-   # 启动本地开发服务器
+   # 启动开发服务器
    pnpm dev
    ```
 
-3. 在浏览器中打开 [http://localhost:4321/](http://localhost:4321/)，即可实时预览主题效果。
+3. 在浏览器中打开 [localhost:4321](http://localhost:4321/)，查看网站的实时预览。
 
-4. 修改主题配置文件 [src/config.ts](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts) 来自定义你的博客。
+4. 参考 [主题上手指南](https://retypeset.radishzz.cc/posts/theme-guide/)，自定义你的博客并创建新文章。
 
-5. 提交并推送你的修改至远程仓库。
-
-## 文档
-
-- [主题上手指南](https://retypeset.radishzz.cc/posts/theme-guide/)
-- [Markdown 样式指南](https://retypeset.radishzz.cc/posts/markdown-style-guide/)
-- [主题配色指南](https://retypeset.radishzz.cc/posts/theme-color-schemes/)
-
-## 部署
-
-1. 点击下方 `Deploy to Netlify` 或 `Deploy to Vercel`。
+5. 参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)，将博客部署至 Netlify、Vercel 等平台。
 
 &emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
  [![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
 
-2. 跟随指示，选择对应仓库，再点击 `Deploy` 即可开始部署。
-
-3. 其它平台请参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
-
 ## 更新
 
-Retypeset 主题会不定期发布新功能和问题修复。你可以参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在复刻仓库中执行 `Sync fork` 同步最新分支。注意，不要点击 `Discard Changes`，否则会丢失你的更改。
+- 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在仓库中执行 `Sync fork` 同步复刻。
+
+- 不要点击 `Discard Changes`，否则会丢失你的更改。
 
 ## 指令
 
@@ -105,7 +93,7 @@ Retypeset 主题会不定期发布新功能和问题修复。你可以参考 [Gi
 
 | 指令                   | 作用                                   |
 | :--------------------- | :------------------------------------- |
-| `pnpm install`         | 安装项目依赖                           |
+| `pnpm install`         | 安装依赖                               |
 | `pnpm dev`             | 在 `localhost:4321` 启动本地开发服务器 |
 | `pnpm build`           | 构建网站至 `./dist/`                   |
 | `pnpm preview`         | 本地预览已构建的网站                   |
@@ -122,8 +110,6 @@ Retypeset 主题会不定期发布新功能和问题修复。你可以参考 [Gi
 - [初夏明朝體](https://github.com/GuiWonder/EarlySummerSerif)
 
 ## Star History
-
-感谢每一位 star 的朋友，你们的支持是我持续维护项目的动力！
 
 <p align="center">
 <a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
