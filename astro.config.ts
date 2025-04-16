@@ -11,7 +11,8 @@ import remarkMath from 'remark-math'
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
-import { remarkReadingTime } from './src/plugins/remark-reading-time'
+import { rehypeImgToFigure } from './src/plugins/rehype-img-to-figure.mjs'
+import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
 const url = themeConfig.site.url
 const locale = themeConfig.global.locale
@@ -24,9 +25,9 @@ const imageConfig = imageHostURL
       image: {
         domains: [imageHostURL],
         remotePatterns: [{ protocol: 'https' }],
-      }
+      },
     }
-  : {};
+  : {}
 
 export default defineConfig({
   site: url,
@@ -66,6 +67,7 @@ export default defineConfig({
     rehypePlugins: [
       rehypeSlug,
       rehypeKatex,
+      rehypeImgToFigure,
       [
         rehypeExternalLinks,
         {
