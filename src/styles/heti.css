@@ -23,6 +23,17 @@
   --at-apply: 'transition-colors hover:(c-primary decoration-secondary/80) lg:underline-0.1em';
 }
 
+/* Images */
+.heti :where(img) {
+  --at-apply: 'mx-auto';
+}
+.heti :where(figure) {
+  --at-apply: 'mx-auto';
+}
+.heti figure > :where(figcaption) {
+  --at-apply: 'text-center text-sm mt-3 text-secondary/50';
+}
+
 /* Paragraphs */
 .heti :where(p) {
   --at-apply: 'mb-4 text-justify';
@@ -287,23 +298,6 @@ html.dark .heti :where(u) {
 .heti :where(del),
 .heti :where(s) {
   --at-apply: 'mx-0.25';
-}
-
-/* Images */
-.heti :where(img) {
-  --at-apply: 'mx-auto my-6';
-}
-.heti :where(figure) {
-  --at-apply: 'mx-auto mt-6 mb-4';
-}
-.heti figure > :where(img) {
-  --at-apply: 'my-0';
-}
-.heti figure > :where(figcaption) {
-  --at-apply: 'text-center text-sm mt-3 text-secondary/50';
-}
-.heti :where(h1, h2, h3, h4, h5, h6) + p > img:first-child {
-  --at-apply: 'mt-0';
 }
 
 /* KaTeX Mathematical */
