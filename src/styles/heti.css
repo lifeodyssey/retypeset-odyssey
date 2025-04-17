@@ -34,7 +34,7 @@
   --at-apply: 'my-0';
 }
 .heti figure > :where(figcaption) {
-  --at-apply: 'text-center text-sm mt-3 text-secondary/50';
+  --at-apply: 'text-center text-sm mt-3 text-secondary/80';
 }
 .heti :where(h1 + p > img:first-child),
 .heti :where(h2 + p > img:first-child),
@@ -233,7 +233,7 @@ html.dark .heti :where(u) {
 
 /* Highlighted Text */
 .heti :where(mark) {
-  --at-apply: 'mx-0.06em p-0.06em text-inherit bg-#ff0';
+  --at-apply: 'py-0.06em text-inherit bg-#ff0';
 }
 html.dark .heti :where(mark) {
   --at-apply: 'bg-#4d4a00e0';
