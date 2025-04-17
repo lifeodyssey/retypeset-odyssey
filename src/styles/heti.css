@@ -246,27 +246,27 @@ html.dark .heti :where(mark) {
 }
 .footnotes:lang(zh-CN)::before {
   content: "脚注";
-  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-semibold tracking-0.05em';
+  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-bold tracking-0.05em';
 }
 .footnotes:lang(zh-TW)::before {
   content: "腳註";
-  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-semibold tracking-0.05em';
+  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-bold tracking-0.05em';
 }
 .footnotes:lang(ja)::before {
   content: "脚注";
-  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-semibold tracking-0.05em';
+  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-bold tracking-0.05em';
 }
 .footnotes:lang(en)::before {
   content: "Footnotes";
-  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-semibold';
+  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-bold';
 }
 .footnotes:lang(es)::before {
   content: "Notas al pie";
-  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-semibold';
+  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-bold';
 }
 .footnotes:lang(ru)::before {
   content: "Сноски";
-  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-semibold';
+  --at-apply: 'block mt-7.4 mb-4.2 text-6 font-bold';
 }
 .heti :where(.data-footnote-backref) {
   --at-apply: 'no-underline';
