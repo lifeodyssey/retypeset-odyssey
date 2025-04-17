@@ -25,13 +25,24 @@
 
 /* Images */
 .heti :where(img) {
-  --at-apply: 'mx-auto';
+  --at-apply: 'mx-auto my-5';
 }
 .heti :where(figure) {
-  --at-apply: 'mx-auto';
+  --at-apply: 'mx-auto my-5';
+}
+.heti figure > :where(img) {
+  --at-apply: 'my-0';
 }
 .heti figure > :where(figcaption) {
   --at-apply: 'text-center text-sm mt-3 text-secondary/50';
+}
+.heti :where(h1 + p > img:first-child),
+.heti :where(h2 + p > img:first-child),
+.heti :where(h3 + p > img:first-child),
+.heti :where(h4 + p > img:first-child),
+.heti :where(h5 + p > img:first-child),
+.heti :where(h6 + p > img:first-child) {
+  --at-apply: 'mt-4';
 }
 
 /* Paragraphs */
@@ -69,6 +80,26 @@
 .heti :where(h6) {
   --at-apply: 'text-3.5 leading-6';
 }
+.heti :where(h1 + h2),
+.heti :where(h2 + h3),
+.heti :where(h3 + h4),
+.heti :where(h4 + h5),
+.heti :where(h5 + h6) {
+  --at-apply: 'mt-3';
+}
+.heti :where(h1:has(+ h2)),
+.heti :where(h2:has(+ h3)),
+.heti :where(h3:has(+ h4)),
+.heti :where(h4:has(+ h5)),
+.heti :where(h5:has(+ h6)),
+.heti :where(h1:has(+ p)),
+.heti :where(h2:has(+ p)),
+.heti :where(h3:has(+ p)),
+.heti :where(h4:has(+ p)),
+.heti :where(h5:has(+ p)),
+.heti :where(h6:has(+ p)) {
+  --at-apply: 'mb-3';
+}
 .heti :where(h1),
 .heti :where(h2),
 .heti :where(h3) {
@@ -78,26 +109,6 @@
 .heti :where(h2:not(:lang(zh)):not(:lang(ja)):not(:lang(ko))),
 .heti :where(h3:not(:lang(zh)):not(:lang(ja)):not(:lang(ko))) {
   --at-apply: 'tracking-0';
-}
-.heti :where(h1 + h2),
-.heti :where(h2 + h3),
-.heti :where(h3 + h4),
-.heti :where(h4 + h5),
-.heti :where(h5 + h6) {
-  --at-apply: 'mt-3';
-}
-.heti :where(h1:has(+ p)),
-.heti :where(h2:has(+ p)),
-.heti :where(h3:has(+ p)),
-.heti :where(h4:has(+ p)),
-.heti :where(h5:has(+ p)),
-.heti :where(h6:has(+ p)),
-.heti :where(h1:has(+ h2)),
-.heti :where(h2:has(+ h3)),
-.heti :where(h3:has(+ h4)),
-.heti :where(h4:has(+ h5)),
-.heti :where(h5:has(+ h6)) {
-  --at-apply: 'mb-3';
 }
 
 /* Blockquotes */
@@ -193,7 +204,7 @@ html.dark .heti pre :where(span) {
 /* Superscript and Subscript */
 .heti :where(sub),
 .heti :where(sup) {
-  --at-apply: 'mx-0.15em relative text-0.75em leading-1 align-baseline';
+  --at-apply: 'mx-0.1em relative text-0.75em leading-1 align-baseline';
 }
 .heti :where(sub) {
   --at-apply: 'bottom--0.25em';
