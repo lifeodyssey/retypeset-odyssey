@@ -80,7 +80,12 @@
 .heti :where(h3:has(+ p)),
 .heti :where(h4:has(+ p)),
 .heti :where(h5:has(+ p)),
-.heti :where(h6:has(+ p)) {
+.heti :where(h6:has(+ p)),
+.heti :where(h1:has(+ h2)),
+.heti :where(h2:has(+ h3)),
+.heti :where(h3:has(+ h4)),
+.heti :where(h4:has(+ h5)),
+.heti :where(h5:has(+ h6)) {
   --at-apply: 'mb-3';
 }
 
