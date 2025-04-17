@@ -83,6 +83,8 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 
 ## Updates
 
+- Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time, which can be updated as follows.
+
 - Refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork` in your repository to sync with the latest branch.
 
 - Do not click `Discard Changes`, or you will lose your modifications.
