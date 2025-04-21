@@ -113,8 +113,6 @@ All commands are run from the root of the project, from a terminal:
 
 ## Star History
 
-Thank you to everyone who has starred this project. Your support motivates me to keep maintaining it!
-
 <p align="center">
 <a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
   <picture>

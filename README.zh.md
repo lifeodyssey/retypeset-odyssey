@@ -85,7 +85,7 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 - Retypeset 会不定期发布 [新功能](https://github.com/radishzzz/astro-theme-retypeset/issues/18)，更新方法如下。
 
-- 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在仓库中执行 `Sync fork` 同步复刻。
+- 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在仓库中执行 `Sync fork` 同步最新分支。
 
 - 不要点击 `Discard Changes`，否则会丢失你的更改。
 
