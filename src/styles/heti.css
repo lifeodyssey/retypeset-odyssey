@@ -107,7 +107,7 @@ html.dark .heti pre :where(span) {
   --at-apply: 'relative pl-8';
 }
 .heti :where(code) span.line::before {
-  --at-apply: 'absolute left-0 w-4 leading-1.9em text-secondary/25';
+  --at-apply: 'absolute left-0 w-4 leading-1.9em text-secondary/40';
   content: counter(line);
   counter-increment: line;
   direction: rtl;
