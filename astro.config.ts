@@ -7,11 +7,13 @@ import { defineConfig } from 'astro/config'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
+import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
 import { rehypeImgToFigure } from './src/plugins/rehype-img-to-figure.mjs'
+import { remarkAdmonitions } from './src/plugins/remark-admonitions.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
 const url = themeConfig.site.url
@@ -61,8 +63,10 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [
+      remarkDirective,
       remarkMath,
       remarkReadingTime,
+      remarkAdmonitions,
     ],
     rehypePlugins: [
       rehypeSlug,
