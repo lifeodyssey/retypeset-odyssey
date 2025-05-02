@@ -92,11 +92,8 @@
 .heti :where(figure) {
   --at-apply: 'mx-auto mt-3 mb-6';
 }
-.heti :where(figure:has(+ figure)) {
-  --at-apply: 'mb-4';
-}
-.heti :where(figure:has(+ p > img:first-child)) {
-  --at-apply: 'mb-4';
+.heti :where(figure:has(+ figure), figure:has(+ p > img:first-child)) {
+  --at-apply: 'mb-4 ';
 }
 .heti :where(figcaption) {
   --at-apply: 'text-center text-sm mt-3 text-secondary/80';
