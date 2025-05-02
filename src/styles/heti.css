@@ -1,7 +1,8 @@
 /*!
  * Project: Heti
  * URL: https://github.com/sivan/heti
- * Author: Sivan [sun.sivan@gmail.com]
+ * Source: https://unpkg.com/heti/umd/heti.min.css
+ * Customized for Astro Theme Retypeset
  */
 
 /* Global Styles */
@@ -12,23 +13,17 @@
   --at-apply: 'tracking-0';
 }
 
-/* Article Title */
+/* Customized Post Title */
 .heti .post-title {
   --at-apply: 'mb-2 text-8.6 leading-12 font-bold c-primary lg:text-9';
 }
 
-/* Links */
-.heti :where(a) {
-  --at-apply: 'break-all font-medium tracking-0 underline decoration-secondary/40 underline-0.075em underline-offset-0.14em';
-  --at-apply: 'transition-colors hover:(c-primary decoration-secondary/80) lg:underline-0.1em';
+/* KaTeX Formula Overflow Fix */
+.heti .katex-display {
+  --at-apply: 'overflow-x-auto overflow-y-hidden scrollbar-hidden';
 }
-
-/* Paragraphs */
-.heti :where(p) {
-  --at-apply: 'mt-3 mb-6 text-justify text-pretty';
-}
-.heti :where(p:not(:lang(zh)):not(:lang(ja)):not(:lang(ko))) {
-  --at-apply: 'text-start';
+.heti .katex-display::-webkit-scrollbar {
+  display: none;
 }
 
 /* Headings */
@@ -76,6 +71,20 @@
   --at-apply: 'mt-3';
 }
 
+/* Paragraphs */
+.heti :where(p) {
+  --at-apply: 'mt-3 mb-6 text-justify text-pretty';
+}
+.heti :where(p:not(:lang(zh)):not(:lang(ja)):not(:lang(ko))) {
+  --at-apply: 'text-start';
+}
+
+/* Links */
+.heti :where(a:not(.gc-container)) {
+  --at-apply: 'break-all font-medium tracking-0 underline decoration-secondary/40 underline-0.075em underline-offset-0.14em';
+  --at-apply: 'transition-colors hover:(c-primary decoration-secondary/80) lg:underline-0.1em';
+}
+
 /* Images */
 .heti :where(img) {
   --at-apply: 'mx-auto cursor-zoom-in force-gpu';
@@ -83,7 +92,7 @@
 .heti :where(figure) {
   --at-apply: 'mx-auto mt-3 mb-6';
 }
-.heti figure > :where(figcaption) {
+.heti :where(figcaption) {
   --at-apply: 'text-center text-sm mt-3 text-secondary/80';
 }
 
@@ -102,6 +111,9 @@ html.dark .heti pre :where(span) {
 .heti :where(code) {
   --at-apply: 'px-0.4em py-0.2em text-0.85em tracking-0 whitespace-pre-wrap rounded bg-secondary/5 border border-solid border-secondary/5';
   counter-reset: line;
+}
+.heti :where(code:is(:lang(zh), :lang(ja), :lang(ko))) {
+  --at-apply: 'break-all';
 }
 .heti :where(code) span.line {
   --at-apply: 'relative pl-8';
@@ -207,7 +219,7 @@ html.dark .heti :where(u) {
 /* Keyboard Input */
 .heti :where(kbd) {
   --at-apply: 'inline-block px-0.4em py-0.3em text-0.85em font-bold leading-none tracking-0 whitespace-nowrap';
-  --at-apply: 'rounded border border-solid border-secondary/25 text-secondary';
+  --at-apply: 'rounded border border-solid border-secondary/40 text-secondary';
 }
 
 /* Highlighted Text */
@@ -259,102 +271,4 @@ html.dark .heti sup a:target {
 .heti :where(hr) {
   --at-apply: 'mt-6 mb-3 border-t-2 border-secondary/5';
 }
-
-/* KaTeX Mathematical */
-.heti .katex-display {
-  --at-apply: 'block max-w-full overflow-x-auto overflow-y-hidden scrollbar-hidden';
-}
-.heti .katex-display::-webkit-scrollbar {
-  display: none;
-}
-
-/* Markdown Extended Features >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-.heti .admonition-title {
-  --at-apply: 'flex items-center font-semibold';
-}
-.heti .admonition-title::before {
-  --at-apply: 'inline-block aspect-square w-4 mr-2 align-text-bottom content-[""]';
-}
-
-/* Note */
-.heti .admonition-note {
-  --at-apply: 'border-note';
-}
-.heti .admonition-note .admonition-title {
-  --at-apply: 'c-note';
-}
-.heti .admonition-note .admonition-title::before {
-  --at-apply: 'bg-note';
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* Tip */
-.heti .admonition-tip {
-  --at-apply: 'border-tip';
-}
-.heti .admonition-tip .admonition-title {
-  --at-apply: 'c-tip';
-}
-.heti .admonition-tip .admonition-title::before {
-  --at-apply: 'bg-tip';
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* Important */
-.heti .admonition-important {
-  --at-apply: 'border-important';
-}
-.heti .admonition-important .admonition-title {
-  --at-apply: 'c-important';
-}
-.heti .admonition-important .admonition-title::before {
-  --at-apply: 'bg-important';
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* Warning */
-.heti .admonition-warning {
-  --at-apply: 'border-warning';
-}
-.heti .admonition-warning .admonition-title {
-  --at-apply: 'c-warning';
-}
-.heti .admonition-warning .admonition-title::before {
-  --at-apply: 'bg-warning';
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* Caution */
-.heti .admonition-caution {
-  --at-apply: 'border-caution';
-}
-.heti .admonition-caution .admonition-title {
-  --at-apply: 'c-caution';
-}
-.heti .admonition-caution .admonition-title::before {
-  --at-apply: 'bg-caution';
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* .heti :where(details) {
-  --at-apply: 'my-4 px-4 py-3 border border-solid border-secondary/25 rounded cursor-pointer';
-}
-.heti details :where(summary) {
-  --at-apply: 'cursor-pointer';
-}
-.heti details[open] :where(summary) {
-  --at-apply: 'border-b border-solid border-secondary/25 mb-3 pb-3';
-} */
-
-/* .heti details :where(summary) {
-  list-style: none;
-}
-.heti details summary::-webkit-details-marker {
-  display: none;
-}
-.heti details summary::marker {
-  content: '';
-} */
-
-/* 为所有admonition-title添加基础样式 */
 

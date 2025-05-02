@@ -1,7 +1,6 @@
 import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
-import compress from 'astro-compress'
 import robotsTxt from 'astro-robots-txt'
 import { defineConfig } from 'astro/config'
 import rehypeExternalLinks from 'rehype-external-links'
@@ -14,6 +13,7 @@ import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
 import { rehypeImgToFigure } from './src/plugins/rehype-img-to-figure.mjs'
 import { remarkAdmonitions } from './src/plugins/remark-admonitions.mjs'
+import { remarkGithubCard } from './src/plugins/remark-github-card.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
 const url = themeConfig.site.url
@@ -59,14 +59,14 @@ export default defineConfig({
     }),
     sitemap(),
     robotsTxt(),
-    compress(),
   ],
   markdown: {
     remarkPlugins: [
       remarkDirective,
       remarkMath,
-      remarkReadingTime,
       remarkAdmonitions,
+      remarkGithubCard,
+      remarkReadingTime,
     ],
     rehypePlugins: [
       rehypeSlug,
