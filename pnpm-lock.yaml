@@ -35,9 +35,6 @@ importers:
       canvaskit-wasm:
         specifier: ^0.40.0
         version: 0.40.0
-      hastscript:
-        specifier: ^9.0.1
-        version: 9.0.1
       katex:
         specifier: ^0.16.22
         version: 0.16.22
