@@ -153,7 +153,7 @@ html.dark .heti pre :where(span) {
 }
 .heti :where(th),
 .heti :where(td) {
-  --at-apply: 'pr-6 pb-1.5 border-b border-b-secondary/15';
+  --at-apply: 'pr-6 pb-1.5 border-b border-b-secondary/25';
 }
 .heti :where(td) {
   --at-apply: 'pt-1.5';
