@@ -87,7 +87,7 @@
 
 /* Images */
 .heti :where(img) {
-  --at-apply: 'mx-auto rounded cursor-zoom-in';
+  --at-apply: 'mx-auto cursor-zoom-in';
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
