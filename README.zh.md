@@ -89,19 +89,6 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 - 不要点击 `Discard Changes`，否则会丢失你的更改。
 
-## 指令
-
-以下指令均需要在项目根目录执行：
-
-| 指令                   | 作用                                   |
-| :--------------------- | :------------------------------------- |
-| `pnpm install`         | 安装依赖                               |
-| `pnpm dev`             | 在 `localhost:4321` 启动本地开发服务器 |
-| `pnpm build`           | 构建网站至 `./dist/`                   |
-| `pnpm preview`         | 本地预览已构建的网站                   |
-| `pnpm astro ...`       | 执行 `astro add`, `astro check` 等命令 |
-| `pnpm astro -- --help` | 获取 Astro CLI 帮助信息                |
-
 ## 鸣谢
 
 - [Typography](https://github.com/moeyua/astro-theme-typography)

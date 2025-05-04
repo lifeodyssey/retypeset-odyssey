@@ -6,10 +6,10 @@
 
 /* Admonition */
 .admonition-title {
-  --at-apply: 'flex items-center font-semibold';
+  --at-apply: 'flex items-center mb-4 font-semibold';
 }
 .admonition-title::before {
-  --at-apply: 'inline-block aspect-square w-4 mr-2 align-text-bottom content-[""]';
+  --at-apply: 'inline-block mr-2 aspect-square w-4 align-text-bottom content-[""]';
 }
 
 /* Note */
@@ -74,8 +74,8 @@
 
 /* GitHub Card >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 .gc-container {
-  --at-apply: 'block overflow-x-auto scrollbar-hidden mt-3 mb-6 rounded border border-solid border-secondary/5';
-  --at-apply: 'bg-secondary/5 px-5 py-4 transition-colors lg:(px-6 py-5) hover:(bg-secondary/10 c-primary)';
+  --at-apply: 'block mt-3 mb-6 px-5 py-4 overflow-x-auto uno-round-border bg-secondary/5 scrollbar-hidden';
+  --at-apply: 'transition-colors lg:(px-6 py-5) hover:(bg-secondary/10 c-primary)';
 }
 .gc-container::-webkit-scrollbar {
   display: none;
@@ -86,7 +86,7 @@
   --at-apply: 'flex items-center gap-2.5 lg:gap-3';
 }
 .gc-owner-avatar {
-  --at-apply: 'flex-shrink-0 aspect-square w-5.5 rounded-full bg-secondary/20';
+  --at-apply: 'flex-shrink-0 w-5.5 aspect-square rounded-full bg-secondary/20';
 }
 .gc-repo-title {
   --at-apply: 'flex items-center leading-normal lg:text-lg';
@@ -95,17 +95,17 @@
   --at-apply: 'mx-1 op-40 lg:mx-1.2';
 }
 .gc-github-icon {
-  --at-apply: 'flex-shrink-0 w-5.5 ml-auto lg:w-6';
+  --at-apply: 'flex-shrink-0 ml-auto w-5.5 lg:w-6';
 }
 
 /* Repo Description */
 .gc-repo-description {
-  --at-apply: 'mt-2.45 mb-3.5 text-sm text-start lg:(text-base mt-2.8 mb-4)';
+  --at-apply: 'mt-2.45 mb-3.5 text-sm text-start lg:(mt-2.8 mb-4 text-base)';
 }
 
 /* Info Bar */
 .gc-info-bar {
-  --at-apply: 'flex items-center gap-1.75 text-xs lg:(text-sm gap-2)';
+  --at-apply: 'flex items-center gap-1.75 text-xs lg:(gap-2 text-sm)';
 }
 .gc-info-icon {
   --at-apply: 'flex-shrink-0';
@@ -128,7 +128,7 @@ details :where(summary) {
   --at-apply: 'cursor-pointer';
 }
 details[open] :where(summary) {
-  --at-apply: 'border-b border-solid border-secondary/25 mb-3 pb-3';
+  --at-apply: 'mb-3 pb-3 border-b border-solid border-secondary/25';
 } */
 
 /* details :where(summary) {
