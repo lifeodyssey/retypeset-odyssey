@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from 'astro'
+import TocIcon from '@/assets/icons/toc-icon.svg'
 import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
 
@@ -18,7 +19,7 @@ const filteredHeadings = headings.filter(heading =>
 ---
 
 {filteredHeadings.length > 0 && (
-  <div class="uno-round-border mb-4 bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-transparent)">
+  <div class="mb-4 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-transparent)">
     <input
       type="checkbox"
       id="toc-toggle"
@@ -28,21 +29,17 @@ const filteredHeadings = headings.filter(heading =>
     <div class="relative h-12 w-full bg-transparent">
       <label
         for="toc-toggle"
-        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static h-max w-max flex c-secondary/40 transition-colors ease-out hover:c-secondary/80)"
+        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static flex c-secondary/40 transition-colors ease-out hover:c-secondary/80)"
       >
         <span class="toc-title">
           {currentUI.toc}
         </span>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
+        <TocIcon
           aria-hidden="true"
-          fill="currentColor"
           class="ml-4 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
-        >
-          <path d="M22.2 2.3H1.8v1.6h19.8zM1.8 21.7h19.8l.6-1.6H1.8zM15.5 11.2H1.8v1.6h13.1z" />
-        </svg>
+          fill="currentColor"
+        />
       </label>
     </div>
 

@@ -36,7 +36,7 @@ export async function generateRSS({ lang }: GenerateRSSOptions = {}) {
     title: siteTitle,
     site: lang ? `${url}/${lang}` : url,
     description: siteDescription,
-    stylesheet: '/rss/rss-style.xsl',
+    stylesheet: '/rss-style.xsl',
     customData: `
     <copyright>Copyright © ${new Date().getFullYear()} ${themeConfig.site.author}</copyright>
     <language>${lang || themeConfig.global.locale}</language>
