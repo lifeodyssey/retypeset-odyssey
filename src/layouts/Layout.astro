@@ -49,9 +49,9 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
       </main>
       <Footer />
     </div>
-    {(isPost || isAbout) && <GithubCard />}
-    <Scrollbar />
     <Button supportedLangs={supportedLangs} />
-    <PhotoSwipe />
+    <Scrollbar />
+    {(isPost || isAbout) && <GithubCard />}
+    {(isPost || isAbout) && <PhotoSwipe />}
   </body>
 </html>
