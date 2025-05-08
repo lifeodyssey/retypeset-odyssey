@@ -38,11 +38,8 @@ export const themeConfig: ThemeConfig = {
     },
     dark: {
       // primary color
-      // used for title, hover, etc
-      // oklch color picker: https://oklch.com/
       primary: 'oklch(92% 0.005 298)',
       // secondary color
-      // used for post text
       secondary: 'oklch(77% 0.005 298)',
       // background color
       background: 'oklch(22% 0.005 298)',
@@ -55,7 +52,7 @@ export const themeConfig: ThemeConfig = {
     // default language
     locale: 'zh', // zh, zh-tw, ja, en, es, ru
     // more languages
-    // not fill in the locale code above again
+    // not fill in the locale code above again, can be an empty array []
     moreLocales: ['zh-tw', 'ja', 'en', 'es', 'ru'], // ['zh', 'zh-tw', 'ja', 'en', 'es', 'ru']
     // font styles for post text
     fontStyle: 'sans', // sans, serif
@@ -84,7 +81,6 @@ export const themeConfig: ThemeConfig = {
       // gif search
       search: false, // true, false
       // image uploader
-      // bug: unable to hide image uploader icon
       imageUploader: false, // true, false
     },
   },
