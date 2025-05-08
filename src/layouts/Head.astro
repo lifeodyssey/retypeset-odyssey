@@ -54,7 +54,7 @@ const pageImage = postSlug
 <link rel="preload" href="/fonts/EarlySummer-Subset.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/Snell-Black.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/Snell-Bold.woff2" as="font" type="font/woff2" crossorigin />
-{katex && <link rel="stylesheet" href={katexCSS} />}
+{katex && <link rel="preload" href={katexCSS} as="style" onload="this.onload=null;this.rel='stylesheet'" />}
 {commentURL && <link rel="preconnect" href={commentURL} crossorigin />}
 {commentURL && <link rel="dns-prefetch" href={commentURL} />}
 <link rel="alternate" href="/rss.xml" type="application/rss+xml" title="RSS Feed" />

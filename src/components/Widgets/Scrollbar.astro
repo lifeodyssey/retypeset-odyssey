@@ -24,43 +24,54 @@ function setupScrollbar() {
     bodyElement.setAttribute('data-scrollbar-initialized', 'true')
   }
 
-  // Add scrollbar to code blocks
-  const preElements = document.querySelectorAll('pre')
-  preElements.forEach((pre) => {
-    if (!pre.hasAttribute('data-scrollbar-initialized')) {
+  const setupSecondaryScrollbars = () => {
+    // Add scrollbar to TOC content
+    const tocElement = document.getElementById('toc-content')
+    if (tocElement && !tocElement.hasAttribute('data-scrollbar-initialized')) {
       OverlayScrollbars({
-        target: pre,
+        target: tocElement,
       }, {
         scrollbars: {
           theme: 'scrollbar-widget',
-          autoHide: 'leave',
-          autoHideDelay: 500,
+          autoHide: 'never',
         },
         overflow: {
-          y: 'hidden',
+          x: 'hidden',
         },
       })
 
-      pre.setAttribute('data-scrollbar-initialized', 'true')
+      tocElement.setAttribute('data-scrollbar-initialized', 'true')
     }
-  })
 
-  // Add scrollbar to TOC content
-  const tocElement = document.getElementById('toc-content')
-  if (tocElement && !tocElement.hasAttribute('data-scrollbar-initialized')) {
-    OverlayScrollbars({
-      target: tocElement,
-    }, {
-      scrollbars: {
-        theme: 'scrollbar-widget',
-        autoHide: 'never',
-      },
-      overflow: {
-        x: 'hidden',
-      },
+    // Add scrollbar to code blocks
+    const preElements = document.querySelectorAll('pre')
+    preElements.forEach((pre) => {
+      if (!pre.hasAttribute('data-scrollbar-initialized')) {
+        OverlayScrollbars({
+          target: pre,
+        }, {
+          scrollbars: {
+            theme: 'scrollbar-widget',
+            autoHide: 'leave',
+            autoHideDelay: 500,
+          },
+          overflow: {
+            y: 'hidden',
+          },
+        })
+
+        pre.setAttribute('data-scrollbar-initialized', 'true')
+      }
     })
+  }
 
-    tocElement.setAttribute('data-scrollbar-initialized', 'true')
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(setupSecondaryScrollbars, { timeout: 1000 })
+  }
+  else {
+    requestAnimationFrame(() => {
+      setupSecondaryScrollbars()
+    })
   }
 }
 
