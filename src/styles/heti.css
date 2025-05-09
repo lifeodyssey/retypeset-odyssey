@@ -73,7 +73,7 @@
 
 /* Links */
 .heti :where(a:not(.gc-container)) {
-  --at-apply: 'break-all font-medium tracking-0 underline decoration-secondary/40 underline-0.075em underline-offset-0.14em';
+  --at-apply: 'break-all font-medium tracking-0 underline decoration-secondary/40 underline-0.075em underline-offset-0.2em';
   --at-apply: 'transition-colors hover:(c-primary decoration-secondary/80) lg:underline-0.1em';
 }
 
