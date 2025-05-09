@@ -145,7 +145,15 @@ html.dark .heti pre :where(span) {
 }
 .heti :where(th),
 .heti :where(td) {
-  --at-apply: 'pr-6 pb-1.5 border-b border-b-secondary/25';
+  --at-apply: 'px-3 pb-1.5 border-b border-b-secondary/25';
+}
+.heti :where(tr td:first-child),
+.heti :where(tr th:first-child) {
+  --at-apply: 'pl-0';
+}
+.heti :where(tr td:last-child),
+.heti :where(tr th:last-child) {
+  --at-apply: 'pr-0';
 }
 .heti :where(td) {
   --at-apply: 'pt-1.5';
@@ -218,7 +226,7 @@ html.dark .heti :where(u) {
 
 /* Highlighted Text */
 .heti :where(mark) {
-  --at-apply: 'py-0.25 text-inherit bg-[rgba(255,235,0,0.5)]';
+  --at-apply: 'py-0.25 text-inherit bg-mark';
 }
 html.dark .heti :where(mark) {
   --at-apply: 'text-background';
@@ -231,7 +239,7 @@ html.dark .heti :where(mark) {
 }
 .heti sup:target,
 .heti sup a:target {
-  --at-apply: 'bg-[rgba(255,235,0,0.5)]';
+  --at-apply: 'bg-mark';
 }
 html.dark .heti sup:target,
 html.dark .heti sup a:target {

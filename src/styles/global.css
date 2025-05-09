@@ -11,6 +11,12 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
+::selection {
+  --at-apply: 'bg-mark';
+}
+html.dark ::selection {
+  --at-apply: 'c-background';
+}
 
 /* View Transition with Theme Toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 ::view-transition-new(theme-transition) {

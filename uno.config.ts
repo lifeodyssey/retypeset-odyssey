@@ -33,6 +33,7 @@ export default defineConfig({
   theme: {
     colors: {
       ...light,
+      mark: 'oklch(0.93 0.195089 103.2532 / 0.5)', // rgba(255,235,0,0.5)
       note: 'oklch(48.8% 0.243 264.376 / 0.8)', // blue-700
       tip: 'oklch(50.8% 0.118 165.612 / 0.8)', // emerald-700
       important: 'oklch(49.6% 0.265 301.924 / 0.8)', // purple-700
