@@ -53,4 +53,13 @@ export const ui = {
     about: 'О себе',
     toc: 'Оглавление',
   },
+  'pt': {
+    title: 'Retipografia',
+    subtitle: 'Reviva a beleza da tipografia',
+    description: 'Retypeset é um tema blog estático baseado no _framework_ Astro. Inspirado por Tipografia, Retypeset estabelece um novo padrão visual e reimagina o layout de todas as páginas, criando uma experiência de leitura remasncenete aos livros de papel, revivendo a beleza da tipografia. Detalhes em cada olhar, elegância em todos os espaços.',
+    posts: 'Postagens',
+    tags: 'Tags',
+    about: 'Sobre',
+    toc: 'Índice',
+  },
 }
