@@ -6,7 +6,7 @@ import GoBackIcon from '@/assets/icons/go-back.svg';
   id="back-button"
   class="hidden"
   lg="block absolute c-secondary/40 left--10 top-1/2 aspect-square w-4.5 translate-y--1/2 transition-colors ease-out c-secondary active:scale-90 hover:c-primary/80"
-  aria-label="Back to home"
+  aria-label="Go back"
 >
   <GoBackIcon
     aria-hidden="true"
@@ -21,16 +21,9 @@ function setupBackButton() {
     if (window.history.length > 1) {
       window.history.back()
     }
-    else {
-      // Click site title link to trigger view transition when no history
-      const titleLink = document.getElementById('site-title-link') as HTMLAnchorElement
-      if (titleLink) {
-        titleLink.click()
-      }
-    }
   })
 }
 
 setupBackButton()
-document.addEventListener('astro:page-load', setupBackButton)
+document.addEventListener('astro:after-swap', setupBackButton)
 </script>

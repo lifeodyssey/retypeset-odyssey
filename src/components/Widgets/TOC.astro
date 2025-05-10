@@ -82,11 +82,9 @@ const filteredHeadings = headings.filter(heading =>
 .toc-title {
   --at-apply: 'font-semibold ml-4 select-none 2xl:hidden';
 }
-
 .toc-list {
   --at-apply: 'list-none pl-0 space-y-2 mt-1 mb-4 2xl:space-y-1.2';
 }
-
 .toc-link-h2, .toc-link-h3, .toc-link-h4 {
   --at-apply: 'text-sm no-underline font-normal text-balance select-none 2xl:(text-3.2 c-secondary/60 transition-colors ease-in hover:(c-secondary font-medium))';
 }
@@ -95,7 +93,6 @@ const filteredHeadings = headings.filter(heading =>
 .accordion-wrapper {
   --at-apply: 'grid rows-[0fr] duration-300 ease-in-out';
 }
-
 .accordion-content {
   --at-apply: 'overflow-hidden max-h-66 2xl:(max-h-[calc(100vh-21.5rem)]) pl-4 pr-6';
 }
@@ -104,7 +101,6 @@ const filteredHeadings = headings.filter(heading =>
 .accordion-toggle:checked ~ .accordion-wrapper {
   grid-template-rows: 1fr;
 }
-
 .accordion-toggle:checked ~ .accordion-wrapper .accordion-content {
   --at-apply: 'overflow-y-auto';
 }
@@ -113,19 +109,15 @@ const filteredHeadings = headings.filter(heading =>
   .accordion-wrapper {
     grid-template-rows: 1fr;
   }
-
   .accordion-toggle:checked ~ .accordion-wrapper {
     grid-template-rows: 0fr;
   }
-
   .accordion-content {
     --at-apply: 'overflow-y-auto';
   }
-
   .accordion-toggle:checked ~ .accordion-wrapper .accordion-content {
     --at-apply: 'overflow-hidden';
   }
-
   .toc-link-active {
     --at-apply: 'c-secondary font-medium';
   }
