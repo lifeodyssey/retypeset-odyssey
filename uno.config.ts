@@ -47,6 +47,12 @@ export default defineConfig({
       serif: ['STIX', 'EarlySummer', 'Georgia', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
     },
   },
+  rules: [
+    ['scrollbar-hidden', {
+      'scrollbar-width': 'none',
+      '-ms-overflow-style': 'none',
+    }],
+  ],
   shortcuts: {
     'uno-desktop-column': 'fixed w-14rem right-[max(5.625rem,calc(50vw-34.375rem))]',
     'uno-tags-style': 'inline-block whitespace-nowrap border border-secondary/25 rounded-full px-3.2 py-0.7 c-secondary transition-colors hover:(border-secondary/75 text-primary)',
@@ -54,11 +60,15 @@ export default defineConfig({
     'uno-tags-wrapper': 'flex flex-wrap gap-x-3 gap-y-3.2',
     'uno-round-border': 'rounded border border-solid border-secondary/5',
   },
-  rules: [
-    ['scrollbar-hidden', {
-      'scrollbar-width': 'none',
-      '-ms-overflow-style': 'none',
-    }],
+  variants: [
+    (matcher) => {
+      if (!matcher.startsWith('cjk:'))
+        return matcher
+      return {
+        matcher: matcher.slice(4),
+        selector: s => `${s}:is(:lang(zh), :lang(ja), :lang(ko))`,
+      }
+    },
   ],
   transformers: [
     transformerDirectives(),

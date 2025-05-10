@@ -39,7 +39,7 @@ function getPostPath(post: Post) {
       {/* post title */}
       <h3 class="inline">
         <a
-          class="hover:c-primary"
+          class="cjk:tracking-0.02em hover:c-primary"
           lg={isHome ? 'font-medium text-4.5' : ''}
           href={getPostPath(post)}
           transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
