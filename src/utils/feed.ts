@@ -1,24 +1,100 @@
-import type { APIContext } from 'astro'
+import type { APIContext, ImageMetadata } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 import type { Author } from 'feed'
 import { defaultLocale, themeConfig } from '@/config'
 import { ui } from '@/i18n/ui'
+import { memoize } from '@/utils/cache'
 import { generateDescription } from '@/utils/description'
+import { getImage } from 'astro:assets'
 import { getCollection } from 'astro:content'
 import { Feed } from 'feed'
 import MarkdownIt from 'markdown-it'
+import { parse as htmlParser } from 'node-html-parser'
 import sanitizeHtml from 'sanitize-html'
-
-const markdownParser = new MarkdownIt()
-const { title, description, url, author: siteAuthor } = themeConfig.site
-const followConfig = themeConfig.seo?.follow
 
 interface GenerateFeedOptions {
   lang?: string
 }
 
+const markdownParser = new MarkdownIt()
+const { title, description, url, author: siteAuthor } = themeConfig.site
+const followConfig = themeConfig.seo?.follow
+
+// Dynamically import all images from /src/content/posts/_images
+const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/content/posts/_images/**/*.{jpeg,jpg,png,gif,webp}',
+)
+
+/**
+ * Optimize image URLs
+ *
+ * @param srcPath Source relative path of the image
+ * @param baseUrl Base URL of the site
+ * @returns Optimized full image URL or null
+ */
+const getOptimizedImageUrl = memoize(async (srcPath: string, baseUrl: string) => {
+  const prefixRemoved = srcPath.replace(/^\.\.\/|^\.\//g, '')
+  const rawImagePath = `/src/content/posts/${prefixRemoved}`
+  const rawImageMetadata = await imagesGlob[rawImagePath]?.()?.then(res => res.default)
+
+  if (rawImageMetadata) {
+    const processedImageData = await getImage({ src: rawImageMetadata })
+    return new URL(processedImageData.src, baseUrl).toString()
+  }
+
+  return null
+})
+
+/**
+ * Fix relative image paths in HTML content
+ *
+ * @param htmlContent HTML content string
+ * @param baseUrl Base URL of the site
+ * @returns Processed HTML string with all image paths converted to absolute URLs
+ */
+async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Promise<string> {
+  const htmlDoc = htmlParser(htmlContent)
+  const images = htmlDoc.querySelectorAll('img')
+  const imagePromises = []
+
+  for (const img of images) {
+    const src = img.getAttribute('src')
+
+    if (!src)
+      continue
+
+    imagePromises.push((async () => {
+      try {
+        // Process images from src/content/posts/_images directory
+        if (src.startsWith('./') || src.startsWith('../')) {
+          const optimizedImageUrl = await getOptimizedImageUrl(src, baseUrl)
+
+          if (optimizedImageUrl) {
+            img.setAttribute('src', optimizedImageUrl)
+          }
+        }
+        // Process images from public/images directory
+        else if (src.startsWith('/images')) {
+          const publicImageUrl = new URL(src, baseUrl).toString()
+          img.setAttribute('src', publicImageUrl)
+        }
+      }
+      catch (error) {
+        console.warn(`Failed to process image in RSS feed: ${src}`, error)
+      }
+    })())
+  }
+
+  await Promise.all(imagePromises)
+  return htmlDoc.toString()
+}
+
 /**
  * Generate post URL with language prefix and abbrlink/slug
+ *
+ * @param post The post collection entry
+ * @param baseUrl Base URL of the site
+ * @returns The fully formed URL for the post
  */
 function generatePostUrl(post: CollectionEntry<'posts'>, baseUrl: string): string {
   const needsLangPrefix = post.data.lang !== defaultLocale && post.data.lang !== ''
@@ -30,6 +106,10 @@ function generatePostUrl(post: CollectionEntry<'posts'>, baseUrl: string): strin
 
 /**
  * Generate a feed object supporting both RSS and Atom formats
+ *
+ * @param options Feed generation options
+ * @param options.lang Optional language code
+ * @returns A Feed instance ready for RSS or Atom output
  */
 export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
   const currentUI = ui[lang as keyof typeof ui] || ui[defaultLocale as keyof typeof ui]
@@ -66,23 +146,27 @@ export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
       (!data.draft && (data.lang === lang || data.lang === '' || (lang === undefined && data.lang === defaultLocale))),
   )
 
-  // Sort posts by published date in descending order
-  const sortedPosts = [...posts].sort((a, b) =>
-    new Date(b.data.published).getTime() - new Date(a.data.published).getTime(),
-  )
-
-  // Limit to the latest 25 posts
-  const limitedPosts = sortedPosts.slice(0, 25)
+  // Sort posts by published date in descending order and limit to the latest 25
+  const limitedPosts = [...posts]
+    .sort((a, b) => new Date(b.data.published).getTime() - new Date(a.data.published).getTime())
+    .slice(0, 25)
 
   // Add posts to feed
   for (const post of limitedPosts) {
     const postLink = generatePostUrl(post, url)
 
+    // Optimize content processing
     const postContent = post.body
-      ? sanitizeHtml(markdownParser.render(post.body), {
-          allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-        })
+      ? sanitizeHtml(
+          await fixRelativeImagePaths(markdownParser.render(post.body), url),
+          { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']) },
+        )
       : ''
+
+    // publishDate -> Atom:<published>, RSS:<pubDate>
+    const publishDate = new Date(post.data.published)
+    // updateDate -> Atom:<updated>, RSS has no update tag
+    const updateDate = post.data.updated ? new Date(post.data.updated) : publishDate
 
     feed.addItem({
       title: post.data.title,
@@ -91,10 +175,8 @@ export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
       description: generateDescription(post, 'feed'),
       content: postContent,
       author: [author],
-      // published -> Atom:<published>, RSS:<pubDate>
-      published: new Date(post.data.published),
-      // date -> Atom:<updated>, RSS has no update tag
-      date: post.data.updated ? new Date(post.data.updated) : new Date(post.data.published),
+      published: publishDate,
+      date: updateDate,
     })
   }
 
@@ -114,6 +196,9 @@ export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
 
 /**
  * Generate RSS 2.0 format feed
+ *
+ * @param context Astro API context containing request params
+ * @returns Response object with RSS XML content
  */
 export async function generateRSS(context: APIContext) {
   const feed = await generateFeed({
@@ -135,6 +220,9 @@ export async function generateRSS(context: APIContext) {
 
 /**
  * Generate Atom 1.0 format feed
+ *
+ * @param context Astro API context containing request params
+ * @returns Response object with Atom XML content
  */
 export async function generateAtom(context: APIContext) {
   const feed = await generateFeed({
