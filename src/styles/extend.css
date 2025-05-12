@@ -107,7 +107,7 @@
 }
 
 /* Repo Description */
-.gc-repo-description {
+.gc-repo-description.gc-repo-description {
   --at-apply: 'mt-2.45 mb-3.5 text-sm text-start lg:(mt-2.8 mb-4 text-base)';
 }
 
