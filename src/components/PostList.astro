@@ -40,7 +40,7 @@ function getPostPath(post: Post) {
       {/* post title */}
       <h3 class="inline">
         <a
-          class="cjk:tracking-0.02em hover:c-primary"
+          class="hover:c-primary cjk:tracking-0.02em"
           lg={isHome ? 'font-medium text-4.5' : ''}
           href={getPostPath(post)}
           transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
@@ -54,12 +54,12 @@ function getPostPath(post: Post) {
             <>
               <PinIcon
                 aria-hidden="true"
-                class="ml-0.25em inline-block aspect-square w-3.7 translate-y--0.45 lg:hidden"
+                class="ml-0.25em inline-block aspect-square w-0.92em translate-y--0.1em lg:hidden"
                 fill="currentColor"
               />
               <PinIconBold
                 aria-hidden="true"
-                class="hidden lg:(ml-0.25em inline-block aspect-square w-4.1 translate-y--0.45)"
+                class="hidden lg:(ml-0.25em inline-block aspect-square w-1.05em translate-y--0.14em)"
                 fill="currentColor"
               />
             </>
