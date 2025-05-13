@@ -1,3 +1,4 @@
+import type { Element } from 'hast'
 import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
@@ -9,6 +10,7 @@ import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
 import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
+import { visit } from 'unist-util-visit'
 import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
@@ -98,9 +100,17 @@ export default defineConfig({
               },
             ],
           },
-          properties: {
-            className: ['heading-anchor-link'],
-            ariaLabel: 'Link to this section',
+          properties: (el: Element) => {
+            let text = ''
+            visit(el, 'text', (textNode) => {
+              text += textNode.value
+            })
+            return {
+              className: ['heading-anchor-link'],
+              ariaLabel: text
+                ? `Link to ${text.replace(/["']/g, char => char === '"' ? '&quot;' : '&#39;')}`
+                : undefined,
+            }
           },
         },
       ],
