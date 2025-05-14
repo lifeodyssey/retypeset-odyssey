@@ -1,0 +1,34 @@
+<script>
+let scrollHandler: EventListener | undefined
+
+function debounce(fn: () => void, delay: number) {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  return function () {
+    clearTimeout(timer)
+    timer = setTimeout(fn, delay)
+  }
+}
+
+function initScrollbar() {
+  const body = document.body
+  body.classList.remove('scrolling')
+
+  if (scrollHandler) {
+    window.removeEventListener('scroll', scrollHandler)
+  }
+
+  const hideScrollbar = debounce(() => {
+    body.classList.remove('scrolling')
+  }, 1200)
+
+  scrollHandler = () => {
+    body.classList.add('scrolling')
+    hideScrollbar()
+  }
+
+  window.addEventListener('scroll', scrollHandler, { passive: true })
+}
+
+initScrollbar()
+document.addEventListener('astro:page-load', initScrollbar)
+</script>

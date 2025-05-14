@@ -83,6 +83,15 @@
 .heti :where(pre) {
   --at-apply: 'mb-4 overflow-auto uno-round-border px-4 py-3 bg-secondary/5!';
 }
+.heti pre::-webkit-scrollbar {
+  --at-apply: 'h-1.25 lg:h-1.5';
+}
+.heti pre::-webkit-scrollbar-thumb {
+  --at-apply: 'rounded-full bg-secondary/15';
+}
+.heti pre::-webkit-scrollbar-thumb:hover {
+  --at-apply: 'bg-secondary/25';
+}
 .heti pre :where(code) {
   --at-apply: 'border-none bg-transparent p-0';
 }

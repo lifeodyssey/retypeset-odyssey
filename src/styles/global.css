@@ -5,15 +5,27 @@
 }
 html {
   --at-apply: 'bg-background c-secondary antialiased';
+  scrollbar-gutter: stable both-edges;
 }
-::selection {
-  --at-apply: 'bg-mark';
-}
-
 /* Fix Flash Issue On iOS */
 body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+body::selection {
+  --at-apply: 'bg-mark';
+}
+body::-webkit-scrollbar {
+  --at-apply: 'w-1.75';
+}
+body::-webkit-scrollbar-thumb {
+  --at-apply: 'rounded-full bg-transparent';
+}
+body.scrolling::-webkit-scrollbar-thumb {
+  --at-apply: 'bg-secondary/25';
+}
+body::-webkit-scrollbar-thumb:hover {
+  --at-apply: 'bg-secondary/40';
 }
 
 /* Highlight Hover Animation */

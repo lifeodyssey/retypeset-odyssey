@@ -37,7 +37,7 @@ const filteredHeadings = headings.filter(heading =>
 
         <TocIcon
           aria-hidden="true"
-          class="ml-4 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
+          class="ml-2 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
           fill="currentColor"
         />
       </label>
@@ -94,7 +94,7 @@ const filteredHeadings = headings.filter(heading =>
   --at-apply: 'grid rows-[0fr] duration-300 ease-in-out';
 }
 .accordion-content {
-  --at-apply: 'overflow-hidden max-h-66 2xl:(max-h-[calc(100vh-21.5rem)]) pl-4 pr-6';
+  --at-apply: 'max-h-66 overflow-hidden pl-4 pr-6 2xl:(max-h-[calc(100vh-21.5rem)] pl-2)';
 }
 
 /* When toggle is checked, expand the wrapper to show content */
@@ -103,6 +103,15 @@ const filteredHeadings = headings.filter(heading =>
 }
 .accordion-toggle:checked ~ .accordion-wrapper .accordion-content {
   --at-apply: 'overflow-y-auto';
+}
+#toc-content::-webkit-scrollbar {
+  --at-apply: 'w-1.25 lg:w-1.5';
+}
+#toc-content::-webkit-scrollbar-thumb {
+  --at-apply: 'rounded-full bg-secondary/15';
+}
+#toc-content::-webkit-scrollbar-thumb:hover {
+  --at-apply: 'bg-secondary/25';
 }
 
 @media (min-width: 1536px) {
@@ -120,6 +129,12 @@ const filteredHeadings = headings.filter(heading =>
   }
   .toc-link-active {
     --at-apply: 'c-secondary font-medium';
+  }
+  #toc-content {
+    --at-apply: 'scrollbar-hidden';
+  }
+  #toc-content::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>
