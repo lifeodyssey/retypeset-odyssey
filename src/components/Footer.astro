@@ -10,7 +10,7 @@ const year = Number(startYear) === currentYear
   ? startYear
   : `${startYear}-${currentYear}`
 
-// i18n RSS Path
+// i18n RSS Feed Path
 const currentLang = getLangFromPath(Astro.url.pathname)
 const links = socialLinks.map((link) => {
   if (link.name === 'RSS') {
@@ -21,6 +21,8 @@ const links = socialLinks.map((link) => {
   }
   return link
 })
+
+const footerLinkClass = 'highlight-hover transition-colors after:bottom-0 hover:c-primary'
 ---
 
 <footer
@@ -30,7 +32,7 @@ const links = socialLinks.map((link) => {
   <p>
     {links.map((link, index) => (
       <>
-        <a class="highlight-hover transition-colors hover:c-primary after:bottom-0!" href={link.url} target="_blank" rel="noopener noreferrer">
+        <a class={footerLinkClass} href={link.url} target="_blank" rel="noopener noreferrer">
           {link.name}
         </a>
         {index < links.length - 1 && ' / '}
@@ -39,7 +41,7 @@ const links = socialLinks.map((link) => {
   </p>
 
   <p>
-    Powered by <a class="highlight-hover transition-colors hover:c-primary after:bottom-0!" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="highlight-hover transition-colors hover:c-primary after:bottom-0!" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
+    Powered by <a class={footerLinkClass} href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class={footerLinkClass} href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
   </p>
 
   <p>

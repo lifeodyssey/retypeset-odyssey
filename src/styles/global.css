@@ -23,7 +23,7 @@ body {
 }
 .highlight-static::after,
 .highlight-hover::after {
-  --at-apply: 'content-[""] absolute bottom-0.5em left-0 z--1 h-0.5em w-full bg-mark';
+  --at-apply: 'content-[""] absolute left-0 z--1 h-0.5em w-full bg-mark';
 }
 .highlight-static::after,
 .highlight-hover:hover::after {
