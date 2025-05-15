@@ -94,6 +94,10 @@
 .heti :where(pre) {
   --at-apply: 'mb-4 overflow-auto uno-round-border px-4 py-3 bg-secondary/5!';
   scrollbar-width: thin;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
+  transition: scrollbar-color 0.3s ease-out;
+}
+.heti :where(pre:hover) {
   scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
 }
 .heti pre :where(code) {
@@ -137,10 +141,13 @@ html.dark .heti pre :where(span) {
 
 /* Tables */
 .heti :where(table) {
-  --at-apply: 'mb-4 box-border block max-w-full table-fixed overflow-x-auto scrollbar-hidden';
+  --at-apply: 'mb-4 box-border block max-w-full table-fixed overflow-x-auto';
+  scrollbar-width: thin;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
+  transition: scrollbar-color 0.3s ease-out;
 }
-.heti :where(table)::-webkit-scrollbar {
-  --at-apply: 'hidden';
+.heti :where(table:hover) {
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
 }
 .heti :where(th),
 .heti :where(td) {

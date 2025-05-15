@@ -1,10 +1,8 @@
 /* GitHub Card */
 .gc-container {
-  --at-apply: 'block mb-4 px-5 py-4 overflow-x-auto uno-round-border bg-secondary/5 scrollbar-hidden';
+  --at-apply: 'block mb-4 px-5 py-4 overflow-x-auto uno-round-border bg-secondary/5';
   --at-apply: 'transition-colors lg:(px-6 py-5) hover:(bg-secondary/10 c-primary)';
-}
-.gc-container::-webkit-scrollbar {
-  display: none;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
 }
 
 /* Title Bar */

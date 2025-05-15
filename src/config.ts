@@ -157,8 +157,6 @@ export const themeConfig: ThemeConfig = {
     // link prefetch
     // docs: https://docs.astro.build/en/guides/prefetch/#prefetch-strategies
     linkPrefetch: 'viewport', // hover, tap, viewport, load
-    // comment server url
-    commentURL: 'https://retypeset-comment.radishzz.cc',
     // image hosting url
     imageHostURL: 'https://image.radishzz.cc',
     // custom google analytics js

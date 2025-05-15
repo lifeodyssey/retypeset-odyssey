@@ -1,6 +1,6 @@
-import { allLocales } from '@/config'
 import { glob } from 'astro/loaders'
 import { defineCollection, z } from 'astro:content'
+import { allLocales } from '@/config'
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),

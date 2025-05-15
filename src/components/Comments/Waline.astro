@@ -2,13 +2,6 @@
 import { defaultLocale, themeConfig } from '@/config'
 import { walineLocaleMap } from '@/i18n/config'
 
-const {
-  serverURL = '',
-  emoji = [],
-  search = false,
-  imageUploader = false,
-} = themeConfig.comment?.waline ?? {}
-
 // Get the language code of Waline
 function getWalineLang(currentPath: string, defaultLocale: string): string {
   // Extract language code from path
@@ -20,43 +13,45 @@ function getWalineLang(currentPath: string, defaultLocale: string): string {
   return walineLocaleMap[lang as keyof typeof walineLocaleMap]
 }
 
-// Get Waline language and generate configuration json
 const walineLang = getWalineLang(Astro.url.pathname, defaultLocale)
-const walineConfigJson = JSON.stringify({
-  serverURL,
-  lang: walineLang,
-  emoji,
-  search,
-  imageUploader,
-})
+const { waline: { serverURL = '', emoji = [], search = false, imageUploader = false } = {} } = themeConfig.comment ?? {}
 ---
 
 <div
   id="waline"
   class="mt-16"
-  data-config={walineConfigJson}
->
-</div>
+></div>
 
-<!-- Not use is:inline or define:vars >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<script>
-import { init } from '@waline/client'
-import '@waline/client/style'
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+<script
+  is:inline
+  define:vars={{
+    walineLang,
+    serverURL,
+    emoji,
+    search,
+    imageUploader,
+  }}
+  type="module"
+>
+import { init } from '/assets/waline/waline.js'
 
 function initWaline() {
-  const walineEl = document.getElementById('waline')
-  const walineConfig = JSON.parse(walineEl?.dataset.config || '{}')
-
   init({
     el: '#waline',
+    serverURL,
     path: window.location.pathname.replace(/^\/([a-z]{2}(-[a-z]{2})?)\//, '/'),
+    lang: walineLang,
+    emoji,
     dark: 'html.dark',
     requiredMeta: ['nick', 'mail'],
     highlighter: false,
     texRenderer: false,
+    imageUploader,
+    search,
     noCopyright: true,
     reaction: [],
-    ...walineConfig,
   })
 }
 
@@ -79,7 +74,7 @@ document.addEventListener('astro:page-load', initWaline)
   --at-apply: 'leading-3.6 mt-1.4';
 }
 #waline .wl-panel {
-  --at-apply: 'm-0 rounded border-secondary/25'
+  --at-apply: 'm-0 rounded-lg border-secondary/25'
 }
 #waline .wl-header {
   --at-apply: 'p-0';
@@ -109,9 +104,6 @@ document.addEventListener('astro:page-load', initWaline)
 #waline .wl-footer {
   --at-apply: 'm-2';
 }
-#waline .wl-info .wl-btn {
-  --at-apply: 'rounded';
-}
 #waline .wl-text-number,
 #waline .wl-action[title="Markdown Guide"],
 #waline .wl-sort,
@@ -119,11 +111,10 @@ document.addEventListener('astro:page-load', initWaline)
   --at-apply: 'hidden';
 }
 #waline .wl-emoji-popup {
-  --at-apply: 'start-0 rounded border-secondary/25';
+  --at-apply: 'start-0 border-secondary/25 max-w-532px';
 }
-#waline {
+#waline .wl-emoji-popup .wl-tab-wrapper {
   scrollbar-width: thin;
-  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.25) transparent;
 }
 #waline .wl-gif-popup {
   --at-apply: 'border-secondary/25';
@@ -162,7 +153,6 @@ document.addEventListener('astro:page-load', initWaline)
 </style>
 
 <!-- Official CSS Variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<!-- https://waline.js.org/reference/client/style.html -->
 <style>
 #waline {
   /* Regular Colors */

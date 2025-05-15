@@ -73,7 +73,6 @@ export interface ThemeConfig {
 
   preload: {
     linkPrefetch: 'hover' | 'tap' | 'viewport' | 'load'
-    commentURL?: string
     imageHostURL?: string
     customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string
