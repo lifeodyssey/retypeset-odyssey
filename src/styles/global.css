@@ -5,8 +5,15 @@
 }
 html {
   --at-apply: 'bg-background c-secondary antialiased';
+  scrollbar-width: thin;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
   scrollbar-gutter: stable both-edges;
+  transition: scrollbar-color 0.3s ease-out;
 }
+html.scrolling {
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.25) transparent;
+}
+
 /* Fix Flash Issue On iOS */
 body {
   backface-visibility: hidden;
@@ -15,17 +22,19 @@ body {
 body::selection {
   --at-apply: 'bg-mark';
 }
-body::-webkit-scrollbar {
-  --at-apply: 'w-1.75';
+
+/* Heading Anchor Link >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+.heading-anchor-link {
+  --at-apply: 'inline-block translate-y-0.08em c-transparent';
 }
-body::-webkit-scrollbar-thumb {
-  --at-apply: 'rounded-full bg-transparent';
+h1:hover .heading-anchor-link,
+h2:hover .heading-anchor-link,
+h3:hover .heading-anchor-link,
+h4:hover .heading-anchor-link {
+  --at-apply: 'c-primary/40';
 }
-body.scrolling::-webkit-scrollbar-thumb {
-  --at-apply: 'bg-secondary/25';
-}
-body::-webkit-scrollbar-thumb:hover {
-  --at-apply: 'bg-secondary/40';
+.heading-anchor-link svg {
+  --at-apply: 'ml-0.4em aspect-square w-0.9em transition-colors active:scale-90 hover:c-primary/80';
 }
 
 /* Highlight Hover Animation */

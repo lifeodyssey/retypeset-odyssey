@@ -12,7 +12,15 @@
 
 /* Customized Post Title */
 .heti .post-title {
-  --at-apply: 'mb-2 text-8.6 c-primary font-bold lg:text-9';
+  --at-apply: 'mb-2 text-8.6 font-bold lg:text-9';
+}
+
+/* KaTeX Overflow Fix */
+.heti .katex-display {
+  --at-apply: 'overflow-x-auto overflow-y-hidden scrollbar-hidden';
+}
+.heti .katex-display::-webkit-scrollbar {
+  display: none;
 }
 
 /* Headings */
@@ -22,7 +30,7 @@
 .heti :where(h4),
 .heti :where(h5),
 .heti :where(h6) {
-  --at-apply: 'mb-4 mt-6 font-semibold';
+  --at-apply: 'mb-4 mt-6 font-semibold text-primary';
 }
 .heti :where(h1) {
   --at-apply: 'mt-9.6 text-7';
@@ -40,7 +48,7 @@
   --at-apply: 'text-4';
 }
 .heti :where(h6) {
-  --at-apply: 'text-3.5';
+  --at-apply: 'text-secondary';
 }
 .heti :where(h1),
 .heti :where(h2),
@@ -69,43 +77,34 @@
 /* Images */
 .heti :where(img) {
   --at-apply: 'mx-auto cursor-zoom-in';
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
-/* .heti :where(p:has(> img):not(:has(> :not(img)))) {
-  --at-apply: 'mb-6';
-}
-.heti :where(p:has(> img):not(:has(> :not(img))):is(:not(h1, h2, h3, h4, h5, h6, p) + *, :not(figure) *)) {
-  --at-apply: 'mt-6';
-} */
 .heti :where(figure) {
   --at-apply: 'mx-auto mb-4';
 }
-/* .heti :where(:not(h1, h2, h3, h4, h5, h6) + figure) {
-  --at-apply: 'mt-6';
-} */
 .heti :where(figcaption) {
   --at-apply: 'mt-2 text-center text-sm text-secondary/80';
+}
+
+/* Video */
+.heti :where(iframe) {
+  --at-apply: 'mb-4 w-full aspect-video';
 }
 
 /* Code Blocks */
 .heti :where(pre) {
   --at-apply: 'mb-4 overflow-auto uno-round-border px-4 py-3 bg-secondary/5!';
+  scrollbar-width: thin;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
+  transition: scrollbar-color 0.3s ease-out;
+}
+.heti :where(pre:hover) {
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
 }
 .heti pre :where(code) {
   --at-apply: 'border-none bg-transparent p-0';
 }
 html.dark .heti pre :where(span) {
   --at-apply: 'text-[var(--shiki-dark)]!';
-}
-.heti pre::-webkit-scrollbar {
-  --at-apply: 'h-1.25 lg:h-1.5';
-}
-.heti pre::-webkit-scrollbar-thumb {
-  --at-apply: 'rounded-full bg-secondary/15';
-}
-.heti pre::-webkit-scrollbar-thumb:hover {
-  --at-apply: 'bg-secondary/25';
 }
 
 /* Inline Code */
@@ -271,4 +270,3 @@ html.dark .heti :where(u) {
 .heti :where(q:is(:lang(zh), :lang(ja), :lang(ko))) {
   quotes: "「" "」" "『" "』";
 }
-

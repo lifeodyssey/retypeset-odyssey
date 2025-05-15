@@ -10,19 +10,19 @@ function debounce(fn: () => void, delay: number) {
 }
 
 function initScrollbar() {
-  const body = document.body
-  body.classList.remove('scrolling')
+  const html = document.documentElement
+  html.classList.remove('scrolling')
 
   if (scrollHandler) {
     window.removeEventListener('scroll', scrollHandler)
   }
 
   const hideScrollbar = debounce(() => {
-    body.classList.remove('scrolling')
+    html.classList.remove('scrolling')
   }, 1500)
 
   scrollHandler = () => {
-    body.classList.add('scrolling')
+    html.classList.add('scrolling')
     hideScrollbar()
   }
 
