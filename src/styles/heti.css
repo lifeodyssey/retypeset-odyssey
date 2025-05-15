@@ -30,13 +30,13 @@
 .heti :where(h4),
 .heti :where(h5),
 .heti :where(h6) {
-  --at-apply: 'mb-4 mt-6 font-semibold text-primary';
+  --at-apply: 'mb-4 mt-6 font-semibold';
 }
 .heti :where(h1) {
-  --at-apply: 'mt-9.6 text-7';
+  --at-apply: 'mt-9.6 text-7 text-primary';
 }
 .heti :where(h2) {
-  --at-apply: 'mt-9.6 text-6';
+  --at-apply: 'mt-9.6 text-6 text-primary';
 }
 .heti :where(h3) {
   --at-apply: 'mt-6.5 text-5';
@@ -48,7 +48,7 @@
   --at-apply: 'text-4';
 }
 .heti :where(h6) {
-  --at-apply: 'text-secondary';
+  --at-apply: 'font-normal';
 }
 .heti :where(h1),
 .heti :where(h2),
@@ -70,8 +70,8 @@
 
 /* Links */
 .heti :where(a:not(.gc-container)) {
-  --at-apply: 'break-all font-medium tracking-0 underline underline-0.075em decoration-secondary/40 underline-offset-0.1em';
-  --at-apply: 'transition-colors hover:(c-primary decoration-secondary/80) lg:underline-0.1em';
+  --at-apply: 'break-all font-semibold tracking-0 underline underline-0.075em decoration-secondary/80 underline-offset-0.15em';
+  --at-apply: 'transition-colors hover:(c-primary decoration-primary/80)  lg:underline-0.1em';
 }
 
 /* Images */
@@ -94,10 +94,6 @@
 .heti :where(pre) {
   --at-apply: 'mb-4 overflow-auto uno-round-border px-4 py-3 bg-secondary/5!';
   scrollbar-width: thin;
-  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
-  transition: scrollbar-color 0.3s ease-out;
-}
-.heti :where(pre:hover) {
   scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
 }
 .heti pre :where(code) {

@@ -5,7 +5,6 @@ import Header from '@/components/Header.astro'
 import Navbar from '@/components/Navbar.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
 import PhotoSwipe from '@/components/Widgets/PhotoSwipe.astro'
-import Scrollbar from '@/components/Widgets/Scrollbar.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
@@ -48,7 +47,6 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
       <Footer />
     </div>
     <Button supportedLangs={supportedLangs} />
-    <Scrollbar />
     <GithubCard />
     <PhotoSwipe />
   </body>

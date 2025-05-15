@@ -19,14 +19,14 @@ const filteredHeadings = headings.filter(heading =>
 ---
 
 {filteredHeadings.length > 0 && (
-  <div class="mb-4 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-transparent)">
+  <div class="mb-4 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-secondary/0)">
     <input
       type="checkbox"
       id="toc-toggle"
       class="accordion-toggle"
       hidden
     />
-    <div class="relative h-12 w-full bg-transparent">
+    <div class="relative h-12 w-full">
       <label
         for="toc-toggle"
         class="absolute inset-0 flex cursor-pointer items-center 2xl:(static flex c-secondary/40 transition-colors ease-out hover:c-secondary/80)"

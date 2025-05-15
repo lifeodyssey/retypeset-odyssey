@@ -6,12 +6,8 @@
 html {
   --at-apply: 'bg-background c-secondary antialiased';
   scrollbar-width: thin;
-  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
-  scrollbar-gutter: stable both-edges;
-  transition: scrollbar-color 0.3s ease-out;
-}
-html.scrolling {
   scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.25) transparent;
+  scrollbar-gutter: stable both-edges;
 }
 
 /* Fix Flash Issue On iOS */
@@ -23,7 +19,7 @@ body::selection {
   --at-apply: 'bg-mark';
 }
 
-/* Heading Anchor Link >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Heading Anchor Link */
 .heading-anchor-link {
   --at-apply: 'inline-block translate-y-0.08em c-transparent';
 }
