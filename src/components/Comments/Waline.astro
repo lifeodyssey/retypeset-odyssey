@@ -122,10 +122,13 @@ document.addEventListener('astro:page-load', initWaline)
   --at-apply: 'start-0 rounded border-secondary/25';
 }
 #waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar {
-  --at-apply: 'w-1.2';
+  --at-apply: 'w-1.25';
 }
 #waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar-thumb {
   --at-apply: 'bg-secondary/25';
+}
+#waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar-thumb:hover {
+  --at-apply: 'bg-secondary/40';
 }
 #waline .wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar-track-piece {
   --at-apply: 'bg-transparent';
