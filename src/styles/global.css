@@ -49,6 +49,15 @@ h4:hover .heading-anchor-link {
 .highlight-hover::after {
   --at-apply: 'origin-bottom-right scale-x-0 transition-transform duration-300 ease-out';
 }
+/* Fix Position Issue on iOS */
+@supports (-webkit-touch-callout: none) {
+  .navbar-highlight-position-fix {
+    --at-apply: 'after:bottom-0.68em';
+  }
+  .footer-highlight-position-fix {
+    --at-apply: 'after:bottom-0.24em';
+  }
+}
 
 /* View Transition with Theme Toggle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 ::view-transition-new(theme-transition) {
