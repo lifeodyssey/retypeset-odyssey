@@ -15,6 +15,7 @@ import UnoCSS from 'unocss/astro'
 import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
 import { rehypeImgToFigure } from './src/plugins/rehype-img-to-figure.mjs'
+import { rehypeUnwrapImg } from './src/plugins/rehype-unwrap-img.mjs'
 import { remarkAdmonitions } from './src/plugins/remark-admonitions.mjs'
 import { remarkGithubCard } from './src/plugins/remark-github-card.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
@@ -70,6 +71,7 @@ export default defineConfig({
       rehypeKatex,
       rehypeSlug,
       rehypeImgToFigure,
+      rehypeUnwrapImg, // must be after rehypeImgToFigure
       [
         rehypeAutolinkHeadings,
         {

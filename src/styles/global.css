@@ -21,16 +21,22 @@ body::selection {
 
 /* Heading Anchor Link */
 .heading-anchor-link {
-  --at-apply: 'inline-block translate-y-0.08em c-transparent';
+  --at-apply: 'inline-block translate-y-0.08em';
 }
-h1:hover .heading-anchor-link,
-h2:hover .heading-anchor-link,
-h3:hover .heading-anchor-link,
-h4:hover .heading-anchor-link {
-  --at-apply: 'c-primary/40';
+h1:hover .heading-anchor-link svg,
+h2:hover .heading-anchor-link svg,
+h3:hover .heading-anchor-link svg,
+h4:hover .heading-anchor-link svg {
+  --at-apply: 'op-40';
 }
 .heading-anchor-link svg {
-  --at-apply: 'ml-0.4em aspect-square w-0.9em transition-colors active:scale-90 hover:c-primary/80';
+  --at-apply: 'ml-0.4em aspect-square w-0.9em op-0 transition-colors active:scale-90';
+}
+h1:hover .heading-anchor-link svg:hover,
+h2:hover .heading-anchor-link svg:hover,
+h3:hover .heading-anchor-link svg:hover,
+h4:hover .heading-anchor-link svg:hover {
+  --at-apply: 'op-80';
 }
 
 /* Highlight Hover Animation */
@@ -47,7 +53,7 @@ h4:hover .heading-anchor-link {
   --at-apply: 'origin-bottom-left scale-x-100';
 }
 .highlight-hover::after {
-  --at-apply: 'origin-bottom-right scale-x-0 transition-transform duration-300 ease-out';
+  --at-apply: 'origin-bottom-right scale-x-0 transition-transform duration-150 ease-out lg:duration-300';
 }
 /* Fix Position Issue on iOS */
 @supports (-webkit-touch-callout: none) {
