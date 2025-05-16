@@ -71,14 +71,11 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 3. Refer to the [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/) to customize your blog and create new articles.
 4. Refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) to deploy your blog to Netlify, Vercel, or other platforms.
 
-&emsp;[![Deploy to Netlify](images/deploy-netlify.svg)](https://app.netlify.com/start)
- [![Deploy to Vercel](images/deploy-vercel.svg)](https://vercel.com/new)
+&emsp;[![Deploy to Netlify](images/deploy-netlify.svg)](https://app.netlify.com/start) [![Deploy to Vercel](images/deploy-vercel.svg)](https://vercel.com/new)
 
 ## Updates
 
-- Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time, which can be updated as follows.
-- Refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) to run `Sync fork` in your repository to sync with the latest branch.
-- Do not click `Discard Changes`, or you will lose your modifications.
+Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time. You can refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) and run `Sync fork` in your repository to sync with the latest branch. Do not click `Discard Changes`, or you will lose your modifications.
 
 ## Credits
 
