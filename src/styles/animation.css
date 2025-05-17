@@ -45,10 +45,8 @@ html[data-theme-changing] [data-disable-theme-transition] {
   }
 }
 
-.animation-fade-up > * {
-  opacity: 0;
-}
 .animation-fade-up > *:nth-child(-n+20) {
+  opacity: 0;
   animation: fadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: calc((var(--animation-order, 0) - 1) * 0.08s);
 }
