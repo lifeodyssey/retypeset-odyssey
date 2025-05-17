@@ -123,7 +123,8 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
 
     <!-- Date -->
     <div
-      class="mb-16.3 block c-primary font-time"
+      class="animation-fade-in mb-16.3 block c-primary font-time"
+      style="--animation-distance: 1rem;"
       transition:name={`time-${post.data.abbrlink || post.id}-${lang}`}
       data-disable-theme-transition
     >
@@ -143,7 +144,10 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
 
   <!-- Tags -->
   {post.data.tags && post.data.tags.length > 0 && (
-    <div class="uno-decorative-line"></div>
+    <div
+      class="animation-fade-in uno-decorative-line"
+      style="--animation-delay: 0.8s;"
+    ></div>
     <div class="uno-tags-wrapper">
       {post.data.tags.map((tag: string) => (
         <a

@@ -1,7 +1,7 @@
 <script>
 function resetFadeUpAnimation() {
   document.querySelectorAll('.animation-fade-up').forEach((container) => {
-    const childElements = Array.from(container.children).slice(0, 20)
+    const childElements = Array.from(container.children)
     childElements.forEach(element =>
       (element as HTMLElement).style.animationName = 'none',
     )

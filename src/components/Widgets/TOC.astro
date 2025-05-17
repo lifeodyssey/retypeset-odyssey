@@ -37,7 +37,7 @@ const filteredHeadings = headings.filter(heading =>
 
         <TocIcon
           aria-hidden="true"
-          class="ml-1 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
+          class="animation-fade-in ml-1 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
           fill="currentColor"
         />
       </label>
@@ -50,7 +50,10 @@ const filteredHeadings = headings.filter(heading =>
         class="accordion-content"
         aria-label="Table of Contents"
       >
-        <ul class="toc-list">
+        <ul
+          class="animation-fade-up toc-list"
+          style="--animation-interval: 0.04s;"
+        >
           {filteredHeadings.map(heading => (
             <li
               class:list={{
