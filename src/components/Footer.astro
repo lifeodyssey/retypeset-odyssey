@@ -22,11 +22,11 @@ const links = socialLinks.map((link) => {
   return link
 })
 
-const footerLinkClass = 'highlight-hover footer-highlight-position-fix transition-colors after:bottom-0 hover:c-primary'
+const footerLinkClass = 'highlight-hover footer-highlight-position-fix py-0.8 transition-colors after:bottom-0.1 hover:c-primary'
 ---
 
 <footer
-  class="text-3 leading-4.75 font-navbar lg:text-3.5"
+  class="text-3 leading-0.9em font-navbar lg:text-3.5"
   lg="uno-desktop-column bottom-20"
 >
   <p>
@@ -44,7 +44,7 @@ const footerLinkClass = 'highlight-hover footer-highlight-position-fix transitio
     Powered by <a class={footerLinkClass} href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class={footerLinkClass} href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
   </p>
 
-  <p>
+  <p class="py-0.8">
     © {year} {author}
   </p>
 </footer>
