@@ -21,16 +21,16 @@ body::selection {
 
 /* Heading Anchor Link */
 .heading-anchor-link {
-  --at-apply: 'inline-block translate-y-0.08em';
+  --at-apply: 'inline-block translate-y-0.1em';
 }
 h1:hover .heading-anchor-link svg,
 h2:hover .heading-anchor-link svg,
 h3:hover .heading-anchor-link svg,
 h4:hover .heading-anchor-link svg {
-  --at-apply: 'op-40';
+  --at-apply: 'op-80';
 }
 .heading-anchor-link svg {
-  --at-apply: 'ml-0.4em aspect-square w-0.9em op-0 transition-colors active:scale-90';
+  --at-apply: 'ml-0.4em aspect-square w-0.9em op-0 transition-opacity duration-300 ease-out active:scale-90';
 }
 h1:hover .heading-anchor-link svg:hover,
 h2:hover .heading-anchor-link svg:hover,
@@ -53,7 +53,7 @@ h4:hover .heading-anchor-link svg:hover {
   --at-apply: 'origin-bottom-left scale-x-100';
 }
 .highlight-hover::after {
-  --at-apply: 'origin-bottom-right scale-x-0 transition-transform duration-150 ease-out lg:duration-300';
+  --at-apply: 'origin-bottom-right scale-x-0 transition-transform';
 }
 /* Fix Position Issue on iOS */
 @supports (-webkit-touch-callout: none) {

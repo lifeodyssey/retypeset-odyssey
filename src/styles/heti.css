@@ -60,7 +60,7 @@
 /* Links */
 .heti :where(a:not(.gc-container)) {
   --at-apply: 'break-all font-semibold tracking-0 underline underline-0.075em decoration-secondary/80 underline-offset-0.1em';
-  --at-apply: 'transition-colors ease-out hover:(c-primary decoration-primary/80) lg:underline-0.1em';
+  --at-apply: 'transition-colors hover:(c-primary decoration-primary/80) lg:underline-0.1em';
 }
 
 /* Images */

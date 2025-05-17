@@ -29,7 +29,7 @@ const filteredHeadings = headings.filter(heading =>
     <div class="relative h-12 w-full">
       <label
         for="toc-toggle"
-        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static flex c-secondary/40 transition-colors ease-out hover:c-secondary/80)"
+        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static flex c-secondary/40 transition-colors hover:c-secondary/80)"
       >
         <span class="toc-title">
           {currentUI.toc}
@@ -86,7 +86,7 @@ const filteredHeadings = headings.filter(heading =>
   --at-apply: 'list-none pl-0 space-y-2 mt-1 mb-4 2xl:space-y-1.2';
 }
 .toc-link-h2, .toc-link-h3, .toc-link-h4 {
-  --at-apply: 'text-sm no-underline font-normal text-balance select-none 2xl:(text-3.2 c-secondary/60 transition-colors ease-in hover:(c-secondary font-medium))';
+  --at-apply: 'text-sm no-underline font-normal text-balance select-none 2xl:(text-3.2 c-secondary/60 transition-colors transition-font-weight duration-300 ease-out hover:(c-secondary font-medium))';
 }
 
 /* Initial collapsed state with zero height grid row */
