@@ -114,7 +114,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
       <h1 class="post-title">
         <span
           transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
-          data-disable-transition-on-theme
+          data-disable-theme-transition
         >
           {post.data.title}
         </span>
@@ -125,7 +125,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     <div
       class="mb-16.3 block c-primary font-time"
       transition:name={`time-${post.data.abbrlink || post.id}-${lang}`}
-      data-disable-transition-on-theme
+      data-disable-theme-transition
     >
       <PostDate
         date={post.data.published}
@@ -136,7 +136,9 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     <!-- TOC -->
     {post.data.toc && <TOC headings={headings} />}
     <!-- Content -->
-    <Content />
+     <div class="animation-fade-up">
+      <Content />
+    </div>
   </article>
 
   <!-- Tags -->

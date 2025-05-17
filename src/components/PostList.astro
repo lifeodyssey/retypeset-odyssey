@@ -43,7 +43,7 @@ function getPostPath(post: Post) {
           lg={isHome ? 'font-medium text-4.5' : ''}
           href={getPostPath(post)}
           transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
-          data-disable-transition-on-theme
+          data-disable-theme-transition
         >
           {post.data.title}
         </a>
@@ -62,7 +62,7 @@ function getPostPath(post: Post) {
       <div
         class="py-0.8 text-3.5 font-time lg:hidden"
         transition:name={`time-${post.data.abbrlink || post.id}-${lang}`}
-        data-disable-transition-on-theme
+        data-disable-theme-transition
       >
         <PostDate
           date={post.data.published}

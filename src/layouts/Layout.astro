@@ -3,11 +3,13 @@ import Button from '@/components/Button.astro'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import Navbar from '@/components/Navbar.astro'
+import FadeUpAnimation from '@/components/Widgets/FadeUpAnimation.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
-// import PhotoSwipe from '@/components/Widgets/PhotoSwipe.astro'
+import PhotoSwipe from '@/components/Widgets/PhotoSwipe.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
+import '@/styles/animation.css'
 import '@/styles/global.css'
 import '@/styles/font.css'
 import '@/styles/heti.css'
@@ -46,8 +48,9 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
       </main>
       <Footer />
     </div>
+    <FadeUpAnimation />
     <Button supportedLangs={supportedLangs} />
     <GithubCard />
-    <!-- <PhotoSwipe /> -->
+    <PhotoSwipe />
   </body>
 </html>

@@ -1,0 +1,18 @@
+<script>
+function resetFadeUpAnimation() {
+  document.querySelectorAll('.animation-fade-up').forEach((container) => {
+    const childElements = Array.from(container.children).slice(0, 20)
+    childElements.forEach(element =>
+      (element as HTMLElement).style.animationName = 'none',
+    )
+    requestAnimationFrame(() => {
+      childElements.forEach(element =>
+        (element as HTMLElement).style.animationName = '',
+      )
+    })
+  })
+}
+
+resetFadeUpAnimation()
+document.addEventListener('astro:page-load', resetFadeUpAnimation)
+</script>

@@ -93,15 +93,15 @@ function setupThemeToggle() {
       }
 
       // Temporarily add markers during animation to implement view transition and disable CSS transitions
-      document.documentElement.style.setProperty('view-transition-name', 'theme-transition')
-      document.documentElement.setAttribute('data-theme-transition', '')
+      document.documentElement.style.setProperty('view-transition-name', 'animation-theme-toggle')
+      document.documentElement.setAttribute('data-theme-changing', '')
 
       // If browser supports View Transitions API, use it to update theme
       const themeTransition = document.startViewTransition(updateTheme)
       // Remove markers after animation
       themeTransition.finished.then(() => {
         document.documentElement.style.removeProperty('view-transition-name')
-        document.documentElement.removeAttribute('data-theme-transition')
+        document.documentElement.removeAttribute('data-theme-changing')
       })
     })
   })
