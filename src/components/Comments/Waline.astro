@@ -41,6 +41,7 @@ function initWaline() {
   init({
     el: '#waline',
     serverURL,
+    // Share comments on posts in different languages
     path: window.location.pathname.replace(/^\/([a-z]{2}(-[a-z]{2})?)\//, '/'),
     lang: walineLang,
     emoji,

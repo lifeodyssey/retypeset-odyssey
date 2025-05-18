@@ -19,25 +19,30 @@ const filteredHeadings = headings.filter(heading =>
 ---
 
 {filteredHeadings.length > 0 && (
+  // TOC Container
   <div
     id="toc-container"
     class="mb-4 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-secondary/0)"
   >
+    {/* Hidden Checkbox */}
     <input
       type="checkbox"
       id="toc-toggle"
       class="accordion-toggle"
       hidden
     />
+    {/* TOC Toggle */}
     <div class="relative h-12 w-full">
       <label
         for="toc-toggle"
         class="absolute inset-0 flex cursor-pointer items-center 2xl:(static flex c-secondary/40 transition-colors ease-out hover:c-secondary/80)"
       >
+        {/* Title on Mobile */}
         <span class="toc-title">
           {currentUI.toc}
         </span>
 
+        {/* Icon on Desktop */}
         <TocIcon
           id="toc-icon"
           aria-hidden="true"
@@ -47,13 +52,14 @@ const filteredHeadings = headings.filter(heading =>
       </label>
     </div>
 
-    {/* Expandable content wrapper */}
+    {/* Expandable Content Wrapper with Accordion Animation */}
     <div class="accordion-wrapper">
       <nav
         id="toc-content"
         class="accordion-content"
         aria-label="Table of Contents"
       >
+        {/* TOC List */}
         <ul
           id="toc-list"
           class="toc-list"

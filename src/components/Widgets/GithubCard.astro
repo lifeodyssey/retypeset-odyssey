@@ -4,6 +4,7 @@ function setupGithubCards() {
   if (githubCards.length === 0)
     return
 
+  // Create an intersection observer to lazy load GitHub repo data when cards enter viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {

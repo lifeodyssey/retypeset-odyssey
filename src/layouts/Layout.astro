@@ -9,11 +9,11 @@ import GsapAnimation from '@/components/Widgets/GsapAnimation.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
-import '@/styles/animation.css'
 import '@/styles/extend.css'
 import '@/styles/font.css'
 import '@/styles/global.css'
 import '@/styles/markdown.css'
+import '@/styles/transition.css'
 
 interface Props {
   postTitle?: string
@@ -26,8 +26,8 @@ const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.prop
 const { isPost } = getPageInfo(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 const MarginBottom = isPost && themeConfig.comment?.enabled
-  ? 'mb-10' // Post page with comment system
-  : 'mb-12' // Other pages without comment system
+  ? 'mb-10' // Post page with comments
+  : 'mb-12' // Other pages without comments
 ---
 
 <html

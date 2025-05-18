@@ -10,8 +10,10 @@ function setupPostPageAnimation() {
   const tocContainer = document.getElementById('toc-container')
 
   const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
+  const isSmallScreen = window.matchMedia('(max-width: 1535px)').matches
 
-  // Post Content + Tags + Comments (First 15 elements)
+  // Post Content + Tags + Comments
+  // First 15 elements
   gsap.from(allElements.slice(0, 15), {
     opacity: 0,
     y: '3rem',
@@ -20,8 +22,7 @@ function setupPostPageAnimation() {
     ease: 'power2.out',
     stagger: 0.05,
   })
-
-  // Post Content + Tags + Comments (Rest elements)
+  // Rest elements as the 16 element
   if (allElements.length > 15) {
     gsap.from(allElements.slice(15), {
       opacity: 0,
@@ -32,8 +33,9 @@ function setupPostPageAnimation() {
     })
   }
 
+  // Desktop Animations
   if (isLargeScreen) {
-    // Desktop Post Date
+    // Post Date
     if (dateElement) {
       gsap.from(dateElement, {
         opacity: 0,
@@ -44,7 +46,7 @@ function setupPostPageAnimation() {
       })
     }
 
-    // Desktop TOC Icon
+    // TOC Icon
     if (tocIcon) {
       gsap.from(tocIcon, {
         opacity: 0,
@@ -55,7 +57,7 @@ function setupPostPageAnimation() {
       })
     }
 
-    // Desktop Toc List
+    // Toc List
     if (tocListChildren.length > 0) {
       gsap.from(tocListChildren, {
         opacity: 0,
@@ -67,7 +69,7 @@ function setupPostPageAnimation() {
       })
     }
 
-    // Desktop Back Button
+    // Back Button
     if (backButton) {
       gsap.from(backButton, {
         opacity: 0,
@@ -78,17 +80,16 @@ function setupPostPageAnimation() {
       })
     }
   }
-  else {
-    // Mobile TOC Container
-    if (tocContainer) {
-      gsap.from(tocContainer, {
-        opacity: 0,
-        y: '3rem',
-        duration: 0.5,
-        delay: 0.1,
-        ease: 'power2.out',
-      })
-    }
+
+  // Mobile Animation (for screens smaller than 1536px)
+  if (isSmallScreen && tocContainer) {
+    gsap.from(tocContainer, {
+      opacity: 0,
+      y: '3rem',
+      duration: 0.5,
+      delay: 0.1,
+      ease: 'power2.out',
+    })
   }
 }
 

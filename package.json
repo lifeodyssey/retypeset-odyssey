@@ -11,13 +11,14 @@
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "assets": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/assets/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/assets/waline/waline.js && curl -L https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css -o public/assets/katex/katex.min.css"
+    "comments": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/assets/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/assets/waline/waline.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.6",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/sitemap": "^3.4.0",
     "astro": "^5.7.13",
+    "astro-compress": "^2.3.8",
     "astro-og-canvas": "^0.7.0",
     "astro-robots-txt": "^1.0.0",
     "canvaskit-wasm": "^0.40.0",
