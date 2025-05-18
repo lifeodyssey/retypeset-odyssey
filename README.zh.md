@@ -2,7 +2,7 @@
 <img alt="Cover Image" src="images/retypeset-zh-mobile.webp"/>
 
 <div align="center">
-  <a title="en" href="README.md">
+  <a title="en" href="https://github.com/radishzzz/astro-theme-retypeset?tab=readme-ov-file#retypeset">
     <img src="https://img.shields.io/badge/-English-545759?style=for-the-badge" alt="English">
   </a>
   <picture>

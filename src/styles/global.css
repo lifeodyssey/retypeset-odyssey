@@ -38,7 +38,7 @@ h4:hover .heading-anchor-link svg {
   --at-apply: 'op-80';
 }
 .heading-anchor-link svg {
-  --at-apply: 'ml-0.4em aspect-square w-0.9em op-0 transition-opacity duration-300 ease-out active:scale-90';
+  --at-apply: 'ml-0.4em aspect-square w-0.9em op-0 transition-opacity ease-out active:scale-90';
 }
 h1:hover .heading-anchor-link svg:hover,
 h2:hover .heading-anchor-link svg:hover,
