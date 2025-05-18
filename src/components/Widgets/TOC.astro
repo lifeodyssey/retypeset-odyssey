@@ -19,7 +19,10 @@ const filteredHeadings = headings.filter(heading =>
 ---
 
 {filteredHeadings.length > 0 && (
-  <div class="mb-4 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-secondary/0)">
+  <div
+    id="toc-container"
+    class="mb-4 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-43.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-secondary/0)"
+  >
     <input
       type="checkbox"
       id="toc-toggle"
@@ -36,8 +39,9 @@ const filteredHeadings = headings.filter(heading =>
         </span>
 
         <TocIcon
+          id="toc-icon"
           aria-hidden="true"
-          class="animation-fade-in ml-1 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
+          class="ml-1 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90)"
           fill="currentColor"
         />
       </label>
@@ -51,8 +55,8 @@ const filteredHeadings = headings.filter(heading =>
         aria-label="Table of Contents"
       >
         <ul
-          class="animation-fade-up toc-list"
-          style="--animation-interval: 0.04s;"
+          id="toc-list"
+          class="toc-list"
         >
           {filteredHeadings.map(heading => (
             <li
@@ -83,13 +87,13 @@ const filteredHeadings = headings.filter(heading =>
 <!-- Override heti default styles  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <style>
 .toc-title {
-  --at-apply: 'font-semibold ml-4 select-none 2xl:hidden';
+  --at-apply: 'font-semibold ml-4 2xl:hidden';
 }
 .toc-list {
-  --at-apply: 'list-none pl-0 space-y-2 mt-1 mb-4 2xl:space-y-1.2';
+  --at-apply: 'list-none pb-3.3 pl-0 space-y-2 mt-1 mb-4 2xl:space-y-1.2';
 }
 .toc-link-h2, .toc-link-h3, .toc-link-h4 {
-  --at-apply: 'text-sm no-underline font-normal text-balance select-none 2xl:(text-3.2 c-secondary/60 transition-colors transition-font-weight duration-300 ease-out hover:(c-secondary font-medium))';
+  --at-apply: 'text-sm no-underline font-normal text-balance 2xl:(text-3.2 c-secondary/60 transition-colors transition-font-weight duration-300 ease-out hover:(c-secondary font-medium))';
 }
 
 /* Initial collapsed state with zero height grid row */
@@ -97,7 +101,7 @@ const filteredHeadings = headings.filter(heading =>
   --at-apply: 'grid rows-[0fr] duration-300 ease-in-out';
 }
 .accordion-content {
-  --at-apply: 'max-h-66 overflow-hidden pl-4 pr-6 2xl:(max-h-[calc(100vh-21.5rem)] pl-1)';
+  --at-apply: 'max-h-66 overflow-hidden pl-4 pr-6 2xl:(max-h-[calc(100vh-26rem)] pl-1)';
 }
 
 /* When toggle is checked, expand the wrapper to show content */

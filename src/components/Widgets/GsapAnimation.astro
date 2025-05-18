@@ -1,0 +1,97 @@
+<script>
+import { gsap } from 'gsap'
+
+function setupPostPageAnimation() {
+  const allElements = Array.from(document.querySelectorAll('#gsap-post-page-content > *, #gsap-post-page-tags, #waline'))
+  const tocListChildren = Array.from(document.querySelectorAll('#toc-list > *')).slice(0, 20)
+  const dateElement = document.getElementById('gsap-post-page-date')
+  const backButton = document.getElementById('back-button')
+  const tocIcon = document.getElementById('toc-icon')
+  const tocContainer = document.getElementById('toc-container')
+
+  const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
+
+  // Post Content + Tags + Comments (First 15 elements)
+  gsap.from(allElements.slice(0, 15), {
+    opacity: 0,
+    y: '3rem',
+    duration: 0.5,
+    delay: 0.1,
+    ease: 'power2.out',
+    stagger: 0.05,
+  })
+
+  // Post Content + Tags + Comments (Rest elements)
+  if (allElements.length > 15) {
+    gsap.from(allElements.slice(15), {
+      opacity: 0,
+      y: '3rem',
+      duration: 0.5,
+      delay: 0.05 * 15 + 0.1,
+      ease: 'power2.out',
+    })
+  }
+
+  if (isLargeScreen) {
+    // Desktop Post Date
+    if (dateElement) {
+      gsap.from(dateElement, {
+        opacity: 0,
+        y: '1.5rem',
+        duration: 0.5,
+        delay: 0.1,
+        ease: 'power2.out',
+      })
+    }
+
+    // Desktop TOC Icon
+    if (tocIcon) {
+      gsap.from(tocIcon, {
+        opacity: 0,
+        y: '0.5rem',
+        duration: 0.5,
+        delay: 0.125,
+        ease: 'power2.out',
+      })
+    }
+
+    // Desktop Toc List
+    if (tocListChildren.length > 0) {
+      gsap.from(tocListChildren, {
+        opacity: 0,
+        y: '1.5rem',
+        duration: 0.5,
+        delay: 0.15,
+        ease: 'power2.out',
+        stagger: 0.025,
+      })
+    }
+
+    // Desktop Back Button
+    if (backButton) {
+      gsap.from(backButton, {
+        opacity: 0,
+        x: '0.5rem',
+        duration: 0.5,
+        delay: 0.15,
+        ease: 'power2.out',
+      })
+    }
+  }
+  else {
+    // Mobile TOC Container
+    if (tocContainer) {
+      gsap.from(tocContainer, {
+        opacity: 0,
+        y: '3rem',
+        duration: 0.5,
+        delay: 0.1,
+        ease: 'power2.out',
+      })
+    }
+  }
+}
+
+setupPostPageAnimation()
+document.addEventListener('astro:after-swap', setupPostPageAnimation)
+</script>
