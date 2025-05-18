@@ -211,7 +211,7 @@ html.dark .heti :where(u) {
 
 /* Highlighted Text */
 .heti :where(mark) {
-  --at-apply: 'bg-mark py-0.65 text-inherit';
+  --at-apply: 'bg-highlight py-0.65 text-inherit';
 }
 
 /* Footnotes */
@@ -221,7 +221,7 @@ html.dark .heti :where(u) {
 }
 .heti sup:target,
 .heti sup a:target {
-  --at-apply: 'bg-mark';
+  --at-apply: 'bg-highlight';
 }
 .heti .data-footnote-backref {
   --at-apply: 'font-serif no-underline';

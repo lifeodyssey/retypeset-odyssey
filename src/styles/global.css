@@ -16,7 +16,7 @@ body {
   -webkit-backface-visibility: hidden;
 }
 body::selection {
-  --at-apply: 'bg-mark';
+  --at-apply: 'bg-highlight';
 }
 
 /* Fix KaTeX Overflow Issue */
@@ -54,7 +54,7 @@ h4:hover .heading-anchor-link svg:hover {
 }
 .highlight-static::after,
 .highlight-hover::after {
-  --at-apply: 'content-[""] absolute left-0 z--1 h-0.5em w-full bg-mark';
+  --at-apply: 'content-[""] absolute left-0 z--1 h-0.5em w-full bg-highlight';
 }
 .highlight-static::after,
 .highlight-hover:hover::after {
