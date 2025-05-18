@@ -16,7 +16,15 @@ const links = socialLinks.map((link) => {
   if (link.name === 'RSS') {
     return {
       ...link,
-      url: currentLang === defaultLocale ? link.url : `/${currentLang}${link.url}`,
+      url: currentLang === defaultLocale
+        ? link.url
+        : `/${currentLang}${link.url}`,
+    }
+  }
+  if (link.name === 'Email') {
+    return {
+      ...link,
+      url: `mailto:${link.url}`,
     }
   }
   return link
