@@ -15,14 +15,6 @@
   --at-apply: 'mb-2 text-8.6 font-bold lg:text-9';
 }
 
-/* KaTeX Overflow Fix */
-.heti .katex-display {
-  --at-apply: 'overflow-x-auto overflow-y-hidden scrollbar-hidden';
-}
-.heti .katex-display::-webkit-scrollbar {
-  display: none;
-}
-
 /* Headings */
 .heti :where(h1, h2, h3, h4, h5, h6) {
   --at-apply: 'mb-4 font-semibold';
@@ -75,11 +67,6 @@
 }
 .heti :where(figcaption) {
   --at-apply: 'mt-3 text-center text-sm text-secondary/80';
-}
-
-/* Video */
-.heti :where(iframe) {
-  --at-apply: 'mb-4 w-full aspect-video';
 }
 
 /* Code Blocks */
