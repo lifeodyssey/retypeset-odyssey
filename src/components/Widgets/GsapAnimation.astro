@@ -90,8 +90,8 @@ function setupPostPageAnimation() {
   }
   else {
     // Post Content + Tags + Comments
-    // First 5 elements
-    gsap.from(allElements.slice(0, 5), {
+    // First 7 elements
+    gsap.from(allElements.slice(0, 7), {
       opacity: 0,
       y: '3rem',
       duration: 0.5,
@@ -99,8 +99,8 @@ function setupPostPageAnimation() {
       ease: 'power2.out',
       stagger: 0.05,
     })
-    // Rest elements as the 6 element
-    // if (allElements.length > 5) {
+    // Rest elements as the 8 element
+    // if (allElements.length > 7) {
     //   gsap.from(allElements.slice(7), {
     //     opacity: 0,
     //     y: '3rem',
