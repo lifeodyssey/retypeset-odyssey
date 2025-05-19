@@ -54,7 +54,7 @@
 
 /* Note */
 .admonition-note {
-  --at-apply: 'border-note';
+  --at-apply: 'border-note!';
 }
 .admonition-note .admonition-title {
   --at-apply: 'c-note';
@@ -66,7 +66,7 @@
 
 /* Tip */
 .admonition-tip {
-  --at-apply: 'border-tip';
+  --at-apply: 'border-tip!';
 }
 .admonition-tip .admonition-title {
   --at-apply: 'c-tip';
@@ -78,7 +78,7 @@
 
 /* Important */
 .admonition-important {
-  --at-apply: 'border-important';
+  --at-apply: 'border-important!';
 }
 .admonition-important .admonition-title {
   --at-apply: 'c-important';
@@ -90,7 +90,7 @@
 
 /* Warning */
 .admonition-warning {
-  --at-apply: 'border-warning';
+  --at-apply: 'border-warning!';
 }
 .admonition-warning .admonition-title {
   --at-apply: 'c-warning';
@@ -102,7 +102,7 @@
 
 /* Caution */
 .admonition-caution {
-  --at-apply: 'border-caution';
+  --at-apply: 'border-caution!';
 }
 .admonition-caution .admonition-title {
   --at-apply: 'c-caution';
