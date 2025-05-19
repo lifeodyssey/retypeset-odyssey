@@ -52,6 +52,7 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 
 1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) this repository, or use this template to create a new repository.
 2. Run the following commands in your terminal:
+
    ```bash
    # Clone the repository
    git clone <repository-url>

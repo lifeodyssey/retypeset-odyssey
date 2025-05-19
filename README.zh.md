@@ -52,6 +52,7 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) 此仓库，或使用此模版创建新仓库。
 2. 在终端执行以下指令：
+
    ```bash
    # 克隆仓库
    git clone <仓库地址>
