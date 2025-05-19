@@ -60,6 +60,8 @@ export const themeConfig: ThemeConfig = {
     dateFormat: 'YYYY-MM-DD', // YYYY-MM-DD, MM-DD-YYYY, DD-MM-YYYY, MONTH DAY YYYY, DAY MONTH YYYY
     // enable KaTeX for mathematical formulas rendering
     katex: true, // true, false
+    // enable table of contents for all posts by default
+    toc: true, // true, false
   },
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -139,16 +141,16 @@ export const themeConfig: ThemeConfig = {
         url: 'https://github.com/radishzzz/astro-theme-retypeset',
       },
       {
-        name: 'X',
-        url: 'https://x.com/radishzz_',
-      },
+        name: 'Email',
+        url: 'email@radishzz.cc',
+      }
       // {
-      //   name: 'Email',
-      //   url: 'https://example@gmail.com',
-      // }
+      //   name: 'X',
+      //   url: 'https://x.com/radishzz_',
+      // },
     ],
     // year of website start
-    startYear: 2024,
+    startYear: 2025,
   },
   // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 
@@ -157,8 +159,6 @@ export const themeConfig: ThemeConfig = {
     // link prefetch
     // docs: https://docs.astro.build/en/guides/prefetch/#prefetch-strategies
     linkPrefetch: 'viewport', // hover, tap, viewport, load
-    // comment server url
-    commentURL: 'https://retypeset-comment.radishzz.cc',
     // image hosting url
     imageHostURL: 'https://image.radishzz.cc',
     // custom google analytics js

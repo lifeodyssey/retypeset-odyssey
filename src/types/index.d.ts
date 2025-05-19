@@ -34,6 +34,7 @@ export interface ThemeConfig {
     fontStyle: 'sans' | 'serif'
     dateFormat: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MONTH DAY YYYY' | 'DAY MONTH YYYY'
     katex: boolean
+    toc: boolean
   }
 
   comment: {
@@ -73,7 +74,6 @@ export interface ThemeConfig {
 
   preload: {
     linkPrefetch: 'hover' | 'tap' | 'viewport' | 'load'
-    commentURL?: string
     imageHostURL?: string
     customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string
