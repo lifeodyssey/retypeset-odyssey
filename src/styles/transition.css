@@ -1,6 +1,6 @@
 /* View Transition */
 ::view-transition-new(animation-theme-toggle) {
-  animation: reveal 1s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: reveal 0.75s cubic-bezier(0.645, 0.045, 0.355, 1);
   clip-path: inset(0 0 0 0);
   z-index: 99;
 }
