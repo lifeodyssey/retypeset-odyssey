@@ -3,7 +3,8 @@ import { gsap } from 'gsap'
 
 function setupPostPageAnimation() {
   const allElements = Array.from(document.querySelectorAll('#gsap-post-page-content > *, #gsap-post-page-tags, #waline'))
-  const tocListChildren = Array.from(document.querySelectorAll('#toc-list > *'))
+  const tocList = document.getElementById('toc-list')
+  const tocListChildren = tocList ? Array.from(tocList.children) : []
   const dateElement = document.getElementById('gsap-post-page-date')
   const backButton = document.getElementById('back-button')
   const tocIcon = document.getElementById('toc-icon')

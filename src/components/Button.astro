@@ -49,8 +49,9 @@ const nextUrl = useSupportedLangs
 
   <!-- Theme Toggle -->
   <button
+    id="theme-toggle-button"
     aria-label="Switch light/dark theme"
-    class="button-theme-toggle aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
   >
     <ThemeToggleIcon
       aria-hidden="true"
@@ -69,7 +70,7 @@ function updateTheme() {
   // Get current theme
   const isDark = document.documentElement.classList.contains('dark')
   // Update meta theme color
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+  const metaThemeColor = document.head.querySelector('meta[name="theme-color"]')
   if (metaThemeColor) {
     metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
   }
@@ -82,10 +83,10 @@ function updateTheme() {
 // Bind click event to the button
 function setupThemeToggle() {
   // Locate theme toggle button
-  const themeToggleButtons = document.querySelectorAll('.button-theme-toggle')
-  // Add click listener to each button
-  themeToggleButtons.forEach((button) => {
-    button.addEventListener('click', () => {
+  const themeToggleButton = document.getElementById('theme-toggle-button')
+  // Add click listener to the button
+  if (themeToggleButton) {
+    themeToggleButton.addEventListener('click', () => {
       // If browser doesn't support View Transitions API, update theme directly
       if (!document.startViewTransition) {
         updateTheme()
@@ -104,7 +105,7 @@ function setupThemeToggle() {
         document.documentElement.removeAttribute('data-theme-changing')
       })
     })
-  })
+  }
 }
 
 // Initialize click event (on first load or page transition)

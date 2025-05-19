@@ -112,7 +112,7 @@ function isCurrentDark() {
 function initTheme(doc = document) {
   const isDark = isCurrentDark()
   doc.documentElement.classList.toggle('dark', isDark)
-  const metaTheme = doc.querySelector('meta[name="theme-color"]')
+  const metaTheme = doc.head.querySelector('meta[name="theme-color"]')
   if (metaTheme) {
     metaTheme.setAttribute('content', isDark ? darkMode : lightMode)
   }

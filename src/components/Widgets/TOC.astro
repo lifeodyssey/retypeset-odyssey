@@ -154,7 +154,7 @@ function setupTOCHighlight() {
   if (!tocContent)
     return
 
-  const tocLinks = tocContent.querySelectorAll('a')
+  const tocLinks = tocContent.getElementsByTagName('a')
   if (tocLinks.length === 0)
     return
 
@@ -163,7 +163,7 @@ function setupTOCHighlight() {
 
   // Build mapping from heading IDs to TOC links
   const headingMap = new Map<string, HTMLAnchorElement>()
-  tocLinks.forEach((link) => {
+  Array.from(tocLinks).forEach((link) => {
     const id = link.getAttribute('href')?.substring(1)
     if (id)
       headingMap.set(id, link as HTMLAnchorElement)
