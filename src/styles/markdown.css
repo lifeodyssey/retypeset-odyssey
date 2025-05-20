@@ -56,8 +56,11 @@
 }
 
 /* Images */
+.heti :where(img) {
+  --at-apply: 'mx-auto cursor-zoom-in';
+}
 .heti :where(img:not(figure img)) {
-  --at-apply: 'my-6 mx-auto cursor-zoom-in';
+  --at-apply: 'my-6';
 }
 .heti :where(figure) {
   --at-apply: 'mx-auto my-6';
