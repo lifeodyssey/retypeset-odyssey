@@ -250,7 +250,7 @@ html.dark .heti :where(u) {
 }
 .heti :where(hr)::before {
   content: "***";
-  --at-apply: 'text-6 tracking-0.8em';
+  --at-apply: 'text-6 tracking-0.8em font-serif';
 }
 
 /* Bold */
