@@ -56,13 +56,3 @@ h4:hover .heading-anchor-link svg:hover {
 .highlight-hover::after {
   --at-apply: 'origin-bottom-right scale-x-0 transition-transform ease-out lg:duration-300';
 }
-
-/* Fix Highlight Position Issue on iOS */
-@supports (-webkit-touch-callout: none) {
-  .navbar-highlight-position-fix {
-    --at-apply: 'after:bottom-0.88em';
-  }
-  .footer-highlight-position-fix {
-    --at-apply: 'after:bottom-0.59em';
-  }
-}
