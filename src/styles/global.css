@@ -60,9 +60,9 @@ h4:hover .heading-anchor-link svg:hover {
 /* Fix Highlight Position Issue on iOS */
 @supports (-webkit-touch-callout: none) {
   .navbar-highlight-position-fix {
-    --at-apply: 'after:bottom-0.68em';
+    --at-apply: 'after:bottom-0.88em';
   }
   .footer-highlight-position-fix {
-    --at-apply: 'after:bottom-0.39em';
+    --at-apply: 'after:bottom-0.59em';
   }
 }
