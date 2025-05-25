@@ -16,15 +16,15 @@ export const langMap: Record<string, string[]> = {
 // Waline Language Map
 // https://waline.js.org/en/guide/features/i18n.html
 export const walineLocaleMap: Record<string, string> = {
-  'de': 'de',
-  'en': 'en',
+  'de': 'en-US', // fallback to English
+  'en': 'en-US',
   'es': 'es',
-  'fr': 'fr',
-  'ja': 'jp',
-  'ko': 'en', // Waline does not support Korean, using English as fallback
-  'pl': 'en', // Waline does not support Polish, using English as fallback
+  'fr': 'fr-FR',
+  'ja': 'jp-JP',
+  'ko': 'en-US', // fallback to English
+  'pl': 'en-US', // fallback to English
   'pt': 'pt-BR',
-  'ru': 'ru',
+  'ru': 'ru-RU',
   'zh': 'zh-CN',
   'zh-tw': 'zh-TW',
 }
