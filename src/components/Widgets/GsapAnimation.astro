@@ -90,8 +90,8 @@ function setupPostPageAnimation() {
   }
   else {
     // Post Content + Tags + Comments
-    // First 5 elements
-    gsap.to(allElements.slice(0, 5), {
+    // First 6 elements
+    gsap.to(allElements.slice(0, 6), {
       opacity: 1,
       y: 0,
       duration: 0.5,
@@ -99,13 +99,13 @@ function setupPostPageAnimation() {
       ease: 'power2.out',
       stagger: 0.05,
     })
-    // Rest elements as the 6th element
-    if (allElements.length > 5) {
-      gsap.to(allElements.slice(5), {
+    // Rest elements as the 7th element
+    if (allElements.length > 6) {
+      gsap.to(allElements.slice(6), {
         opacity: 1,
         y: 0,
         duration: 0.5,
-        delay: 0.2 + 0.05 * 5,
+        delay: 0.2 + 0.05 * 6,
         ease: 'power2.out',
       })
     }
