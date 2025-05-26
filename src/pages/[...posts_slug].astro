@@ -107,19 +107,17 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
   supportedLangs={supportedLangs}
 >
   <article class="heti mb-12.6">
-    <div class="relative">
-      <!-- Go Back Button On Desktop -->
-      <BackButton />
-      <!-- Title -->
-      <h1 class="post-title">
-        <span
-          transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
-          data-disable-theme-transition
-        >
-          {post.data.title}
-        </span>
-      </h1>
-    </div>
+    <!-- Go Back Button On Desktop -->
+    <BackButton />
+    <!-- Title -->
+    <h1 class="post-title">
+      <span
+        transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
+        data-disable-theme-transition
+      >
+        {post.data.title}
+      </span>
+    </h1>
 
     <!-- Date -->
     <div
