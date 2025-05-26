@@ -60,10 +60,10 @@ export default defineConfig({
     sitemap(),
     robotsTxt(),
     Compress({
-      CSS: false,
-      HTML: true, // Enable HTML compression only to remove comments
+      CSS: true,
+      HTML: true,
       Image: false,
-      JavaScript: false,
+      JavaScript: true,
       SVG: false,
     }),
   ],
