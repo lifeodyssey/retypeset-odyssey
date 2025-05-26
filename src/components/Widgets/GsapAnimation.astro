@@ -99,16 +99,16 @@ function setupPostPageAnimation() {
       ease: 'power2.out',
       stagger: 0.05,
     })
-    // Rest elements as the 8 element
-    // if (allElements.length > 7) {
-    //   gsap.from(allElements.slice(7), {
-    //     opacity: 0,
-    //     y: '3rem',
-    //     duration: 0.5,
-    //     delay: 0.2 + 0.05 * 5,
-    //     ease: 'power2.out',
-    //   })
-    // }
+    // Rest elements as the 8th element
+    if (allElements.length > 7) {
+      gsap.to(allElements.slice(7), {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        delay: 0.2 + 0.05 * 7,
+        ease: 'power2.out',
+      })
+    }
   }
 
   // Mobile Animation (for screens smaller than 1536px)
