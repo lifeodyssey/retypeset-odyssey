@@ -21,6 +21,12 @@ function setupBackButton() {
     if (window.history.length > 1) {
       window.history.back()
     }
+    else {
+      const siteTitleLink = document.getElementById('site-title-link')
+      if (siteTitleLink) {
+        siteTitleLink.click()
+      }
+    }
   })
 }
 
