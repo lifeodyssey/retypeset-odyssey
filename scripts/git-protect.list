@@ -1,0 +1,4 @@
+.cursor/
+src/config.ts
+src/content/
+src/i18n/ui.ts
