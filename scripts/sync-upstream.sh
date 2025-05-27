@@ -1,81 +1,82 @@
 #!/bin/bash
 # filepath: sync-upstream.sh
 
-# 用法: ./sync-upstream.sh <upstream/branch> <tmp_dir>
-# 示例: ./sync-upstream.sh upstream/master /tmp/astro-protect
+# Usage: ./sync-upstream.sh <upstream/branch> <tmp_dir>
+# Example: ./sync-upstream.sh upstream/master /tmp/astro-protect
 
 set -e
 
 ###########################
-# 配置区
-DEBUG=true  # 设置为 true 启用调试输出
-PROTECT_LIST="scripts/git-protect.list" # 保护文件列表路径
+# Configuration
+DEBUG=true  # Set to true to enable debug output
+PROTECT_LIST="scripts/git-protect.list"  # Path to the protected files list
 ###########################
 
 UPSTREAM_BRANCH="$1"
 TMP_DIR="$2"
 
-# 打印调试信息
+# Debug output function
 log_debug() {
   if [[ "$DEBUG" == true ]]; then
     echo -e "[DEBUG] $*"
   fi
 }
 
+# Validate arguments
 if [[ -z "$UPSTREAM_BRANCH" || -z "$TMP_DIR" ]]; then
-  echo "用法: $0 <upstream/branch> <tmp_dir>"
+  echo "Usage: $0 <upstream/branch> <tmp_dir>"
   exit 1
 fi
 
 if [[ ! -f "$PROTECT_LIST" ]]; then
-  echo "未找到 $PROTECT_LIST 文件"
+  echo "File not found: $PROTECT_LIST"
   exit 1
 fi
 
-log_debug "同步上游分支: $UPSTREAM_BRANCH"
-log_debug "临时目录: $TMP_DIR"
-log_debug "保护列表文件: $PROTECT_LIST"
+log_debug "Upstream branch: $UPSTREAM_BRANCH"
+log_debug "Temporary directory: $TMP_DIR"
+log_debug "Protection list file: $PROTECT_LIST"
 
-# 确保复制隐藏文件（如 .env）
+# Include hidden files (e.g., .env)
 shopt -s dotglob
 
-# 1. 备份需要保护的文件/文件夹
+# Step 1: Back up protected files and directories
 mkdir -p "$TMP_DIR"
 while IFS= read -r path || [[ -n "$path" ]]; do
   [[ -z "$path" ]] && continue
   [[ "${path:0:1}" == "#" ]] && continue
   if [[ -e "$path" ]]; then
-    log_debug "备份: $path"
+    log_debug "Backing up: $path"
     mkdir -p "$TMP_DIR/$(dirname "$path")"
     cp -r "$path" "$TMP_DIR/$(dirname "$path")/"
   else
-    log_debug "跳过不存在的路径: $path"
+    log_debug "Skipping non-existent path: $path"
   fi
 done < "$PROTECT_LIST"
 
-# 2. 用上游分支内容覆盖本地
-log_debug "获取上游分支 ${UPSTREAM_BRANCH%%/*}"
+# Step 2: Fetch and apply upstream content
+log_debug "Fetching from remote: ${UPSTREAM_BRANCH%%/*}"
 git fetch "${UPSTREAM_BRANCH%%/*}"
 
-log_debug "从 $UPSTREAM_BRANCH 覆盖当前目录内容"
+log_debug "Checking out from $UPSTREAM_BRANCH"
 git checkout "$UPSTREAM_BRANCH" -- .
 
-# 3. 恢复保护的文件/文件夹
+# Step 3: Restore protected files
 while IFS= read -r path || [[ -n "$path" ]]; do
   [[ -z "$path" ]] && continue
   [[ "${path:0:1}" == "#" ]] && continue
   if [[ -e "$TMP_DIR/$path" ]]; then
-    log_debug "恢复: $path"
+    log_debug "Restoring: $path"
     rm -rf "$path"
     mkdir -p "$(dirname "$path")"
     cp -r "$TMP_DIR/$path" "$path"
   else
-    log_debug "未找到备份，跳过: $path"
+    log_debug "No backup found, skipping: $path"
   fi
 done < "$PROTECT_LIST"
 
-# 4. 清理临时目录
-log_debug "删除临时目录: $TMP_DIR"
+# Step 4: Clean up
+log_debug "Removing temporary directory: $TMP_DIR"
 rm -rf "$TMP_DIR"
 
-echo "✅ 同步完成，已保留保护文件。请检查后 git add/commit/push。"
+echo "✅ Sync complete. Protected files have been restored. Please review and git add/commit/push."
