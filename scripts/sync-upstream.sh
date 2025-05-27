@@ -2,7 +2,7 @@
 # filepath: sync-upstream.sh
 
 # 用法: ./sync-upstream.sh <upstream/branch> <tmp_dir>
-# 示例: ./sync-upstream.sh upstream/main /tmp/astro-protect
+# 示例: ./sync-upstream.sh upstream/master /tmp/astro-protect
 
 set -e
 
