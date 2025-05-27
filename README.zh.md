@@ -81,7 +81,7 @@ Retypeset 会不定期发布 [新功能](https://github.com/radishzzz/astro-them
 
 如需了解如何在**保留自定义内容的同时安全地拉取上游更新**，请参阅：
 
-👉 [`scripts/README.md`](./scripts/README.md) 文件
+👉 [`scripts/README.md`](./scripts/README-zh.md) 文件
 
 ## 鸣谢
 
