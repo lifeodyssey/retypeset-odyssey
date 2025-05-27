@@ -50,7 +50,7 @@ bash scripts/sync-upstream.sh upstream/master /tmp/blog-sync
 
 * ✅ **Use Git Bash** to run the above commands;
 * ❌ **Avoid using cmd.exe or PowerShell**, as they may cause compatibility issues with file paths;
-* For best results, stick with Git Bash even on Windows.
+* For best results, stick with Git Bash even on Windows.Use the `/c/...` format for path arguments and avoid Windows-style paths.
 
 ---
 

@@ -46,7 +46,7 @@ bash scripts/sync-upstream.sh upstream/master /tmp/blog-sync
 
 * **请使用 Git Bash** 执行上述命令；
 * ❌ **不建议使用 cmd.exe 或 PowerShell**，以避免路径兼容与权限问题；
-* 如需使用 Windows 运行脚本，推荐 Git Bash。
+* 如需使用 Windows 运行脚本，推荐 Git Bash。路径参数使用 `/c/...` 格式，避免 Windows 风格路径。
 
 ---
 
