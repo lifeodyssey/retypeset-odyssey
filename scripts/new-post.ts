@@ -47,6 +47,7 @@ toc: ${themeConfig.global.toc}
 lang: ''
 abbrlink: ''
 ---
+
 `
 
 // Write to file

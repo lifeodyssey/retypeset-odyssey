@@ -11,9 +11,9 @@
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "comments": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/assets/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/assets/waline/waline.js",
+    "new-post": "esno scripts/new-post.ts",
     "update-theme": "esno scripts/update-theme.ts",
-    "new-post": "esno scripts/new-post.ts"
+    "update-vendors": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/vendors/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/vendors/waline/waline.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
@@ -47,7 +47,7 @@
     "@astrojs/check": "^0.9.4",
     "@types/hast": "^3.0.4",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^22.15.23",
+    "@types/node": "^22.15.24",
     "@types/sanitize-html": "^2.16.0",
     "@unocss/eslint-plugin": "66.1.2",
     "@unocss/preset-attributify": "66.1.2",
