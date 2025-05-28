@@ -143,6 +143,8 @@ window
 </script>
 
 <!-- Google Analytics -->
+<!-- Define gtag on window object for proper Partytown forwarding -->
+<!-- See https://github.com/QwikDev/partytown/issues/382 -->
 {googleAnalyticsID && (
   <>
     <script
@@ -156,18 +158,18 @@ window
       define:vars={{ googleAnalyticsID, customGoogleAnalyticsJS }}
     >
       window.dataLayer = window.dataLayer || []
-      function gtag(...args) {
-        dataLayer.push(args)
+      window.gtag = function () {
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments)
       }
-      gtag('js', new Date())
-
+      window.gtag('js', new Date())
       if (customGoogleAnalyticsJS) {
-        gtag('config', googleAnalyticsID, {
+        window.gtag('config', googleAnalyticsID, {
           transport_url: new URL(customGoogleAnalyticsJS).origin,
         })
       }
       else {
-        gtag('config', googleAnalyticsID)
+        window.gtag('config', googleAnalyticsID)
       }
     </script>
   </>
