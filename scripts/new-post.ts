@@ -7,9 +7,9 @@ import { themeConfig } from '../src/config'
 // pnpm new-post first-post
 // pnpm new-post first-post.md
 // pnpm new-post first-post.mdx
-// pnpm new-post 2025/03/post
-// pnpm new-post 2025/03/post.md
-// pnpm new-post 2025/03/post.mdx
+// pnpm new-post 2025/03/first-post
+// pnpm new-post 2025/03/first-post.md
+// pnpm new-post 2025/03/first-post.mdx
 
 // Process file path
 const rawPath = process.argv[2] || 'new-post'

@@ -1,8 +1,6 @@
 import { execSync } from 'node:child_process'
 import process from 'node:process'
 
-// pnpm update-theme
-
 // Check and set up the remote repository
 try {
   execSync('git remote get-url upstream', { stdio: 'ignore' })
@@ -16,7 +14,7 @@ try {
   execSync('git fetch upstream', { stdio: 'inherit' })
 
   const beforeHash = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim()
-  execSync('git merge upstream/main', { stdio: 'inherit' })
+  execSync('git merge upstream/master', { stdio: 'inherit' })
   const afterHash = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim()
 
   if (beforeHash === afterHash) {
