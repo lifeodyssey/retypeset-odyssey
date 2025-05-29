@@ -1,8 +1,8 @@
-<img alt="Cover Image" src="assets/retypeset-zh-desktop.webp"/>
-<img alt="Cover Image" src="assets/retypeset-zh-mobile.webp"/>
+<img alt="Cover Image" src="images/retypeset-zh-desktop.webp"/>
+<img alt="Cover Image" src="images/retypeset-zh-mobile.webp"/>
 
 <div align="center">
-  <a title="en" href="README.md">
+  <a title="en" href="https://github.com/radishzzz/astro-theme-retypeset?tab=readme-ov-file#retypeset">
     <img src="https://img.shields.io/badge/-English-545759?style=for-the-badge" alt="English">
   </a>
   <picture>
@@ -41,35 +41,43 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 ## 性能
 
+<br>
 <p align="center">
-  <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2F">
-    <img width="710" alt="Retypeset Lighthouse Score" src="assets/retypeset-lighthouse-score.svg">
+  <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2F&form_factor=desktop">
+    <img width="710" alt="Retypeset Lighthouse Score" src="images/retypeset-lighthouse-score.svg">
   <a>
 </p>
 
-## 部署
+## 开始
 
-1. 点击 [`Fork`](https://github.com/radishzzz/astro-theme-retypeset/fork) 克隆本仓库。
+1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) 此仓库，或使用此模版创建新仓库。
+2. 在终端执行以下指令：
 
-2. 点击下方 `Deploy to Netlify` 或 `Deploy to Vercel`
+   ```bash
+   # 克隆仓库
+   git clone <仓库地址>
 
-&emsp;[![Deploy to Netlify](assets/deploy-netlify.svg)](https://app.netlify.com/start)
-[![Deploy to Vercel](assets/deploy-vercel.svg)](https://vercel.com/new)
+   # 进入项目目录
+   cd <仓库名称>
 
-3. 选择对应仓库，点击 `Deploy` 即可。
+   # 全局安装 pnpm（如果未安装）
+   npm install -g pnpm
 
-其它平台请参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
+   # 安装依赖
+   pnpm install
+
+   # 启动开发服务器
+   pnpm dev
+   ```
+
+3. 参考 [主题上手指南](https://retypeset.radishzz.cc/posts/theme-guide/)，自定义你的博客并创建新文章。
+4. 参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)，将博客部署至 Netlify、Vercel 等平台。
+
+&emsp;[![Deploy to Netlify](images/deploy-netlify.svg)](https://app.netlify.com/start) [![Deploy to Vercel](images/deploy-vercel.svg)](https://vercel.com/new)
 
 ## 更新
 
-1. 参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) 在克隆仓库中执行 `Sync fork` 同步最新分支。
-
-2. 不要点击 `Discard Changes` 放弃你的更改。
-
-## 文档
-
-- [主题上手指南](https://retypeset.radishzz.cc/posts/theme-guide/)
-- [主题配置文件](https://github.com/radishzzz/astro-theme-retypeset/blob/master/src/config.ts)
+Retypeset 会不定期发布 [新功能](https://github.com/radishzzz/astro-theme-retypeset/issues/18)，执行 `pnpm update-theme` 即可更新主题。如果遇到合并冲突，请参考 [此视频](https://youtu.be/lz5OuKzvadQ?si=sH_ALNgqxrYqNVQT) 手动解决。
 
 ## 鸣谢
 

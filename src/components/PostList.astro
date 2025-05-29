@@ -1,9 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { defaultLocale } from '@/config'
 import { generateDescription } from '@/utils/description'
-import { isTagPage } from '@/utils/page'
+import { isHomePage } from '@/utils/page'
 
 type Post = CollectionEntry<'posts'> & {
   remarkPluginFrontmatter: {
@@ -12,7 +13,7 @@ type Post = CollectionEntry<'posts'> & {
 }
 
 const { posts, lang, pinned = false } = Astro.props
-const isTag = isTagPage(Astro.url.pathname)
+const isHome = isHomePage(Astro.url.pathname)
 
 export interface Props {
   posts: Post[]
@@ -32,40 +33,36 @@ function getPostPath(post: Post) {
   {posts.map(post => (
     <li
       class="mb-5.5"
-      lg={isTag ? '' : 'mb-10'}
+      lg={isHome ? 'mb-10' : ''}
     >
 
       {/* post title */}
-      <h3 class="inline">
+      <h3 class="inline transition-colors hover:c-primary">
         <a
-          class="hover:c-primary"
-          lg={isTag ? '' : 'font-medium text-4.5'}
+          class="cjk:tracking-0.02em"
+          lg={isHome ? 'font-medium text-4.5' : ''}
           href={getPostPath(post)}
           transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
-          data-disable-transition-on-theme
+          data-disable-theme-transition
         >
           {post.data.title}
         </a>
 
           {/* pinned icon */}
           {pinned && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+            <PinIcon
               aria-hidden="true"
-              class="ml-1 inline-block aspect-square w-3.7 shrink-0 translate-y--0.45 lg:(ml-1.2 w-4.1)"
+              class="ml-0.25em inline-block aspect-square w-0.98em translate-y--0.1em lg:(w-1.05em translate-y--0.15em)"
               fill="currentColor"
-            >
-              <path d="M16.5 23.6c.6-6.1 1.1-8.6 7.2-15.5L15.9.4C9 6.5 6.5 7 .4 7.5l7.4 7.4-6.4 7 .7.7 7-6.4zm-.8-21.3 6 6c-5 6.1-5.7 8.1-6.2 12.2L3.4 8.5C7.5 8 9.5 7.3 15.6 2.3Z" />
-            </svg>
+            />
           )}
       </h3>
 
       {/* mobile post time */}
       <div
-        class="text-3.5 leading-6.875 font-time lg:hidden"
+        class="py-0.8 text-3.5 font-time lg:hidden"
         transition:name={`time-${post.data.abbrlink || post.id}-${lang}`}
-        data-disable-transition-on-theme
+        data-disable-theme-transition
       >
         <PostDate
           date={post.data.published}
@@ -74,7 +71,7 @@ function getPostPath(post: Post) {
       </div>
 
       {/* desktop post time */}
-      <div class="hidden text-3.65 leading-6.875 font-time lg:(ml-2.5 inline)">
+      <div class="hidden text-3.65 font-time lg:(ml-2.5 inline)">
         <PostDate
           date={post.data.published}
           minutes={post.remarkPluginFrontmatter.minutes}
@@ -82,10 +79,10 @@ function getPostPath(post: Post) {
       </div>
 
       {/* desktop post description */}
-      {!isTag && (
+      {isHome && (
         <div
           class="heti hidden"
-          lg="mt-2 block"
+          lg="mt-2.25 block"
         >
           <p>{generateDescription(post, 'list')}</p>
         </div>

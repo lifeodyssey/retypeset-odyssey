@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content'
-import { generateDescription } from '@/utils/description'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
+import { generateDescription } from '@/utils/description'
 
 // eslint-disable-next-line antfu/no-top-level-await
 const blogEntries = await getCollection('posts')
@@ -25,7 +25,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
     title: page.title,
     description: page.description,
     logo: {
-      path: './public/icon/og-logo.png', // Required local path and PNG format
+      path: './public/icons/og-logo.png', // Required local path and PNG format
       size: [250],
     },
     border: {
@@ -46,10 +46,10 @@ export const { getStaticPaths, GET } = OGImageRoute({
       },
     },
     fonts: [
-      'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/SubsetOTF/SC/NotoSansSC-Bold.otf',
-      'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf',
-      // 'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Serif/SubsetOTF/SC/NotoSerifSC-Bold.otf',
-      // 'https://raw.githubusercontent.com/notofonts/noto-cjk/main/Serif/SubsetOTF/SC/NotoSerifSC-Regular.otf',
+      'https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/SubsetOTF/SC/NotoSansSC-Bold.otf',
+      'https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf',
+      // 'https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@main/Serif/SubsetOTF/SC/NotoSerifSC-Bold.otf',
+      // 'https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@main/Serif/SubsetOTF/SC/NotoSerifSC-Regular.otf',
     ],
     bgGradient: [[242, 241, 245]],
   }),

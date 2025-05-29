@@ -33,8 +33,9 @@ export interface ThemeConfig {
     moreLocales: typeof supportedLangs[number][]
     fontStyle: 'sans' | 'serif'
     dateFormat: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MONTH DAY YYYY' | 'DAY MONTH YYYY'
-    titleGap: 1 | 2 | 3
+    toc: boolean
     katex: boolean
+    reduceMotion: boolean
   }
 
   comment: {
@@ -84,7 +85,6 @@ export interface ThemeConfig {
 
   preload: {
     linkPrefetch: 'hover' | 'tap' | 'viewport' | 'load'
-    commentURL?: string
     imageHostURL?: string
     customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string

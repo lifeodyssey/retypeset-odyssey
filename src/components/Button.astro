@@ -1,4 +1,6 @@
 ---
+import LanguageSwitcherIcon from '@/assets/icons/language-switcher.svg'
+import ThemeToggleIcon from '@/assets/icons/theme-toggle.svg'
 import { moreLocales, themeConfig } from '@/config'
 import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
 import { isPostPage, isTagPage } from '@/utils/page'
@@ -7,7 +9,10 @@ interface Props {
   supportedLangs: string[]
 }
 
-const { light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
+const {
+  light: { background: lightMode },
+  dark: { background: darkMode },
+} = themeConfig.color
 
 const { supportedLangs } = Astro.props
 const currentPath = Astro.url.pathname
@@ -20,15 +25,14 @@ const showLanguageSwitcher = moreLocales.length > 0
 const useSupportedLangs = isPost || (isTag && supportedLangs.length > 0)
 // Choose a language switch list according to the page type
 const nextUrl = useSupportedLangs
-  ? getNextSupportedLangPath(currentPath, supportedLangs) // Switch between supported languages
-  : getNextGlobalLangPath(currentPath) // Switch between all languages
+  ? getNextSupportedLangPath(currentPath, supportedLangs) // Switch between supported languages in post/tag page
+  : getNextGlobalLangPath(currentPath) // Switch between all languages in other pages
 ---
 
 <div
   class:list={[
-  'absolute flex gap-6 top-14.6 right-7.25vw min-[823px]:max-[1024px]:right-[calc(50vw-22rem)]',
-  '[@supports(-webkit-touch-callout:none)]:top-13.6', // fix position issue on ios
-  'lg:(fixed w-14rem top-auto bottom-47 right-[max(5.625rem,calc(50vw-34.375rem))])',
+  'absolute right-7.25vw top-14.6 flex gap-6 min-[823px]:max-[1024px]:right-[calc(50vw-22rem)]',
+  'lg:(fixed bottom-48 right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
 ]}
 >
   <!-- Language Switcher -->
@@ -38,36 +42,31 @@ const nextUrl = useSupportedLangs
       class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
       aria-label="Switch website language"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
+      <LanguageSwitcherIcon
         aria-hidden="true"
-        class="h-full w-full"
         fill="currentColor"
-      >
-        <path d="M19.1 21 12.4 2h-1.2L4.6 21l-2.5.2v.8h6.3v-.8L5.6 21l2-5.9h7.5l2 5.9-3.3.2v.8h8.1v-.8zM7.9 14.3l3.4-10.1 3.5 10.1z" />
-      </svg>
+      />
     </a>
   )}
 
   <!-- Theme Toggle -->
   <button
+    id="theme-toggle-button"
     aria-label="Switch light/dark theme"
-    class="button-theme-toggle aspect-square w-4.2 c-secondary active:scale-90 hover:c-primary"
+    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+    <ThemeToggleIcon
       aria-hidden="true"
       fill="currentColor"
-    >
-      <path d="M12 1C5.9 1 1 5.9 1 12s4.9 11 11 11 11-4.9 11-11S18.1 1 12 1m0 20c-5.8 0-10.5-4-10.5-9S6.2 3 12 3s10.5 4 10.5 9-4.7 9-10.5 9" />
-    </svg>
+    />
   </button>
 </div>
 
 <!-- Theme Toggle Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<script is:inline define:vars={{ lightMode, darkMode }}>
+<script
+  is:inline
+  define:vars={{ lightMode, darkMode }}
+>
 // Update theme
 function updateTheme() {
   // Toggle website theme
@@ -76,7 +75,7 @@ function updateTheme() {
   // Get current theme
   const isDark = document.documentElement.classList.contains('dark')
   // Update meta theme color
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+  const metaThemeColor = document.head.querySelector('meta[name="theme-color"]')
   if (metaThemeColor) {
     metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
   }
@@ -89,29 +88,29 @@ function updateTheme() {
 // Bind click event to the button
 function setupThemeToggle() {
   // Locate theme toggle button
-  const themeToggleButtons = document.querySelectorAll('.button-theme-toggle')
-  // Add click listener to each button
-  themeToggleButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      // If browser doesn't support View Transitions API, update theme directly
-      if (!document.startViewTransition) {
+  const themeToggleButton = document.getElementById('theme-toggle-button')
+  // Add click listener to the button
+  if (themeToggleButton) {
+    themeToggleButton.addEventListener('click', () => {
+      // If reduceMotion is enabled or browser doesn't support View Transitions API, update theme directly
+      if (document.documentElement.classList.contains('reduce-motion') || !document.startViewTransition) {
         updateTheme()
         return
       }
 
       // Temporarily add markers during animation to implement view transition and disable CSS transitions
-      document.documentElement.style.setProperty('view-transition-name', 'theme-transition')
-      document.documentElement.setAttribute('data-theme-transition', '')
+      document.documentElement.style.setProperty('view-transition-name', 'animation-theme-toggle')
+      document.documentElement.setAttribute('data-theme-changing', '')
 
       // If browser supports View Transitions API, use it to update theme
       const themeTransition = document.startViewTransition(updateTheme)
       // Remove markers after animation
       themeTransition.finished.then(() => {
         document.documentElement.style.removeProperty('view-transition-name')
-        document.documentElement.removeAttribute('data-theme-transition')
+        document.documentElement.removeAttribute('data-theme-changing')
       })
     })
-  })
+  }
 }
 
 // Initialize click event (on first load or page transition)
