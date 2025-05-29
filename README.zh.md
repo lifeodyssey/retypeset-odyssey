@@ -69,6 +69,7 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
    # 启动开发服务器
    pnpm dev
    ```
+
 3. 参考 [主题上手指南](https://retypeset.radishzz.cc/posts/theme-guide/)，自定义你的博客并创建新文章。
 4. 参考 [Astro 部署指南](https://docs.astro.build/zh-cn/guides/deploy/)，将博客部署至 Netlify、Vercel 等平台。
 
@@ -76,7 +77,7 @@ Retypeset 是一款基于 [Astro](https://astro.build/) 框架的静态博客主
 
 ## 更新
 
-Retypeset 会不定期发布 [新功能](https://github.com/radishzzz/astro-theme-retypeset/issues/18)。你可以参考 [GitHub 文档](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)，在仓库中执行 `Sync fork` 以同步最新分支。不要点击 `Discard Changes`，否则会丢失你的更改。
+Retypeset 会不定期发布 [新功能](https://github.com/radishzzz/astro-theme-retypeset/issues/18)，执行 `pnpm update-theme` 即可更新主题。如果遇到合并冲突，请参考 [此视频](https://youtu.be/lz5OuKzvadQ?si=sH_ALNgqxrYqNVQT) 手动解决。
 
 ## 鸣谢
 

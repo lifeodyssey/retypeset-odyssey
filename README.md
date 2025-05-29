@@ -69,6 +69,7 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
    # Start the development server
    pnpm dev
    ```
+
 3. Refer to the [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/) to customize your blog and create new articles.
 4. Refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) to deploy your blog to Netlify, Vercel, or other platforms.
 
@@ -76,7 +77,7 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 
 ## Updates
 
-Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time. You can refer to the [GitHub Docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) and run `Sync fork` in your repository to sync with the latest branch. Do not click `Discard Changes`, or you will lose your modifications.
+Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time. Simply run `pnpm update-theme` to update the theme. If you encounter merge conflicts, please refer to [this video](https://youtu.be/lz5OuKzvadQ?si=sH_ALNgqxrYqNVQT) for manual resolution.
 
 ## Credits
 
