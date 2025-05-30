@@ -46,6 +46,9 @@ const shouldRender = Boolean(repo && repoID && categoryID)
     return isDark
       ? `${siteUrl}/vendors/giscus/theme-dark.css`
       : `${siteUrl}/vendors/giscus/theme-light.css`
+      // For local development
+      // ? `http://localhost:4321/vendors/giscus/theme-dark.css`
+      // : `http://localhost:4321/vendors/giscus/theme-light.css`
   }
 
   function setupGiscus() {

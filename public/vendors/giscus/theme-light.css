@@ -4,6 +4,20 @@
  */
 
  main {
+  /* Custom Theme Colors */
+  --secondary-color: oklch(40% 0.005 298);
+  --secondary-color-25: oklch(40% 0.005 298 / 25%);
+  --background-color: oklch(96% 0.005 298);
+
+  --color-fg-default: var(--secondary-color);
+  --color-canvas-default: var(--background-color);
+  --color-canvas-overlay: var(--background-color);
+  --color-canvas-inset: var(--background-color);
+  --color-canvas-subtle: var(--background-color);
+  --color-accent-fg: oklch(48.8% 0.243 264.376);
+  --color-accent-emphasis: oklch(48.8% 0.243 264.376);
+
+  /* Offical Theme Colors */
   --color-prettylights-syntax-comment: #6e7781;
   --color-prettylights-syntax-constant: #0550ae;
   --color-prettylights-syntax-entity: #8250df;
@@ -60,18 +74,18 @@
   --color-segmented-control-bg: #eaeef2;
   --color-segmented-control-button-bg: #fff;
   --color-segmented-control-button-selected-border: #8c959f;
-  --color-fg-default: #1F2328;
+  /* --color-fg-default: var(--secondary-color); */
   --color-fg-muted: #656d76;
   --color-fg-subtle: #6e7781;
-  --color-canvas-default: #fff;
-  --color-canvas-overlay: #fff;
-  --color-canvas-inset: #f6f8fa;
-  --color-canvas-subtle: #f6f8fa;
+  /* --color-canvas-default: var(--background-color);
+  --color-canvas-overlay: var(--background-color);
+  --color-canvas-inset: var(--background-color);
+  --color-canvas-subtle: var(--background-color); */
   --color-border-default: #d0d7de;
   --color-border-muted: hsl(210deg 18% 87% / 100%);
   --color-neutral-muted: rgb(175 184 193 / 20%);
-  --color-accent-fg: #0969da;
-  --color-accent-emphasis: #0969da;
+  /* --color-accent-fg: oklch(48.8% 0.243 264.376);
+  --color-accent-emphasis: oklch(48.8% 0.243 264.376); */
   --color-accent-muted: rgb(84 174 255 / 40%);
   --color-accent-subtle: #ddf4ff;
   --color-success-fg: #1a7f37;
@@ -96,4 +110,67 @@ main .pagination-loader-container {
 
 main .gsc-loading-image {
   background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
+}
+
+/* Smooth Font */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* All Border Color */
+*:not(.BtnGroup-item) {
+  border-color: var(--secondary-color-25)!important;
+}
+
+/* No Giscus Copyright and Avatar Line */
+.gsc-tl-line,
+.gsc-left-header em {
+  display: none;
+}
+
+/* Comments Count Font No Underline and Small Size */
+h4.gsc-comments-count-separator,
+h4.gsc-replies-count {
+  color: var(--secondary-color);
+  font-size: 0.875rem;
+}
+
+/* Oldest and Newest Buttons Style */
+.BtnGroup-item,
+.BtnGroup-item.BtnGroup-item--selected {
+  background-color: var(--background-color);
+}
+.BtnGroup-item.BtnGroup-item--selected {
+  border-color: var(--secondary-color-25)!important;
+}
+.BtnGroup-item:not(.BtnGroup-item--selected):hover {
+  border-color: var(--secondary-color-25)!important;
+}
+.BtnGroup-item button.btn:hover {
+  background-color: var(--background-color);
+}
+
+/* Reply Time No Underline */
+.gsc-comment-author a:has(time),
+.gsc-reply-author a:has(time) {
+  text-decoration: none;
+  font-size: 0.75rem;
+}
+
+/* Comments Count No Underline */
+.gsc-comments-count a {
+  text-decoration: none!important;
+}
+
+/* Social Reactions Icons */
+.gsc-social-reaction-summary-item.has-reacted {
+  background-color: var(--background-color);
+}
+.gsc-social-reaction-summary-item.has-reacted:hover {
+  background-color: var(--background-color)!important;
+  border-color: var(--color-accent-fg)!important;
+}
+.color-bg-info {
+  background-color: var(--background-color);
 }
