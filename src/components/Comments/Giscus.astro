@@ -41,6 +41,13 @@ const shouldRender = Boolean(repo && repoID && categoryID)
       siteUrl,
     }}
   >
+  function getThemeUrl() {
+    const isDark = document.documentElement.classList.contains('dark')
+    return isDark
+      ? `${siteUrl}/vendors/giscus/theme-dark.css`
+      : `${siteUrl}/vendors/giscus/theme-light.css`
+  }
+
   function setupGiscus() {
     const giscusContainer = document.getElementById('giscus')
     if (!giscusContainer)
@@ -64,13 +71,14 @@ const shouldRender = Boolean(repo && repoID && categoryID)
     const dataAttributes = {
       repo,
       repoId: repoID,
+      category: undefined,
       categoryId: categoryID,
       mapping,
       strict,
       reactionsEnabled,
       emitMetadata,
       inputPosition,
-      theme: `${siteUrl}/vendors/giscus/theme.css`,
+      theme: getThemeUrl(),
       lang: currentGiscusLang,
     }
 
@@ -81,10 +89,32 @@ const shouldRender = Boolean(repo && repoID && categoryID)
     // Apply all attributes
     Object.assign(script.dataset, dataAttributes)
 
-    giscusContainer.appendChild(script)
+    try {
+      giscusContainer.appendChild(script)
+    }
+    catch (error) {
+      console.error('Failed to setup Giscus:', error)
+    }
+  }
+
+  function updateGiscusTheme() {
+    const iframe = document.querySelector('.giscus-frame')
+    if (!iframe || !iframe.contentWindow)
+      return
+
+    try {
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: getThemeUrl() } } },
+        'https://giscus.app',
+      )
+    }
+    catch (error) {
+      console.error('Failed to update Giscus theme:', error)
+    }
   }
 
   setupGiscus()
   document.addEventListener('astro:page-load', setupGiscus)
+  document.addEventListener('theme-changed', updateGiscusTheme)
   </script>
 )}
