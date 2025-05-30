@@ -36,7 +36,7 @@ export const giscusLocaleMap: Record<string, string> = {
   'en': 'en',
   'es': 'es',
   'fr': 'fr',
-  'ja': 'jp',
+  'ja': 'ja',
   'ko': 'ko',
   'pl': 'pl',
   'pt': 'pt',
