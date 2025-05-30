@@ -5,7 +5,6 @@ import {
   presetWind3,
   transformerDirectives,
   transformerVariantGroup,
-  type Preset,
 } from 'unocss'
 import presetTheme from 'unocss-preset-theme'
 import { themeConfig } from './src/config.ts'

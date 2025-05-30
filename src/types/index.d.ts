@@ -40,21 +40,22 @@ export interface ThemeConfig {
 
   comment: {
     enabled: boolean
-    provider?: 'waline' | 'giscus'
     waline?: {
       serverURL?: string
       emoji?: string[]
       search?: boolean
       imageUploader?: boolean
-    },
+    }
     giscus?: {
-      repo: string
-      repoID: string
-      category: string
-      categoryID: string
-      mapping: 'pathname' | 'url' | 'title'
-      inputPosition: 'top' | 'bottom'
-      loading: 'lazy' | 'embed'
+      repo?: string
+      repoID?: string
+      category?: string
+      categoryID?: string
+      mapping?: 'pathname' | 'url' | 'title' | 'og:title'
+      strict?: '0' | '1'
+      reactionsEnabled?: '0' | '1'
+      emitMetadata?: '0' | '1'
+      inputPosition?: 'top' | 'bottom'
     }
   }
 

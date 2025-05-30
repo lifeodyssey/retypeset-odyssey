@@ -29,13 +29,20 @@ export const walineLocaleMap: Record<string, string> = {
   'zh-tw': 'zh-TW',
 }
 
+// Giscus Language Map
+// https://giscus.app/
 export const giscusLocaleMap: Record<string, string> = {
-  'zh': 'zh-CN',
-  'zh-tw': 'zh-TW',
-  'ja': 'ja',
+  'de': 'de',
   'en': 'en',
   'es': 'es',
+  'fr': 'fr',
+  'ja': 'jp',
+  'ko': 'ko',
+  'pl': 'pl',
+  'pt': 'pt',
   'ru': 'ru',
+  'zh': 'zh-CN',
+  'zh-tw': 'zh-TW',
 }
 
 // Supported Languages
