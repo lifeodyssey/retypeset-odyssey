@@ -71,6 +71,19 @@ export const themeConfig: ThemeConfig = {
   comment: {
     // enable comment system
     enabled: true, // true, false
+    // giscus
+    // https://giscus.app/
+    giscus: {
+      // repo: 'radishzzz/comment-giscus',
+      repoID: 'R_kgDOOy1K0w',
+      category: 'Announcements',
+      categoryID: 'DIC_kwDOOy1K084CqwuZ',
+      mapping: 'pathname',
+      strict: '0',
+      reactionsEnabled: '1',
+      emitMetadata: '0',
+      inputPosition: 'bottom',
+    },
     // waline
     // https://waline.js.org/en/
     waline: {
@@ -86,19 +99,6 @@ export const themeConfig: ThemeConfig = {
       search: false, // true, false
       // image uploader
       imageUploader: false, // true, false
-    },
-    // giscus
-    // https://giscus.app/
-    giscus: {
-      // repo: 'radishzzz/comment-giscus',
-      repoID: 'R_kgDOOy1K0w',
-      category: 'Announcements',
-      categoryID: 'DIC_kwDOOy1K084CqwuZ',
-      mapping: 'pathname',
-      strict: '0',
-      reactionsEnabled: '1',
-      emitMetadata: '0',
-      inputPosition: 'bottom',
     },
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
