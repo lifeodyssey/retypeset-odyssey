@@ -6,16 +6,16 @@
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && pnpm apply-lqip",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "new-post": "esno scripts/new-post.ts",
     "format-posts": "esno scripts/format-posts.ts",
-    "update-theme": "esno scripts/update-theme.ts",
     "generate-lqip": "esno scripts/generate-lqip-map.ts",
-    "add-lqip": "esno scripts/add-lqip.ts",
+    "apply-lqip": "esno scripts/apply-lqip.ts",
+    "update-theme": "esno scripts/update-theme.ts",
     "update-vendors": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/vendors/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/vendors/waline/waline.js"
   },
   "dependencies": {
