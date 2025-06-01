@@ -1,10 +1,111 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import quantize from '@lokesh.dhakar/quantize'
 import glob from 'fast-glob'
+import { getPixels } from 'ndarray-pixels'
 import sharp from 'sharp'
-import { rgbToOkLab } from '../src/plugins/lqip/color-convert.mjs'
-import { getPalette } from '../src/plugins/lqip/thief.mjs'
+
+// 从color-convert.mjs内联的代码pnpm depcheck
+function rgbToOkLab(rgb: { r: number, g: number, b: number }) {
+  return rgb_to_oklab(rgb)
+}
+
+function rgb_to_oklab(c: { r: number, g: number, b: number }) {
+  const r = gamma_inv(c.r / 255)
+  const g = gamma_inv(c.g / 255)
+  const b = gamma_inv(c.b / 255)
+
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b)
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b)
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b)
+
+  return {
+    L: l * +0.2104542553 + m * +0.793617785 + s * -0.0040720468,
+    a: l * +1.9779984951 + m * -2.428592205 + s * +0.4505937099,
+    b: l * +0.0259040371 + m * +0.7827717662 + s * -0.808675766,
+  }
+}
+
+function gamma_inv(x: number): number {
+  return x >= 0.04045 ? ((x + 0.055) / (1.055)) ** 2.4 : x / 12.92
+}
+
+// 从thief.mjs内联的代码
+function createPixelArray(pixels: Uint8Array, pixelCount: number, quality: number): number[][] {
+  const pixelArray: number[][] = []
+
+  for (let i = 0; i < pixelCount; i += quality) {
+    const offset = i * 4
+    const r = pixels[offset]!
+    const g = pixels[offset + 1]!
+    const b = pixels[offset + 2]!
+
+    // MODIFIED FROM ORIGINAL: REMOVE FILTER
+    // If pixel is mostly opaque and not white
+    // if ((typeof a === 'undefined' || a >= 125) && !(r > 250 && g > 250 && b > 250))
+    pixelArray.push([r, g, b])
+  }
+
+  return pixelArray
+}
+
+function validateOptions(options: { colorCount?: number, quality?: number }) {
+  let { colorCount, quality } = options
+
+  if (typeof colorCount === 'undefined' || !Number.isInteger(colorCount)) {
+    colorCount = 10
+  }
+  else if (colorCount === 1) {
+    throw new Error(
+      '`colorCount` should be between 2 and 20. To get one color, call `getColor()` instead of `getPalette()`',
+    )
+  }
+  else {
+    colorCount = Math.max(colorCount, 2)
+    colorCount = Math.min(colorCount, 20)
+  }
+
+  if (
+    typeof quality === 'undefined'
+    || !Number.isInteger(quality)
+    || quality < 1
+  ) {
+    quality = 10
+  }
+
+  return { colorCount, quality }
+}
+
+interface NdArray {
+  data: Uint8Array
+  shape: number[]
+}
+
+async function loadImg(img: string): Promise<NdArray> {
+  const buffer = await sharp(img).toBuffer()
+  const metadata = await sharp(buffer).metadata()
+  const result = await getPixels(buffer, metadata.format as string)
+  return result
+}
+
+function getPalette(img: string, colorCount = 10, quality = 10): Promise<number[][]> {
+  const options = validateOptions({ colorCount, quality })
+
+  return loadImg(img).then((imgData) => {
+    const pixelCount = imgData.shape[0] * imgData.shape[1]
+    const pixelArray = createPixelArray(
+      imgData.data,
+      pixelCount,
+      options.quality,
+    )
+
+    const cmap = quantize(pixelArray, options.colorCount)
+    const palette = cmap ? cmap.palette() : null
+
+    return palette || []
+  })
+}
 
 // 获取项目根目录
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -13,7 +114,7 @@ const distDir = path.join(rootDir, 'dist')
 const assetsDir = path.join(rootDir, 'src', 'assets')
 
 // LQIP生成逻辑从src/plugins/lqip/lqip.mjs中提取的核心算法
-async function generateLqipValue(imagePath) {
+async function generateLqipValue(imagePath: string): Promise<number | null> {
   try {
     const theSharp = sharp(imagePath)
     const stats = await theSharp.stats()
@@ -31,7 +132,12 @@ async function generateLqipValue(imagePath) {
         .removeAlpha()
         .toFormat('raw', { bitdepth: 8 })
         .toBuffer(),
-      getPalette(imagePath, 4, 10).then(palette => palette[0]),
+      getPalette(imagePath, 4, 10).then((palette) => {
+        if (!palette || palette.length === 0) {
+          throw new Error('无法提取颜色调色板')
+        }
+        return palette[0]
+      }),
     ])
 
     // 计算基础颜色Lab值
@@ -83,7 +189,7 @@ async function generateLqipValue(imagePath) {
 }
 
 // 辅助函数从lqip.mjs复制
-function findOklabBits(targetL, targetA, targetB) {
+function findOklabBits(targetL: number, targetA: number, targetB: number) {
   const targetChroma = Math.hypot(targetA, targetB)
   const scaledTargetA = scaleComponentForDiff(targetA, targetChroma)
   const scaledTargetB = scaleComponentForDiff(targetB, targetChroma)
@@ -116,18 +222,18 @@ function findOklabBits(targetL, targetA, targetB) {
   return { ll: bestBits[0], aaa: bestBits[1], bbb: bestBits[2] }
 }
 
-function scaleComponentForDiff(x, chroma) {
+function scaleComponentForDiff(x: number, chroma: number) {
   return x / (1e-6 + chroma ** 0.5)
 }
 
-function bitsToLab(ll, aaa, bbb) {
+function bitsToLab(ll: number, aaa: number, bbb: number) {
   const L = (ll / 0b11) * 0.6 + 0.2
   const a = (aaa / 0b1000) * 0.7 - 0.35
   const b = ((bbb + 1) / 0b1000) * 0.7 - 0.35
   return { L, a, b }
 }
 
-function clamp(value, min, max) {
+function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }
 
@@ -144,14 +250,14 @@ async function main() {
   console.log(`找到${webpFiles.length}个webp文件`)
 
   // 生成映射表
-  const lqipMap = {}
+  const lqipMap: Record<string, number> = {}
   let processed = 0
 
   for (const filePath of webpFiles) {
     const relativePath = path.relative(distDir, filePath)
     const lqipValue = await generateLqipValue(filePath)
 
-    if (lqipValue) {
+    if (lqipValue !== null) {
       lqipMap[relativePath] = lqipValue
       processed++
 
@@ -165,6 +271,7 @@ async function main() {
     await fs.mkdir(assetsDir, { recursive: true })
   }
   catch {
+    // 目录已存在时忽略错误
   }
 
   // 保存映射表到src/assets
