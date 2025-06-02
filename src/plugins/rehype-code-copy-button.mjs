@@ -9,7 +9,7 @@ export function rehypeCodeCopyButton() {
         && parent
         && !node.properties?.['data-copy-button-added']
       ) {
-        node.properties = node.properties || {}
+        node.properties ??= {}
         node.properties['data-copy-button-added'] = 'true'
 
         parent.children[index] = {

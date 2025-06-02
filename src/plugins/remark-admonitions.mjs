@@ -19,7 +19,7 @@ export function remarkAdmonitions() {
     function createAdmonition(node, type, title) {
       const titleSpan = `<span class="admonition-title">${title}</span>`
 
-      node.data = node.data || {}
+      node.data ??= {}
       node.data.hName = 'blockquote'
       node.data.hProperties = {
         className: `admonition-${type}`,
@@ -57,11 +57,15 @@ export function remarkAdmonitions() {
 
     // Handle > [!TYPE] syntax
     visit(tree, 'blockquote', (node) => {
-      if (!node.children?.length || node.children[0].type !== 'paragraph')
+      if (!node.children?.length)
+        return
+      if (node.children[0].type !== 'paragraph')
         return
 
       const paragraph = node.children[0]
-      if (!paragraph.children?.length || paragraph.children[0].type !== 'text')
+      if (!paragraph.children?.length)
+        return
+      if (paragraph.children[0].type !== 'text')
         return
 
       const textNode = paragraph.children[0]

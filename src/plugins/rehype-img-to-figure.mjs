@@ -5,14 +5,13 @@ export function rehypeImgToFigure() {
     visit(tree, 'element', (node) => {
       if (
         node.tagName === 'p'
-        && node.children
-        && node.children.length === 1
-        && node.children[0].tagName === 'img'
-        && node.children[0].properties.alt
-        && !node.children[0].properties.alt.startsWith('_')
+        && node.children?.length === 1
+        && node.children[0]?.tagName === 'img'
+        && node.children[0]?.properties?.alt
+        && !node.children[0]?.properties?.alt?.startsWith('_')
       ) {
         const child = node.children[0]
-        const altText = child.properties.alt
+        const altText = child.properties?.alt
 
         node.tagName = 'figure'
         node.children = [
