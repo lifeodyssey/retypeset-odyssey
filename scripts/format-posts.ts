@@ -25,8 +25,10 @@ function splitContent(content: string) {
 }
 
 async function main() {
+  console.log('🔍 Scanning Markdown files...')
+
   const files = await fg(['src/content/**/*.{md,mdx}'])
-  console.log(`🔍 ${files.length} Markdown files found`)
+  console.log(`📁 Found ${files.length} Markdown files`)
 
   let changedCount = 0
   let errorCount = 0
@@ -53,7 +55,7 @@ async function main() {
     }
   }
 
-  console.log(`\n${changedCount > 0
+  console.log(`${changedCount > 0
     ? `✨ Formatted ${changedCount} files successfully`
     : `✅ Check complete, no files needed formatting changes`}`)
 
