@@ -8,19 +8,20 @@ import glob from 'fast-glob'
 import { parse as parseHTML } from 'node-html-parser'
 
 const distDir = 'dist'
-const lqipMappingPath = 'src/assets/lqip-mapping.json'
+const lqipMapPath = 'src/assets/lqip-mapping.json'
 
 async function applyLqipStyles() {
   console.log('🔍 Adding LQIP styles...')
 
   // Load LQIP mapping data
-  let lqipMapping: Record<string, number>
+  let lqipMap: Record<string, number>
 
   try {
-    lqipMapping = JSON.parse(await fs.readFile(lqipMappingPath, 'utf-8'))
+    lqipMap = JSON.parse(await fs.readFile(lqipMapPath, 'utf-8'))
   }
   catch (error) {
-    if (error.code === 'ENOENT')
+    // If the file does not exist, return
+    if ((error as { code?: string })?.code === 'ENOENT')
       return
 
     console.error('❌ Failed to parse LQIP mapping file')
@@ -37,54 +38,60 @@ async function applyLqipStyles() {
   // Iterate through each HTML file
   for (const htmlFile of htmlFiles) {
     const filePath = `${distDir}/${htmlFile}`
+
+    // Parse HTML content
     const root = parseHTML(await fs.readFile(filePath, 'utf-8'))
     const images = root.querySelectorAll('img')
 
     totalImages += images.length
     let hasChanges = false
 
-    // Iterate through each image
+    // Process each image in the HTML file
     for (const img of images) {
       const src = img.getAttribute('src')
       if (!src)
         continue
 
-      const imagePath = src.startsWith('/') ? src.slice(1) : src
-      const lqipValue = lqipMapping[imagePath]
+      // Check if image has a corresponding LQIP value
+      const imagePath = src
+      const lqipValue = lqipMap[imagePath]
+      if (!lqipValue)
+        continue
 
-      if (lqipValue) {
-        const currentStyle = img.getAttribute('style') || ''
+      // Skip if LQIP style already exists
+      const currentStyle = img.getAttribute('style') ?? ''
+      if (currentStyle.includes('--lqip:'))
+        continue
 
-        // Only add LQIP if not already present
-        if (!currentStyle.includes('--lqip:')) {
-          const newStyle = currentStyle
-            ? `${currentStyle}; --lqip:${lqipValue}`
-            : `--lqip:${lqipValue}`
+      // Create new style with LQIP value
+      const newStyle = currentStyle
+        ? `${currentStyle}; --lqip:${lqipValue}`
+        : `--lqip:${lqipValue}`
 
-          // Apply updated style and track changes
-          img.setAttribute('style', newStyle)
-          updatedImages++
-          hasChanges = true
-        }
-      }
+      // Apply the new style to the image
+      img.setAttribute('style', newStyle)
+      updatedImages++
+      hasChanges = true
     }
 
-    // Write changes to file if needed
-    if (hasChanges) {
-      await fs.writeFile(filePath, root.toString())
-    }
+    // Skip writing if no changes were made
+    if (!hasChanges)
+      continue
+
+    // Write changes to file
+    await fs.writeFile(filePath, root.toString())
   }
 
   // Log summary based on updates
-  if (updatedImages > 0) {
-    console.log(`✨ Done! Found ${totalImages} images, updated ${updatedImages} with LQIP styles`)
-  }
-  else {
+  if (updatedImages === 0) {
     console.log(`✅ Done! Found ${totalImages} images, no updates needed`)
+    return
   }
+
+  console.log(`✨ Done! Found ${totalImages} images, updated ${updatedImages} with LQIP styles`)
 }
 
 applyLqipStyles().catch((error) => {
-  console.error('❌ Execution failed:', error)
+  console.error('❌ Execution failed:', (error as Error)?.message ?? String(error))
   exit(1)
 })

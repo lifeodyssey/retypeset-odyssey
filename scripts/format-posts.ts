@@ -10,17 +10,18 @@ import fg from 'fast-glob'
 
 function splitContent(content: string) {
   const match = content.match(/^---\r?\n([\s\S]+?)\r?\n---\r?\n([\s\S]*)$/m)
-  if (match) {
+  if (!match) {
     return {
-      frontmatter: match[1],
-      body: match[2],
-      hasFrontmatter: true,
+      frontmatter: '',
+      body: content,
+      hasFrontmatter: false,
     }
   }
+
   return {
-    frontmatter: '',
-    body: content,
-    hasFrontmatter: false,
+    frontmatter: match[1],
+    body: match[2],
+    hasFrontmatter: true,
   }
 }
 
@@ -43,21 +44,28 @@ async function main() {
         ? `---\n${frontmatter}\n---\n${formattedBody}`
         : formattedBody
 
-      if (content !== newContent) {
-        await writeFile(file, newContent, 'utf8')
-        console.log(`✅ ${file}`)
-        changedCount++
-      }
+      // Skip if content hasn't changed
+      if (content === newContent)
+        continue
+
+      // Write updated content to file
+      await writeFile(file, newContent, 'utf8')
+      console.log(`✅ ${file}`)
+      changedCount++
     }
     catch (error) {
-      console.error(`❌ ${file}: ${error instanceof Error ? error.message : error}`)
+      console.error(`❌ ${file}: ${(error as Error)?.message ?? String(error)}`)
       errorCount++
     }
   }
 
-  console.log(`${changedCount > 0
-    ? `✨ Formatted ${changedCount} files successfully`
-    : `✅ Check complete, no files needed formatting changes`}`)
+  // Report results
+  if (changedCount === 0) {
+    console.log(`✅ Check complete, no files needed formatting changes`)
+  }
+  else {
+    console.log(`✨ Formatted ${changedCount} files successfully`)
+  }
 
   if (errorCount > 0) {
     console.log(`⚠️ ${errorCount} files failed to format`)
@@ -65,6 +73,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('❌ Execution failed:', error)
+  console.error('❌ Execution failed:', (error as Error)?.message ?? String(error))
   process.exit(1)
 })

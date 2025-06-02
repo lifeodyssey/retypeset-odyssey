@@ -39,7 +39,7 @@ catch (error) {
     console.log('⚠️ Update fetched with merge conflicts. Please resolve manually')
   }
   else {
-    console.error('❌ Update failed:', error)
+    console.error('❌ Update failed:', (error as Error)?.message ?? String(error))
     process.exit(1)
   }
 }

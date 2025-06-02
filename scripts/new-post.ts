@@ -16,7 +16,7 @@ import process from 'node:process'
 import { themeConfig } from '../src/config'
 
 // Process file path
-const rawPath = process.argv[2] || 'new-post'
+const rawPath = process.argv[2] ?? 'new-post'
 const baseName = basename(rawPath).replace(/\.(md|mdx)$/, '')
 const targetFile = ['.md', '.mdx'].includes(extname(rawPath))
   ? rawPath
@@ -60,6 +60,6 @@ try {
   console.log(`✅ Post created: ${fullPath}`)
 }
 catch (error) {
-  console.error('❌ Failed to create post:', error)
+  console.error('❌ Failed to create post:', (error as Error)?.message ?? String(error))
   process.exit(1)
 }
