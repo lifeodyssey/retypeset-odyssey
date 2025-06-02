@@ -8,10 +8,13 @@ export function memoize<T>(fn: (...args: any[]) => Promise<T>) {
   const cache = new Map<string, Promise<T>>()
 
   return async (...args: any[]): Promise<T> => {
-    const key = JSON.stringify(args) || 'default'
-    if (!cache.has(key)) {
-      cache.set(key, fn(...args))
+    const key = JSON.stringify(args) ?? 'default'
+    if (cache.has(key)) {
+      return cache.get(key)!
     }
-    return cache.get(key)!
+
+    const promise = fn(...args)
+    cache.set(key, promise)
+    return promise
   }
 }

@@ -73,7 +73,7 @@ export function generateExcerpt(
     .replace(/([。？！："」』])\s+/g, '$1')
   const excerpt = normalizedText.slice(0, length).trim()
   // Remove trailing punctuation from the excerpt
-  if (normalizedText.length > length)
+  if (normalizedText?.length > length)
     return `${excerpt.replace(/\p{P}+$/u, '')}...`
   return excerpt
 }
@@ -87,6 +87,6 @@ export function generateDescription(
   if (post.data.description)
     return post.data.description
 
-  const lang = (!post.data.lang || post.data.lang === '') ? defaultLocale : post.data.lang
+  const lang = post.data.lang ?? defaultLocale
   return generateExcerpt(post.body || '', scene, lang)
 }
