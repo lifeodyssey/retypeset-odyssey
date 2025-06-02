@@ -120,7 +120,7 @@ function generatePostUrl(post: CollectionEntry<'posts'>, baseUrl: string): strin
  * @returns A Feed instance ready for RSS or Atom output
  */
 export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
-  const currentUI = ui[lang as keyof typeof ui] ?? ui[defaultLocale as keyof typeof ui]
+  const currentUI = ui[lang as keyof typeof ui] ?? ui[defaultLocale as keyof typeof ui] ?? {}
   const useI18nTitle = themeConfig.site.i18nTitle
   const siteTitle = useI18nTitle ? currentUI.title : title
   const siteDescription = useI18nTitle ? currentUI.description : description

@@ -102,7 +102,7 @@ const shouldRender = Boolean(repo && repoID && categoryID)
 
   function updateGiscusTheme() {
     const iframe = document.querySelector('.giscus-frame')
-    if (!iframe?.contentWindow)
+    if (!iframe || !iframe.contentWindow)
       return
 
     try {

@@ -73,7 +73,7 @@ export function generateExcerpt(
     .replace(/([。？！："」』])\s+/g, '$1')
   const excerpt = normalizedText.slice(0, length).trim()
   // Remove trailing punctuation from the excerpt
-  if (normalizedText?.length > length)
+  if (normalizedText.length > length)
     return `${excerpt.replace(/\p{P}+$/u, '')}...`
   return excerpt
 }
