@@ -4,11 +4,11 @@ import { gsap } from 'gsap'
 function setupPostPageAnimation() {
   // Animated Elements
   const postContent = document.getElementById('gsap-post-page-content')
-  const postContentChildren = postContent ? Array.from(postContent.children) : []
+  const postContentChildren = postContent?.children ? Array.from(postContent.children) : []
   const tocContainer = document.getElementById('toc-container')
   const tocIcon = document.getElementById('toc-icon')
   const tocList = document.getElementById('toc-list')
-  const tocListChildren = tocList ? Array.from(tocList.children) : []
+  const tocListChildren = tocList?.children ? Array.from(tocList.children) : []
   const backButton = document.getElementById('back-button')
   const postDate = document.getElementById('gsap-post-page-date')
 

@@ -175,17 +175,13 @@ function setupTOCHighlight() {
     if (link === currentActiveLink)
       return
 
-    if (currentActiveLink) {
-      currentActiveLink.classList.remove('toc-link-active')
-    }
+    currentActiveLink?.classList.remove('toc-link-active')
 
     link.classList.add('toc-link-active')
     currentActiveLink = link
 
     // Only scroll the TOC in large screen (2xl) mode
-    if (is2xl) {
-      scrollLinkToCenter(link)
-    }
+    is2xl && scrollLinkToCenter(link)
   }
 
   // Scroll the link to center position
@@ -200,10 +196,10 @@ function setupTOCHighlight() {
   const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
     const visibleHeading = entries.find(entry => entry.isIntersecting)?.target
 
-    if (visibleHeading && visibleHeading.id) {
-      const link = headingMap.get(visibleHeading.id)
-      if (link)
-        highlightLink(link)
+    const id = visibleHeading?.id
+    if (id) {
+      const link = headingMap.get(id)
+      link && highlightLink(link)
     }
   }
 
@@ -232,9 +228,7 @@ function setupTOCHighlight() {
       // Update screen size flag
       is2xl = newIs2xl
 
-      if (currentActiveLink && is2xl) {
-        scrollLinkToCenter(currentActiveLink)
-      }
+      is2xl && currentActiveLink && scrollLinkToCenter(currentActiveLink)
     }
   })
 }

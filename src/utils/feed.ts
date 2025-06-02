@@ -33,7 +33,7 @@ const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
  * @returns Optimized full image URL or null
  */
 const getOptimizedImageUrl = memoize(async (srcPath: string, baseUrl: string) => {
-  const prefixRemoved = srcPath.replace(/^\.\.\/|^\.\//g, '')
+  const prefixRemoved = srcPath.replace(/^\.\.\/|^\.\//, '')
   const rawImagePath = `/src/content/posts/${prefixRemoved}`
   const rawImageModule = imagesGlob[rawImagePath]
 
