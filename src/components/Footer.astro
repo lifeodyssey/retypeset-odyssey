@@ -16,7 +16,7 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   }
 
   if (name === 'Email') {
-    return { name, url: `mailto:${url}`, ...rest }
+    return { name, url: url.startsWith('mailto:') ? url : `mailto:${url}`, ...rest }
   }
 
   return { name, url, ...rest }

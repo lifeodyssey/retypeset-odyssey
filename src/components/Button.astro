@@ -87,8 +87,11 @@ function updateTheme() {
 function setupThemeToggle() {
   // Locate theme toggle button
   const themeToggleButton = document.getElementById('theme-toggle-button')
+  if (!themeToggleButton)
+    return
+
   // Add click listener to the button
-  themeToggleButton?.addEventListener('click', () => {
+  themeToggleButton.addEventListener('click', () => {
     // If reduceMotion is enabled or browser doesn't support View Transitions API, update theme directly
     if (document.documentElement.classList.contains('reduce-motion') || !document.startViewTransition) {
       updateTheme()

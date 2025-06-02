@@ -50,8 +50,8 @@ function setupWaline() {
     requiredMeta: ['nick', 'mail'],
     highlighter: false,
     texRenderer: false,
-    imageUploader,
-    search,
+    ...(imageUploader && { imageUploader }),
+    ...(search && { search }),
     noCopyright: true,
     reaction: [],
   })

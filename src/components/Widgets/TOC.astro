@@ -176,7 +176,6 @@ function setupTOCHighlight() {
       return
 
     currentActiveLink?.classList.remove('toc-link-active')
-
     link.classList.add('toc-link-active')
     currentActiveLink = link
 
@@ -195,12 +194,12 @@ function setupTOCHighlight() {
   // Intersection observer callback
   const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
     const visibleHeading = entries.find(entry => entry.isIntersecting)?.target
+    if (!visibleHeading?.id)
+      return
 
-    const id = visibleHeading?.id
-    if (id) {
-      const link = headingMap.get(id)
-      link && highlightLink(link)
-    }
+    const link = headingMap.get(visibleHeading.id)
+    if (link)
+      highlightLink(link)
   }
 
   // Create the intersection observer

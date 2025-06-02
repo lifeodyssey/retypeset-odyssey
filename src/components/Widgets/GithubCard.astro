@@ -49,14 +49,14 @@ async function loadCardData(card: HTMLElement) {
       starsEl.textContent = new Intl.NumberFormat('en', {
         notation: 'compact',
         maximumFractionDigits: 1,
-      }).format(data.stargazers_count)
+      }).format(data.stargazers_count ?? 0)
     }
 
     if (forksEl) {
       forksEl.textContent = new Intl.NumberFormat('en', {
         notation: 'compact',
         maximumFractionDigits: 1,
-      }).format(data.forks_count)
+      }).format(data.forks_count ?? 0)
     }
 
     if (licenseEl)
