@@ -16,7 +16,7 @@ export function getTagPath(tagName: string, lang: string): string {
 // Generates a localized path based on current language
 export function getLocalizedPath(path: string, currentLang?: string) {
   const clean = path.replace(/^\/|\/$/g, '')
-  const lang = currentLang || getLangFromPath(path)
+  const lang = currentLang ?? getLangFromPath(path)
 
   if (clean === '') {
     return lang === defaultLocale ? '/' : `/${lang}/`
@@ -37,18 +37,17 @@ export function buildNextLangPath(currentPath: string, currentLang: string, next
     return nextLang === defaultLocale ? '/' : `/${nextLang}/`
   }
 
-  // Build path based on language change
-  const nextPath = (() => {
-    if (nextLang === defaultLocale) {
-      return currentPath.replace(`/${currentLang}`, '') || '/'
-    }
+  let nextPath: string
 
-    if (currentLang === defaultLocale) {
-      return `/${nextLang}${currentPath}`
-    }
-
-    return currentPath.replace(`/${currentLang}`, `/${nextLang}`)
-  })()
+  if (nextLang === defaultLocale) {
+    nextPath = currentPath.replace(`/${currentLang}`, '') ?? '/'
+  }
+  else if (currentLang === defaultLocale) {
+    nextPath = `/${nextLang}${currentPath}`
+  }
+  else {
+    nextPath = currentPath.replace(`/${currentLang}`, `/${nextLang}`)
+  }
 
   return nextPath.endsWith('/') ? nextPath : `${nextPath}/`
 }
@@ -80,7 +79,7 @@ export function getNextSupportedLangPath(currentPath: string, supportedLangs: st
     [defaultLocale, ...moreLocales].map((lang, index) => [lang, index]),
   )
   const sortedLangs = [...supportedLangs].sort(
-    (a, b) => langPriority.get(a)! - langPriority.get(b)!,
+    (a, b) => (langPriority.get(a) ?? 0) - (langPriority.get(b) ?? 0),
   )
 
   // Get current language and next in cycle
