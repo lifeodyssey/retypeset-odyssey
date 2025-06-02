@@ -40,7 +40,7 @@ export function buildNextLangPath(currentPath: string, currentLang: string, next
   let nextPath: string
 
   if (nextLang === defaultLocale) {
-    nextPath = currentPath.replace(`/${currentLang}`, '') ?? '/'
+    nextPath = currentPath.replace(`/${currentLang}`, '') || '/'
   }
   else if (currentLang === defaultLocale) {
     nextPath = `/${nextLang}${currentPath}`
