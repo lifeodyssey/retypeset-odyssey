@@ -4,7 +4,7 @@
  * Scans Markdown files in src/content/, applies autocorrect formatting to content
  * while preserving frontmatter, and updates files only when changes are needed.
  *
- * Usage: pnpm format-markdown
+ * Usage: pnpm format-posts
  * Target: src/content/**.md and src/content/**.mdx files
  */
 

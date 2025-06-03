@@ -4,8 +4,7 @@
  * Generates a new Markdown file in src/content/posts/ with complete YAML
  * frontmatter including title, date, tags, and theme configuration.
  *
- * Usage: pnpm new-post <filename>
- * Example: pnpm new-post first-post
+ * Usage: pnpm new-post first-post
  * Output: src/content/posts/first-post.md
  */
 
