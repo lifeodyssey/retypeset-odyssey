@@ -1,3 +1,10 @@
+/**
+ * RSS/Atom feed generation utilities for multi-language blog
+ *
+ * Generates RSS 2.0 and Atom 1.0 feeds with multi-language support,
+ * image optimization, content sanitization, and follow verification.
+ */
+
 import type { APIContext, ImageMetadata } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 import type { Author } from 'feed'
@@ -87,7 +94,7 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
         img.setAttribute('src', publicImageUrl)
       }
       catch (error) {
-        console.warn(`Failed to process image in RSS feed: ${src}`, error)
+        console.warn(`Failed to process image in RSS feed: ${src}`, (error as Error)?.message ?? String(error))
       }
     })())
   }

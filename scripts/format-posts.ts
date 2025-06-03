@@ -1,8 +1,13 @@
 /**
- * Project: https://github.com/huacnlee/autocorrect
- * Format posts by fixing spaces and punctuations in CJK text
- * Usage: pnpm format-posts
+ * Format Markdown files using autocorrect for consistent typography
+ *
+ * Scans Markdown files in src/content/, applies autocorrect formatting to content
+ * while preserving frontmatter, and updates files only when changes are needed.
+ *
+ * Usage: pnpm format-markdown
+ * Target: src/content/**.md and src/content/**.mdx files
  */
+
 import { readFile, writeFile } from 'node:fs/promises'
 import process from 'node:process'
 import { format } from 'autocorrect-node'
@@ -29,7 +34,7 @@ async function main() {
   console.log('🔍 Scanning Markdown files...')
 
   const files = await fg(['src/content/**/*.{md,mdx}'])
-  console.log(`📁 Found ${files.length} Markdown files`)
+  console.log(`📦 Found ${files.length} Markdown files`)
 
   let changedCount = 0
   let errorCount = 0

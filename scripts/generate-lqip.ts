@@ -1,5 +1,23 @@
+/**
+ * Generate LQIP (Low-Quality Image Placeholders) mapping for website load optimization
+ *
+ * Scans WebP images in dist/_astro/, extracts dominant colors and tiny previews,
+ * compresses them into 19-bit integers, and generates a JSON mapping file.
+ *
+ * Features:
+ * - Batch processing with concurrency control
+ * - Incremental updates (skips unchanged files)
+ * - OKLab color space for perceptual accuracy
+ * - Compact 19-bit encoding for minimal overhead
+ *
+ * Usage: pnpm generate-lqip
+ * Output: src/assets/lqip-map.json
+ */
+
 import type { Buffer } from 'node:buffer'
 import fs from 'node:fs/promises'
+import path from 'node:path'
+import process from 'node:process'
 import quantize from '@lokesh.dhakar/quantize'
 import glob from 'fast-glob'
 import { getPixels } from 'ndarray-pixels'
@@ -115,12 +133,8 @@ export async function getPalette(img: Buffer | string, colorCount = 10, quality 
 /**
  * LQIP core algorithm
  * Compresses images into compact 19-bit integers representing dominant colors and tiny previews
- * https://github.com/Kalabasa/leanrada.com/blob/7b6739c7c30c66c771fcbc9e1dc8942e628c5024/main/scripts/update/lqip.mjs#L118-L159
+ * https://github.com/Kalabasa/leanrada.com/blob/7b6739c7c30c66c771fcbc9e1dc8942e628c5024/main/scripts/update/lqip.mjs
  */
-
-const distDir = 'dist'
-const assetsDir = 'src/assets'
-const mapFilePath = `${assetsDir}/lqip-mapping.json`
 
 const LQIP_BASE_VALUE = -(2 ** 19)
 const PIXEL_MAX_VALUE = 0b11
@@ -128,7 +142,6 @@ const L_MAX_VALUE = 0b11
 const A_MAX_VALUE = 0b111
 const B_MAX_VALUE = 0b111
 const MAX_COLOR_SCALE = 0b1000
-
 const BIT_SHIFTS = {
   PIXEL_A: 18,
   PIXEL_B: 16,
@@ -139,7 +152,7 @@ const BIT_SHIFTS = {
   L: 6,
   A: 3,
   B: 0,
-}
+} as const
 
 // Generate LQIP value from image
 async function generateLqipValue(imagePath: string): Promise<number | null> {
@@ -198,7 +211,7 @@ async function generateLqipValue(imagePath: string): Promise<number | null> {
     return lqip
   }
   catch (error) {
-    console.error(`Error processing image ${imagePath}:`, error)
+    console.error(`Error processing image ${imagePath}:`, (error as Error)?.message ?? String(error))
     return null
   }
 }
@@ -246,109 +259,135 @@ function bitsToLab(ll: number, aaa: number, bbb: number) {
 }
 
 /**
- * LQIP映射生成主函数
- * 功能：查找网站中的WebP图片，为每张图片生成Low-Quality Image Placeholder值，
- * 并将结果保存到映射文件中，用于网站加载优化
+ * LQIP Mapping Generator
+ * Processes WebP images to generate LQIP and creates the LQIP mapping file for website load optimization
  */
 
-// 加载并清理LQIP映射
-async function loadAndCleanLqipMap(webpFiles: string[]) {
-  try {
-    // 读取现有映射文件
-    const existingMapData = await fs.readFile(mapFilePath, 'utf-8')
-      .catch(() => null)
+const PATHS = {
+  DIST: 'dist',
+  ASSETS: 'src/assets',
+  LQIP_MAP: 'src/assets/lqip-map.json',
+} as const
 
-    // 解析为映射对象
-    const existingLqipMap = JSON.parse(existingMapData ?? '{}') as Record<string, number>
-
-    // 创建当前路径集合
-    const currentPaths = new Set(
-      webpFiles.map(path => path.replace(`${distDir}/`, '')),
-    )
-
-    // 过滤出仍然存在的映射项
-    return Object.fromEntries(
-      Object.entries(existingLqipMap)
-        .filter(([path]) => currentPaths.has(path)),
-    )
-  }
-  catch {
-    return {}
-  }
+function toWebPath(filePath: string) {
+  return `/${path.relative(PATHS.DIST, filePath).replace(/\\/g, '/')}`
 }
 
-// 处理图片生成LQIP数据
-async function processImages(webpFiles: string[], existingLqipMap: Record<string, number>) {
-  const lqipMap: Record<string, number> = {}
-  let processed = 0
-  let reused = 0
-  let newGenerated = 0
-  let failed = 0
+// Prepare environment and find WebP files
+async function prepareEnvironment() {
+  console.log('🔍 Scanning WebP images...')
 
-  for (const filePath of webpFiles) {
-    const cleanPath = filePath.replace(`${distDir}`, '')
-
-    // 复用已有LQIP值
-    if (existingLqipMap[cleanPath] !== undefined) {
-      lqipMap[cleanPath] = existingLqipMap[cleanPath]
-      reused++
-
-      processed++
-      if (processed % 10 === 0)
-        console.log(`进度: ${processed}/${webpFiles.length} 图片处理中`)
-      continue
-    }
-
-    // 生成新LQIP值
-    const lqipValue = await generateLqipValue(filePath)
-    if (lqipValue === null) {
-      failed++
-      console.log(`警告：图片处理失败 ${filePath}`)
-    }
-    else {
-      lqipMap[cleanPath] = lqipValue
-      newGenerated++
-    }
-
-    processed++
-    if (processed % 10 === 0)
-      console.log(`进度: ${processed}/${webpFiles.length} 图片处理中`)
-  }
-
-  return { lqipMap, stats: { processed, reused, newGenerated, failed } }
-}
-
-// 主函数整合所有步骤
-async function main() {
-  console.log('开始生成LQIP映射...')
-
-  // 确保assets目录存在，不存在则创建
   try {
-    await fs.access(assetsDir)
-  }
-  catch {
-    await fs.mkdir(assetsDir, { recursive: true })
-  }
-
-  // 查找所有生成的WebP图片
-  const webpFiles = await glob(`${distDir}/_astro/**/*.webp`)
-  console.log(`找到${webpFiles.length}个webp文件`)
-
-  const existingLqipMap = await loadAndCleanLqipMap(webpFiles)
-  const { lqipMap, stats } = await processImages(webpFiles, existingLqipMap)
-
-  // 保存LQIP映射
-  try {
-    await fs.writeFile(mapFilePath, JSON.stringify(lqipMap, null, 2))
-    console.log(`LQIP映射已保存至: ${mapFilePath}`)
+    // Ensure assets directory exists
+    await fs.mkdir(PATHS.ASSETS, { recursive: true })
   }
   catch (error) {
-    console.error(`保存LQIP映射文件失败: ${(error as Error)?.message ?? '未知错误'}`)
+    console.warn('⚠️ Could not create assets directory:', (error as Error)?.message ?? String(error))
   }
 
-  // 输出最终统计信息
-  console.log(`成功处理图片：${stats.processed}/${webpFiles.length}`)
-  console.log(`复用现有LQIP值: ${stats.reused}，新生成LQIP值: ${stats.newGenerated}，处理失败: ${stats.failed}`)
+  // Find all WebP files in build output
+  const webpFiles = await glob('_astro/**/*.webp', {
+    cwd: PATHS.DIST,
+    absolute: true,
+  })
+
+  console.log(`📦 Found ${webpFiles.length} WebP images`)
+  return webpFiles
 }
 
-main().catch(console.error)
+// Prepare LQIP map and clean up invalid entries
+async function prepareLqipMap(webpFiles: string[]) {
+  // Load existing map or create empty one if not exists
+  const existingLqipMap = await fs.readFile(PATHS.LQIP_MAP, 'utf-8')
+    .then(data => JSON.parse(data) as Record<string, number>)
+    .catch(() => ({} as Record<string, number>))
+
+  // Create set of valid paths for fast lookups
+  const validPaths = new Set(webpFiles.map(toWebPath))
+
+  // Remove entries that no longer exist in the build
+  const cleanedEntries = Object.entries(existingLqipMap)
+    .filter(([path]) => validPaths.has(path))
+
+  return {
+    cleanedLqipMap: Object.fromEntries(cleanedEntries) as Record<string, number>,
+  }
+}
+
+// Process images to generate LQIP values
+async function processImages(webpFiles: string[], existingLqipMap: Record<string, number>) {
+  const newLqipMap: Record<string, number> = {}
+  const stats = { processed: 0, failed: 0, successful: 0 }
+  const total = webpFiles.length
+  const batchSize = 10 // Process 10 images at a time
+
+  for (let i = 0; i < webpFiles.length; i += batchSize) {
+    const batch = webpFiles.slice(i, i + batchSize)
+
+    await Promise.all(batch.map(async (filePath) => {
+      try {
+        const relativePath = toWebPath(filePath)
+
+        const existingValue = existingLqipMap[relativePath]
+        if (existingValue !== undefined) {
+          newLqipMap[relativePath] = existingValue
+          stats.successful++
+        }
+        else {
+          const lqipValue = await generateLqipValue(filePath)
+          if (lqipValue !== null) {
+            newLqipMap[relativePath] = lqipValue
+            stats.successful++
+          }
+          else {
+            stats.failed++
+          }
+        }
+      }
+      catch (error) {
+        stats.failed++
+        console.error(`Error processing ${filePath}:`, (error as Error)?.message ?? String(error))
+      }
+      finally {
+        stats.processed++
+      }
+    }))
+
+    // Show progress after each batch
+    console.log(`🔄 Processed: ${stats.processed}/${total}`)
+  }
+
+  return { lqipMap: newLqipMap, stats }
+}
+
+// Main function to coordinate the mapping process
+async function main() {
+  try {
+    const webpFiles = await prepareEnvironment()
+
+    // Early exit if no images found
+    if (webpFiles.length === 0) {
+      console.log(`✅ Done! No WebP files found to process`)
+      return
+    }
+
+    // Clean up old map entries and process images
+    const { cleanedLqipMap } = await prepareLqipMap(webpFiles)
+    const { lqipMap, stats } = await processImages(webpFiles, cleanedLqipMap)
+
+    // Save updated LQIP map to file
+    await fs.writeFile(PATHS.LQIP_MAP, JSON.stringify(lqipMap, null, 2))
+
+    if (stats.successful > 0)
+      console.log(`✨ Successfully processed ${stats.successful} images`)
+    if (stats.failed > 0)
+      console.log(`⚠️ Failed to process ${stats.failed} images`)
+    console.log(`📁 LQIP mapping saved to ${PATHS.LQIP_MAP}`)
+  }
+  catch (error) {
+    console.error('❌ LQIP mapping generation failed:', (error as Error)?.message ?? String(error))
+    process.exit(1)
+  }
+}
+
+main()

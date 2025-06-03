@@ -1,9 +1,9 @@
-import type { CollectionEntry } from 'astro:content'
-import { getCollection, render } from 'astro:content'
-import { defaultLocale } from '@/config'
-import { memoize } from '@/utils/cache'
-
 /**
+ * Blog post data utilities with memoization and multi-language support
+ *
+ * Provides functions to query, filter, and organize blog posts from Astro's content
+ * collections. Features automatic caching, language filtering, and metadata enhancement.
+ *
  * Core Functions
  * - addMetaToPost
  * - getPosts
@@ -20,6 +20,11 @@ import { memoize } from '@/utils/cache'
  * - getPostsByTag
  * - getTagSupportedLangs
  */
+
+import type { CollectionEntry } from 'astro:content'
+import { getCollection, render } from 'astro:content'
+import { defaultLocale } from '@/config'
+import { memoize } from '@/utils/cache'
 
 // Type definitions
 export type Post = CollectionEntry<'posts'> & {
