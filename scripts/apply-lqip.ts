@@ -30,7 +30,7 @@ async function applyLqipStyles() {
     if ((error as { code?: string })?.code === 'ENOENT')
       return
 
-    console.error('❌ Failed to parse LQIP mapping file')
+    console.error('❌ Failed to parse LQIP mapping file:', (error as Error)?.message ?? String(error))
     exit(1)
   }
 
@@ -61,7 +61,7 @@ async function applyLqipStyles() {
       // Check if image has a corresponding LQIP value
       const imagePath = src
       const lqipValue = lqipMap[imagePath]
-      if (!lqipValue)
+      if (lqipValue === undefined)
         continue
 
       // Skip if LQIP style already exists
