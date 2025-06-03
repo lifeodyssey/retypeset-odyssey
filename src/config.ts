@@ -74,10 +74,10 @@ export const themeConfig: ThemeConfig = {
     // giscus
     // https://giscus.app/
     giscus: {
-      // repo: 'radishzzz/comment-giscus',
-      repoID: 'R_kgDOOy1K0w',
-      category: 'Announcements',
-      categoryID: 'DIC_kwDOOy1K084CqwuZ',
+      repo: '',
+      repoID: '',
+      category: '',
+      categoryID: '',
       mapping: 'pathname',
       strict: '0',
       reactionsEnabled: '1',
