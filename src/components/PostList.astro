@@ -23,7 +23,7 @@ export interface Props {
 
 function getPostPath(post: Post) {
   // Prioritize abbrlink over slug
-  const postPath = post.data.abbrlink ?? post.id
+  const postPath = post.data.abbrlink || post.id
 
   // If no language specified or is default language, return root path
   if (!lang || lang === defaultLocale)
@@ -47,7 +47,7 @@ function getPostPath(post: Post) {
           class="cjk:tracking-0.02em"
           lg={isHome ? 'font-medium text-4.5' : ''}
           href={getPostPath(post)}
-          transition:name={`post-${post.data.abbrlink ?? post.id}${lang ? `-${lang}` : ''}`}
+          transition:name={`post-${post.data.abbrlink || post.id}${lang ? `-${lang}` : ''}`}
           data-disable-theme-transition
         >
           {post.data.title}
@@ -66,7 +66,7 @@ function getPostPath(post: Post) {
       {/* mobile post time */}
       <div
         class="py-0.8 text-3.5 font-time lg:hidden"
-        transition:name={`time-${post.data.abbrlink ?? post.id}${lang ? `-${lang}` : ''}`}
+        transition:name={`time-${post.data.abbrlink || post.id}${lang ? `-${lang}` : ''}`}
         data-disable-theme-transition
       >
         <PostDate

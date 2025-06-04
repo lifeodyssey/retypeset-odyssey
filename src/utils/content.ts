@@ -64,7 +64,7 @@ async function _checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]): Pro
 
   posts.forEach((post) => {
     const lang = post.data.lang
-    const slug = post.data.abbrlink ?? post.id
+    const slug = post.data.abbrlink || post.id
 
     if (!slugMap.has(lang)) {
       slugMap.set(lang, new Set())

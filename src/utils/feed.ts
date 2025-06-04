@@ -111,7 +111,7 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
  * @returns The fully formed URL for the post
  */
 function generatePostUrl(post: CollectionEntry<'posts'>, baseUrl: string): string {
-  const postSlug = post.data.abbrlink ?? post.id
+  const postSlug = post.data.abbrlink || post.id
   const langPrefix = post.data.lang !== defaultLocale && post.data.lang !== ''
     ? `${post.data.lang}/`
     : ''
