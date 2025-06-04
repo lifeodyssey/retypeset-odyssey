@@ -1,21 +1,3 @@
-/**
- * Core Functions
- * - addMetaToPost
- * - getPosts
- * - checkPostSlugDuplication
- *
- * Post Filtering
- * - getRegularPosts
- * - getPinnedPosts
- * - getPostsByYear
- *
- * Tag Related
- * - getPostsGroupByTags
- * - getAllTags
- * - getPostsByTag
- * - getTagSupportedLangs
- */
-
 import type { CollectionEntry } from 'astro:content'
 import { getCollection, render } from 'astro:content'
 import { defaultLocale } from '@/config'
