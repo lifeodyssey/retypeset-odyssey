@@ -1,4 +1,4 @@
-# 重新编排
+# Retypeset
 
 <img alt="Cover Image" src="../images/retypeset-zh-desktop.webp"/>
 <img alt="Cover Image" src="../images/retypeset-zh-mobile.webp"/>

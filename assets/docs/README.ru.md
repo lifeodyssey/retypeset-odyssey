@@ -1,4 +1,4 @@
-# Переверстка
+# Retypeset
 
 <img alt="Cover Image" src="../images/retypeset-en-desktop.webp"/>
 <img alt="Cover Image" src="../images/retypeset-en-mobile.webp"/>
