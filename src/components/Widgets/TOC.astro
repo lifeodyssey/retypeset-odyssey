@@ -98,12 +98,18 @@ const filteredHeadings = headings.filter(heading =>
   transition: color 0.15s ease-out, font-weight 0.15s ease-out;
 }
 .toc-link-active {
-  --at-apply: 'text-secondary/80 font-medium';
+  --at-apply: 'text-secondary/80';
+}
+.toc-links-h2.toc-link-active {
+  --at-apply: 'font-medium';
 }
 
 /* Hover Effect */
 #toc-container:hover :is(.toc-links-h2, .toc-links-h3, .toc-links-h4) {
   --at-apply: '2xl:(text-secondary/60 hover:text-primary) hover:(text-secondary font-medium)';
+}
+#toc-container:hover :is(.toc-links-h3, .toc-links-h4) {
+  --at-apply: '2xl:(hover:font-normal)';
 }
 #toc-container:hover .toc-link-active {
   --at-apply: '2xl:text-primary';
@@ -211,7 +217,7 @@ function setupTOCHighlight() {
     })
   }
 
-  // Simplified intersection callback
+  // Intersection observer callback
   const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
     const headingId = entries.find(entry => entry.isIntersecting)?.target?.id
     if (headingId) {
@@ -227,7 +233,7 @@ function setupTOCHighlight() {
     threshold: [0.4],
   })
 
-  // Observe all heading elements with filter + forEach
+  // Observe all heading elements
   Array.from(document.querySelectorAll('h2, h3, h4'))
     .filter(heading => heading.id && heading.id !== 'footnotes')
     .forEach(heading => headingObserver.observe(heading))
