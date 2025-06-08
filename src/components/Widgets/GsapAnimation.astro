@@ -2,6 +2,9 @@
 import { gsap } from 'gsap'
 
 function setupPostPageAnimation() {
+  if (document.documentElement.classList.contains('reduce-motion'))
+    return
+
   // Animated Elements
   const postContent = document.getElementById('gsap-post-page-content')
   const postContentChildren = postContent ? Array.from(postContent.children) : []

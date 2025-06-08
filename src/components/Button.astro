@@ -93,7 +93,7 @@ function setupThemeToggle() {
   // Add click listener to the button
   themeToggleButton.addEventListener('click', () => {
     // If reduceMotion is enabled or browser doesn't support View Transitions API, update theme directly
-    if (document.documentElement.classList.contains('reduce-motion') || !document.startViewTransition) {
+    if (document.documentElement.classList.contains('reduce-motion')) {
       updateTheme()
       return
     }
