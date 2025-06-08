@@ -112,7 +112,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
       <!-- Title -->
       <h1 class="post-title">
         <span
-          transition:name={`post-${post.data.abbrlink || post.id}-${lang}`}
+          transition:name={`post-${post.data.abbrlink || post.id}${lang ? `-${lang}` : ''}`}
           data-disable-theme-transition
         >
           {post.data.title}
@@ -124,7 +124,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     <div
       id="gsap-post-page-date"
       class="mb-17.2 block c-primary font-time"
-      transition:name={`time-${post.data.abbrlink || post.id}-${lang}`}
+      transition:name={`time-${post.data.abbrlink || post.id}${lang ? `-${lang}` : ''}`}
       data-disable-theme-transition
     >
       <PostDate

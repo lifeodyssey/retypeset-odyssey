@@ -1,5 +1,4 @@
 ---
-import LinkWrapper from '@/components/LinkWrapper.astro'
 import { defaultLocale, themeConfig } from '@/config'
 import { getLangFromPath } from '@/i18n/lang'
 
@@ -31,7 +30,7 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   <p>
     {links.map((link, index) => (
       <>
-        <LinkWrapper href={link.url} text={link.name} />&nbsp;{index < links.length - 1 && '/'}
+        <a class="uno-footer-link" href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>&nbsp;{index < links.length - 1 && '/'}
       </>
     ))}
   </p>
@@ -41,6 +40,6 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   </p>
 
   <p>
-    Powered by <LinkWrapper href="https://astro.build/" text="Astro" />&nbsp;and <LinkWrapper href="https://github.com/radishzzz/astro-theme-retypeset" text="Retypeset" />
+    Powered by <a class="uno-footer-link" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="uno-footer-link" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
   </p>
 </footer>
