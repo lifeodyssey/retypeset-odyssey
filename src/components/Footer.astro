@@ -30,7 +30,7 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   <p>
     {links.map((link, index) => (
       <>
-        <a class="uno-footer-link" href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>&nbsp;{index < links.length - 1 && '/'}
+        <a class="highlight-hover uno-footer-link" href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>&nbsp;{index < links.length - 1 && '/'}
       </>
     ))}
   </p>
@@ -40,6 +40,6 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   </p>
 
   <p>
-    Powered by <a class="uno-footer-link" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="uno-footer-link" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
+    Powered by <a class="highlight-hover uno-footer-link" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="highlight-hover uno-footer-link" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
   </p>
 </footer>
