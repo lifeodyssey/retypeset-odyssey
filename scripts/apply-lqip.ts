@@ -119,7 +119,7 @@ async function applyLqipStyles(): Promise<void> {
   // Load LQIP mapping data
   const lqipMap = await loadLqipMap()
   if (!lqipMap) {
-    return // Exit early if no LQIP map file exists
+    return
   }
 
   // Get all HTML files to process

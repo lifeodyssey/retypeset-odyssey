@@ -20,11 +20,13 @@ export interface ThemeConfig {
       primary: string
       secondary: string
       background: string
+      highlight: string
     }
     dark: {
       primary: string
       secondary: string
       background: string
+      highlight: string
     }
   }
 
@@ -84,8 +86,7 @@ export interface ThemeConfig {
     startYear: number
   }
 
-  preload: {
-    linkPrefetch: 'hover' | 'tap' | 'viewport' | 'load'
+  preload?: {
     imageHostURL?: string
     customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string
