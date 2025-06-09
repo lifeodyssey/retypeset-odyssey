@@ -2,7 +2,7 @@
   "name": "astro-theme-retypeset",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@10.11.1",
+  "packageManager": "pnpm@10.12.1",
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
@@ -22,7 +22,7 @@
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/sitemap": "^3.4.1",
-    "astro": "^5.8.2",
+    "astro": "^5.9.2",
     "astro-compress": "^2.3.8",
     "astro-og-canvas": "^0.7.0",
     "astro-robots-txt": "^1.0.0",
