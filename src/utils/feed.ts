@@ -37,12 +37,14 @@ const getOptimizedImageUrl = memoize(async (srcPath: string, baseUrl: string) =>
   const rawImagePath = `/src/content/posts/${prefixRemoved}`
   const rawImageModule = imagesGlob[rawImagePath]
 
-  if (!rawImageModule)
+  if (!rawImageModule) {
     return null
+  }
 
   const rawImageMetadata = await rawImageModule().then(res => res.default).catch(() => null)
-  if (!rawImageMetadata)
+  if (!rawImageMetadata) {
     return null
+  }
 
   const processedImageData = await getImage({ src: rawImageMetadata })
   return new URL(processedImageData.src, baseUrl).toString()
@@ -63,14 +65,16 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
   for (const img of images) {
     const src = img.getAttribute('src')
 
-    if (!src)
+    if (!src) {
       continue
+    }
 
     imagePromises.push((async () => {
       try {
         // Skip if not a relative or public image path
-        if (!src.startsWith('./') && !src.startsWith('../') && !src.startsWith('/images'))
+        if (!src.startsWith('./') && !src.startsWith('../') && !src.startsWith('/images')) {
           return
+        }
 
         // Process images from src/content/posts/_images directory
         if (src.startsWith('./') || src.startsWith('../')) {

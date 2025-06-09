@@ -110,12 +110,15 @@ const pageImage = postSlug
 // Priority: Local storage theme > Default theme > System preference
 function isCurrentDark() {
   const currentTheme = localStorage.getItem('theme')
-  if (currentTheme)
+  if (currentTheme) {
     return currentTheme === 'dark'
-  if (defaultMode === 'light')
+  }
+  if (defaultMode === 'light') {
     return false
-  if (defaultMode === 'dark')
+  }
+  if (defaultMode === 'dark') {
     return true
+  }
 
   return window.matchMedia('(prefers-color-scheme: dark)').matches
 }

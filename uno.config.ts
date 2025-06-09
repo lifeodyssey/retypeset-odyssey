@@ -60,8 +60,9 @@ export default defineConfig({
   },
   variants: [
     (matcher) => {
-      if (!matcher.startsWith('cjk:'))
+      if (!matcher.startsWith('cjk:')) {
         return matcher
+      }
       return {
         matcher: matcher.slice(4),
         selector: s => `${s}:is(:lang(zh), :lang(ja), :lang(ko))`,

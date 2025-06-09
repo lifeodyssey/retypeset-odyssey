@@ -144,16 +144,19 @@ const filteredHeadings = headings.filter(heading =>
 <script>
 function setupTOCHighlight() {
   const is2xl = window.innerWidth >= 1536
-  if (!is2xl)
+  if (!is2xl) {
     return
+  }
 
   const tocContent = document.getElementById('toc-accordion-content')
-  if (!tocContent)
+  if (!tocContent) {
     return
+  }
 
   const tocLinksCollection = tocContent.getElementsByTagName('a')
-  if (tocLinksCollection.length === 0)
+  if (tocLinksCollection.length === 0) {
     return
+  }
 
   const tocLinks = Array.from(tocLinksCollection, item => item as HTMLAnchorElement)
 
@@ -167,8 +170,9 @@ function setupTOCHighlight() {
   const headingMap = new Map<string, HTMLAnchorElement>()
   tocLinks.forEach((link) => {
     const id = link.getAttribute('href')?.substring(1)
-    if (id)
+    if (id) {
       headingMap.set(id, link)
+    }
   })
 
   let currentActiveLink: HTMLAnchorElement | null = null
@@ -186,8 +190,9 @@ function setupTOCHighlight() {
   }
 
   function highlightLink(linkElement: HTMLAnchorElement) {
-    if (linkElement === currentActiveLink)
+    if (linkElement === currentActiveLink) {
       return
+    }
 
     // Clear all highlights
     tocLinks.forEach((linkItem) => {
@@ -216,8 +221,9 @@ function setupTOCHighlight() {
     const headingId = entries.find(entry => entry.isIntersecting)?.target?.id
     if (headingId) {
       const link = headingMap.get(headingId)
-      if (link)
+      if (link) {
         highlightLink(link)
+      }
     }
   }
 

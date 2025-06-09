@@ -47,18 +47,21 @@ async function getHtmlFiles(): Promise<string[]> {
 // Process a single image element, applying LQIP style if needed
 function processImage(img: any, lqipMap: LqipMap): boolean {
   const src = img.getAttribute('src')
-  if (!src)
+  if (!src) {
     return false
+  }
 
   // Check if image has a corresponding LQIP value
   const lqipValue = lqipMap[src]
-  if (lqipValue === undefined)
+  if (lqipValue === undefined) {
     return false
+  }
 
   // Skip if LQIP style already exists
   const currentStyle = img.getAttribute('style') ?? ''
-  if (currentStyle.includes('--lqip:'))
+  if (currentStyle.includes('--lqip:')) {
     return false
+  }
 
   // Create new style with LQIP value
   const newStyle = currentStyle
