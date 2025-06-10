@@ -38,18 +38,16 @@ html.reduce-motion {
 
 /* GSAP Animation Elements Initial States >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 @media (min-width: 1024px) {
-  html.js:not(.reduce-motion) #gsap-post-page-content > * {
+  /* Post Content + Tags + Comments */
+  html.js:not(.reduce-motion) #gsap-post-content > *,
+  html.js:not(.reduce-motion) #gsap-post-tags,
+  html.js:not(.reduce-motion) #giscus,
+  html.js:not(.reduce-motion) #waline {
     opacity: 0;
     transform: translateY(3rem);
   }
-  html.js:not(.reduce-motion) #gsap-post-page-date {
-    opacity: 0;
-    transform: translateY(1.5rem);
-  }
-  html.js:not(.reduce-motion) #back-button {
-    opacity: 0;
-    transform: translateX(0.5rem);
-  }
+
+  /* TOC + Back Button + Post Date */
   html.js:not(.reduce-motion) #toc-desktop-icon {
     opacity: 0;
     transform: translateY(0.5rem);
@@ -58,10 +56,18 @@ html.reduce-motion {
     opacity: 0;
     transform: translateY(1.5rem);
   }
+  html.js:not(.reduce-motion) #back-button {
+    opacity: 0;
+    transform: translateX(0.5rem);
+  }
+  html.js:not(.reduce-motion) #gsap-post-date {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
 }
 
 @media (max-width: 1023px) {
-  html.js:not(.reduce-motion) #gsap-post-page-content > :nth-child(-n+7) {
+  html.js:not(.reduce-motion) #gsap-post-content > :nth-child(-n+7) {
     opacity: 0;
     transform: translateY(3rem);
   }

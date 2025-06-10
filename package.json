@@ -1,7 +1,7 @@
 {
   "name": "astro-theme-retypeset",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "packageManager": "pnpm@10.12.1",
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
@@ -51,7 +51,7 @@
     "@lokesh.dhakar/quantize": "^1.4.0",
     "@types/hast": "^3.0.4",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.0.0",
     "@types/sanitize-html": "^2.16.0",
     "@unocss/eslint-plugin": "66.1.4",
     "@unocss/preset-attributify": "66.1.4",
