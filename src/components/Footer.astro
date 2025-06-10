@@ -21,6 +21,8 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
 
   return { name, url, ...rest }
 })
+
+const footerLinkClass = 'highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary'
 ---
 
 <footer
@@ -30,7 +32,7 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   <p>
     {links.map((link, index) => (
       <>
-        <a class="highlight-hover uno-footer-link" href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>&nbsp;{index < links.length - 1 && '/'}
+        <a class={footerLinkClass} href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>&nbsp;{index < links.length - 1 && '/'}
       </>
     ))}
   </p>
@@ -40,6 +42,6 @@ const links = socialLinks.map(({ name, url, ...rest }) => {
   </p>
 
   <p>
-    Powered by <a class="highlight-hover uno-footer-link" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="highlight-hover uno-footer-link" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
+    Powered by <a class={footerLinkClass} href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class={footerLinkClass} href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a>
   </p>
 </footer>

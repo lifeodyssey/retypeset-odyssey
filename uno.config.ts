@@ -56,7 +56,6 @@ export default defineConfig({
     'uno-desktop-column': 'fixed right-[max(5rem,calc(50vw-35rem))] w-14rem',
     'uno-decorative-line': 'mb-4.5 h-0.25 w-10 bg-secondary/25 lg:(mb-6 w-11)',
     'uno-round-border': 'border border-secondary/5 rounded border-solid',
-    'uno-footer-link': 'py-0.8 transition-colors after:bottom-0.35em hover:c-primary',
   },
   variants: [
     (matcher) => {

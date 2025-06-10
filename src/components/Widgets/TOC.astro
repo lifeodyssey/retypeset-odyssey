@@ -70,9 +70,9 @@ const filteredHeadings = headings.filter(heading =>
               <a
                 href={`#${heading.slug}`}
                 class:list={[
-                  { 'toc-links-h2': heading.depth === 2 },
-                  { 'toc-links-h3': heading.depth === 3 },
-                  { 'toc-links-h4': heading.depth === 4 },
+                  { 'toc-links-h2 highlight-hover': heading.depth === 2 },
+                  { 'toc-links-h3 highlight-hover': heading.depth === 3 },
+                  { 'toc-links-h4 highlight-hover': heading.depth === 4 },
                 ]}
               >
                 {heading.text}
@@ -94,11 +94,11 @@ const filteredHeadings = headings.filter(heading =>
   --at-apply: 'mb-2.5 mt-1 list-none pl-0 2xl:(mb-1 space-y-1) space-y-1.1';
 }
 .toc-links-h2, .toc-links-h3, .toc-links-h4 {
-  --at-apply: 'text-balance text-sm font-normal no-underline 2xl:(text-3.2 c-secondary/25)';
+  --at-apply: 'text-balance text-sm font-normal no-underline after:bottom-0.15em 2xl:(text-3.2 c-secondary/25)';
   transition: color 0.15s ease-out, font-weight 0.15s ease-out;
 }
 .toc-link-active {
-  --at-apply: 'c-secondary/80 font-medium';
+  --at-apply: 'c-secondary font-medium';
 }
 
 /* Hover Effect */
@@ -212,7 +212,7 @@ function setupTOCHighlight() {
     // Scroll to center position
     linkElement.scrollIntoView({
       behavior: 'smooth',
-      block: 'center',
+      block: 'nearest',
     })
   }
 
@@ -242,6 +242,32 @@ function setupTOCHighlight() {
   if (tocLinks.length > 0) {
     highlightLink(tocLinks[0])
   }
+
+  const postContent = document.getElementById('gsap-post-content')
+  const lastContentElement = postContent?.lastElementChild
+
+  // Exit if no content elements
+  if (!postContent || !lastContentElement) {
+    return
+  }
+
+  // Create observer to monitor the last element
+  const contentEndObserver = new IntersectionObserver(
+    (entries) => {
+      // Clear highlights when scrolled past content
+      if (!entries[0].isIntersecting && entries[0].boundingClientRect.top < 0) {
+        tocLinks.forEach(linkItem => linkItem.classList.remove('toc-link-active'))
+        currentActiveLink = null
+      }
+    },
+    {
+      rootMargin: '0px 0px 0px 0px',
+      threshold: 0,
+    },
+  )
+
+  // Observe last content element
+  contentEndObserver.observe(lastContentElement)
 }
 
 setupTOCHighlight()
