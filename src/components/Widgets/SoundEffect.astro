@@ -1,0 +1,38 @@
+<script is:inline>
+function playRandomTapSound() {
+  const randomNum = Math.floor(Math.random() * 5) + 1
+  const audio = new Audio(`/sounds/tap_0${randomNum}.wav`)
+  audio.volume = 1.0
+  audio.play().catch(error => console.error('Sound playback failed:', error))
+}
+
+const soundElementIds = new Set([
+  'language-switcher',
+  'theme-toggle-button',
+  'back-button',
+  'toc-desktop-icon',
+])
+
+function handleSoundClick(event) {
+  if (window.matchMedia('(max-width: 1023px)').matches) {
+    return
+  }
+
+  let target = event.target
+  while (target && target !== document) {
+    if (target.id && soundElementIds.has(target.id)) {
+      playRandomTapSound()
+      return
+    }
+    target = target.parentElement
+  }
+}
+
+function setupGlobalSoundHandler() {
+  document.removeEventListener('click', handleSoundClick)
+  document.addEventListener('click', handleSoundClick)
+}
+
+setupGlobalSoundHandler()
+document.addEventListener('astro:page-load', setupGlobalSoundHandler)
+</script>
