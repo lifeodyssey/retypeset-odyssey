@@ -128,7 +128,8 @@ export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
   const useI18nTitle = themeConfig.site.i18nTitle
   const siteTitle = useI18nTitle ? currentUI.title : title
   const siteDescription = useI18nTitle ? currentUI.description : description
-  const siteURL = lang ? `${url}/${lang}` : url
+  const baseUrl = lang ? `${url}/${lang}` : url
+  const siteURL = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
   const author: Author = {
     name: siteAuthor,
     link: url,
@@ -165,7 +166,7 @@ export async function generateFeed({ lang }: GenerateFeedOptions = {}) {
 
   // Add posts to feed
   for (const post of limitedPosts) {
-    const postLink = generatePostUrl(post, url)
+    const postLink = generatePostUrl(post, siteURL)
 
     // Optimize content processing
     const postContent = post.body
