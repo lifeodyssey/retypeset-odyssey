@@ -22,12 +22,14 @@ const activeTimeouts = new WeakMap<HTMLButtonElement, ReturnType<typeof setTimeo
 
 async function handleCopy(button: HTMLButtonElement) {
   const codeElement = button.parentElement?.querySelector('pre code')
-  if (!codeElement)
+  if (!codeElement) {
     return
+  }
 
   const code = codeElement.textContent ?? ''
-  if (!code)
+  if (!code) {
     return
+  }
 
   try {
     await navigator.clipboard.writeText(code)
@@ -67,8 +69,9 @@ function setupCodeCopyButtons() {
 
 // Use event delegation for better performance
 document.addEventListener('click', (e) => {
-  if (!(e.target instanceof HTMLElement))
+  if (!(e.target instanceof HTMLElement)) {
     return
+  }
 
   // Find closest button element if clicked on button or child element
   const button = e.target.closest('.code-copy-button') as HTMLButtonElement | null
