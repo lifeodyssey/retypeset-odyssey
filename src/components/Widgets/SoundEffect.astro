@@ -1,38 +1,101 @@
 <script is:inline>
-function playRandomTapSound() {
-  const randomNum = Math.floor(Math.random() * 5) + 1
-  const audio = new Audio(`/sounds/tap_0${randomNum}.wav`)
-  audio.volume = 1.0
-  audio.play().catch(error => console.error('Sound playback failed:', error))
+class AudioManager {
+  constructor() {
+    this.audioContext = null
+    this.audioBuffers = new Map()
+    this.isReady = false
+    this.isInitializing = false
+  }
+
+  async initialize() {
+    if (this.isReady || this.isInitializing) {
+      return
+    }
+
+    this.isInitializing = true
+    try {
+      this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+      await this.preloadSounds()
+      this.isReady = true
+    }
+    catch (error) {
+      console.warn('Audio initialization failed:', error)
+    }
+    finally {
+      this.isInitializing = false
+    }
+  }
+
+  async preloadSounds() {
+    const promises = Array.from({ length: 5 }, (_, i) =>
+      this.loadSound(`tap_0${i + 1}`, `/sounds/tap_0${i + 1}.wav`))
+    await Promise.allSettled(promises)
+  }
+
+  async loadSound(name, url) {
+    try {
+      const response = await fetch(url)
+      const arrayBuffer = await response.arrayBuffer()
+      const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer)
+      this.audioBuffers.set(name, audioBuffer)
+    }
+    catch (error) {
+      console.warn(`Failed to load ${name}:`, error)
+    }
+  }
+
+  async playRandomTapSound() {
+    if (!this.isReady) {
+      await this.initialize()
+    }
+
+    if (this.audioBuffers.size === 0)
+      return
+
+    try {
+      if (this.audioContext.state === 'suspended') {
+        await this.audioContext.resume()
+      }
+
+      const availableBuffers = Array.from(this.audioBuffers.values())
+      const randomIndex = Math.floor(Math.random() * availableBuffers.length)
+      const audioBuffer = availableBuffers[randomIndex]
+
+      const source = this.audioContext.createBufferSource()
+      source.buffer = audioBuffer
+      source.connect(this.audioContext.destination)
+      source.start(0)
+    }
+    catch (error) {
+      console.warn('Playback failed:', error)
+    }
+  }
 }
 
-const soundElementIds = new Set([
-  'language-switcher',
-  'theme-toggle-button',
-  'back-button',
-  'toc-desktop-icon',
-])
+const audioManager = new AudioManager()
 
 function handleSoundClick(event) {
   if (window.matchMedia('(max-width: 1023px)').matches) {
     return
   }
 
-  let target = event.target
-  while (target && target !== document) {
-    if (target.id && soundElementIds.has(target.id)) {
-      playRandomTapSound()
-      return
-    }
-    target = target.parentElement
+  const target = event.target.closest(`
+    #language-switcher,
+    #theme-toggle-button,
+    #back-button,
+    #toc-desktop-icon
+  `)
+
+  if (target) {
+    audioManager.playRandomTapSound().catch(() => {})
   }
 }
 
-function setupGlobalSoundHandler() {
+function setupAudioSystem() {
   document.removeEventListener('click', handleSoundClick)
   document.addEventListener('click', handleSoundClick)
 }
 
-setupGlobalSoundHandler()
-document.addEventListener('astro:page-load', setupGlobalSoundHandler)
+setupAudioSystem()
+document.addEventListener('astro:page-load', setupAudioSystem)
 </script>
