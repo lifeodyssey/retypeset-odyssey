@@ -7,10 +7,10 @@ const SOUND_TYPES = {
 const CLICK_TARGETS = [
   '#language-switcher',
   '#theme-toggle-button',
-  '#back-button',
-  '#toc-desktop-icon',
-  '.heading-anchor-link',
-  '.code-copy-button',
+  // '#back-button',
+  // '#toc-desktop-icon',
+  // '.heading-anchor-link',
+  // '.code-copy-button',
 ]
 
 const TYPING_TARGETS = [
@@ -118,7 +118,7 @@ class SoundEffectManager {
       const source = this.audioContext.createBufferSource()
       source.buffer = audioBuffer
       const gainNode = this.audioContext.createGain()
-      gainNode.gain.value = soundType === SOUND_TYPES.TYPING ? 0.7 : 1.0 // 0.7x Typing Volume
+      gainNode.gain.value = soundType === SOUND_TYPES.TYPING ? 0.4 : 0.8 // Volume control
 
       // Connect and play
       source.connect(gainNode)
