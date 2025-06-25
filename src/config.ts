@@ -89,6 +89,12 @@ export const themeConfig: ThemeConfig = {
       emitMetadata: '0',
       inputPosition: 'bottom',
     },
+    // twikoo
+    // https://twikoo.js.org/en/
+    twikoo: {
+      envId: '',
+      region: '',
+    },
     // waline
     // https://waline.js.org/en/
     waline: {
@@ -181,7 +187,7 @@ export const themeConfig: ThemeConfig = {
     imageHostURL: 'image.radishzz.cc',
     // custom google analytics js
     // for users who route analytics javascript to a customized domain
-    // See https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738
+    // see https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738
     customGoogleAnalyticsJS: '',
     // custom umami analytics js
     // for users who deploy umami on their own, or route analytics javascript to a customized domain

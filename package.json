@@ -2,7 +2,7 @@
   "name": "astro-theme-retypeset",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.12.3",
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
@@ -16,7 +16,7 @@
     "generate-lqip": "esno scripts/generate-lqip.ts",
     "apply-lqip": "esno scripts/apply-lqip.ts",
     "update-theme": "esno scripts/update-theme.ts",
-    "update-vendors": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/vendors/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/vendors/waline/waline.js"
+    "update-vendors": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/vendors/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/vendors/waline/waline.js && mkdir -p public/vendors/twikoo && curl -L https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.min.js -o public/vendors/twikoo/twikoo.min.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",

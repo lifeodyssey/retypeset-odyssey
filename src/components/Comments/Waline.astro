@@ -3,13 +3,11 @@ import { defaultLocale, themeConfig } from '@/config'
 import { walineLocaleMap } from '@/i18n/config'
 
 const {
-  waline: {
-    serverURL = '',
-    emoji = [],
-    search = false,
-    imageUploader = false,
-  } = {},
-} = themeConfig.comment ?? {}
+  serverURL = '',
+  emoji = [],
+  search = false,
+  imageUploader = false,
+} = themeConfig.comment?.waline ?? {}
 ---
 
 <div
