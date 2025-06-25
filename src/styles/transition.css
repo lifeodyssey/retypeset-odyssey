@@ -42,6 +42,7 @@ html.reduce-motion {
   html.js:not(.reduce-motion) #gsap-post-content > *,
   html.js:not(.reduce-motion) #gsap-post-tags,
   html.js:not(.reduce-motion) #giscus,
+  html.js:not(.reduce-motion) #twikoo,
   html.js:not(.reduce-motion) #waline {
     opacity: 0;
     transform: translateY(3rem);

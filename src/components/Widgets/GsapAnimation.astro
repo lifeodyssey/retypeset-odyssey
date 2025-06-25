@@ -15,8 +15,9 @@ function setupPostPageAnimation() {
   const postContentChildren = Array.from(postContent.children)
   const tagsElement = document.getElementById('gsap-post-tags')
   const giscusElement = document.getElementById('giscus')
+  const twikooElement = document.getElementById('twikoo')
   const walineElement = document.getElementById('waline')
-  const allElements = [...postContentChildren, tagsElement, giscusElement, walineElement].filter(Boolean)
+  const allElements = [...postContentChildren, tagsElement, giscusElement, twikooElement, walineElement].filter(Boolean)
 
   // TOC + Back Button + Post Date
   const tocContainer = document.getElementById('toc-container')
