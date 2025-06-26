@@ -55,7 +55,6 @@ export interface ThemeConfig {
     }
     twikoo?: {
       envId?: string
-      region?: string
     }
     waline?: {
       serverURL?: string

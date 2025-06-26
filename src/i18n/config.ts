@@ -32,15 +32,15 @@ export const giscusLocaleMap: Record<string, string> = {
 // Twikoo Language Map
 // https://github.com/twikoojs/twikoo/blob/main/src/client/utils/i18n/index.js
 export const twikooLocaleMap: Record<string, string> = {
-  'de': 'en',
+  'de': 'en', // fallback to English
   'en': 'en',
-  'es': 'en',
-  'fr': 'en',
+  'es': 'en', // fallback to English
+  'fr': 'en', // fallback to English
   'ja': 'ja',
   'ko': 'ko',
-  'pl': 'en',
-  'pt': 'en',
-  'ru': 'en',
+  'pl': 'en', // fallback to English
+  'pt': 'en', // fallback to English
+  'ru': 'en', // fallback to English
   'zh': 'zh-cn',
   'zh-tw': 'zh-tw',
 }

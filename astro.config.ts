@@ -52,11 +52,11 @@ export default defineConfig({
       injectReset: true,
     }),
     mdx(),
-    partytown({
-      config: {
-        forward: ['dataLayer.push', 'gtag'],
-      },
-    }),
+    // partytown({
+    //   config: {
+    //     forward: ['dataLayer.push', 'gtag'],
+    //   },
+    // }),
     sitemap(),
     robotsTxt(),
     Compress({

@@ -90,10 +90,10 @@ export const themeConfig: ThemeConfig = {
       inputPosition: 'bottom',
     },
     // twikoo
-    // https://twikoo.js.org/en/
+    // https://twikoo.js.org/
     twikoo: {
       envId: 'https://comment-twikoo-three.vercel.app',
-      region: '',
+      // version: change twikoo frontend version in package.json
     },
     // waline
     // https://waline.js.org/en/

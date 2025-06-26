@@ -1,23 +1,21 @@
 <script>
-import { gsap } from 'gsap'
+  import { gsap } from 'gsap'
 
-function setupPostPageAnimation() {
-  if (document.documentElement.classList.contains('reduce-motion')) {
-    return
-  }
+  function setupPostPageAnimation() {
+    if (document.documentElement.classList.contains('reduce-motion')) {
+      return
+    }
 
-  // Post Content + Tags + Comments
-  const postContent = document.getElementById('gsap-post-content')
-  if (!postContent) {
-    return
-  }
+    // Post Content + Tags + Comments
+    const postContent = document.getElementById('gsap-post-content')
+    if (!postContent) {
+      return
+    }
 
-  const postContentChildren = Array.from(postContent.children)
-  const tagsElement = document.getElementById('gsap-post-tags')
-  const giscusElement = document.getElementById('giscus')
-  const twikooElement = document.getElementById('twikoo')
-  const walineElement = document.getElementById('waline')
-  const allElements = [...postContentChildren, tagsElement, giscusElement, twikooElement, walineElement].filter(Boolean)
+    const postContentChildren = Array.from(postContent.children)
+    const tagsElement = document.getElementById('gsap-post-tags')
+    const walineElement = document.getElementById('waline')
+    const allElements = [...postContentChildren, tagsElement, walineElement].filter(Boolean)
 
   // TOC + Back Button + Post Date
   const tocContainer = document.getElementById('toc-container')

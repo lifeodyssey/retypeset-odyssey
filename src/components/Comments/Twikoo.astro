@@ -1,29 +1,25 @@
 ---
+import twikooPath from 'twikoo/dist/twikoo.nocss.js?url'
 import { defaultLocale, themeConfig } from '@/config'
 import { twikooLocaleMap } from '@/i18n/config'
 
-const {
-  envId = '',
-  region = '',
-} = themeConfig.comment?.twikoo ?? {}
+const { envId = '' } = themeConfig.comment?.twikoo ?? {}
 ---
 
-<div
-  id="twikoo"
-  class="mt-16"
-></div>
+<!-- class="mt-16" not working -->
+<div id="twikoo"></div>
 
 <!-- Twikoo Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<!-- Using twikoo.min.js causes CSS to fail after View Transitions -->
 <script
   is:inline
-  src="/vendors/twikoo/twikoo.min.js"
+  src={twikooPath}
 ></script>
 
 <script
   is:inline
   define:vars={{
     envId,
-    region,
     twikooLocaleMap,
     defaultLocale,
   }}
@@ -39,7 +35,7 @@ function setupTwikoo() {
   twikoo.init({
     envId,
     el: '#twikoo',
-    // ...(region ? { region } : {}),
+    // region: 'ap-shanghai', // Specify for Tencent Cloud, omit for Vercel
     path: window.location.pathname.replace(/^\/([a-z]{2}(-[a-z]{2})?)\//, '/'), // Share comments on posts in different languages
     lang: currentTwikooLang,
   })
