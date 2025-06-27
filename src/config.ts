@@ -93,7 +93,7 @@ export const themeConfig: ThemeConfig = {
     // https://twikoo.js.org/
     twikoo: {
       envId: '',
-      // version: change twikoo frontend version in package.json
+      // version: twikoo frontend version can be changed in package.json
     },
     // waline
     // https://waline.js.org/en/
