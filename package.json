@@ -2,7 +2,7 @@
   "name": "astro-theme-retypeset",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.12.3",
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
@@ -15,13 +15,13 @@
     "format-posts": "esno scripts/format-posts.ts",
     "generate-lqip": "esno scripts/generate-lqip.ts",
     "apply-lqip": "esno scripts/apply-lqip.ts",
-    "update-theme": "esno scripts/update-theme.ts",
-    "update-vendors": "curl -L https://unpkg.com/@waline/client@latest/dist/waline.css -o public/vendors/waline/waline.css && curl -L https://unpkg.com/@waline/client@latest/dist/waline.js -o public/vendors/waline/waline.js"
+    "update-theme": "esno scripts/update-theme.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/sitemap": "^3.4.1",
+    "@waline/client": "^3.5.7",
     "astro": "^5.10.1",
     "astro-compress": "^2.3.8",
     "astro-og-canvas": "^0.7.0",
@@ -43,6 +43,7 @@
     "remark-math": "^6.0.0",
     "sanitize-html": "^2.17.0",
     "sharp": "^0.34.2",
+    "twikoo": "^1.6.44",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

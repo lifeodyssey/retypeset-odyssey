@@ -1,15 +1,14 @@
 ---
+import walineJS from '@waline/client/full?url'
 import { defaultLocale, themeConfig } from '@/config'
 import { walineLocaleMap } from '@/i18n/config'
 
 const {
-  waline: {
-    serverURL = '',
-    emoji = [],
-    search = false,
-    imageUploader = false,
-  } = {},
-} = themeConfig.comment ?? {}
+  serverURL = '',
+  emoji = [],
+  search = false,
+  imageUploader = false,
+} = themeConfig.comment?.waline ?? {}
 ---
 
 <div
@@ -27,12 +26,13 @@ const {
     imageUploader,
     walineLocaleMap,
     defaultLocale,
+    walineJS,
   }}
   type="module"
 >
-import { init } from '/vendors/waline/waline.js'
+async function setupWaline() {
+  const { init } = await import(walineJS)
 
-function setupWaline() {
   const currentPath = window.location.pathname
   const pathLang = Object.keys(walineLocaleMap).find(code =>
     currentPath.startsWith(`/${code}/`),

@@ -146,9 +146,9 @@ export default defineConfig({
     enabled: false,
   },
   // For local development
-  // server: {
-  //   headers: {
-  //     'Access-Control-Allow-Origin': 'https://giscus.app',
-  //   },
-  // },
+  server: {
+    headers: {
+      'Access-Control-Allow-Origin': 'https://giscus.app',
+    },
+  },
 })
