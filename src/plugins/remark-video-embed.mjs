@@ -39,7 +39,7 @@ export function remarkVideoEmbed() {
         node.value = `
         <figure>
           <iframe
-            src="//player.bilibili.com/player.html?isOutside=true&bvid=${bvid}&p=1"
+            src="//player.bilibili.com/player.html?isOutside=true&bvid=${bvid}&p=1&autoplay=0&muted=false"
             scrolling="no"
             border="0"
             frameborder="no"
