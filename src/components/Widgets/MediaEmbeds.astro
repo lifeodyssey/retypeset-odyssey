@@ -1,0 +1,35 @@
+---
+import liteYouTubeJS from 'lite-youtube-embed?url'
+import 'lite-youtube-embed/src/lite-yt-embed.css'
+---
+
+<script
+  is:inline
+  define:vars={{ liteYouTubeJS }}
+>
+async function setupMediaEmbeds() {
+  // Detect YouTube video embeds
+  if (document.querySelector('lite-youtube')) {
+    // Dynamically load JS
+    await import(liteYouTubeJS)
+  }
+
+  // Detect X tweet embeds
+  if (document.querySelector('.twitter-tweet') && !document.querySelector('script[src*="platform.twitter.com"]')) {
+    // Set theme before loading Twitter script
+    const isDark = document.documentElement.classList.contains('dark')
+    document.querySelectorAll('.twitter-tweet').forEach(tweet => {
+      tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
+    })
+
+    // Dynamically load JS
+    const script = document.createElement('script')
+    script.src = 'https://platform.twitter.com/widgets.js'
+    script.async = true
+    document.head.appendChild(script)
+  }
+}
+
+setupMediaEmbeds()
+document.addEventListener('astro:page-load', setupMediaEmbeds)
+</script>
