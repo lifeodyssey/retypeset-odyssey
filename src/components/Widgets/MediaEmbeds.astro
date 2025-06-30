@@ -8,25 +8,35 @@ import 'lite-youtube-embed/src/lite-yt-embed.css'
   define:vars={{ liteYouTubeJS }}
 >
 async function setupMediaEmbeds() {
-  // Detect YouTube video embeds
-  if (document.querySelector('lite-youtube')) {
-    // Dynamically load JS
+  // Detect media elements
+  const youtubeElements = document.querySelectorAll('lite-youtube')
+  const xElements = document.querySelectorAll('.twitter-tweet')
+
+  // Exit directly when no media content
+  if (youtubeElements.length === 0 && xElements.length === 0) {
+    return
+  }
+
+  // Process YouTube embeds
+  if (youtubeElements.length > 0) {
     await import(liteYouTubeJS)
   }
 
-  // Detect X tweet embeds
-  if (document.querySelector('.twitter-tweet') && !document.querySelector('script[src*="platform.twitter.com"]')) {
-    // Set theme before loading Twitter script
+  // Process X tweet embeds
+  if (xElements.length > 0) {
+    // Set theme before loading X script
     const isDark = document.documentElement.classList.contains('dark')
-    document.querySelectorAll('.twitter-tweet').forEach(tweet => {
+    xElements.forEach((tweet) => {
       tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
     })
 
-    // Dynamically load JS
-    const script = document.createElement('script')
-    script.src = 'https://platform.twitter.com/widgets.js'
-    script.async = true
-    document.head.appendChild(script)
+    // Load script if not exists
+    if (!document.querySelector('script[src*="platform.twitter.com"]')) {
+      const script = document.createElement('script')
+      script.src = 'https://platform.twitter.com/widgets.js'
+      script.async = true
+      document.head.appendChild(script)
+    }
   }
 }
 
