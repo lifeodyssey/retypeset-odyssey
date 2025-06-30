@@ -8,11 +8,9 @@ import 'lite-youtube-embed/src/lite-yt-embed.css'
   define:vars={{ liteYouTubeJS }}
 >
 async function setupMediaEmbeds() {
-  // Detect media elements
   const youtubeElements = document.querySelectorAll('lite-youtube')
   const xElements = document.querySelectorAll('.twitter-tweet')
 
-  // Exit directly when no media content
   if (youtubeElements.length === 0 && xElements.length === 0) {
     return
   }
@@ -30,7 +28,6 @@ async function setupMediaEmbeds() {
       tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
     })
 
-    // Load X widgets script
     const script = document.createElement('script')
     script.src = 'https://platform.twitter.com/widgets.js'
     script.async = true

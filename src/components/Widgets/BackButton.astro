@@ -16,7 +16,6 @@ import GoBackIcon from '@/assets/icons/go-back.svg';
 
 <!-- Go Back Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script>
-// Use event delegation to avoid memory leaks
 document.addEventListener('click', (e) => {
   if (e.target instanceof Element && e.target.closest('#back-button')) {
     // Navigate back if history exists
