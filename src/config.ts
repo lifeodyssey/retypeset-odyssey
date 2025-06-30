@@ -80,9 +80,9 @@ export const themeConfig: ThemeConfig = {
     // https://giscus.app/
     giscus: {
       repo: '',
-      repoID: '',
+      repoId: '',
       category: '',
-      categoryID: '',
+      categoryId: '',
       mapping: 'pathname',
       strict: '0',
       reactionsEnabled: '1',

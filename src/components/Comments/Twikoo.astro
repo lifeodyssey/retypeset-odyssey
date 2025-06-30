@@ -54,15 +54,13 @@ function lazySetupTwikoo() {
   }
 
   twikooObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setupTwikoo()
-        twikooObserver?.unobserve(entry.target)
-      }
-    })
+    if (entries.some(entry => entry.isIntersecting)) {
+      setupTwikoo()
+      twikooObserver?.disconnect()
+    }
   }, { rootMargin: '200px' })
 
-  twikooObserver?.observe(twikooContainer)
+  twikooObserver.observe(twikooContainer)
 }
 
 lazySetupTwikoo()
