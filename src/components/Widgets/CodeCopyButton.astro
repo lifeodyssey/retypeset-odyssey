@@ -20,19 +20,38 @@ const copyIcons = {
 // Track timeout references for each button to manage icon state transitions
 const activeTimeouts = new WeakMap<HTMLButtonElement, ReturnType<typeof setTimeout>>()
 
-async function handleCopy(button: HTMLButtonElement) {
+// Initialize copy buttons with icons
+function setupCodeCopyButtons(): void {
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.code-copy-button')
+
+  if (buttons.length === 0) {
+    return
+  }
+
+  buttons.forEach((button) => {
+    button.innerHTML = copyIcons.copy
+  })
+}
+
+// Handle copy button click
+async function handleCodeCopy(button: HTMLButtonElement) {
+  // Prevent duplicate clicks while showing success state
+  if (button.classList.contains('copy-success')) {
+    return
+  }
+
   const codeElement = button.parentElement?.querySelector('pre code')
   if (!codeElement) {
     return
   }
 
-  const code = codeElement.textContent ?? ''
-  if (!code) {
+  const codeText = codeElement.textContent ?? ''
+  if (!codeText) {
     return
   }
 
   try {
-    await navigator.clipboard.writeText(code)
+    await navigator.clipboard.writeText(codeText)
 
     // Clear existing timeout to prevent icon state conflicts on multiple clicks
     const existingTimeout = activeTimeouts.get(button)
@@ -56,32 +75,16 @@ async function handleCopy(button: HTMLButtonElement) {
     activeTimeouts.set(button, timeoutId)
   }
   catch (error) {
-    console.error('Failed to copy code', (error as Error)?.message ?? String(error))
+    console.error('Failed to copy code', error)
   }
 }
-
-// Initialize copy buttons with icons
-function setupCodeCopyButtons() {
-  document
-    .querySelectorAll<HTMLButtonElement>('.code-copy-button')
-    .forEach((button) => {
-      button.innerHTML = copyIcons.copy
-    })
-}
-
-// Use event delegation for better performance
-document.addEventListener('click', (e) => {
-  if (!(e.target instanceof HTMLElement)) {
-    return
-  }
-
-  // Find closest button element if clicked on button or child element
-  const button = e.target.closest('.code-copy-button') as HTMLButtonElement | null
-  if (button) {
-    handleCopy(button)
-  }
-}, { passive: true })
 
 setupCodeCopyButtons()
 document.addEventListener('astro:page-load', setupCodeCopyButtons)
+document.addEventListener('click', (e) => {
+  const button = e.target instanceof Element && e.target.closest('.code-copy-button')
+  if (button) {
+    handleCodeCopy(button as HTMLButtonElement)
+  }
+}, { passive: true })
 </script>
