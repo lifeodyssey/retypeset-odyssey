@@ -70,6 +70,11 @@
     "unocss": "66.3.2",
     "unocss-preset-theme": "^0.14.1"
   },
+  "pnpm": {
+    "patchedDependencies": {
+      "@qwik.dev/partytown@0.11.1": "patches/@qwik.dev__partytown@0.11.1.patch"
+    }
+  },
   "lint-staged": {
     "*.{js,ts,astro}": "eslint --fix"
   }

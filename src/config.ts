@@ -92,14 +92,14 @@ export const themeConfig: ThemeConfig = {
     // twikoo
     // https://twikoo.js.org/
     twikoo: {
-      envId: '',
+      envId: 'https://comment-twikoo-three.vercel.app',
       // version: twikoo frontend version can be changed in package.json
     },
     // waline
     // https://waline.js.org/en/
     waline: {
       // server url
-      serverURL: 'https://retypeset-comment.radishzz.cc',
+      // serverURL: 'https://retypeset-comment.radishzz.cc',
       // emoji url
       emoji: [
         'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
