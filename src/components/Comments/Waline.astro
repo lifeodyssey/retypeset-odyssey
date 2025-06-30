@@ -30,6 +30,8 @@ const {
   }}
   type="module"
 >
+let walineObserver = null
+
 async function setupWaline() {
   const { init } = await import(walineJS)
 
@@ -59,21 +61,24 @@ async function setupWaline() {
 
 // Create an intersection observer to lazy load Waline comments when the container enters viewport
 function lazySetupWaline() {
+  // Cleanup observer if exists
+  walineObserver?.disconnect()
+
   const walineContainer = document.getElementById('waline')
   if (!walineContainer) {
     return
   }
 
-  const observer = new IntersectionObserver((entries) => {
+  walineObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         setupWaline()
-        observer.unobserve(entry.target)
+        walineObserver?.unobserve(entry.target)
       }
     })
   }, { rootMargin: '200px' })
 
-  observer.observe(walineContainer)
+  walineObserver?.observe(walineContainer)
 }
 
 lazySetupWaline()
@@ -117,7 +122,7 @@ document.addEventListener('astro:page-load', lazySetupWaline)
   --at-apply: 'mt-4 border-is-none';
 }
 #waline .wl-editor {
-  --at-apply: 'min-h-24';
+  --at-apply: 'min-h-20';
 }
 #waline .wl-editor::placeholder {
   --at-apply: 'c-primary/25';
@@ -150,10 +155,10 @@ document.addEventListener('astro:page-load', lazySetupWaline)
   --at-apply: 'scrollbar-hidden';
 }
 #waline .wl-meta-head {
-  --at-apply: 'px-0 pb-2 pt-3';
+  --at-apply: 'px-0 py-3';
 }
 #waline .wl-card-item {
-  --at-apply: 'px-0';
+  --at-apply: 'px-0 py-1';
 }
 #waline .wl-user-avatar {
   --at-apply: 'mt-1';
