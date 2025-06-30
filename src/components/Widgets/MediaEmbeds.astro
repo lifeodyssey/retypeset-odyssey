@@ -30,13 +30,11 @@ async function setupMediaEmbeds() {
       tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
     })
 
-    // Load script if not exists
-    if (!document.querySelector('script[src*="platform.twitter.com"]')) {
-      const script = document.createElement('script')
-      script.src = 'https://platform.twitter.com/widgets.js'
-      script.async = true
-      document.head.appendChild(script)
-    }
+    // Load X widgets script
+    const script = document.createElement('script')
+    script.src = 'https://platform.twitter.com/widgets.js'
+    script.async = true
+    document.head.appendChild(script)
   }
 }
 
