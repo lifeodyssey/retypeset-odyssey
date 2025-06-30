@@ -48,6 +48,7 @@ export default defineConfig({
     defaultLocale: locale,
   },
   integrations: [
+    partytown(),
     UnoCSS({
       injectReset: true,
     }),
