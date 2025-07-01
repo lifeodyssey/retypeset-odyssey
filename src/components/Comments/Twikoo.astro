@@ -1,4 +1,5 @@
 ---
+import twikooCSS from 'twikoo/dist/twikoo.css?url'
 import twikooPath from 'twikoo/dist/twikoo.nocss.js?url'
 import { defaultLocale, themeConfig } from '@/config'
 import { twikooLocaleMap } from '@/i18n/config'
@@ -22,11 +23,14 @@ const { envId = '' } = themeConfig.comment?.twikoo ?? {}
     envId,
     twikooLocaleMap,
     defaultLocale,
+    twikooCSS,
   }}
 >
 let twikooObserver = null
 
 function setupTwikoo() {
+  window.loadCSS(twikooCSS)
+
   const currentPath = window.location.pathname
   const pathLang = Object.keys(twikooLocaleMap).find(code =>
     currentPath.startsWith(`/${code}/`),
