@@ -91,7 +91,7 @@ class SoundEffectManager {
 
       // Get matching sound buffers for the requested type
       const buffers = this.audioBuffers[soundType] || []
-      if (!buffers.length) {
+      if (buffers.length === 0) {
         return
       }
 
