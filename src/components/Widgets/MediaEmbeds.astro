@@ -1,5 +1,4 @@
 ---
-import katexCSS from 'katex/dist/katex.min.css?url'
 import liteYouTubeCSS from 'lite-youtube-embed/src/lite-yt-embed.css?url'
 import liteYouTubeJS from 'lite-youtube-embed?url'
 ---
@@ -7,24 +6,18 @@ import liteYouTubeJS from 'lite-youtube-embed?url'
 <script
   is:inline
   define:vars={{
-    katexCSS,
     liteYouTubeCSS,
     liteYouTubeJS,
  }}
 >
 async function setupMediaEmbeds() {
   const embeds = {
-    katex: document.querySelectorAll('.katex'),
     youtube: document.querySelectorAll('lite-youtube'),
     x: document.querySelectorAll('.twitter-tweet'),
   }
 
   if (!Object.values(embeds).some(elements => elements.length > 0)) {
     return
-  }
-
-  if (embeds.katex.length > 0) {
-    window.loadCSS(katexCSS)
   }
 
   if (embeds.youtube.length > 0) {
