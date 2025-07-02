@@ -28,8 +28,15 @@ const { envId = '' } = themeConfig.comment?.twikoo ?? {}
 >
 let twikooObserver = null
 
+function loadCSS(url) {
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = url
+  document.head.appendChild(link)
+}
+
 function setupTwikoo() {
-  window.loadCSS(twikooCSS)
+  loadCSS(twikooCSS)
 
   const currentPath = window.location.pathname
   const pathLang = Object.keys(twikooLocaleMap).find(code =>

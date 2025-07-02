@@ -14,6 +14,13 @@ import photoSwipeJS from 'photoswipe?url'
 >
 let lightbox
 
+function loadCSS(url) {
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = url
+  document.head.appendChild(link)
+}
+
 async function setupPhotoSwipe() {
   if (lightbox) {
     lightbox.destroy()
@@ -30,7 +37,7 @@ async function setupPhotoSwipe() {
     return
   }
 
-  window.loadCSS(photoSwipeCSS)
+  loadCSS(photoSwipeCSS)
   const [{ default: PhotoSwipeLightbox }, pswp] = await Promise.all([
     import(photoSwipeLightboxJS),
     import(photoSwipeJS),

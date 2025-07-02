@@ -90,7 +90,7 @@ const pageImage = postSlug
 <!-- Global View Transition -->
 <ClientRouter fallback="none" />
 
-<!-- Custom Script -->
+<!-- Theme Toggle -->
 <script
   is:inline
   define:vars={{
@@ -100,14 +100,6 @@ const pageImage = postSlug
     reduceMotion,
  }}
 >
-// Dynamically load CSS file from provided URL
-window.loadCSS = function (url) {
-  const link = document.createElement('link')
-  link.rel = 'stylesheet'
-  link.href = url
-  document.head.appendChild(link)
-}
-
 // Check if current theme is dark mode
 // Priority: Local storage theme > Default theme > System preference
 function isCurrentDark() {
