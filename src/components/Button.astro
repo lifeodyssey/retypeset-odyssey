@@ -84,7 +84,7 @@ function applyTheme(isDark: boolean) {
   document.dispatchEvent(new Event('theme-changed'))
 }
 
-// Toggle theme
+// Toggle theme mode
 function toggleTheme() {
   const isDark = !document.documentElement.classList.contains('dark')
   applyTheme(isDark)
@@ -117,7 +117,7 @@ document.addEventListener('click', (e) => {
   }
 })
 
-// Listen to system theme changes in real-time
+// Listen to system theme changes
 window.matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', ({ matches: isDark }) => {
     // Apply system theme preference
