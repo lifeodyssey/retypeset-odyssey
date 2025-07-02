@@ -42,8 +42,6 @@ function loadCSS(url) {
 }
 
 async function setupWaline() {
-  loadCSS(walineCSS)
-
   const { init } = await import(walineJS)
 
   const currentPath = window.location.pathname
@@ -80,6 +78,7 @@ function lazySetupWaline() {
     return
   }
 
+  loadCSS(walineCSS)
   walineObserver = new IntersectionObserver((entries) => {
     if (entries.some(entry => entry.isIntersecting)) {
       setupWaline()
