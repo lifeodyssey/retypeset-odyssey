@@ -149,6 +149,8 @@ function handleGlobalKeydown(event) {
   soundManager.playSound(SOUND_TYPES.TYPING)
 }
 
+document.removeEventListener('click', handleGlobalClick)
+document.removeEventListener('keydown', handleGlobalKeydown)
 document.addEventListener('click', handleGlobalClick)
 document.addEventListener('keydown', handleGlobalKeydown)
 </script>

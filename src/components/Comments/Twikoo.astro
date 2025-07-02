@@ -28,6 +28,11 @@ const { envId = '' } = themeConfig.comment?.twikoo ?? {}
 >
 let twikooObserver = null
 
+function cleanupTwikooObserver() {
+  twikooObserver?.disconnect()
+  twikooObserver = null
+}
+
 function loadCSS(url) {
   const link = document.createElement('link')
   link.rel = 'stylesheet'
@@ -54,8 +59,8 @@ function setupTwikoo() {
 
 // Create an intersection observer to lazy load Twikoo comments when the container enters viewport
 function lazySetupTwikoo() {
-  // Cleanup observer if exists
-  twikooObserver?.disconnect()
+  // Cleanup Twikoo observer if exists
+  cleanupTwikooObserver()
 
   const twikooContainer = document.getElementById('twikoo')
   if (!twikooContainer) {
@@ -73,8 +78,9 @@ function lazySetupTwikoo() {
   twikooObserver.observe(twikooContainer)
 }
 
-lazySetupTwikoo()
 document.addEventListener('astro:page-load', lazySetupTwikoo)
+document.addEventListener('astro:before-swap', cleanupTwikooObserver)
+lazySetupTwikoo()
 </script>
 
 <!-- Custom CSS Styles >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->

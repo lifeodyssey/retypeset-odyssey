@@ -34,6 +34,11 @@ const {
 >
 let walineObserver = null
 
+function cleanupWalineObserver() {
+  walineObserver?.disconnect()
+  walineObserver = null
+}
+
 function loadCSS(url) {
   const link = document.createElement('link')
   link.rel = 'stylesheet'
@@ -70,8 +75,8 @@ async function setupWaline() {
 
 // Create an intersection observer to lazy load Waline comments when the container enters viewport
 function lazySetupWaline() {
-  // Cleanup observer if exists
-  walineObserver?.disconnect()
+  // Cleanup Waline observer if exists
+  cleanupWalineObserver()
 
   const walineContainer = document.getElementById('waline')
   if (!walineContainer) {
@@ -89,8 +94,9 @@ function lazySetupWaline() {
   walineObserver.observe(walineContainer)
 }
 
-lazySetupWaline()
 document.addEventListener('astro:page-load', lazySetupWaline)
+document.addEventListener('astro:before-swap', cleanupWalineObserver)
+lazySetupWaline()
 </script>
 
 <!-- Custom CSS Styles >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->

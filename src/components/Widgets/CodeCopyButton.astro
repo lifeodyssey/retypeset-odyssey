@@ -79,12 +79,15 @@ async function handleCodeCopy(button: HTMLButtonElement) {
   }
 }
 
-setupCodeCopyButtons()
-document.addEventListener('astro:page-load', setupCodeCopyButtons)
-document.addEventListener('click', (e) => {
+function handleCodeCopyClick(e: Event) {
   const button = e.target instanceof Element && e.target.closest('.code-copy-button')
   if (button) {
     handleCodeCopy(button as HTMLButtonElement)
   }
-}, { passive: true })
+}
+
+document.addEventListener('astro:page-load', setupCodeCopyButtons)
+document.removeEventListener('click', handleCodeCopyClick)
+document.addEventListener('click', handleCodeCopyClick, { passive: true })
+setupCodeCopyButtons()
 </script>
