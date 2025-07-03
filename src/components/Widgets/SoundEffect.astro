@@ -1,10 +1,12 @@
-<script is:inline>
+<script>
 const SOUND_TYPES = {
   CLICK: 'tap',
   TYPING: 'type',
-}
+} as const
 
-const VOLUME_SETTINGS = {
+type SoundType = typeof SOUND_TYPES[keyof typeof SOUND_TYPES]
+
+const VOLUME_SETTINGS: Record<SoundType, number> = {
   [SOUND_TYPES.CLICK]: 0.8,
   [SOUND_TYPES.TYPING]: 0.4,
 }
@@ -12,7 +14,7 @@ const VOLUME_SETTINGS = {
 const CLICK_TARGETS = [
   '#language-switcher',
   '#theme-toggle-button',
-]
+] as const
 
 const TYPING_TARGETS = [
   // Twikoo
@@ -23,7 +25,7 @@ const TYPING_TARGETS = [
   '#wl-mail',
   '#wl-link',
   '#wl-edit',
-]
+] as const
 
 const IGNORED_KEYS = new Set([
   'Shift',
@@ -38,22 +40,25 @@ const IGNORED_KEYS = new Set([
 const CLICK_SELECTOR = CLICK_TARGETS.join(',')
 const TYPING_SELECTOR = TYPING_TARGETS.join(',')
 
-function isMobileDevice() {
+function isMobileDevice(): boolean {
   return window.matchMedia('(max-width: 1023px)').matches
 }
 
 class SoundEffectManager {
-  constructor() {
-    this.audioContext = null
-    this.audioBuffers = {
-      [SOUND_TYPES.CLICK]: [],
-      [SOUND_TYPES.TYPING]: [],
-    }
-    this.initPromise = null
+  private audioContext: AudioContext | null = null
+  private audioBuffers: Record<SoundType, AudioBuffer[]> = {
+    [SOUND_TYPES.CLICK]: [],
+    [SOUND_TYPES.TYPING]: [],
   }
 
+  private initPromise: Promise<void> | null = null
+
   // Fetch, decode and cache a single sound file
-  async fetchAndCacheSound(type, index) {
+  private async fetchAndCacheSound(type: SoundType, index: number): Promise<void> {
+    if (!this.audioContext) {
+      throw new Error('Audio context not initialized')
+    }
+
     const soundId = `${type}_0${index + 1}`
     const response = await fetch(`/sounds/${soundId}.wav`)
     const arrayBuffer = await response.arrayBuffer()
@@ -62,8 +67,8 @@ class SoundEffectManager {
   }
 
   // Preload all sound variants
-  async preloadAllSounds() {
-    const soundTypes = Object.values(SOUND_TYPES)
+  private async preloadAllSounds(): Promise<void> {
+    const soundTypes = Object.values(SOUND_TYPES) as SoundType[]
     const allPromises = soundTypes.flatMap(type =>
       Array.from({ length: 5 }, (_, i) => this.fetchAndCacheSound(type, i)),
     )
@@ -72,17 +77,22 @@ class SoundEffectManager {
   }
 
   // Initialize audio context and preload sound files (executes only once)
-  async initialize() {
+  private async initialize(): Promise<void> {
     return this.initPromise ??= (async () => {
-      this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext
+      this.audioContext = new AudioContextClass()
       await this.preloadAllSounds()
     })()
   }
 
   // Play a random sound of the specified type
-  async playSound(soundType) {
+  public async playSound(soundType: SoundType): Promise<void> {
     try {
       await this.initialize()
+
+      if (!this.audioContext) {
+        return
+      }
 
       // Resume audio context if suspended
       if (this.audioContext.state === 'suspended') {
@@ -90,7 +100,7 @@ class SoundEffectManager {
       }
 
       // Get matching sound buffers for the requested type
-      const buffers = this.audioBuffers[soundType] || []
+      const buffers = this.audioBuffers[soundType]
       if (buffers.length === 0) {
         return
       }
@@ -116,12 +126,13 @@ class SoundEffectManager {
 const soundManager = new SoundEffectManager()
 
 // Handle click events on interactive elements
-function handleGlobalClick(event) {
+function handleGlobalClick(event: MouseEvent): void {
   if (isMobileDevice()) {
     return
   }
 
-  if (!event.target.closest(CLICK_SELECTOR)) {
+  const target = event.target as Element | null
+  if (!target?.closest(CLICK_SELECTOR)) {
     return
   }
 
@@ -129,7 +140,7 @@ function handleGlobalClick(event) {
 }
 
 // Handle keyboard events for typing sounds
-function handleGlobalKeydown(event) {
+function handleGlobalKeydown(event: KeyboardEvent): void {
   if (isMobileDevice()) {
     return
   }
@@ -142,15 +153,14 @@ function handleGlobalKeydown(event) {
     return
   }
 
-  if (!event.target.closest(TYPING_SELECTOR)) {
+  const target = event.target as Element | null
+  if (!target?.closest(TYPING_SELECTOR)) {
     return
   }
 
   soundManager.playSound(SOUND_TYPES.TYPING)
 }
 
-document.removeEventListener('click', handleGlobalClick)
-document.removeEventListener('keydown', handleGlobalKeydown)
 document.addEventListener('click', handleGlobalClick)
 document.addEventListener('keydown', handleGlobalKeydown)
 </script>
