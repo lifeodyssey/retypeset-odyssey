@@ -1,7 +1,4 @@
 /* vendor.css | Third-party CSS libraries */
 
-/* PhotoSwipe */
-@import 'photoswipe/style.css';
-
 /* LiteYoutube */
 @import 'lite-youtube-embed/src/lite-yt-embed.css';

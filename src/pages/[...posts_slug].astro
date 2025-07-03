@@ -122,7 +122,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
 
     <!-- Date -->
     <div
-      id="gsap-post-date"
+      id="post-date"
       class="mb-17.2 block c-primary font-time"
       transition:name={`time-${post.data.abbrlink || post.id}${lang ? `-${lang}` : ''}`}
       data-disable-theme-transition
@@ -136,11 +136,13 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     <!-- TOC -->
     {post.data.toc && <TOC headings={headings} />}
     <!-- Content -->
-    <div id="gsap-post-content">
+    <div id="post-content">
       <Content />
+      <!-- Copyright -->
+      <div id="post-copyright" />
       <!-- Tags -->
       {post.data.tags?.length > 0 && (
-        <div class="mt-12.6 uno-decorative-line"></div>
+        <div class="mt-12.6 uno-decorative-line" />
         <TagsWrapper
           tags={post.data.tags}
           lang={lang}

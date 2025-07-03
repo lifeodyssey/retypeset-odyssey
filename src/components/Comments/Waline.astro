@@ -12,10 +12,7 @@ const {
 } = themeConfig.comment?.waline ?? {}
 ---
 
-<div
-  id="waline"
-  class="mt-16"
-></div>
+<div id="waline" class="mt-16" />
 
 <!-- Waline Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script
@@ -89,7 +86,7 @@ function lazySetupWaline() {
       setupWaline()
       walineObserver?.disconnect()
     }
-  }, { rootMargin: '200px' })
+  }, { rootMargin: '500px' })
 
   walineObserver.observe(walineContainer)
 }

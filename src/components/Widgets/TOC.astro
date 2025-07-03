@@ -247,14 +247,12 @@ function setupTOCHighlight() {
     .filter(heading => heading.id && heading.id !== 'footnotes')
     .forEach(heading => headingObserver?.observe(heading))
 
-  const postContent = document.getElementById('gsap-post-content')
-  const contentEndElement = postContent?.lastElementChild
-
+  const contentEndElement = document.getElementById('post-copyright')
   if (!contentEndElement) {
     return
   }
 
-  // Create observer to monitor the last content element
+  // Create observer to monitor the content end element
   contentEndObserver = new IntersectionObserver(
     (entries) => {
       // Clear highlights when scrolled past content
@@ -269,7 +267,7 @@ function setupTOCHighlight() {
     },
   )
 
-  // Observe last content element
+  // Observe the content end element
   contentEndObserver?.observe(contentEndElement)
 
   // Highlight the first TOC item by default

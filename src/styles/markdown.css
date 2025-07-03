@@ -49,7 +49,7 @@
 }
 
 /* Links */
-.heti :where(a:not(.no-heti)) {
+.heti :where(a:not([class*="no-heti"])) {
   --at-apply: 'font-semibold tracking-0 underline underline-0.075em decoration-secondary/80 underline-offset-0.1em cjk:break-all';
   --at-apply: 'transition-colors ease-out hover:(c-primary decoration-primary/80) lg:underline-0.1em';
 }
