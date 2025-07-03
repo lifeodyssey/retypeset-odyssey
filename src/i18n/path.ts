@@ -3,6 +3,7 @@ import { getLangFromPath, getNextGlobalLang } from '@/i18n/lang'
 
 /**
  * Get path to tag page with language support
+ *
  * @param tagName Tag name
  * @param lang Current language code
  * @returns Path to tag page
@@ -15,6 +16,7 @@ export function getTagPath(tagName: string, lang: string): string {
 
 /**
  * Get next language path for [...tags_tag] page
+ *
  * @param currentPath Current page path
  * @returns Path to tags list page in next language
  */
@@ -44,6 +46,7 @@ export function getLocalizedPath(path: string, currentLang?: string) {
 
 /**
  * Build path for next language
+ *
  * @param currentPath Current page path
  * @param currentLang Current language code
  * @param nextLang Next language code to switch to
@@ -71,6 +74,7 @@ export function getNextLangPath(currentPath: string, currentLang: string, nextLa
 
 /**
  * Get next language path from global language list
+ *
  * @param currentPath Current page path
  * @returns Path for next supported language
  */
@@ -82,6 +86,7 @@ export function getNextGlobalLangPath(currentPath: string): string {
 
 /**
  * Get next language path from supported language list
+ *
  * @param currentPath Current page path
  * @param supportedLangs List of supported language codes
  * @returns Path for next supported language
