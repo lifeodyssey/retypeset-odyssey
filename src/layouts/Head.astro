@@ -128,6 +128,7 @@ const pageImage = postSlug
     const isDark = isDarkMode()
     doc.documentElement.classList.toggle('dark', isDark)
 
+  // Update meta theme-color tag
     const metaThemeColor = doc.head.querySelector('meta[name="theme-color"]')
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)

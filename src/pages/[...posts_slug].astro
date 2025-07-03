@@ -45,8 +45,8 @@ export async function getStaticPaths() {
       [...langs].sort((a, b) => allLocales.indexOf(a) - allLocales.indexOf(b)),
     ]),
   )
-
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
   type PathItem = {
     params: { posts_slug: string }
     props: { post: any, lang: string, supportedLangs: string[] }

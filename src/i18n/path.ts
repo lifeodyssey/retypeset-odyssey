@@ -32,14 +32,14 @@ export function getTagsListLangPath(currentPath: string): string {
 
 // Generates a localized path based on current language
 export function getLocalizedPath(path: string, currentLang?: string) {
-  const clean = path.replace(/^\/|\/$/g, '')
+  const normalizedPath = path.replace(/^\/|\/$/g, '')
   const lang = currentLang || getLangFromPath(path)
 
-  if (clean === '') {
+  if (normalizedPath === '') {
     return lang === defaultLocale ? '/' : `/${lang}/`
   }
 
-  return lang === defaultLocale ? `/${clean}/` : `/${lang}/${clean}/`
+  return lang === defaultLocale ? `/${normalizedPath}/` : `/${lang}/${normalizedPath}/`
 }
 
 /**
@@ -49,7 +49,7 @@ export function getLocalizedPath(path: string, currentLang?: string) {
  * @param nextLang Next language code to switch to
  * @returns Path for next language
  */
-export function buildNextLangPath(currentPath: string, currentLang: string, nextLang: string): string {
+export function getNextLangPath(currentPath: string, currentLang: string, nextLang: string): string {
   if (currentPath === '/') {
     return nextLang === defaultLocale ? '/' : `/${nextLang}/`
   }
@@ -77,7 +77,7 @@ export function buildNextLangPath(currentPath: string, currentLang: string, next
 export function getNextGlobalLangPath(currentPath: string): string {
   const currentLang = getLangFromPath(currentPath)
   const nextLang = getNextGlobalLang(currentLang)
-  return buildNextLangPath(currentPath, currentLang, nextLang)
+  return getNextLangPath(currentPath, currentLang, nextLang)
 }
 
 /**
@@ -104,5 +104,5 @@ export function getNextSupportedLangPath(currentPath: string, supportedLangs: st
   const currentIndex = sortedLangs.indexOf(currentLang)
   const nextLang = sortedLangs[(currentIndex + 1) % sortedLangs.length]
 
-  return buildNextLangPath(currentPath, currentLang, nextLang)
+  return getNextLangPath(currentPath, currentLang, nextLang)
 }

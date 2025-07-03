@@ -1,10 +1,9 @@
 /**
- * Memoization decorator - provides in-memory caching for async functions
+ * Memoizes an async function, caching results by arguments
  *
- * @param fn The original async function to be memoized
- * @returns A function wrapper with caching capability
+ * @param fn - The async function to memoize
+ * @returns Memoized function that caches results
  */
-
 export function memoize<T>(fn: (...args: any[]) => Promise<T>) {
   const cache = new Map<string, Promise<T>>()
 
@@ -16,6 +15,7 @@ export function memoize<T>(fn: (...args: any[]) => Promise<T>) {
 
     const promise = fn(...args)
     cache.set(key, promise)
+
     return promise
   }
 }
