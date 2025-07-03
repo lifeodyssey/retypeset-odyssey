@@ -1,17 +1,18 @@
 /* View Transition */
-::view-transition-new(animation-theme-toggle) {
-  z-index: 99;
-  clip-path: inset(0 0 0 0);
-  animation: reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-::view-transition-old(animation-theme-toggle) {
-  z-index: -1;
-  animation: none;
-}
 @keyframes reveal {
   from {
     clip-path: inset(var(--from));
   }
+}
+
+::view-transition-new(animation-theme-toggle) {
+  z-index: 99;
+  clip-path: inset(0 0 0 0);
+  animation: reveal 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+}
+::view-transition-old(animation-theme-toggle) {
+  z-index: -1;
+  animation: none;
 }
 
 html.dark {
@@ -41,7 +42,7 @@ html[data-theme-changing] [data-disable-theme-transition] {
 @media (max-width: 1535px) {
   #toc-container {
     opacity: 0;
-    animation: fadeInUp 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     animation-delay: 0.1s;
   }
 }
@@ -49,14 +50,14 @@ html[data-theme-changing] [data-disable-theme-transition] {
 @media (min-width: 1023px) {
   #post-date {
     opacity: 0;
-    animation: fadeInUp 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     animation-delay: 0.1s;
   }
 }
 
 #post-content > * {
   opacity: 0;
-  animation: fadeInUp 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+  animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 #post-content > *:nth-child(1) { animation-delay: 0.15s; }
@@ -85,33 +86,48 @@ html[data-theme-changing] [data-disable-theme-transition] {
 }
 
 /* Catalog Progressive Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-@media (min-width: 1535px) {
-  #toc-desktop-icon,
-  #toc-links-list > * {
+@keyframes fadeInUpMini {
+  from {
     opacity: 0;
-    animation: fadeInUp 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1535px) {
+  #toc-desktop-icon {
+    opacity: 0;
+    animation: fadeInUpMini 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   }
 
-  #toc-desktop-icon { animation-delay: 0.1s; }
-  #toc-links-list > *:nth-child(1) { animation-delay: 0.15s; }
-  #toc-links-list > *:nth-child(2) { animation-delay: 0.175s; }
-  #toc-links-list > *:nth-child(3) { animation-delay: 0.2s; }
-  #toc-links-list > *:nth-child(4) { animation-delay: 0.225s; }
-  #toc-links-list > *:nth-child(5) { animation-delay: 0.25s; }
-  #toc-links-list > *:nth-child(6) { animation-delay: 0.275s; }
-  #toc-links-list > *:nth-child(7) { animation-delay: 0.3s; }
-  #toc-links-list > *:nth-child(8) { animation-delay: 0.325s; }
-  #toc-links-list > *:nth-child(9) { animation-delay: 0.35s; }
-  #toc-links-list > *:nth-child(10) { animation-delay: 0.375s; }
-  #toc-links-list > *:nth-child(11) { animation-delay: 0.4s; }
-  #toc-links-list > *:nth-child(12) { animation-delay: 0.425s; }
-  #toc-links-list > *:nth-child(13) { animation-delay: 0.45s; }
-  #toc-links-list > *:nth-child(14) { animation-delay: 0.475s; }
-  #toc-links-list > *:nth-child(15) { animation-delay: 0.5s; }
-  #toc-links-list > *:nth-child(16) { animation-delay: 0.525s; }
-  #toc-links-list > *:nth-child(17) { animation-delay: 0.55s; }
-  #toc-links-list > *:nth-child(18) { animation-delay: 0.575s; }
-  #toc-links-list > *:nth-child(n+19) { animation-delay: 0.6s; }
+  #toc-links-list > * {
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+
+  #toc-desktop-icon { animation-delay: 0.175s; }
+  #toc-links-list > *:nth-child(1) { animation-delay: 0.175s; }
+  #toc-links-list > *:nth-child(2) { animation-delay: 0.2s; }
+  #toc-links-list > *:nth-child(3) { animation-delay: 0.225s; }
+  #toc-links-list > *:nth-child(4) { animation-delay: 0.25s; }
+  #toc-links-list > *:nth-child(5) { animation-delay: 0.275s; }
+  #toc-links-list > *:nth-child(6) { animation-delay: 0.3s; }
+  #toc-links-list > *:nth-child(7) { animation-delay: 0.325s; }
+  #toc-links-list > *:nth-child(8) { animation-delay: 0.35s; }
+  #toc-links-list > *:nth-child(9) { animation-delay: 0.375s; }
+  #toc-links-list > *:nth-child(10) { animation-delay: 0.4s; }
+  #toc-links-list > *:nth-child(11) { animation-delay: 0.425s; }
+  #toc-links-list > *:nth-child(12) { animation-delay: 0.45s; }
+  #toc-links-list > *:nth-child(13) { animation-delay: 0.475s; }
+  #toc-links-list > *:nth-child(14) { animation-delay: 0.5s; }
+  #toc-links-list > *:nth-child(15) { animation-delay: 0.525s; }
+  #toc-links-list > *:nth-child(16) { animation-delay: 0.55s; }
+  #toc-links-list > *:nth-child(17) { animation-delay: 0.575s; }
+  #toc-links-list > *:nth-child(18) { animation-delay: 0.6s; }
+  #toc-links-list > *:nth-child(n+19) { animation-delay: 0.625s; }
 }
 
 /* Back Button Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -129,7 +145,7 @@ html[data-theme-changing] [data-disable-theme-transition] {
 @media (min-width: 1023px) {
   #back-button {
     opacity: 0;
-    animation: fadeInLeft 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    animation: fadeInLeft 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     animation-delay: 0.2s;
   }
 }
