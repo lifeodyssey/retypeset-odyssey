@@ -87,7 +87,6 @@ function handleCodeCopyClick(e: Event) {
 }
 
 document.addEventListener('astro:page-load', setupCodeCopyButtons)
-document.removeEventListener('click', handleCodeCopyClick)
 document.addEventListener('click', handleCodeCopyClick, { passive: true })
 setupCodeCopyButtons()
 </script>

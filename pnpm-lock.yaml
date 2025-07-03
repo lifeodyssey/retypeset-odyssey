@@ -58,9 +58,6 @@ importers:
       node-html-parser:
         specifier: ^7.0.1
         version: 7.0.1
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
@@ -3048,10 +3045,6 @@ packages:
 
   perfect-debounce@1.0.0:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
-
-  photoswipe@5.4.4:
-    resolution: {integrity: sha512-WNFHoKrkZNnvFFhbHL93WDkW3ifwVOXSW3w1UuZZelSmgXpIGiZSNlZJq37rR8YejqME2rHs9EhH9ZvlvFH2NA==}
-    engines: {node: '>= 0.12.0'}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -7657,8 +7650,6 @@ snapshots:
     optional: true
 
   perfect-debounce@1.0.0: {}
-
-  photoswipe@5.4.4: {}
 
   picocolors@1.1.1: {}
 

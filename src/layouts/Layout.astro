@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar.astro'
 import CodeCopyButton from '@/components/Widgets/CodeCopyButton.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
 import MediaEmbeds from '@/components/Widgets/MediaEmbeds.astro'
+import MediumZoom from '@/components/Widgets/MediumZoom.astro'
 import SoundEffect from '@/components/Widgets/SoundEffect.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
@@ -58,5 +59,6 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
     <CodeCopyButton />
     <GithubCard />
     <MediaEmbeds />
+    <MediumZoom />
   </body>
 </html>
