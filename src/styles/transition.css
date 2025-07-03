@@ -46,13 +46,19 @@ html[data-theme-changing] [data-disable-theme-transition] {
   }
 }
 
-#post-date,
+@media (min-width: 1023px) {
+  #post-date {
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    animation-delay: 0.1s;
+  }
+}
+
 #post-content > * {
   opacity: 0;
   animation: fadeInUp 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
 }
 
-#post-date > *:nth-child(1) { animation-delay: 0.1s; }
 #post-content > *:nth-child(1) { animation-delay: 0.15s; }
 #post-content > *:nth-child(2) { animation-delay: 0.2s; }
 #post-content > *:nth-child(3) { animation-delay: 0.25s; }
@@ -144,7 +150,7 @@ html.reduce-motion {
   #toc-links-list > *,
   #back-button {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0);
     animation: none;
   }
 }
