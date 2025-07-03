@@ -1,41 +1,25 @@
----
-import liteYouTubeCSS from 'lite-youtube-embed/src/lite-yt-embed.css?url'
-import liteYouTubeJS from 'lite-youtube-embed?url'
----
-
-<script
-  is:inline
-  define:vars={{
-    liteYouTubeCSS,
-    liteYouTubeJS,
- }}
->
-function loadCSS(url) {
-  const link = document.createElement('link')
-  link.rel = 'stylesheet'
-  link.href = url
-  document.head.appendChild(link)
-}
-
+<script>
 async function setupMediaEmbeds() {
-  const embeds = {
-    youtube: document.querySelectorAll('lite-youtube'),
-    x: document.querySelectorAll('.twitter-tweet'),
-  }
+  const youtubeEmbeds = document.querySelectorAll('lite-youtube')
+  const xEmbeds = document.querySelectorAll('.twitter-tweet')
 
-  if (!Object.values(embeds).some(elements => elements.length > 0)) {
+  if (youtubeEmbeds.length === 0 && xEmbeds.length === 0) {
     return
   }
 
-  if (embeds.youtube.length > 0) {
-    loadCSS(liteYouTubeCSS)
-    await import(liteYouTubeJS)
+  if (youtubeEmbeds.length > 0) {
+    try {
+      // @ts-expect-error - No type definitions available for lite-youtube-embed
+      await import('lite-youtube-embed')
+    }
+    catch (error) {
+      console.error('Failed to load YouTube embed:', error)
+    }
   }
 
-  if (embeds.x.length > 0) {
-    // Set theme before loading X script
+  if (xEmbeds.length > 0) {
     const isDark = document.documentElement.classList.contains('dark')
-    embeds.x.forEach((element) => {
+    xEmbeds.forEach((element) => {
       element.setAttribute('data-theme', isDark ? 'dark' : 'light')
     })
 
@@ -46,6 +30,6 @@ async function setupMediaEmbeds() {
   }
 }
 
-setupMediaEmbeds()
 document.addEventListener('astro:page-load', setupMediaEmbeds)
+setupMediaEmbeds()
 </script>

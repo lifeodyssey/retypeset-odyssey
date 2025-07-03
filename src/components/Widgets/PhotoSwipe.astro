@@ -1,8 +1,5 @@
 <script>
-import PhotoSwipeLightbox from 'photoswipe/lightbox'
-import 'photoswipe/style.css'
-
-let lightbox: PhotoSwipeLightbox | null = null
+let lightbox: any = null
 
 function cleanupLightbox(): void {
   if (lightbox) {
@@ -28,6 +25,7 @@ async function setupPhotoSwipe(): Promise<void> {
 
   try {
     const pswp = await import('photoswipe')
+    const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
 
     lightbox = new PhotoSwipeLightbox({
       gallery: 'article.heti img',
