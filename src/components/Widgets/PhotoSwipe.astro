@@ -4,11 +4,15 @@ import 'photoswipe/style.css'
 
 let lightbox: PhotoSwipeLightbox | null = null
 
-async function setupPhotoSwipe(): Promise<void> {
+function cleanupLightbox(): void {
   if (lightbox) {
     lightbox.destroy()
     lightbox = null
   }
+}
+
+async function setupPhotoSwipe(): Promise<void> {
+  cleanupLightbox()
 
   const article = document.querySelector('article.heti')
   if (!article) {
@@ -78,5 +82,6 @@ function lazySetupPhotoSwipe(): void {
 }
 
 document.addEventListener('astro:page-load', lazySetupPhotoSwipe)
+document.addEventListener('astro:before-swap', cleanupLightbox)
 lazySetupPhotoSwipe()
 </script>

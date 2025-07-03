@@ -145,6 +145,14 @@ const filteredHeadings = headings.filter(heading =>
 let headingObserver: IntersectionObserver | null = null
 let contentEndObserver: IntersectionObserver | null = null
 
+// Cleanup TOC observers if exists
+function cleanupTOCObservers() {
+  headingObserver?.disconnect()
+  contentEndObserver?.disconnect()
+  headingObserver = null
+  contentEndObserver = null
+}
+
 function setupTOCHighlight() {
   const is2xl = window.innerWidth >= 1536
   if (!is2xl) {
@@ -268,14 +276,6 @@ function setupTOCHighlight() {
   if (tocLinks.length > 0) {
     highlightLink(tocLinks[0])
   }
-}
-
-// Cleanup TOC observers if exists
-function cleanupTOCObservers() {
-  headingObserver?.disconnect()
-  contentEndObserver?.disconnect()
-  headingObserver = null
-  contentEndObserver = null
 }
 
 document.addEventListener('astro:after-swap', setupTOCHighlight)
