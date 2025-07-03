@@ -16,7 +16,7 @@ const embedHandlers = {
     }
 
     return `
-    <a href="https://github.com/${repo}" class="gc-container" target="_blank" rel="noopener noreferrer" data-repo="${repo}">
+    <a href="https://github.com/${repo}" class="no-heti gc-container" target="_blank" rel="noopener noreferrer" data-repo="${repo}">
       <div class="gc-title-bar">
         <div class="gc-owner-avatar" style="background-size: cover; background-position: center;" aria-hidden="true"></div>
         <span class="gc-repo-title">

@@ -105,7 +105,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
   postSlug={post.id}
   supportedLangs={supportedLangs}
 >
-  <article class="heti mb-12.6">
+  <article class="heti">
     <div class="relative">
       <!-- Go Back Button On Desktop -->
       <BackButton />
@@ -136,21 +136,18 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     <!-- TOC -->
     {post.data.toc && <TOC headings={headings} />}
     <!-- Content -->
-     <div id="gsap-post-content">
+    <div id="gsap-post-content">
       <Content />
+      <!-- Tags -->
+      {post.data.tags?.length > 0 && (
+        <div class="mt-12.6 uno-decorative-line"></div>
+        <TagsWrapper
+          tags={post.data.tags}
+          lang={lang}
+        />
+      )}
+      <!-- Comments -->
+      <Comments />
     </div>
   </article>
-
-  <!-- Tags -->
-  {post.data.tags?.length > 0 && (
-    <div id="gsap-post-tags">
-      <div class="uno-decorative-line"></div>
-      <TagsWrapper
-        tags={post.data.tags}
-        lang={lang}
-      />
-    </div>
-  )}
-  <!-- Comments -->
-  <Comments />
 </Layout>
