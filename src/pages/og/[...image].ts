@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
-import { generateDescription } from '@/utils/description'
+import { getPostDescription } from '@/utils/description'
 
 // eslint-disable-next-line antfu/no-top-level-await
 const posts = await getCollection('posts')
@@ -12,7 +12,7 @@ const pages = Object.fromEntries(
     post.id,
     {
       title: post.data.title,
-      description: post.data.description || generateDescription(post, 'og'),
+      description: getPostDescription(post, 'og'),
     },
   ]),
 )

@@ -83,11 +83,6 @@ const ImageZoom = {
         this.zoomedImg.style.transform = `scale(${scale}) translate3d(${translateX}px, ${translateY}px, 0)`
       }
     })
-
-    // Hide original image
-    if (this.originalImg) {
-      this.originalImg.style.visibility = 'hidden'
-    }
   },
 
   // Close zoomed image
@@ -116,7 +111,6 @@ const ImageZoom = {
 
       // Restore original image and focus
       if (this.originalImg) {
-        this.originalImg.style.visibility = 'visible'
         this.originalImg.focus()
       }
       this.originalImg = null

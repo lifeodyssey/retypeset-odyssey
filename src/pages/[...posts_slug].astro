@@ -9,7 +9,7 @@ import TOC from '@/components/Widgets/TOC.astro'
 import { allLocales, defaultLocale, moreLocales } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { checkPostSlugDuplication } from '@/utils/content'
-import { generateDescription } from '@/utils/description'
+import { getPostDescription } from '@/utils/description'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
@@ -95,7 +95,7 @@ export async function getStaticPaths() {
 }
 
 const { post, lang, supportedLangs } = Astro.props
-const description = generateDescription(post, 'meta')
+const description = getPostDescription(post, 'meta')
 const { Content, headings, remarkPluginFrontmatter } = await render(post)
 ---
 

@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { defaultLocale } from '@/config'
-import { generateDescription } from '@/utils/description'
+import { getPostDescription } from '@/utils/description'
 import { isHomePage } from '@/utils/page'
 
 type Post = CollectionEntry<'posts'> & {
@@ -85,7 +85,7 @@ function getPostPath(post: Post) {
           class="heti hidden"
           lg="mt-2.25 block"
         >
-          <p>{generateDescription(post, 'list')}</p>
+          <p>{getPostDescription(post, 'list')}</p>
         </div>
       )}
     </li>

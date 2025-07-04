@@ -9,7 +9,7 @@ import sanitizeHtml from 'sanitize-html'
 import { defaultLocale, themeConfig } from '@/config'
 import { ui } from '@/i18n/ui'
 import { memoize } from '@/utils/cache'
-import { generateDescription } from '@/utils/description'
+import { getPostDescription } from '@/utils/description'
 
 const markdownParser = new MarkdownIt()
 const { title, description, url, author } = themeConfig.site
@@ -99,9 +99,9 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
 
   return htmlDoc.toString()
 }
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 /**
+ * >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  * Generate a feed object supporting both RSS and Atom formats
  *
  * @param options Feed generation options
@@ -182,7 +182,7 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
       title: post.data.title,
       id: link,
       link,
-      description: generateDescription(post, 'feed'),
+      description: getPostDescription(post, 'feed'),
       content: postContent,
       author: [{
         name: author,
@@ -207,6 +207,7 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
   return feed
 }
 
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Generate RSS 2.0 format feed
 export async function generateRSS(context: APIContext) {
   const feed = await generateFeed({

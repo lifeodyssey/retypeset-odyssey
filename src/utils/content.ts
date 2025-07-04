@@ -75,7 +75,7 @@ export const checkPostSlugDuplication = memoize(_checkPostSlugDuplication)
  * @returns Posts filtered by language, enhanced with metadata, sorted by date
  */
 async function _getPosts(lang?: string) {
-  const currentLang = lang ?? defaultLocale
+  const currentLang = lang || defaultLocale
 
   const filteredPosts = await getCollection(
     'posts',
