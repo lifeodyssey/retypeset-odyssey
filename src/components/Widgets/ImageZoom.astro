@@ -54,7 +54,7 @@ const ImageZoom = {
     // Calculate scale and position
     const viewportWidth = window.innerWidth
     const viewportHeight = window.innerHeight
-    const scaleFactor = this.isMobile() ? 0.95 : 0.8
+    const scaleFactor = this.isMobile() ? 1 : 0.8
     const scaleX = (viewportWidth * scaleFactor) / rect.width
     const scaleY = (viewportHeight * scaleFactor) / rect.height
     const scale = Math.min(scaleX, scaleY)
@@ -131,11 +131,12 @@ const ImageZoom = {
       this.overlay.style.left = '0'
       this.overlay.style.width = '100%'
       this.overlay.style.height = '100%'
-      this.overlay.style.display = 'none'
       this.overlay.style.zIndex = '999'
-      this.overlay.style.opacity = '0'
       this.overlay.style.backgroundColor = 'oklch(var(--un-preset-theme-colors-background) / 0.95)'
+      this.overlay.style.opacity = '0'
       this.overlay.style.transition = 'opacity 300ms ease'
+      this.overlay.style.cursor = 'zoom-out'
+      this.overlay.style.display = 'none'
       document.body.appendChild(this.overlay)
     }
 
