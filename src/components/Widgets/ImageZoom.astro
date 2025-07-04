@@ -1,0 +1,149 @@
+<script>
+const ImageZoom = {
+  overlay: document.querySelector('.zoom-overlay') as HTMLDivElement | null,
+  zoomedImg: null as HTMLImageElement | null,
+  originalImg: null as HTMLImageElement | null,
+
+  // Check if image is larger than 200x200px
+  isLargeImg(img: HTMLImageElement): boolean {
+    return img.complete && img.naturalWidth >= 200 && img.naturalHeight >= 200
+  },
+
+  // Check if mobile device
+  isMobile(): boolean {
+    return window.innerWidth < 768
+  },
+
+  // Setup zoom-in cursor style for large images
+  setupCursorZoom() {
+    document.querySelectorAll('img').forEach((img) => {
+      const imgEl = img as HTMLImageElement
+      if (this.isLargeImg(imgEl)) {
+        imgEl.style.cursor = 'zoom-in'
+      }
+    })
+  },
+
+  // Zoom in the image
+  zoomImg(img: HTMLImageElement) {
+    if (!this.overlay) {
+      return
+    }
+
+    // Disable scrolling and get position
+    document.body.style.overflow = 'hidden'
+    const rect = img.getBoundingClientRect()
+    this.originalImg = img
+
+    // Create and style cloned image
+    this.zoomedImg = img.cloneNode() as HTMLImageElement
+    this.zoomedImg.style.position = 'fixed'
+    this.zoomedImg.style.top = `${rect.top}px`
+    this.zoomedImg.style.left = `${rect.left}px`
+    this.zoomedImg.style.width = `${rect.width}px`
+    this.zoomedImg.style.height = `${rect.height}px`
+    this.zoomedImg.style.transition = 'transform 300ms cubic-bezier(0.2, 0, 0.2, 1)'
+    this.zoomedImg.style.zIndex = '1000'
+    this.zoomedImg.style.cursor = 'zoom-out'
+
+    // Add to DOM and show
+    document.body.appendChild(this.overlay)
+    document.body.appendChild(this.zoomedImg)
+    this.overlay.style.display = 'block'
+
+    // Calculate scale and position
+    const viewportWidth = window.innerWidth
+    const viewportHeight = window.innerHeight
+    const scaleFactor = this.isMobile() ? 0.95 : 0.8
+    const scaleX = (viewportWidth * scaleFactor) / rect.width
+    const scaleY = (viewportHeight * scaleFactor) / rect.height
+    const scale = Math.min(scaleX, scaleY)
+    const translateX = (-rect.left + (viewportWidth - rect.width) / 2) / scale
+    const translateY = (-rect.top + (viewportHeight - rect.height) / 2) / scale
+
+    // Start animation
+    setTimeout(() => {
+      if (this.overlay) {
+        this.overlay.style.opacity = '1'
+      }
+      if (this.zoomedImg)
+        this.zoomedImg.style.transform = `scale(${scale}) translate3d(${translateX}px, ${translateY}px, 0)`
+    }, 10)
+
+    // Hide original image
+    this.originalImg.style.visibility = 'hidden'
+  },
+
+  // Close zoomed image
+  close() {
+    if (!this.zoomedImg || !this.originalImg || !this.overlay) {
+      return
+    }
+
+    // Reset transform and start closing animation
+    this.zoomedImg.style.transform = ''
+    this.overlay.style.opacity = '0'
+    document.body.style.overflow = ''
+
+    // Clean up after animation completes
+    setTimeout(() => {
+      // Remove zoomed image
+      if (this.zoomedImg && this.zoomedImg.parentNode) {
+        document.body.removeChild(this.zoomedImg)
+      }
+      this.zoomedImg = null
+
+      // Hide overlay
+      if (this.overlay) {
+        this.overlay.style.display = 'none'
+      }
+
+      // Restore original image
+      if (this.originalImg) {
+        this.originalImg.style.visibility = 'visible'
+      }
+      this.originalImg = null
+    }, 300)
+  },
+
+  // Handle click events
+  handleClick(event: MouseEvent) {
+    const target = event.target as HTMLElement
+
+    if (this.zoomedImg) {
+      this.close()
+      return
+    }
+
+    if (target.tagName === 'IMG' && this.isLargeImg(target as HTMLImageElement)) {
+      event.preventDefault()
+      this.zoomImg(target as HTMLImageElement)
+    }
+  },
+
+  // Initialize the ImageZoom
+  init() {
+    if (!this.overlay) {
+      this.overlay = document.createElement('div')
+      this.overlay.classList.add('zoom-overlay')
+      this.overlay.style.position = 'fixed'
+      this.overlay.style.top = '0'
+      this.overlay.style.left = '0'
+      this.overlay.style.width = '100%'
+      this.overlay.style.height = '100%'
+      this.overlay.style.display = 'none'
+      this.overlay.style.zIndex = '999'
+      this.overlay.style.opacity = '0'
+      this.overlay.style.backgroundColor = 'oklch(var(--un-preset-theme-colors-background) / 0.95)'
+      this.overlay.style.transition = 'opacity 300ms ease'
+      document.body.appendChild(this.overlay)
+    }
+
+    document.addEventListener('astro:page-load', () => this.setupCursorZoom())
+    document.addEventListener('click', event => this.handleClick(event))
+    this.setupCursorZoom()
+  },
+}
+
+ImageZoom.init()
+</script>
