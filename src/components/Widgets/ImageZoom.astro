@@ -151,7 +151,11 @@ const ImageZoom = {
   init() {
     this.createOverlay()
 
-    document.addEventListener('astro:page-load', () => this.createOverlay())
+    document.addEventListener('astro:page-load', () => {
+      this.createOverlay()
+      this.zoomedImg = null
+      this.originalImg = null
+    })
     document.addEventListener('click', event => this.handleClick(event))
     window.addEventListener('resize', () => this.handleResize())
   },
