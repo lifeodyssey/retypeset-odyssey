@@ -32,7 +32,13 @@ export function getTagsListLangPath(currentPath: string): string {
   return `/${nextLang}/tags/`
 }
 
-// Generates a localized path based on current language
+/**
+ * Generate localized path based on current language
+ *
+ * @param path Path to localize
+ * @param currentLang Current language code
+ * @returns Localized path with language prefix
+ */
 export function getLocalizedPath(path: string, currentLang?: string) {
   const normalizedPath = path.replace(/^\/|\/$/g, '')
   const lang = currentLang || getLangFromPath(path)
