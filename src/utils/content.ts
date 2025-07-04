@@ -3,7 +3,6 @@ import { getCollection, render } from 'astro:content'
 import { defaultLocale } from '@/config'
 import { memoize } from '@/utils/cache'
 
-// Type definitions
 export type Post = CollectionEntry<'posts'> & {
   remarkPluginFrontmatter: {
     minutes: number

@@ -70,9 +70,9 @@ const filteredHeadings = headings.filter(heading =>
               <a
                 href={`#${heading.slug}`}
                 class:list={[
-                  { 'toc-links-h2 highlight-hover': heading.depth === 2 },
-                  { 'toc-links-h3 highlight-hover': heading.depth === 3 },
-                  { 'toc-links-h4 highlight-hover': heading.depth === 4 },
+                  { 'no-heti toc-links-h2 highlight-hover': heading.depth === 2 },
+                  { 'no-heti toc-links-h3 highlight-hover': heading.depth === 3 },
+                  { 'no-heti toc-links-h4 highlight-hover': heading.depth === 4 },
                 ]}
               >
                 {heading.text}
