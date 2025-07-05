@@ -85,7 +85,7 @@ html[data-theme-changing] [data-disable-theme-transition] {
   }
 }
 
-/* Catalog Progressive Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* TOC Progressive Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 @keyframes fadeInUpMini {
   from {
     opacity: 0;

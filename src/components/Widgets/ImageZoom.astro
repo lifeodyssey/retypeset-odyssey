@@ -134,7 +134,7 @@ const ImageZoom = {
       return
     }
 
-    event.preventDefault()
+    // event.preventDefault()
     this.zoomImg(target)
   },
 
@@ -156,8 +156,8 @@ const ImageZoom = {
       this.zoomedImg = null
       this.originalImg = null
     })
-    document.addEventListener('click', event => this.handleClick(event))
-    window.addEventListener('resize', () => this.handleResize())
+    document.addEventListener('click', event => this.handleClick(event), { passive: true })
+    window.addEventListener('resize', () => this.handleResize(), { passive: true })
   },
 }
 

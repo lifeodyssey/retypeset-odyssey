@@ -254,7 +254,7 @@ function setupTOCHighlight() {
 
   // Create observer to monitor the content end element
   contentEndObserver = new IntersectionObserver(
-    (entries) => {
+    (entries: IntersectionObserverEntry[]) => {
       // Clear highlights when scrolled past content
       if (!entries[0].isIntersecting && entries[0].boundingClientRect.top < 0) {
         tocLinks.forEach(linkItem => linkItem.classList.remove('toc-link-active'))

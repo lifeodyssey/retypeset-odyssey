@@ -34,6 +34,7 @@ const { lang } = Astro.props
 const pinnedPosts = await getPinnedPosts(lang)
 const postsByYear = await getPostsByYear(lang)
 ---
+
 <Layout>
   <!-- Pinned Posts -->
   {pinnedPosts.length > 0 && (

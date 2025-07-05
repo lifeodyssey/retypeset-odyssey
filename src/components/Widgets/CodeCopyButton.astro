@@ -79,7 +79,7 @@ async function handleCodeCopy(button: HTMLButtonElement) {
   }
 }
 
-function handleCodeCopyClick(e: Event) {
+function handleCodeCopyClick(e: MouseEvent) {
   const button = e.target instanceof Element && e.target.closest('.code-copy-button')
   if (button) {
     handleCodeCopy(button as HTMLButtonElement)
