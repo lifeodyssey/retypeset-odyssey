@@ -91,7 +91,7 @@ function toggleTheme() {
 }
 
 // Handle theme toggle click events
-function handleToggleClick(e: MouseEvent) {
+function handleThemeToggleClick(e: MouseEvent) {
   if (
     e.target instanceof Element
     && e.target.closest('#theme-toggle-button')
@@ -118,7 +118,7 @@ function handleToggleClick(e: MouseEvent) {
 }
 
 // Bind click event to the button
-document.addEventListener('click', handleToggleClick, { passive: true })
+document.addEventListener('click', handleThemeToggleClick, { passive: true })
 
 // Listen to system theme changes in real time
 window.matchMedia('(prefers-color-scheme: dark)')
