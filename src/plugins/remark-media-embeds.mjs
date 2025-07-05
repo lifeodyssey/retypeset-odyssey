@@ -84,15 +84,15 @@ const embedHandlers = {
     `
   },
 
-  // X Post Card
-  x: (node) => {
-    const xUrl = node.attributes?.url ?? ''
-    if (!xUrl) {
-      console.warn(`Missing X URL`)
+  // Tweet Card
+  tweet: (node) => {
+    const tweetUrl = node.attributes?.url ?? ''
+    if (!tweetUrl) {
+      console.warn(`Missing Tweet URL`)
       return false
     }
 
-    const twitterUrl = xUrl.replace(/(\w+:\/\/)?x\.com\//g, '$1twitter.com/')
+    const twitterUrl = tweetUrl.replace(/(\w+:\/\/)?x\.com\//g, '$1twitter.com/')
 
     return `
     <figure>

@@ -1,9 +1,9 @@
 <script>
 async function setupMediaEmbeds() {
   const youtubeEmbeds = document.querySelectorAll('lite-youtube')
-  const xEmbeds = document.querySelectorAll('.twitter-tweet')
+  const tweetEmbeds = document.querySelectorAll('.twitter-tweet')
 
-  if (youtubeEmbeds.length === 0 && xEmbeds.length === 0) {
+  if (youtubeEmbeds.length === 0 && tweetEmbeds.length === 0) {
     return
   }
 
@@ -17,10 +17,10 @@ async function setupMediaEmbeds() {
     }
   }
 
-  if (xEmbeds.length > 0) {
+  if (tweetEmbeds.length > 0) {
     const isDark = document.documentElement.classList.contains('dark')
-    xEmbeds.forEach((element) => {
-      element.setAttribute('data-theme', isDark ? 'dark' : 'light')
+    tweetEmbeds.forEach((tweet) => {
+      tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
     })
 
     const script = document.createElement('script')
