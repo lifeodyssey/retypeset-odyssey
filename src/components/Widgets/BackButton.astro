@@ -16,7 +16,7 @@ import GoBackIcon from '@/assets/icons/go-back.svg';
 
 <!-- Go Back Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script>
-function setupBackButton(e: MouseEvent) {
+function handleBackButtonClick(e: MouseEvent) {
   if (e.target instanceof Element && e.target.closest('#back-button')) {
     // Navigate back if history exists
     if (window.history.length > 1) {
@@ -30,5 +30,5 @@ function setupBackButton(e: MouseEvent) {
   }
 }
 
-document.addEventListener('click', setupBackButton, { passive: true })
+document.addEventListener('click', handleBackButtonClick, { passive: true })
 </script>
