@@ -1,22 +1,22 @@
 <script>
-const SOUND_TYPES = {
-  CLICK: 'tap',
-  TYPING: 'type',
+const soundTypes = {
+  click: 'tap',
+  typing: 'type',
 } as const
 
-type SoundType = typeof SOUND_TYPES[keyof typeof SOUND_TYPES]
+type SoundType = typeof soundTypes[keyof typeof soundTypes]
 
-const VOLUME_SETTINGS: Record<SoundType, number> = {
-  [SOUND_TYPES.CLICK]: 0.8,
-  [SOUND_TYPES.TYPING]: 0.4,
+const volumeSettings: Record<SoundType, number> = {
+  [soundTypes.click]: 0.8,
+  [soundTypes.typing]: 0.4,
 }
 
-const CLICK_TARGETS = [
+const clickTargets = [
   '#language-switcher',
   '#theme-toggle-button',
 ] as const
 
-const TYPING_TARGETS = [
+const typingTargets = [
   // Twikoo
   '.el-input__inner',
   '.el-textarea__inner',
@@ -27,7 +27,7 @@ const TYPING_TARGETS = [
   '#wl-edit',
 ] as const
 
-const IGNORED_KEYS = new Set([
+const ignoredKeys = new Set([
   'Shift',
   'Control',
   'Alt',
@@ -37,8 +37,8 @@ const IGNORED_KEYS = new Set([
   'CapsLock',
 ])
 
-const CLICK_SELECTOR = CLICK_TARGETS.join(',')
-const TYPING_SELECTOR = TYPING_TARGETS.join(',')
+const clickSelector = clickTargets.join(',')
+const typingSelector = typingTargets.join(',')
 
 function isMobileDevice(): boolean {
   return window.matchMedia('(max-width: 1023px)').matches
@@ -47,8 +47,8 @@ function isMobileDevice(): boolean {
 class SoundEffectManager {
   private audioContext: AudioContext | null = null
   private audioBuffers: Record<SoundType, AudioBuffer[]> = {
-    [SOUND_TYPES.CLICK]: [],
-    [SOUND_TYPES.TYPING]: [],
+    [soundTypes.click]: [],
+    [soundTypes.typing]: [],
   }
 
   private initPromise: Promise<void> | null = null
@@ -68,8 +68,8 @@ class SoundEffectManager {
 
   // Preload all sound variants
   private async preloadAllSounds(): Promise<void> {
-    const soundTypes = Object.values(SOUND_TYPES) as SoundType[]
-    const allPromises = soundTypes.flatMap(type =>
+    const soundTypeValues = Object.values(soundTypes) as SoundType[]
+    const allPromises = soundTypeValues.flatMap(type =>
       Array.from({ length: 5 }, (_, i) => this.fetchAndCacheSound(type, i)),
     )
 
@@ -111,7 +111,7 @@ class SoundEffectManager {
 
       // Create and configure audio nodes
       const gainNode = this.audioContext.createGain()
-      gainNode.gain.value = VOLUME_SETTINGS[soundType]
+      gainNode.gain.value = volumeSettings[soundType]
 
       // Connect nodes and play sound
       source.connect(gainNode).connect(this.audioContext.destination)
@@ -132,11 +132,11 @@ function handleGlobalClick(event: MouseEvent): void {
   }
 
   const target = event.target as Element | null
-  if (!target?.closest(CLICK_SELECTOR)) {
+  if (!target?.closest(clickSelector)) {
     return
   }
 
-  soundManager.playSound(SOUND_TYPES.CLICK)
+  soundManager.playSound(soundTypes.click)
 }
 
 // Handle keyboard events for typing sounds
@@ -149,16 +149,16 @@ function handleGlobalKeydown(event: KeyboardEvent): void {
     return
   }
 
-  if (IGNORED_KEYS.has(event.key)) {
+  if (ignoredKeys.has(event.key)) {
     return
   }
 
   const target = event.target as Element | null
-  if (!target?.closest(TYPING_SELECTOR)) {
+  if (!target?.closest(typingSelector)) {
     return
   }
 
-  soundManager.playSound(SOUND_TYPES.TYPING)
+  soundManager.playSound(soundTypes.typing)
 }
 
 document.addEventListener('click', handleGlobalClick, { passive: true })
