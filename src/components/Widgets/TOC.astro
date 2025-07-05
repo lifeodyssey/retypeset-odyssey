@@ -164,16 +164,16 @@ function setupTOCHighlight() {
     return
   }
 
-  const tocLinksCollection = tocContent.getElementsByTagName('a')
-  if (tocLinksCollection.length === 0) {
+  const linksCollection = tocContent.getElementsByTagName('a')
+  if (linksCollection.length === 0) {
     return
   }
 
-  const tocLinks = Array.from(tocLinksCollection, item => item as HTMLAnchorElement)
+  const tocLinks = Array.from(linksCollection, item => item as HTMLAnchorElement)
 
   // Determine the top level heading class
-  const hasH2Headings = tocLinks.some(linkItem => linkItem.classList.contains('toc-links-h2'))
-  const topLevelClass = hasH2Headings ? 'toc-links-h2' : 'toc-links-h3'
+  const hasH2 = tocLinks.some(linkItem => linkItem.classList.contains('toc-links-h2'))
+  const topLevelClass = hasH2 ? 'toc-links-h2' : 'toc-links-h3'
 
   // Build the heading map with the forEach approach
   const headingMap = new Map<string, HTMLAnchorElement>()
@@ -184,11 +184,11 @@ function setupTOCHighlight() {
     }
   })
 
-  let currentActiveLink: HTMLAnchorElement | null = null
+  let activeLink: HTMLAnchorElement | null = null
 
   // Find and highlight the nearest parent heading
-  function highlightParentLink(childElement: HTMLAnchorElement): void {
-    const currentIndex = tocLinks.indexOf(childElement)
+  function highlightParentLink(child: HTMLAnchorElement): void {
+    const currentIndex = tocLinks.indexOf(child)
     for (let i = currentIndex - 1; i >= 0; i--) {
       const linkItem = tocLinks[i]
       if (linkItem.classList.contains(topLevelClass)) {
@@ -198,8 +198,8 @@ function setupTOCHighlight() {
     }
   }
 
-  function highlightLink(linkElement: HTMLAnchorElement) {
-    if (linkElement === currentActiveLink) {
+  function highlightLink(link: HTMLAnchorElement) {
+    if (link === activeLink) {
       return
     }
 
@@ -209,17 +209,17 @@ function setupTOCHighlight() {
     })
 
     // Highlight current link
-    linkElement.classList.add('toc-link-active')
+    link.classList.add('toc-link-active')
 
     // If not a top level heading, find and highlight the parent heading
-    if (!linkElement.classList.contains(topLevelClass)) {
-      highlightParentLink(linkElement)
+    if (!link.classList.contains(topLevelClass)) {
+      highlightParentLink(link)
     }
 
-    currentActiveLink = linkElement
+    activeLink = link
 
     // Scroll to center position
-    linkElement.scrollIntoView({
+    link.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
     })
@@ -247,8 +247,8 @@ function setupTOCHighlight() {
     .filter(heading => heading.id && heading.id !== 'footnotes')
     .forEach(heading => headingObserver?.observe(heading))
 
-  const contentEndElement = document.getElementById('post-copyright')
-  if (!contentEndElement) {
+  const endElement = document.getElementById('post-copyright')
+  if (!endElement) {
     return
   }
 
@@ -258,7 +258,7 @@ function setupTOCHighlight() {
       // Clear highlights when scrolled past content
       if (!entries[0].isIntersecting && entries[0].boundingClientRect.top < 0) {
         tocLinks.forEach(linkItem => linkItem.classList.remove('toc-link-active'))
-        currentActiveLink = null
+        activeLink = null
       }
     },
     {
@@ -268,7 +268,7 @@ function setupTOCHighlight() {
   )
 
   // Observe the content end element
-  contentEndObserver?.observe(contentEndElement)
+  contentEndObserver?.observe(endElement)
 
   // Highlight the first TOC item by default
   if (tocLinks.length > 0) {

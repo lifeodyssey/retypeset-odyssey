@@ -1,13 +1,13 @@
 <script>
 async function setupMediaEmbeds() {
-  const youtubeEmbeds = document.querySelectorAll('lite-youtube')
-  const tweetEmbeds = document.querySelectorAll('.twitter-tweet')
+  const youtube = document.querySelectorAll('lite-youtube')
+  const tweets = document.querySelectorAll('.twitter-tweet')
 
-  if (youtubeEmbeds.length === 0 && tweetEmbeds.length === 0) {
+  if (youtube.length === 0 && tweets.length === 0) {
     return
   }
 
-  if (youtubeEmbeds.length > 0) {
+  if (youtube.length > 0) {
     try {
       // @ts-expect-error - No type definitions available for lite-youtube-embed
       await import('lite-youtube-embed')
@@ -17,9 +17,9 @@ async function setupMediaEmbeds() {
     }
   }
 
-  if (tweetEmbeds.length > 0) {
+  if (tweets.length > 0) {
     const isDark = document.documentElement.classList.contains('dark')
-    tweetEmbeds.forEach((tweet) => {
+    tweets.forEach((tweet) => {
       tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
     })
 
