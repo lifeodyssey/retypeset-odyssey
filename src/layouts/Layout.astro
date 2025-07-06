@@ -6,18 +6,18 @@ import Navbar from '@/components/Navbar.astro'
 import CodeCopyButton from '@/components/Widgets/CodeCopyButton.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
 import ImageZoom from '@/components/Widgets/ImageZoom.astro'
-import MediaEmbeds from '@/components/Widgets/MediaEmbeds.astro'
+import MediaEmbed from '@/components/Widgets/MediaEmbed.astro'
 import SoundEffect from '@/components/Widgets/SoundEffect.astro'
 import themeConfig from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
 import '@/styles/comment.css'
-import '@/styles/extensions.css'
+import '@/styles/extension.css'
 import '@/styles/font.css'
 import '@/styles/global.css'
 import '@/styles/lqip.css'
 import '@/styles/markdown.css'
-import '@/styles/transitions.css'
+import '@/styles/transition.css'
 
 interface Props {
   postTitle?: string
@@ -59,7 +59,7 @@ const MarginBottom = isPost && themeConfig.comment?.enabled
     <SoundEffect />
     <CodeCopyButton />
     <GithubCard />
-    <MediaEmbeds />
+    <MediaEmbed />
     <ImageZoom />
   </body>
 </html>
