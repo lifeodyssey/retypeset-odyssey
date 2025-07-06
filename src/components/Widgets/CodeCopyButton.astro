@@ -40,12 +40,12 @@ async function handleCodeCopy(button: HTMLButtonElement) {
     return
   }
 
-  const codeElement = button.parentElement?.querySelector('pre code')
-  if (!codeElement) {
+  const code = button.parentElement?.querySelector('pre code')
+  if (!code) {
     return
   }
 
-  const codeText = codeElement.textContent ?? ''
+  const codeText = code.textContent ?? ''
   if (!codeText) {
     return
   }
@@ -79,12 +79,14 @@ async function handleCodeCopy(button: HTMLButtonElement) {
   }
 }
 
-setupCodeCopyButtons()
-document.addEventListener('astro:page-load', setupCodeCopyButtons)
-document.addEventListener('click', (e) => {
+function handleCodeCopyClick(e: MouseEvent) {
   const button = e.target instanceof Element && e.target.closest('.code-copy-button')
   if (button) {
     handleCodeCopy(button as HTMLButtonElement)
   }
-}, { passive: true })
+}
+
+document.addEventListener('astro:page-load', setupCodeCopyButtons)
+document.addEventListener('click', handleCodeCopyClick, { passive: true })
+setupCodeCopyButtons()
 </script>
