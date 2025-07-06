@@ -71,7 +71,10 @@ export function getPostDescription(
   const lang = post.data.lang || defaultLocale
 
   if (post.data.description) {
-    return getExcerpt(post.data.description, lang, scene)
+    // Only truncate for og scene, return full description for other scenes
+    return scene === 'og'
+      ? getExcerpt(post.data.description, lang, scene)
+      : post.data.description
   }
 
   const content = post.body || ''
