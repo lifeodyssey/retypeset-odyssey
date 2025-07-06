@@ -55,8 +55,6 @@ const nextUrl = isTag
     id="theme-toggle-button"
     class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
     aria-label="Switch light/dark theme"
-    data-light-mode={lightMode}
-    data-dark-mode={darkMode}
   >
     <ThemeToggleIcon
       aria-hidden="true"
@@ -66,12 +64,12 @@ const nextUrl = isTag
 </div>
 
 <!-- Theme Toggle Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-<script>
-const button = document.getElementById('theme-toggle-button')
-const { lightMode, darkMode } = button?.dataset || {}
-
+<script
+  is:inline
+  define:vars={{ lightMode, darkMode }}
+>
 // Apply theme changes
-function applyTheme(isDark: boolean) {
+function applyTheme(isDark) {
   document.documentElement.classList.toggle('dark', isDark)
 
   // Update meta theme-color tag
@@ -91,7 +89,7 @@ function toggleTheme() {
 }
 
 // Handle theme toggle click events
-function handleThemeToggleClick(e: MouseEvent) {
+function handleThemeToggleClick(e) {
   if (
     e.target instanceof Element
     && e.target.closest('#theme-toggle-button')
@@ -122,7 +120,7 @@ document.addEventListener('click', handleThemeToggleClick, { passive: true })
 
 // Listen to system theme changes in real time
 window.matchMedia('(prefers-color-scheme: dark)')
-  .addEventListener('change', (event: MediaQueryListEvent) => {
+  .addEventListener('change', (event) => {
     const isDark = event.matches
     // Apply system theme preference
     applyTheme(isDark)

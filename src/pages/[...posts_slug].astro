@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { getCollection, render } from 'astro:content'
-import Comments from '@/components/Comments/Index.astro'
+import Comment from '@/components/Comment/Index.astro'
 import PostDate from '@/components/PostDate.astro'
 import TagsWrapper from '@/components/TagsWrapper.astro'
 import BackButton from '@/components/Widgets/BackButton.astro'
@@ -148,8 +148,8 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
           lang={lang}
         />
       )}
-      <!-- Comments -->
-      <Comments />
+      <!-- Comment -->
+      <Comment />
     </div>
   </article>
 </Layout>
