@@ -44,7 +44,7 @@
 }
 
 /* Paragraphs */
-.heti :where(p) {
+.heti :where(p:not(.no-heti):not(.no-heti *)) {
   --at-apply: 'mb-4 text-pretty cjk:text-justify';
 }
 

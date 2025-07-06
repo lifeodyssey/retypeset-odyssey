@@ -1,8 +1,5 @@
 /* Twikoo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* Global styles */
-#twikoo {
-  --at-apply: 'mt-16'
-}
 #twikoo svg,
 #twikoo .tk-action-count {
   --at-apply: 'c-secondary/80'

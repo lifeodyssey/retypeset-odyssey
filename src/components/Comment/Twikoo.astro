@@ -7,8 +7,10 @@ import { twikooLocaleMap } from '@/i18n/config'
 const { envId = '' } = themeConfig.comment?.twikoo ?? {}
 ---
 
-<!-- class="mt-16" not working -->
-<div id="twikoo" class="no-heti" />
+<!-- Class not working for twikoo div -->
+<div class="no-heti mt-16">
+  <div id="twikoo" />
+</div>
 
 <!-- Twikoo Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script
