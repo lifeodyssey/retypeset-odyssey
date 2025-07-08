@@ -18,11 +18,8 @@ import GoBackIcon from '@/assets/icons/go-back.svg';
 <script>
 function handleBackButtonClick(e: MouseEvent) {
   if (e.target instanceof Element && e.target.closest('#back-button')) {
-    const referrer = document.referrer
-    const currentOrigin = window.location.origin
-
     // Navigate back if history exists
-    if (referrer && referrer.startsWith(currentOrigin) && referrer !== window.location.href) {
+    if (window.history.length > 1) {
       window.history.back()
     }
     else {
