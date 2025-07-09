@@ -104,7 +104,7 @@ const embedHandlers = {
   },
 }
 
-export function remarkMediaEmbeds() {
+export function remarkLeafDirectives() {
   return (tree) => {
     visit(tree, 'leafDirective', (node) => {
       const handler = embedHandlers[node.name]

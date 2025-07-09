@@ -17,8 +17,8 @@ import { themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
 import { rehypeCodeCopyButton } from './src/plugins/rehype-code-copy-button.mjs'
 import { rehypeImageProcessor } from './src/plugins/rehype-image-processor.mjs'
-import { remarkAdmonitions } from './src/plugins/remark-admonitions.mjs'
-import { remarkMediaEmbeds } from './src/plugins/remark-media-embeds.mjs'
+import { remarkContainerDirectives } from './src/plugins/remark-container-directives.mjs'
+import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
 const url = themeConfig.site.url
@@ -70,15 +70,15 @@ export default defineConfig({
     remarkPlugins: [
       remarkDirective,
       remarkMath,
-      remarkAdmonitions,
-      remarkMediaEmbeds,
+      remarkContainerDirectives,
+      remarkLeafDirectives,
       remarkReadingTime,
     ],
     rehypePlugins: [
       rehypeKatex,
       rehypeSlug,
-      rehypeCodeCopyButton,
       rehypeImageProcessor,
+      rehypeCodeCopyButton,
       [
         rehypeAutolinkHeadings,
         {
