@@ -131,12 +131,6 @@ figure .twitter-tweet {
 }
 
 /* Fold */
-details {
-  --at-apply: 'text-pretty cjk:text-justify';
-}
-details[open] {
-  --at-apply: 'mb-4';
-}
 summary {
   --at-apply: 'mb-4 w-fit cursor-pointer select-none list-none font-semibold';
 }
@@ -144,6 +138,9 @@ summary::before {
   content: '▶';
   transform: rotate(0deg);
   --at-apply: 'mr-2 inline-block text-sm font-serif transition-transform ease-out';
+}
+details[open] {
+  --at-apply: 'mb-4';
 }
 details[open] summary::before {
   transform: rotate(90deg) translate(-2px, 2px);
