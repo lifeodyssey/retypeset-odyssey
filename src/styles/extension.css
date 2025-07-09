@@ -132,7 +132,7 @@ figure .twitter-tweet {
 
 /* Fold */
 summary {
-  --at-apply: 'mb-4 w-fit cursor-pointer list-none font-semibold';
+  --at-apply: 'mb-4 w-fit cursor-pointer list-none';
 }
 summary::before {
   content: '▶';
