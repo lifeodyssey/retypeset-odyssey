@@ -113,7 +113,7 @@ function reportResults(stats: ProcessingStats) {
     console.log(`✅ Done! Found ${stats.totalImages} images, no updates needed`)
   }
   else {
-    console.log(`✨ Done! Found ${stats.totalImages} images, updated ${stats.updatedImages} with LQIP styles`)
+    console.log(`✨ Done! Found ${stats.totalImages} images, updated ${stats.updatedImages} LQIP styles`)
   }
 }
 
