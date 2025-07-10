@@ -36,13 +36,17 @@ async function setupMediaEmbeds() {
 
 function handleGalleryWheel(e: WheelEvent) {
   const container = (e.target as Element)?.closest('.gallery-container') as HTMLElement
-
   if (!container) {
     return
   }
 
-  e.preventDefault()
+  const previousScrollLeft = container.scrollLeft
   container.scrollLeft += e.deltaY
+  if (container.scrollLeft === previousScrollLeft) {
+    return
+  }
+
+  e.preventDefault()
 }
 
 document.addEventListener('astro:page-load', setupMediaEmbeds)
