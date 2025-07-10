@@ -3,7 +3,6 @@ import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import Compress from 'astro-compress'
-import robotsTxt from 'astro-robots-txt'
 import { defineConfig } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeExternalLinks from 'rehype-external-links'
@@ -57,7 +56,6 @@ export default defineConfig({
       },
     }),
     sitemap(),
-    robotsTxt(),
     Compress({
       CSS: true,
       HTML: true,
