@@ -41,12 +41,8 @@ async function handleCodeCopy(button: HTMLButtonElement) {
   }
 
   const code = button.parentElement?.querySelector('pre code')
-  if (!code) {
-    return
-  }
-
-  const codeText = code.textContent ?? ''
-  if (!codeText) {
+  const codeText = code?.textContent ?? ''
+  if (!code || !codeText) {
     return
   }
 

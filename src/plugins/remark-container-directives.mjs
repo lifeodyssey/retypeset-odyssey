@@ -86,14 +86,9 @@ export function remarkContainerDirectives() {
       // Collapsible Sections
       if (type === 'fold') {
         // Require non-empty [title]
-        if (!labelNode?.data?.directiveLabel) {
-          console.warn(`:::fold syntax requires [title] brackets`)
-          return
-        }
-
         const title = getLabelText(labelNode)
-        if (!title) {
-          console.warn(`:::fold[title] requires a non-empty title`)
+        if (!labelNode?.data?.directiveLabel || !title) {
+          console.warn(`:::fold syntax requires [title] brackets with non-empty content`)
           return
         }
 
