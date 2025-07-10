@@ -311,7 +311,7 @@ async function getImageLqipValue(filePath: string, existingLqipMap: LqipMap): Pr
 }
 
 // Report final results
-function reportResults(stats: LqipProcessingStats): void {
+function reportResults(stats: LqipProcessingStats) {
   if (stats.successful > 0) {
     console.log(`✓ Successfully processed ${stats.successful} images`)
   }

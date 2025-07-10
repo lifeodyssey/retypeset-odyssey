@@ -108,7 +108,7 @@ async function processHtmlFile(
 }
 
 // Report processing results
-function reportResults(stats: ProcessingStats): void {
+function reportResults(stats: ProcessingStats) {
   if (stats.updatedImages === 0) {
     console.log(`✅ Done! Found ${stats.totalImages} images, no updates needed`)
   }

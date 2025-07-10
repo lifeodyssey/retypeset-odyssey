@@ -145,3 +145,11 @@ details[open] {
 details[open] summary::before {
   transform: rotate(90deg) translate(-2px, 2px);
 }
+
+/* Gallery */
+.gallery-container {
+  --at-apply: 'flex gap-4 overflow-x-auto scrollbar-hidden';
+}
+.gallery-container .gallery-item {
+  --at-apply: 'my-0 max-w-80% flex-shrink-0';
+}

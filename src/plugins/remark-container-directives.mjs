@@ -45,6 +45,15 @@ function createFoldSection(node, title) {
   })
 }
 
+// Gallery Containers
+function createGallery(node) {
+  node.data ??= {}
+  node.data.hName = 'div'
+  node.data.hProperties = {
+    className: ['gallery-container'],
+  }
+}
+
 export function remarkContainerDirectives() {
   const githubAdmonitionRegex = new RegExp(
     `^\\s*\\[!(${Object.values(admonitionTypes).join('|')})\\]\\s*`,
@@ -57,9 +66,26 @@ export function remarkContainerDirectives() {
       const type = node.name
       const labelNode = node.children?.[0]
 
+      // Admonition Blocks
+      if (admonitionTypes[type]) {
+        // Optional [title] for admonitions
+        let title = admonitionTypes[type]
+
+        if (labelNode?.data?.directiveLabel) {
+          const customTitle = getLabelText(labelNode)
+          if (customTitle) {
+            title = customTitle
+          }
+          node.children.shift()
+        }
+
+        createAdmonition(node, type, title)
+        return
+      }
+
       // Collapsible Sections
       if (type === 'fold') {
-        // For fold syntax, require [title] brackets with non-empty title
+        // Require non-empty [title]
         if (!labelNode?.data?.directiveLabel) {
           console.warn(`:::fold syntax requires [title] brackets`)
           return
@@ -76,20 +102,14 @@ export function remarkContainerDirectives() {
         return
       }
 
-      // Admonition Blocks
-      if (admonitionTypes[type]) {
-        // For admonitions, [title] is optional
-        let title = admonitionTypes[type]
-
+      // Gallery Containers
+      if (type === 'gallery') {
+        // Remove label if exists
         if (labelNode?.data?.directiveLabel) {
-          const customTitle = getLabelText(labelNode)
-          if (customTitle) {
-            title = customTitle
-          }
           node.children.shift()
         }
 
-        createAdmonition(node, type, title)
+        createGallery(node)
       }
     })
 
