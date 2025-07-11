@@ -20,17 +20,15 @@ import { remarkContainerDirectives } from './src/plugins/remark-container-direct
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
-const url = themeConfig.site.url
-const locale = themeConfig.global.locale
+const siteUrl = themeConfig.site.url
+const defaultLocale = themeConfig.global.locale
 const imageHostURL = themeConfig.preload?.imageHostURL
-// Configure domains and remotePatterns to optimize remote images in Markdown files using ![alt](src) syntax
-// Docs: https://docs.astro.build/en/guides/images/#authorizing-remote-images
 const imageConfig = imageHostURL
   ? { image: { domains: [imageHostURL], remotePatterns: [{ protocol: 'https' }] } }
   : {}
 
 export default defineConfig({
-  site: url,
+  site: siteUrl,
   base: '/',
   trailingSlash: 'always',
   prefetch: {
@@ -43,7 +41,7 @@ export default defineConfig({
       path,
       codes: codes as [string, ...string[]],
     })),
-    defaultLocale: locale,
+    defaultLocale,
   },
   integrations: [
     UnoCSS({
