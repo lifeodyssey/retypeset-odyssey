@@ -123,7 +123,7 @@
 lite-youtube > .lty-playbtn {
   --at-apply: 'filter-none';
 }
-iframe.bilibili-player {
+.heti iframe.bilibili-player {
   --at-apply: 'aspect-video w-full';
 }
 .twitter-tweet {
