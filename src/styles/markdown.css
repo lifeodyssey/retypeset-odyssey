@@ -251,8 +251,8 @@ html.dark .heti :where(u) {
   --at-apply: 'mb-10.5 mt-14.5 h-auto border-none text-center';
 }
 .heti :where(hr)::before {
-  content: "*   *   *";
   --at-apply: 'whitespace-pre text-6 c-secondary/25 font-serif';
+  content: "*   *   *";
 }
 
 /* Bold */

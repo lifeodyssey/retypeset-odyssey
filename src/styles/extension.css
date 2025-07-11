@@ -55,8 +55,8 @@
   --at-apply: 'mb-4 flex items-center font-semibold';
 }
 .admonition-title::before {
-  content: '';
   --at-apply: 'mr-2 inline-block aspect-square w-4 align-text-bottom';
+  content: '';
 }
 
 /* Note */
@@ -132,8 +132,20 @@ lite-youtube > .lty-playbtn {
 
 /* Fold */
 summary {
-  --at-apply: 'mb-4 cursor-pointer';
+  --at-apply: 'mb-4 cursor-pointer list-none';
 }
+summary::before {
+  --at-apply: 'mr-2 inline-block transition-transform ease-out';
+  content: '';
+  border-left: 10px solid currentColor;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  transform: translate(2px, 0.5px);
+}
+details[open] summary::before {
+  transform: rotate(90deg) translate(0.5px, -2px);
+}
+
 
 /* Gallery */
 .gallery-container {
