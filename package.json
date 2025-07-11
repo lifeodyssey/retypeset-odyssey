@@ -13,9 +13,9 @@
     "lint:fix": "eslint . --fix",
     "new-post": "esno scripts/new-post.ts",
     "format-posts": "esno scripts/format-posts.ts",
+    "update-theme": "esno scripts/update-theme.ts",
     "generate-lqip": "esno scripts/generate-lqip.ts",
-    "apply-lqip": "esno scripts/apply-lqip.ts",
-    "update-theme": "esno scripts/update-theme.ts"
+    "apply-lqip": "esno scripts/apply-lqip.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
@@ -46,7 +46,6 @@
     "@antfu/eslint-config": "^4.16.2",
     "@astrojs/check": "^0.9.4",
     "@lokesh.dhakar/quantize": "^1.4.0",
-    "@types/hast": "^3.0.4",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^24.0.13",
     "@types/sanitize-html": "^2.16.0",
@@ -61,6 +60,7 @@
     "fast-glob": "^3.3.3",
     "lint-staged": "^16.1.2",
     "ndarray-pixels": "^5.0.1",
+    "simple-git-hooks": "^2.13.0",
     "typescript": "~5.8.3",
     "unocss": "66.3.3",
     "unocss-preset-theme": "^0.14.1"
@@ -69,6 +69,9 @@
     "patchedDependencies": {
       "@qwik.dev/partytown@0.11.1": "patches/@qwik.dev__partytown@0.11.1.patch"
     }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
     "*.{js,ts,astro}": "eslint --fix"
