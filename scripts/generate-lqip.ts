@@ -216,7 +216,7 @@ async function generateLqipValue(imagePath: string): Promise<number | null> {
     return lqip
   }
   catch (error) {
-    console.error(`Error processing image ${imagePath}:`, error)
+    console.error(`⚠️ Failed to process image: ${imagePath}`, error)
     return null
   }
 }
@@ -313,17 +313,17 @@ async function getImageLqipValue(filePath: string, existingLqipMap: LqipMap): Pr
 // Report final results
 function reportResults(stats: LqipProcessingStats) {
   if (stats.successful > 0) {
-    console.log(`✓ Successfully processed ${stats.successful} images`)
+    console.log(`✨ Successfully generated LQIP styles for ${stats.successful} images`)
   }
   if (stats.failed > 0) {
-    console.error(`✗ Failed to process ${stats.failed} images`)
+    console.error(`❌ Failed to process ${stats.failed} images`)
   }
   console.log(`📁 LQIP mapping saved to ${lqipMapPath}`)
 }
 
 // Prepare environment and find WebP files
 async function prepareEnvironment() {
-  console.log('🔍 Scanning WebP images...')
+  console.log('🔍 Scanning WebP images in dist/_astro/...')
 
   try {
     // Ensure assets directory exists
@@ -339,7 +339,7 @@ async function prepareEnvironment() {
     absolute: true,
   })
 
-  console.log(`📦 Found ${webpFiles.length} WebP images`)
+  console.log(`📦 Found ${webpFiles.length} images`)
   return webpFiles
 }
 
@@ -380,7 +380,7 @@ async function generateLqipForImages(webpFiles: string[], existingLqipMap: LqipM
       }
       catch (error) {
         stats.failed++
-        console.error(`Error processing ${filePath}:`, error)
+        console.error(`⚠️ Failed to process image: ${filePath}`, error)
       }
       finally {
         // Track total processed
@@ -401,7 +401,7 @@ async function main() {
 
   // Early exit if no images found
   if (webpFiles.length === 0) {
-    console.log(`✅ Done! No WebP files found to process`)
+    console.log(`✅ No images found to process`)
     return
   }
 

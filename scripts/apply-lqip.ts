@@ -31,16 +31,15 @@ async function loadLqipMap(): Promise<LqipMap | null> {
       return null
     }
 
-    console.error('❌ Failed to parse LQIP mapping file:', error)
+    console.error('⚠️ Failed to parse LQIP mapping file:', error)
     exit(1)
   }
 }
 
 // Get all HTML files from dist directory
 async function getHtmlFiles(): Promise<string[]> {
-  console.log('🔍 Scanning HTML files...')
+  console.log('🔍 Scanning HTML files in dist/...')
   const htmlFiles = await glob('**/*.html', { cwd: distDir })
-  console.log(`📦 Found ${htmlFiles.length} HTML files`)
   return htmlFiles
 }
 
@@ -108,12 +107,14 @@ async function processHtmlFile(
 }
 
 // Report processing results
-function reportResults(stats: ProcessingStats) {
+function reportResults(stats: ProcessingStats, htmlFileCount: number) {
+  console.log(`📦 Found ${stats.totalImages} images in ${htmlFileCount} HTML files`)
+
   if (stats.updatedImages === 0) {
-    console.log(`✅ Done! Found ${stats.totalImages} images, no updates needed`)
+    console.log(`✅ All ${stats.totalImages} images already have LQIP styles`)
   }
   else {
-    console.log(`✨ Done! Found ${stats.totalImages} images, updated ${stats.updatedImages} LQIP styles`)
+    console.log(`✨ Successfully applied LQIP styles to ${stats.updatedImages} images`)
   }
 }
 
@@ -138,10 +139,10 @@ async function applyLqipStyles(): Promise<void> {
   }
 
   // Report results
-  reportResults(stats)
+  reportResults(stats, htmlFiles.length)
 }
 
 applyLqipStyles().catch((error) => {
-  console.error('❌ Execution failed:', error)
+  console.error('❌ Failed to apply LQIP styles:', error)
   exit(1)
 })
