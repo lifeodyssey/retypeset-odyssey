@@ -76,7 +76,7 @@
 
 /* Video */
 .heti iframe {
-  --at-apply: 'aspect-video';
+  --at-apply: 'aspect-video w-full';
 }
 
 /* Code Blocks */
@@ -107,7 +107,7 @@ html.dark .heti pre span {
 
 /* Inline Code */
 .heti :where(code) {
-  --at-apply: 'uno-round-border bg-secondary/5 px-0.4em py-0.2em text-0.85em tracking-0 cjk:break-all';
+  --at-apply: 'uno-round-border bg-secondary/5 px-0.4em py-0.15em text-0.85em tracking-0 cjk:break-all';
   counter-reset: line;
 }
 .heti code span.line {
