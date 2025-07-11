@@ -72,6 +72,7 @@ const embedHandlers = {
     <figure>
       <iframe
         src="//player.bilibili.com/player.html?isOutside=true&bvid=${bvid}&p=1&autoplay=0&muted=0"
+        class="bilibili-player"
         title="Bilibili video player"
         loading="lazy"
         scrolling="no"

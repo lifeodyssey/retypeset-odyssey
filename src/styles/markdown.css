@@ -74,11 +74,6 @@
   --at-apply: 'mb-4';
 }
 
-/* Video */
-.heti iframe {
-  --at-apply: 'aspect-video w-full';
-}
-
 /* Code Blocks */
 .heti :where(pre) {
   --at-apply: 'overflow-auto uno-round-border px-4 py-3 bg-secondary/5!';

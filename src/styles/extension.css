@@ -120,13 +120,13 @@
 }
 
 /* Medium Embed >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* YouTube */
-figure lite-youtube > .lty-playbtn {
+lite-youtube > .lty-playbtn {
   --at-apply: 'filter-none';
 }
-
-/* Tweet */
-figure .twitter-tweet {
+.bilibili-player {
+  --at-apply: 'aspect-video w-full';
+}
+.twitter-tweet {
   --at-apply: 'mx-auto';
 }
 
