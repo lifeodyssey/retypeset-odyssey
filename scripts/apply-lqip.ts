@@ -1,6 +1,5 @@
 /**
- * LQIP (Low-Quality Image Placeholders) processor
- * Generates LQIP values for WebP images and applies them to HTML files
+ * Generate and apply LQIP (Low-Quality Image Placeholders) to images
  * Usage: pnpm apply-lqip
  */
 
