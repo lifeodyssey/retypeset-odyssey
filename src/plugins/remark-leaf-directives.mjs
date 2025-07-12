@@ -1,7 +1,7 @@
 import { visit } from 'unist-util-visit'
 
 const embedHandlers = {
-  // Github Repository Card
+  // GitHub Repository Card
   github: (node) => {
     const repo = node.attributes?.repo ?? ''
     if (!repo) {
