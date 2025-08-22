@@ -12,8 +12,8 @@ import { memoize } from '@/utils/cache'
 import { getPostDescription } from '@/utils/description'
 
 const markdownParser = new MarkdownIt()
-const { title, description, url, author } = themeConfig.site
-const followConfig = themeConfig.seo?.follow
+const { title, description, i18nTitle, url, author } = themeConfig.site
+const { follow } = themeConfig.seo ?? {}
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Dynamically import all images from /src/content/posts/_images
@@ -110,13 +110,12 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
  */
 export async function generateFeed({ lang }: { lang?: string } = {}) {
   const currentUI = ui[lang as keyof typeof ui] ?? ui[defaultLocale as keyof typeof ui] ?? {}
-  const useI18nTitle = themeConfig.site.i18nTitle
   const siteURL = lang ? `${url}/${lang}/` : `${url}/`
 
   // Create Feed instance
   const feed = new Feed({
-    title: useI18nTitle ? currentUI.title : title,
-    description: useI18nTitle ? currentUI.description : description,
+    title: i18nTitle ? currentUI.title : title,
+    description: i18nTitle ? currentUI.description : description,
     id: siteURL,
     link: siteURL,
     language: lang ?? themeConfig.global.locale,
@@ -194,12 +193,12 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
   }
 
   // Add follow verification if available
-  if (followConfig?.feedID && followConfig?.userID) {
+  if (follow?.feedID && follow?.userID) {
     feed.addExtension({
       name: 'follow_challenge',
       objects: {
-        feedId: followConfig.feedID,
-        userId: followConfig.userID,
+        feedId: follow.feedID,
+        userId: follow.userID,
       },
     })
   }

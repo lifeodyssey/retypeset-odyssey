@@ -18,16 +18,15 @@ import { remarkContainerDirectives } from './src/plugins/remark-container-direct
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
-const siteUrl = themeConfig.site.url
-const siteBase = themeConfig.site.base
-const imageHostURL = themeConfig.preload?.imageHostURL
+const { url: site, base } = themeConfig.site
+const { imageHostURL } = themeConfig.preload ?? {}
 const imageConfig = imageHostURL
   ? { image: { domains: [imageHostURL], remotePatterns: [{ protocol: 'https' }] } }
   : {}
 
 export default defineConfig({
-  site: siteUrl,
-  base: siteBase,
+  site,
+  base,
   trailingSlash: 'always',
   prefetch: {
     prefetchAll: true,
@@ -83,6 +82,21 @@ export default defineConfig({
         dark: 'github-dark',
       },
     },
+  },
+  vite: {
+    plugins: [
+      {
+        name: 'prefix-font-urls-with-base',
+        transform(code, id) {
+          if (!id.endsWith('src/styles/font.css')) {
+            return null
+          }
+
+          const basePath = base === '/' ? '' : base.replace(/\/$/, '')
+          return code.replace(/url\("\/fonts\//g, `url("${basePath}/fonts/`)
+        },
+      },
+    ],
   },
   devToolbar: {
     enabled: false,
