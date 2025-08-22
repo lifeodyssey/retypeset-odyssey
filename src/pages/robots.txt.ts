@@ -1,8 +1,5 @@
 import type { APIRoute } from 'astro'
-import { themeConfig } from '@/config'
-
-const { base } = themeConfig.site
-const basePath = base === '/' ? '' : base.replace(/\/$/, '')
+import { base } from '@/config'
 
 export const GET: APIRoute = ({ site }) => {
   const sitemapURL = new URL('sitemap-index.xml', site)
@@ -10,11 +7,11 @@ export const GET: APIRoute = ({ site }) => {
   const robotsTxt = [
     'User-agent: *',
     'Allow: /',
-    `Disallow: ${basePath}/_astro/`,
-    `Disallow: ${basePath}/feeds/`,
-    `Disallow: ${basePath}/giscus/`,
-    `Disallow: ${basePath}/og/`,
-    `Disallow: ${basePath}/~partytown/`,
+    `Disallow: ${base}/_astro/`,
+    `Disallow: ${base}/feeds/`,
+    `Disallow: ${base}/giscus/`,
+    `Disallow: ${base}/og/`,
+    `Disallow: ${base}/~partytown/`,
     '',
     `Sitemap: ${sitemapURL.href}`,
   ].join('\n')

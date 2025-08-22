@@ -6,7 +6,7 @@ import { Feed } from 'feed'
 import MarkdownIt from 'markdown-it'
 import { parse } from 'node-html-parser'
 import sanitizeHtml from 'sanitize-html'
-import { defaultLocale, themeConfig } from '@/config'
+import { base, defaultLocale, themeConfig } from '@/config'
 import { ui } from '@/i18n/ui'
 import { memoize } from '@/utils/cache'
 import { getPostDescription } from '@/utils/description'
@@ -110,7 +110,7 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
  */
 export async function generateFeed({ lang }: { lang?: string } = {}) {
   const currentUI = ui[lang as keyof typeof ui] ?? ui[defaultLocale as keyof typeof ui] ?? {}
-  const siteURL = lang ? `${url}/${lang}/` : `${url}/`
+  const siteURL = lang ? `${url}${base}/${lang}/` : `${url}${base}/`
 
   // Create Feed instance
   const feed = new Feed({
@@ -124,13 +124,13 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
     generator: 'Astro-Theme-Retypeset with Feed for Node.js',
 
     feedLinks: {
-      rss: new URL(lang ? `/${lang}/rss.xml` : '/rss.xml', url).toString(),
-      atom: new URL(lang ? `/${lang}/atom.xml` : '/atom.xml', url).toString(),
+      rss: new URL(lang ? `${base}/${lang}/rss.xml` : `${base}/rss.xml`, url).toString(),
+      atom: new URL(lang ? `${base}/${lang}/atom.xml` : `${base}/atom.xml`, url).toString(),
     },
 
     author: {
       name: author,
-      link: url,
+      link: `${url}${base}/`,
     },
   })
 
@@ -163,7 +163,7 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
           await fixRelativeImagePaths(
             // Remove HTML comments before rendering markdown
             markdownParser.render(post.body.replace(/<!--[\s\S]*?-->/g, '')),
-            url,
+            `${url}${base}/`,
           ),
           {
             // Allow <img> tags in feed content
@@ -185,7 +185,7 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
       content: postContent,
       author: [{
         name: author,
-        link: url,
+        link: `${url}${base}/`,
       }],
       published: publishDate,
       date: updateDate,
@@ -217,7 +217,7 @@ export async function generateRSS(context: APIContext) {
   let rssXml = feed.rss2()
   rssXml = rssXml.replace(
     '<?xml version="1.0" encoding="utf-8"?>',
-    '<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet href="/feeds/rss-style.xsl" type="text/xsl"?>',
+    `<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet href="${base}/feeds/rss-style.xsl" type="text/xsl"?>`,
   )
 
   return new Response(rssXml, {
@@ -237,7 +237,7 @@ export async function generateAtom(context: APIContext) {
   let atomXml = feed.atom1()
   atomXml = atomXml.replace(
     '<?xml version="1.0" encoding="utf-8"?>',
-    '<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet href="/feeds/atom-style.xsl" type="text/xsl"?>',
+    `<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet href="${base}/feeds/atom-style.xsl" type="text/xsl"?>`,
   )
 
   return new Response(atomXml, {

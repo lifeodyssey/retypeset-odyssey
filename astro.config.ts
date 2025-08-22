@@ -8,7 +8,7 @@ import rehypeSlug from 'rehype-slug'
 import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
 import UnoCSS from 'unocss/astro'
-import { defaultLocale, themeConfig } from './src/config'
+import { base, defaultLocale, themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
 import { rehypeCodeCopyButton } from './src/plugins/rehype-code-copy-button.mjs'
 import { rehypeExternalLinks } from './src/plugins/rehype-external-links.mjs'
@@ -18,7 +18,7 @@ import { remarkContainerDirectives } from './src/plugins/remark-container-direct
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
-const { url: site, base } = themeConfig.site
+const { url: site } = themeConfig.site
 const { imageHostURL } = themeConfig.preload ?? {}
 const imageConfig = imageHostURL
   ? { image: { domains: [imageHostURL], remotePatterns: [{ protocol: 'https' }] } }
@@ -92,8 +92,7 @@ export default defineConfig({
             return null
           }
 
-          const basePath = base === '/' ? '' : base.replace(/\/$/, '')
-          return code.replace(/url\("\/fonts\//g, `url("${basePath}/fonts/`)
+          return code.replace(/url\("\/fonts\//g, `url("${base}/fonts/`)
         },
       },
     ],
