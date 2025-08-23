@@ -140,7 +140,6 @@ const pageImage = postSlug
     const shouldReduceMotion = reduceMotion || prefersReducedMotion || !supportsViewTransitions
 
     doc.documentElement.classList.toggle('reduce-motion', shouldReduceMotion)
-    doc.documentElement.classList.add('js') // Indicate JS support
   }
 
   // Update theme before page transition to prevent flashing
