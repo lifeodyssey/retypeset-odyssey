@@ -1,5 +1,5 @@
 ---
-import { defaultLocale, themeConfig } from '@/config'
+import { base, defaultLocale, themeConfig } from '@/config'
 import { giscusLocaleMap } from '@/i18n/config'
 
 const {
@@ -21,6 +21,7 @@ const {
 <script
   is:inline
   define:vars={{
+    base,
     repo,
     repoId,
     category,
@@ -36,11 +37,11 @@ const {
 >
 function getThemeUrl() {
   const isDark = document.documentElement.classList.contains('dark')
-  const baseUrl = window.location.origin
+  const origin = window.location.origin
 
   return isDark
-    ? `${baseUrl}/giscus/theme-dark.css`
-    : `${baseUrl}/giscus/theme-light.css`
+    ? `${origin}${base}/giscus/theme-dark.css`
+    : `${origin}${base}/giscus/theme-light.css`
 }
 
 function setupGiscus() {
