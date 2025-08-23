@@ -32,23 +32,6 @@ export function getPostPath(slug: string, lang: string): string {
 }
 
 /**
- * Get next language path for [...tags_tag] page
- *
- * @param currentPath Current page path
- * @returns Path to tags list page in next language
- */
-export function getNextLangTagsPath(currentPath: string): string {
-  const currentLang = getLangFromPath(currentPath)
-  const nextLang = getNextGlobalLang(currentLang)
-
-  const tagsListPath = nextLang === defaultLocale
-    ? '/tags/'
-    : `/${nextLang}/tags/`
-
-  return base ? `${base}${tagsListPath}` : tagsListPath
-}
-
-/**
  * Generate localized path based on current language
  *
  * @param path Path to localize
