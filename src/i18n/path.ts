@@ -1,17 +1,19 @@
-import { defaultLocale, moreLocales } from '@/config'
+import { base, defaultLocale, moreLocales } from '@/config'
 import { getLangFromPath, getNextGlobalLang } from '@/i18n/lang'
 
 /**
- * Get path to tag page with language support
+ * Get path to a specific tag page with language support
  *
  * @param tagName Tag name
  * @param lang Current language code
  * @returns Path to tag page
  */
 export function getTagPath(tagName: string, lang: string): string {
-  return lang === defaultLocale
+  const tagPath = lang === defaultLocale
     ? `/tags/${tagName}/`
     : `/${lang}/tags/${tagName}/`
+
+  return base ? `${base}${tagPath}` : tagPath
 }
 
 /**
@@ -20,16 +22,15 @@ export function getTagPath(tagName: string, lang: string): string {
  * @param currentPath Current page path
  * @returns Path to tags list page in next language
  */
-export function getTagsListLangPath(currentPath: string): string {
+export function getNextLangTagsPath(currentPath: string): string {
   const currentLang = getLangFromPath(currentPath)
   const nextLang = getNextGlobalLang(currentLang)
 
-  // Build path to tags list page
-  if (nextLang === defaultLocale) {
-    return '/tags/'
-  }
+  const tagsListPath = nextLang === defaultLocale
+    ? '/tags/'
+    : `/${nextLang}/tags/`
 
-  return `/${nextLang}/tags/`
+  return base ? `${base}${tagsListPath}` : tagsListPath
 }
 
 /**
@@ -43,11 +44,12 @@ export function getLocalizedPath(path: string, currentLang?: string) {
   const normalizedPath = path.replace(/^\/|\/$/g, '')
   const lang = currentLang ?? getLangFromPath(path)
 
-  if (normalizedPath === '') {
-    return lang === defaultLocale ? '/' : `/${lang}/`
-  }
+  const langPrefix = lang === defaultLocale ? '' : `/${lang}`
+  const localizedPath = normalizedPath === ''
+    ? `${langPrefix}/`
+    : `${langPrefix}/${normalizedPath}/`
 
-  return lang === defaultLocale ? `/${normalizedPath}/` : `/${lang}/${normalizedPath}/`
+  return base ? `${base}${localizedPath}` : localizedPath
 }
 
 /**
