@@ -26,7 +26,7 @@ const imageConfig = imageHostURL
 
 export default defineConfig({
   site,
-  base,
+  base: '/blog',
   trailingSlash: 'always',
   prefetch: {
     prefetchAll: true,
