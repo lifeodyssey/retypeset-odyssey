@@ -17,6 +17,21 @@ export function getTagPath(tagName: string, lang: string): string {
 }
 
 /**
+ * Get path to a specific post page with language support
+ *
+ * @param slug Post slug
+ * @param lang Current language code
+ * @returns Path to post page
+ */
+export function getPostPath(slug: string, lang: string): string {
+  const postPath = lang === defaultLocale
+    ? `/posts/${slug}/`
+    : `/${lang}/posts/${slug}/`
+
+  return base ? `${base}${postPath}` : postPath
+}
+
+/**
  * Get next language path for [...tags_tag] page
  *
  * @param currentPath Current page path
@@ -61,23 +76,15 @@ export function getLocalizedPath(path: string, currentLang?: string) {
  * @returns Path for next language
  */
 export function getNextLangPath(currentPath: string, currentLang: string, nextLang: string): string {
-  if (currentPath === '/') {
-    return nextLang === defaultLocale ? '/' : `/${nextLang}/`
-  }
+  const pathWithoutBase = base && currentPath.startsWith(base)
+    ? currentPath.slice(base.length)
+    : currentPath
 
-  let nextPath: string
+  const pagePath = currentLang === defaultLocale
+    ? pathWithoutBase
+    : pathWithoutBase.replace(`/${currentLang}`, '')
 
-  if (nextLang === defaultLocale) {
-    nextPath = currentPath.replace(`/${currentLang}`, '') || '/'
-  }
-  else if (currentLang === defaultLocale) {
-    nextPath = `/${nextLang}${currentPath}`
-  }
-  else {
-    nextPath = currentPath.replace(`/${currentLang}`, `/${nextLang}`)
-  }
-
-  return nextPath.endsWith('/') ? nextPath : `${nextPath}/`
+  return getLocalizedPath(pagePath, nextLang)
 }
 
 /**
