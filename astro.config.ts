@@ -27,7 +27,7 @@ const imageConfig = imageHostURL
 export default defineConfig({
   site,
   base,
-  trailingSlash: 'always',
+  trailingSlash: 'always', // Not recommended to change
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport', // hover, tap, viewport, load
