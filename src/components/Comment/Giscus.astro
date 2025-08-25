@@ -22,6 +22,7 @@ const {
   is:inline
   define:vars={{
     base,
+    defaultLocale,
     repo,
     repoId,
     category,
@@ -32,7 +33,6 @@ const {
     emitMetadata,
     inputPosition,
     giscusLocaleMap,
-    defaultLocale,
   }}
 >
 function getThemeUrl() {
@@ -48,12 +48,15 @@ function setupGiscus() {
   const giscusContainer = document.getElementById('giscus')
   giscusContainer.innerHTML = ''
 
-  const lang = Object.keys(giscusLocaleMap).find(code =>
-    window.location.pathname.startsWith(`/${code}/`),
-  ) ?? defaultLocale
-  const giscusLang = giscusLocaleMap[lang]
+  const currentPath = window.location.pathname
+  const pathWithoutBase = base && currentPath.startsWith(base)
+    ? currentPath.slice(base.length)
+    : currentPath
 
-  // Set up basic attributes
+  const lang = Object.keys(giscusLocaleMap).find(code =>
+    pathWithoutBase.startsWith(`/${code}/`),
+  ) ?? defaultLocale
+
   const dataAttributes = {
     repo,
     repoId,
@@ -65,7 +68,7 @@ function setupGiscus() {
     emitMetadata,
     inputPosition,
     theme: getThemeUrl(),
-    lang: giscusLang,
+    lang: giscusLocaleMap[lang],
   }
 
   const script = document.createElement('script')
