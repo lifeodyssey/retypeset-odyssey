@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap'
 import Compress from 'astro-compress'
 import { defineConfig } from 'astro/config'
 import rehypeKatex from 'rehype-katex'
+import rehypeMermaid from 'rehype-mermaid'
 import rehypeSlug from 'rehype-slug'
 import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
@@ -69,12 +70,20 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeKatex,
+      [rehypeMermaid, {
+        strategy: 'img-svg',
+        dark: true,
+      }],
       rehypeSlug,
       rehypeHeadingAnchor,
       rehypeImageProcessor,
       rehypeExternalLinks,
       rehypeCodeCopyButton,
     ],
+    syntaxHighlight: {
+      type: 'shiki',
+      excludeLangs: ['mermaid'],
+    },
     shikiConfig: {
       // Available themes: https://shiki.style/themes
       themes: {

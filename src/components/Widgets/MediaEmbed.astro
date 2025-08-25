@@ -34,6 +34,26 @@ async function setupMediaEmbeds() {
   }
 }
 
+function updateMermaidTheme() {
+  const pictures = document.querySelectorAll('picture:has(img[id^="mermaid-"])')
+
+  if (pictures.length === 0) {
+    return
+  }
+
+  const isDark = document.documentElement.classList.contains('dark')
+
+  pictures.forEach((picture) => {
+    const img = picture.querySelector('img[id^="mermaid-"]')
+    const darkSource = picture.querySelector('source[id*="mermaid-dark"]')
+
+    if (img instanceof HTMLImageElement && darkSource instanceof HTMLSourceElement) {
+      img.dataset.originalSrc ??= img.src
+      img.src = isDark ? darkSource.srcset : img.dataset.originalSrc
+    }
+  })
+}
+
 function handleGalleryWheel(e: WheelEvent) {
   const container = (e.target as Element)?.closest('.gallery-container') as HTMLElement
   if (!container) {
@@ -50,6 +70,7 @@ function handleGalleryWheel(e: WheelEvent) {
 }
 
 document.addEventListener('astro:page-load', setupMediaEmbeds)
+document.addEventListener('theme-changed', updateMermaidTheme)
 document.addEventListener('wheel', handleGalleryWheel, { passive: false })
 setupMediaEmbeds()
 </script>
