@@ -70,10 +70,7 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeKatex,
-      [rehypeMermaid, {
-        strategy: 'img-svg',
-        dark: true,
-      }],
+      [rehypeMermaid, { strategy: 'pre-mermaid' }],
       rehypeSlug,
       rehypeHeadingAnchor,
       rehypeImageProcessor,

@@ -3,54 +3,94 @@ import 'lite-youtube-embed/src/lite-yt-embed.css'
 ---
 
 <script>
-async function setupMediaEmbeds() {
+async function setupYouTubeEmbeds() {
   const youtube = document.querySelectorAll('lite-youtube')
-  const tweets = document.querySelectorAll('.twitter-tweet')
-
-  if (youtube.length === 0 && tweets.length === 0) {
+  if (youtube.length === 0) {
     return
   }
 
-  if (youtube.length > 0) {
-    try {
-      // @ts-expect-error - No type definitions available for lite-youtube-embed
-      await import('lite-youtube-embed')
-    }
-    catch (error) {
-      console.error('Failed to load YouTube embed:', error)
-    }
+  try {
+    // @ts-expect-error - No type definitions available for lite-youtube-embed
+    await import('lite-youtube-embed')
   }
-
-  if (tweets.length > 0) {
-    const isDark = document.documentElement.classList.contains('dark')
-    tweets.forEach((tweet) => {
-      tweet.setAttribute('data-theme', isDark ? 'dark' : 'light')
-    })
-
-    const script = document.createElement('script')
-    script.src = 'https://platform.twitter.com/widgets.js'
-    script.async = true
-    document.head.appendChild(script)
+  catch (error) {
+    console.error('Failed to load YouTube embed:', error)
   }
 }
 
-function updateMermaidTheme() {
-  const pictures = document.querySelectorAll('picture:has(img[id^="mermaid-"])')
+async function setupTwitterEmbeds() {
+  const tweets = document.querySelectorAll('.twitter-tweet')
+  if (tweets.length === 0) {
+    return
+  }
 
-  if (pictures.length === 0) {
+  tweets.forEach((tweet) => {
+    tweet.setAttribute('data-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')
+  })
+
+  const script = document.createElement('script')
+  script.src = 'https://platform.twitter.com/widgets.js'
+  script.async = true
+  document.head.appendChild(script)
+}
+
+async function setupMermaidEmbeds() {
+  const mermaids = document.querySelectorAll('pre.mermaid')
+  if (mermaids.length === 0) {
+    return
+  }
+
+  mermaids.forEach((element) => {
+    const mermaid = element as HTMLElement
+    if (!mermaid.dataset.mermaidCode) {
+      mermaid.dataset.mermaidCode = mermaid.textContent?.trim() ?? ''
+    }
+  })
+
+  try {
+    const { default: mermaid } = await import('mermaid')
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
+    })
+    mermaid.run()
+  }
+  catch (error) {
+    console.error('Failed to load Mermaid:', error)
+  }
+}
+
+async function setupMediaEmbeds() {
+  await Promise.allSettled([
+    setupYouTubeEmbeds(),
+    setupTwitterEmbeds(),
+    setupMermaidEmbeds(),
+  ])
+}
+
+function updateMermaidTheme() {
+  const mermaids = document.querySelectorAll('pre.mermaid[data-mermaid-code]')
+  if (mermaids.length === 0) {
     return
   }
 
   const isDark = document.documentElement.classList.contains('dark')
 
-  pictures.forEach((picture) => {
-    const img = picture.querySelector('img[id^="mermaid-"]')
-    const darkSource = picture.querySelector('source[id*="mermaid-dark"]')
+  import('mermaid').then(({ default: mermaid }) => {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+    })
 
-    if (img instanceof HTMLImageElement && darkSource instanceof HTMLSourceElement) {
-      img.dataset.originalSrc ??= img.src
-      img.src = isDark ? darkSource.srcset : img.dataset.originalSrc
-    }
+    mermaids.forEach((element) => {
+      const mermaid = element as HTMLElement
+      mermaid.innerHTML = mermaid.dataset.mermaidCode ?? ''
+      mermaid.removeAttribute('data-processed')
+    })
+
+    mermaid.run()
+  }).catch((error) => {
+    console.error('Failed to update Mermaid theme:', error)
   })
 }
 
