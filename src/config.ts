@@ -15,6 +15,9 @@ export const themeConfig: ThemeConfig = {
     author: 'radishzz',
     // site url
     url: 'https://retypeset.radishzz.cc',
+    // base path
+    // root directory for all pages and assets
+    base: '/', // e.g., '/blog', '/docs'
     // favicon url
     // recommended formats: svg, png or ico
     favicon: '/icons/favicon.svg', // or https://example.com/favicon.svg
@@ -199,6 +202,7 @@ export const themeConfig: ThemeConfig = {
 
 export default themeConfig
 
+export const base = themeConfig.site.base === '/' ? '' : themeConfig.site.base.replace(/\/$/, '')
 export const defaultLocale = themeConfig.global.locale
 export const moreLocales = themeConfig.global.moreLocales
 export const allLocales = [defaultLocale, ...moreLocales]
