@@ -1,4 +1,19 @@
 import { allLocales, base, defaultLocale, moreLocales } from '@/config'
+import { langMap } from './config'
+
+/**
+ * Get the internal language code (path) that corresponding to the given locale.
+ *
+ * @param locale Locale value in Astro.config.i18n.locales.[].codes
+ * @returns Corresponding internal langguage code or the default one
+ */
+export function getLangFromLocale(locale: string | undefined): string {
+  if (!locale) {
+    return defaultLocale
+  }
+  return Object.keys(langMap).find(lang => langMap[lang].includes(locale))
+    || defaultLocale
+}
 
 /**
  * Gets the language code from the current path
