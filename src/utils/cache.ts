@@ -4,10 +4,10 @@
  * @param fn - The async function to memoize
  * @returns Memoized function that caches results
  */
-export function memoize<T>(fn: (...args: any[]) => Promise<T>) {
-  const cache = new Map<string, Promise<T>>()
+export function memoize<F extends (...args: any[]) => Promise<any>>(fn: F): (...args: Parameters<F>) => ReturnType<F> {
+  const cache = new Map<string, ReturnType<F>>()
 
-  return async (...args: any[]): Promise<T> => {
+  return (...args: Parameters<F>): ReturnType<F> => {
     // Generate cache key from function arguments
     const key = JSON.stringify(args)
 
@@ -17,7 +17,7 @@ export function memoize<T>(fn: (...args: any[]) => Promise<T>) {
     }
 
     // Execute the original function and cache the promise
-    const promise = fn(...args)
+    const promise = fn(...args) as ReturnType<F>
     cache.set(key, promise)
 
     // Remove failed promises from cache to allow retry
