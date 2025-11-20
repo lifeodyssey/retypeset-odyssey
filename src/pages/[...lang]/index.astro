@@ -1,14 +1,13 @@
 ---
 import PostList from '@/components/PostList.astro'
 import { allLocales } from '@/config'
-import { getLangFromLocale } from '@/i18n/lang'
-import { generateLangRouteParamValue } from '@/i18n/path'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
 import { getPinnedPosts, getPostsByYear } from '@/utils/content'
 
 export async function getStaticPaths() {
   return allLocales.map(lang => ({
-    params: { lang: generateLangRouteParamValue(lang) },
+    params: { lang: getLangRouteParam(lang) },
   }))
 }
 

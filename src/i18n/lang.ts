@@ -2,6 +2,16 @@ import { allLocales, base, defaultLocale, moreLocales } from '@/config'
 import { langMap } from '@/i18n/config'
 
 /**
+ * Get the short language code for the `[...lang]` route parameter
+ *
+ * @param lang Current language code (e.g. 'en')
+ * @returns Route parameter value (e.g. 'en') or undefined (root path '/')
+ */
+export function getLangRouteParam(lang: string): string | undefined {
+  return lang === defaultLocale ? undefined : lang
+}
+
+/**
  * Get the corresponding short language code from the complete current locale value
  *
  * @param locale Current locale value (e.g. 'en-US')

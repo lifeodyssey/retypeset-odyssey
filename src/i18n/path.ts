@@ -109,21 +109,3 @@ export function getNextSupportedLangPath(currentPath: string, supportedLangs: st
 
   return getNextLangPath(currentPath, currentLang, nextLang)
 }
-
-/**
- * Get the value to fill `[...lang]` route param.
- * Note: it must be an rest parameter in order to support undefined value.
- *
- * @param lang The lang of the page
- * @returns Value to fill the route param
- */
-export function generateLangRouteParamValue(lang: string): string | undefined {
-  // currently always false
-  // in cause we support this configuration in the future
-  const prefixDefaultLocale = false
-
-  if (lang === defaultLocale && !prefixDefaultLocale) {
-    return undefined
-  }
-  return lang
-}
