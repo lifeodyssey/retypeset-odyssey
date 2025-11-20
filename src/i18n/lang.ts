@@ -1,22 +1,21 @@
 import { allLocales, base, defaultLocale, moreLocales } from '@/config'
-import { langMap } from './config'
+import { langMap } from '@/i18n/config'
 
 /**
- * Get the internal language code (path) that corresponding to the given locale.
+ * Get the corresponding short language code from the complete current locale value
  *
- * @param locale Locale value in Astro.config.i18n.locales.[].codes
- * @returns Corresponding internal langguage code or the default one
+ * @param locale Current locale value (e.g. 'en-US')
+ * @returns Corresponding language code (e.g. 'en') or default locale
  */
 export function getLangFromLocale(locale: string | undefined): string {
   if (!locale) {
     return defaultLocale
   }
-  return Object.keys(langMap).find(lang => langMap[lang].includes(locale))
-    || defaultLocale
+  return Object.entries(langMap).find(([, codes]) => codes.includes(locale))?.[0] ?? defaultLocale
 }
 
 /**
- * Gets the language code from the current path
+ * Get the language code from the current path
  *
  * @param path Current page path
  * @returns Language code detected from path or default locale
@@ -26,8 +25,7 @@ export function getLangFromPath(path: string) {
     ? path.slice(base.length)
     : path
 
-  return moreLocales.find(lang =>
-    pathWithoutBase.startsWith(`/${lang}/`)) ?? defaultLocale
+  return moreLocales.find(lang => pathWithoutBase.startsWith(`/${lang}/`)) ?? defaultLocale
 }
 
 /**
