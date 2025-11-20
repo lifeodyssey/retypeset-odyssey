@@ -17,7 +17,6 @@ export async function getStaticPaths() {
   return paths.flat()
 }
 
-
 const { tag } = Astro.props
 const currentLang = getLangFromLocale(Astro.currentLocale)
 const posts = await getPostsByTag(tag, currentLang)
