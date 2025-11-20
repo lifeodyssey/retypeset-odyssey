@@ -51,22 +51,24 @@ export async function getStaticPaths() {
   return allLocales.flatMap(lang => posts
     // Show drafts in dev mode only
     .filter(post => import.meta.env.DEV || !post.data.draft)
-    // lang matching
+    // Match current language or universal posts
     .filter(post => post.data.lang === lang || post.data.lang === '')
     .map((post) => {
       const slug = post.data.abbrlink || post.id
       return {
-        params: { lang: getLangRouteParam(lang), post: slug },
-        props: { post, slug, supportedLangs: slugToLangs[slug] ?? [] },
+        params: { lang: getLangRouteParam(lang), slug },
+        props: { post, supportedLangs: slugToLangs[slug] },
       }
     }),
   )
 }
 
-const { post, slug, supportedLangs } = Astro.props
-const currentLang = getLangFromLocale(Astro.currentLocale)
+
+const { post, supportedLangs } = Astro.props
+const slug = post.data.abbrlink || post.id
 const description = getPostDescription(post, 'meta')
 const { Content, headings, remarkPluginFrontmatter } = await render(post)
+const currentLang = getLangFromLocale(Astro.currentLocale)
 ---
 
 <Layout
