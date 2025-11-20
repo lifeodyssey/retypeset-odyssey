@@ -28,14 +28,18 @@ export interface Props {
 
     return (
       <li
-        class="mb-5.5"
-        lg={isHome ? 'mb-10' : ''}
+        class:list={[
+          'mb-5.5',
+          isHome ? 'lg:mb-10' : '',
+        ]}
       >
         {/* post title */}
         <h3 class="inline transition-colors hover:c-primary">
           <a
-            class="cjk:tracking-0.02em"
-            lg={isHome ? 'font-medium text-4.5' : ''}
+            class:list={[
+              'cjk:tracking-0.02em',
+              isHome ? 'lg:font-medium lg:text-4.5' : '',
+            ]}
             href={getPostPath(slug, lang)}
             transition:name={`post-${slug}${lang ? `-${lang}` : ''}`}
             data-disable-theme-transition
