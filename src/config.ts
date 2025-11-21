@@ -62,6 +62,8 @@ export const themeConfig: ThemeConfig = {
     // more languages
     // not fill in the locale code above again, can be an empty array []
     moreLocales: ['en', 'es', 'ja', 'ru', 'zh-tw'], // ['de', 'en', 'es', 'fr', 'ja', 'ko', 'pl', 'pt', 'ru', 'zh', 'zh-tw']
+    // prefix default language in urls
+    prefixDefaultLocale: false, // true | false
     // font styles for post text
     fontStyle: 'sans', // sans | serif
     // date format for posts
@@ -205,4 +207,5 @@ export default themeConfig
 export const base = themeConfig.site.base === '/' ? '' : themeConfig.site.base.replace(/\/$/, '')
 export const defaultLocale = themeConfig.global.locale
 export const moreLocales = themeConfig.global.moreLocales
+export const prefixDefaultLocale = themeConfig.global.prefixDefaultLocale
 export const allLocales = [defaultLocale, ...moreLocales]
