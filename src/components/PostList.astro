@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import type { Language } from '@/i18n/config'
 import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { getPostPath } from '@/i18n/path'
@@ -17,7 +18,7 @@ const isHome = isHomePage(Astro.url.pathname)
 
 export interface Props {
   posts: Post[]
-  lang: string
+  lang: Language
   pinned?: boolean
 }
 ---

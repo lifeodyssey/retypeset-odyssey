@@ -1,4 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
+import type { Language } from '@/i18n/config'
 import MarkdownIt from 'markdown-it'
 import { defaultLocale } from '@/config'
 
@@ -33,8 +34,8 @@ const htmlEntityMap: Record<string, string> = {
 }
 
 // Creates a clean text excerpt with length limits by language and scene
-function getExcerpt(text: string, lang: string, scene: ExcerptScene): string {
-  const isCJK = (lang: string) => ['zh', 'zh-tw', 'ja', 'ko'].includes(lang)
+function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
+  const isCJK = (lang: Language) => ['zh', 'zh-tw', 'ja', 'ko'].includes(lang)
   const length = isCJK(lang)
     ? excerptLengths[scene].cjk
     : excerptLengths[scene].other
@@ -68,7 +69,7 @@ export function getPostDescription(
   post: CollectionEntry<'posts'>,
   scene: ExcerptScene,
 ): string {
-  const lang = post.data.lang || defaultLocale
+  const lang = (post.data.lang || defaultLocale) as Language
 
   if (post.data.description) {
     // Only truncate for og scene, return full description for other scenes

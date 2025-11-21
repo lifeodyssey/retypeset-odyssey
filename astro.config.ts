@@ -37,7 +37,7 @@ export default defineConfig({
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
       path,
-      codes: codes as [string, ...string[]],
+      codes: [...codes] as [string, ...string[]],
     })),
     defaultLocale,
   },

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import type { Language } from '@/i18n/config'
 import { getCollection, render } from 'astro:content'
 import Comment from '@/components/Comment/Index.astro'
 import PostDate from '@/components/PostDate.astro'
@@ -22,30 +23,34 @@ export async function getStaticPaths() {
   }
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  // Use a Map to store the relationship between post slugs and their supported languages
-  // Set is used to store the supported languages for each post
-  const slugToLangsMap = posts.reduce((map, post) => {
+  // Build a map of post slugs to their supported languages
+  // Handles both specific language posts (e.g., 'en') and universal posts (lang: '')
+  const slugToLangsMap = new Map<string, Set<Language>>()
+
+  for (const post of posts) {
     const slug = post.data.abbrlink || post.id
     const lang = post.data.lang
 
-    if (!map.has(slug)) {
-      map.set(slug, new Set(lang ? [lang] : allLocales))
-    }
-    else if (lang) {
-      map.get(slug)?.add(lang)
+    let langSet = slugToLangsMap.get(slug)
+    if (!langSet) {
+      langSet = new Set()
+      slugToLangsMap.set(slug, langSet)
     }
 
-    return map
-  }, new Map<string, Set<string>>())
+    if (lang) {
+      langSet.add(lang as Language)
+    }
+    else {
+      allLocales.forEach(locale => langSet.add(locale))
+    }
+  }
 
-  // Convert Map<slug, Set<langs>> to Record<slug, langs[]> structure
-  // Sort languages according to the order defined in allLocales
-  const slugToLangs = Object.fromEntries(
-    Array.from(slugToLangsMap.entries()).map(([slug, langs]) => [
-      slug,
-      [...langs].sort((a, b) => allLocales.indexOf(a) - allLocales.indexOf(b)),
-    ]),
-  )
+  // Convert the map to a sorted record for the component props
+  // Ensure languages are always sorted by the order defined in config
+  const slugToLangs: Record<string, Language[]> = {}
+  for (const [slug, langs] of slugToLangsMap) {
+    slugToLangs[slug] = [...langs].sort((a, b) => allLocales.indexOf(a) - allLocales.indexOf(b))
+  }
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   return allLocales.flatMap(lang => posts

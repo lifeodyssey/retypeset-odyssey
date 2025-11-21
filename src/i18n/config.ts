@@ -1,5 +1,5 @@
 // Global Language Map
-export const langMap: Record<string, string[]> = {
+export const langMap = {
   'de': ['de-DE'],
   'en': ['en-US'],
   'es': ['es-ES'],
@@ -11,7 +11,7 @@ export const langMap: Record<string, string[]> = {
   'ru': ['ru-RU'],
   'zh': ['zh-CN'],
   'zh-tw': ['zh-TW'],
-}
+} as const
 
 // Giscus Language Map
 // https://giscus.app/
@@ -62,4 +62,4 @@ export const walineLocaleMap: Record<string, string> = {
 }
 
 // Supported Languages
-export const supportedLangs = Object.keys(langMap).flat()
+export type Language = keyof typeof langMap

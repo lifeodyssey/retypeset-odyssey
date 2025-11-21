@@ -1,4 +1,4 @@
-import type { supportedLangs } from '@/i18n/config'
+import type { Language } from '@/i18n/config'
 
 type Exclude<T, U> = T extends U ? never : T
 
@@ -29,8 +29,8 @@ export interface ThemeConfig {
     }
   }
   global: {
-    locale: typeof supportedLangs[number]
-    moreLocales: typeof supportedLangs[number][]
+    locale: Language
+    moreLocales: Language[]
     fontStyle: 'sans' | 'serif'
     dateFormat: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MONTH DAY YYYY' | 'DAY MONTH YYYY'
     toc: boolean
