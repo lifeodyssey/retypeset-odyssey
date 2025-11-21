@@ -43,7 +43,7 @@ async function addMetaToPost(post: CollectionEntry<'posts'>): Promise<Post> {
  * @param posts Array of blog posts to check
  * @returns Array of descriptive error messages for duplicate slugs
  */
-async function _checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]): Promise<string[]> {
+export async function checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]): Promise<string[]> {
   const slugMap = new Map<string, Set<string>>()
   const duplicates: string[] = []
 
@@ -71,8 +71,6 @@ async function _checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]): Pro
 
   return duplicates
 }
-
-export const checkPostSlugDuplication = memoize(_checkPostSlugDuplication)
 
 /**
  * Get all posts (including pinned ones, excluding drafts in production)
