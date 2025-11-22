@@ -31,7 +31,6 @@ export interface ThemeConfig {
   global: {
     locale: Language
     moreLocales: Language[]
-    prefixDefaultLocale: boolean
     fontStyle: 'sans' | 'serif'
     dateFormat: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MMM D YYYY' | 'D MMM YYYY'
     toc: boolean
