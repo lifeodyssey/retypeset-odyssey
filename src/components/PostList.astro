@@ -1,26 +1,20 @@
 ---
-import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
+import type { Post } from '@/types'
 import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { getPostPath } from '@/i18n/path'
 import { getPostDescription } from '@/utils/description'
 import { isHomePage } from '@/utils/page'
 
-type Post = CollectionEntry<'posts'> & {
-  remarkPluginFrontmatter: {
-    minutes: number
-  }
-}
-
-const { posts, lang, pinned = false } = Astro.props
-const isHome = isHomePage(Astro.url.pathname)
-
 export interface Props {
   posts: Post[]
   lang: Language
   pinned?: boolean
 }
+
+const { posts, lang, pinned = false } = Astro.props
+const isHome = isHomePage(Astro.url.pathname)
 ---
 
 <ul>

@@ -1,14 +1,9 @@
 import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
+import type { Post } from '@/types'
 import { getCollection, render } from 'astro:content'
 import { defaultLocale } from '@/config'
 import { memoize } from '@/utils/cache'
-
-export type Post = CollectionEntry<'posts'> & {
-  remarkPluginFrontmatter: {
-    minutes: number
-  }
-}
 
 const metaCache = new Map<string, { minutes: number }>()
 

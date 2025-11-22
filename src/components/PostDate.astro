@@ -1,6 +1,9 @@
 ---
+import type { ThemeConfig } from '@/types'
 import { themeConfig } from '@/config'
 import { isPostPage } from '@/utils/page'
+
+type DateFormat = ThemeConfig['global']['dateFormat']
 
 interface Props {
   date: Date
@@ -13,7 +16,7 @@ const { dateFormat: format } = themeConfig.global
 const isPost = isPostPage(Astro.url.pathname)
 const timeSpacingClass = isPost ? 'ml-1.75' : 'ml-1.5'
 
-function formatDate(date: Date, format: 'YYYY-MM-DD' | 'MM-DD-YYYY' | 'DD-MM-YYYY' | 'MMM D YYYY' | 'D MMM YYYY') {
+function formatDate(date: Date, format: DateFormat) {
   if (format === 'YYYY-MM-DD') {
     return date.toISOString().split('T')[0]
   }
