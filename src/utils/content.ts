@@ -20,20 +20,21 @@ const metaCache = new Map<string, { minutes: number }>()
  */
 async function addMetaToPost(post: CollectionEntry<'posts'>): Promise<Post> {
   const cacheKey = `${post.id}-${post.data.lang || 'universal'}`
-
-  if (metaCache.has(cacheKey)) {
+  const cachedMeta = metaCache.get(cacheKey)
+  if (cachedMeta) {
     return {
       ...post,
-      remarkPluginFrontmatter: metaCache.get(cacheKey)!,
+      remarkPluginFrontmatter: cachedMeta,
     }
   }
 
   const { remarkPluginFrontmatter } = await render(post)
-  metaCache.set(cacheKey, remarkPluginFrontmatter as { minutes: number })
+  const meta = remarkPluginFrontmatter as { minutes: number }
+  metaCache.set(cacheKey, meta)
 
   return {
     ...post,
-    remarkPluginFrontmatter: metaCache.get(cacheKey)!,
+    remarkPluginFrontmatter: meta,
   }
 }
 
@@ -51,11 +52,12 @@ export async function checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]
     const lang = post.data.lang
     const slug = post.data.abbrlink || post.id
 
-    if (!slugMap.has(lang)) {
-      slugMap.set(lang, new Set())
+    let slugSet = slugMap.get(lang)
+    if (!slugSet) {
+      slugSet = new Set()
+      slugMap.set(lang, slugSet)
     }
 
-    const slugSet = slugMap.get(lang)!
     if (!slugSet.has(slug)) {
       slugSet.add(slug)
       return
@@ -92,7 +94,7 @@ async function _getPosts(lang?: Language) {
 
   const enhancedPosts = await Promise.all(filteredPosts.map(addMetaToPost))
 
-  return enhancedPosts.sort((a: Post, b: Post) =>
+  return enhancedPosts.sort((a, b) =>
     b.data.published.valueOf() - a.data.published.valueOf(),
   )
 }
@@ -139,10 +141,12 @@ async function _getPostsByYear(lang?: Language): Promise<Map<number, Post[]>> {
 
   posts.forEach((post: Post) => {
     const year = post.data.published.getFullYear()
-    if (!yearMap.has(year)) {
-      yearMap.set(year, [])
+    let yearPosts = yearMap.get(year)
+    if (!yearPosts) {
+      yearPosts = []
+      yearMap.set(year, yearPosts)
     }
-    yearMap.get(year)!.push(post)
+    yearPosts.push(post)
   })
 
   // Sort posts within each year by date
@@ -171,10 +175,12 @@ async function _getPostsGroupByTags(lang?: Language) {
 
   posts.forEach((post: Post) => {
     post.data.tags?.forEach((tag: string) => {
-      if (!tagMap.has(tag)) {
-        tagMap.set(tag, [])
+      let tagPosts = tagMap.get(tag)
+      if (!tagPosts) {
+        tagPosts = []
+        tagMap.set(tag, tagPosts)
       }
-      tagMap.get(tag)!.push(post)
+      tagPosts.push(post)
     })
   })
 

@@ -1,7 +1,5 @@
 import type { Language } from '@/i18n/config'
 
-type Exclude<T, U> = T extends U ? never : T
-
 export interface ThemeConfig {
   site: {
     title: string
@@ -89,5 +87,3 @@ export interface ThemeConfig {
     customUmamiAnalyticsJS?: string
   }
 }
-
-export default ThemeConfig
