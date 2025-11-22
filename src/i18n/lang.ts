@@ -1,5 +1,5 @@
 import type { Language } from '@/i18n/config'
-import { allLocales, base, defaultLocale, moreLocales, prefixDefaultLocale } from '@/config'
+import { allLocales, base, defaultLocale, moreLocales, themeConfig } from '@/config'
 import { langMap } from '@/i18n/config'
 
 /**
@@ -9,7 +9,7 @@ import { langMap } from '@/i18n/config'
  * @returns Route parameter value (e.g. 'en') or undefined (root path '/')
  */
 export function getLangRouteParam(lang: Language): string | undefined {
-  if (!prefixDefaultLocale && lang === defaultLocale) {
+  if (!themeConfig.global.prefixDefaultLocale && lang === defaultLocale) {
     return undefined
   }
   return lang
