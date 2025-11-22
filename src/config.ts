@@ -62,13 +62,13 @@ export const themeConfig: ThemeConfig = {
     // more languages
     // not fill in the locale code above again, can be an empty array []
     moreLocales: ['en', 'es', 'ja', 'ru', 'zh-tw'], // ['de', 'en', 'es', 'fr', 'ja', 'ko', 'pl', 'pt', 'ru', 'zh', 'zh-tw']
-    // font styles for post text
+    // post font style
     fontStyle: 'sans', // sans | serif
-    // date format for posts
+    // post date format
     dateFormat: 'YYYY-MM-DD', // YYYY-MM-DD | MM-DD-YYYY | DD-MM-YYYY | MMM D YYYY | D MMM YYYY
-    // table of contents for posts
+    // enable table of contents
     toc: true, // true | false
-    // KaTeX math rendering
+    // enable katex math rendering
     katex: true, // true | false
     // reduce motion
     reduceMotion: false, // true | false
@@ -151,7 +151,7 @@ export const themeConfig: ThemeConfig = {
       userID: '',
     },
     // apiflash access key
-    // automatically generate website screenshots for open graph images
+    // generate website screenshots for open graph images
     // get your access key at: https://apiflash.com/
     apiflashKey: '',
   },
@@ -186,7 +186,7 @@ export const themeConfig: ThemeConfig = {
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   preload: {
     // image hosting url
-    // optimize remote images in Markdown files to avoid cumulative layout shift
+    // optimize remote images and generate low-quality placeholders
     imageHostURL: 'image.radishzz.cc',
     // custom google analytics js
     // for users who route analytics javascript to a customized domain
