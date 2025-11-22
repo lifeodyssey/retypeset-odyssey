@@ -46,6 +46,10 @@ function getThemeUrl() {
 
 function setupGiscus() {
   const giscusContainer = document.getElementById('giscus')
+  if (!giscusContainer) {
+    return
+  }
+
   giscusContainer.innerHTML = ''
 
   const currentPath = window.location.pathname

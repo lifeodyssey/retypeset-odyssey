@@ -73,7 +73,10 @@ function lazySetupTwikoo() {
   const link = document.createElement('link')
   link.rel = 'stylesheet'
   link.href = twikooCSS
-  document.head.appendChild(link)
+
+  if (!document.querySelector(`link[href="${twikooCSS}"]`)) {
+    document.head.appendChild(link)
+  }
 
   twikooObserver = new IntersectionObserver((entries) => {
     if (entries.some(entry => entry.isIntersecting)) {

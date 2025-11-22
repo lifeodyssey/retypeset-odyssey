@@ -85,7 +85,10 @@ function lazySetupWaline() {
   const link = document.createElement('link')
   link.rel = 'stylesheet'
   link.href = walineCSS
-  document.head.appendChild(link)
+
+  if (!document.querySelector(`link[href="${walineCSS}"]`)) {
+    document.head.appendChild(link)
+  }
 
   walineObserver = new IntersectionObserver((entries) => {
     if (entries.some(entry => entry.isIntersecting)) {
