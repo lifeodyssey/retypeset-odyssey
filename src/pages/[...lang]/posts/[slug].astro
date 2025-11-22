@@ -68,6 +68,10 @@ export async function getStaticPaths() {
   )
 }
 
+interface Props {
+  post: CollectionEntry<'posts'>
+  supportedLangs: Language[]
+}
 
 const { post, supportedLangs } = Astro.props
 const currentLang = getLangFromLocale(Astro.currentLocale)
