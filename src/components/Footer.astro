@@ -4,23 +4,46 @@ import { getLangFromPath } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 
 const { author } = themeConfig.site
-const { links: socialLinks, startYear } = themeConfig.footer
+const { links, startYear } = themeConfig.footer
 
 const currentYear = new Date().getFullYear()
-const year = Number(startYear) === currentYear ? startYear : `${startYear}-${currentYear}`
+const year = Number(startYear) === currentYear
+  ? startYear
+  : `${startYear}-${currentYear}`
 
 // i18n RSS Feed Path
 const currentLang = getLangFromPath(Astro.url.pathname)
-const links = socialLinks.map(({ name, url, ...rest }) => {
-  if (name === 'RSS') {
-    return { name, url: getLocalizedPath(url, currentLang).slice(0, -1), ...rest }
+const socialLinks = links.map(({ name, url }) => {
+  const isRSS = url === '/atom.xml' || url === '/rss.xml'
+  const isEmail = /^[\w.-]+@[\w.-]+\.[a-z]{2,}$/i.test(url)
+
+  if (isRSS) {
+    return {
+      name,
+      href: getLocalizedPath(url, currentLang).slice(0, -1),
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    }
   }
 
-  if (name === 'Email') {
-    return { name, url: url.startsWith('mailto:') ? url : `mailto:${url}`, ...rest }
+  if (isEmail) {
+    const href = `mailto:${url}`
+    return {
+      name,
+      href,
+      'data-umami-event': 'outbound-link-click',
+      'data-umami-event-url': href,
+    }
   }
 
-  return { name, url, ...rest }
+  return {
+    name,
+    'href': url,
+    'target': '_blank',
+    'rel': 'noopener noreferrer',
+    'data-umami-event': 'outbound-link-click',
+    'data-umami-event-url': url,
+  }
 })
 
 const footerLinkClass = 'highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary'
@@ -31,9 +54,9 @@ const footerLinkClass = 'highlight-hover py-0.8 transition-colors after:bottom-0
   lg="uno-desktop-column bottom-20"
 >
   <p>
-    {links.map((link, index) => (
+    {socialLinks.map((link, index) => (
       <>
-        <a class={footerLinkClass} href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>&nbsp;{index < links.length - 1 && '/'}
+        <a class={footerLinkClass} {...link}>{link.name}</a>&nbsp;{index < socialLinks.length - 1 && '/'}
       </>
     ))}
   </p>
