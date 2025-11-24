@@ -47,12 +47,12 @@ function getThemeUrl() {
 }
 
 function updateGiscusTheme() {
-  const iframe = document.querySelector('.giscus-frame')
-  if (!iframe || !iframe.contentWindow) {
+  const giscusWindow = document.querySelector('.giscus-frame')?.contentWindow
+  if (!giscusWindow) {
     return
   }
 
-  iframe.contentWindow.postMessage(
+  giscusWindow.postMessage(
     { giscus: { setConfig: { theme: getThemeUrl() } } },
     'https://giscus.app',
   )
