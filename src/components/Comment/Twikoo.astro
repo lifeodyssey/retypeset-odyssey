@@ -39,11 +39,11 @@ function setupTwikoo() {
     // Remove locale prefix from path
     const localePattern = new RegExp(`\\/(${allLocales.join('|')})\\/`)
     const twikooPath = currentPath.replace(localePattern, '/')
-
-    // Determine language
     const pathWithoutBase = base && currentPath.startsWith(base)
       ? currentPath.slice(base.length)
       : currentPath
+
+    // Determine language
     const matchedLang = Object.keys(twikooLocaleMap).find(code => pathWithoutBase.startsWith(`/${code}/`))
     const lang = matchedLang ?? defaultLocale
 
