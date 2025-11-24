@@ -78,8 +78,9 @@ function lazySetupWaline() {
     return
   }
 
-  if (!document.querySelector(`link[href="${walineCSS}"]`)) {
+  if (!document.getElementById('waline-css')) {
     const link = document.createElement('link')
+    link.id = 'waline-css'
     link.rel = 'stylesheet'
     link.href = walineCSS
     document.head.appendChild(link)
