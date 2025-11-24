@@ -82,10 +82,10 @@ export const themeConfig: ThemeConfig = {
     // giscus
     // https://giscus.app/
     giscus: {
-      repo: 'radishzzz/comment-giscus',
-      repoId: 'R_kgDOOy1K0w',
-      category: 'Announcements',
-      categoryId: 'DIC_kwDOOy1K084CqwuZ',
+      repo: '',
+      repoId: '',
+      category: '',
+      categoryId: '',
       mapping: 'pathname',
       strict: '0',
       reactionsEnabled: '1',
@@ -102,7 +102,7 @@ export const themeConfig: ThemeConfig = {
     // https://waline.js.org/en/
     waline: {
       // server url
-      serverURL: '',
+      serverURL: 'https://retypeset-comment.radishzz.cc',
       // emoji url
       emoji: [
         'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
