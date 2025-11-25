@@ -98,6 +98,7 @@ function lazySetupWaline() {
     if (entries.some(entry => entry.isIntersecting)) {
       setupWaline()
       walineObserver?.disconnect()
+      walineObserver = null
     }
   }, { rootMargin: '500px' })
 
