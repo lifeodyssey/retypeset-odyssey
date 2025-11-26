@@ -54,10 +54,9 @@ async function setupWaline() {
     return
   }
 
-  const config = JSON.parse(walineContainer.dataset.config)
-  const { walineJS, walineCSS, ...walineOptions } = config
-
   try {
+    const config = JSON.parse(walineContainer.dataset.config)
+    const { walineJS, walineCSS, ...walineOptions } = config
     const { init } = await import(walineJS)
 
     walineInstance = init({
