@@ -50,11 +50,11 @@ let walineInstance: WalineInstance | null = null
 
 async function setupWaline() {
   const walineContainer = document.getElementById('waline')
-  if (!walineContainer) {
+  if (!walineContainer || !walineContainer.dataset.config) {
     return
   }
 
-  const config = JSON.parse(walineContainer.dataset.config || '{}')
+  const config = JSON.parse(walineContainer.dataset.config)
   const { walineJS, walineCSS, ...walineOptions } = config
 
   try {
@@ -79,11 +79,11 @@ async function setupWaline() {
 // Lazy load Waline when the container enters viewport
 function lazySetupWaline() {
   const walineContainer = document.getElementById('waline')
-  if (!walineContainer) {
+  if (!walineContainer || !walineContainer.dataset.config) {
     return
   }
 
-  const config = JSON.parse(walineContainer.dataset.config || '{}')
+  const config = JSON.parse(walineContainer.dataset.config)
   const { walineCSS } = config
 
   if (!document.getElementById('waline-css')) {
