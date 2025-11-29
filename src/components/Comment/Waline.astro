@@ -56,7 +56,7 @@ async function setupWaline() {
 
   try {
     const config = JSON.parse(walineContainer.dataset.config)
-    const { walineJS, walineCSS, ...walineOptions } = config
+    const { walineJS, walineCSS, ...restConfig } = config
     const { init } = await import(walineJS)
 
     walineInstance = init({
@@ -67,7 +67,7 @@ async function setupWaline() {
       texRenderer: false,
       noCopyright: true,
       reaction: [],
-      ...walineOptions,
+      ...restConfig,
     })
   }
   catch (error) {
