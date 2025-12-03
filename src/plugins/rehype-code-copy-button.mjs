@@ -70,14 +70,7 @@ export function rehypeCodeCopyButton() {
               'type': 'button',
               'aria-label': 'Copy code',
             },
-            children: [
-              {
-                type: 'element',
-                tagName: 'span',
-                properties: { className: ['icon-container'] },
-                children: [copyIcon, checkIcon],
-              },
-            ],
+            children: [copyIcon, checkIcon],
           },
           node,
         ],
