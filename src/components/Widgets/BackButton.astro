@@ -20,7 +20,6 @@ import GoBackIcon from '@/assets/icons/go-back.svg';
 function handleBackButtonClick(e: MouseEvent) {
   const target = e.target instanceof Element ? e.target : null
   const button = target?.closest('#back-button')
-
   if (!button) {
     return
   }
