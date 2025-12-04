@@ -108,13 +108,9 @@ function setupGiscus() {
   catch (error) {
     console.error('[Giscus] Failed to initialize:', error)
   }
-
-  document.addEventListener('theme-changed', updateGiscusTheme)
 }
 
 function cleanupGiscus() {
-  document.removeEventListener('theme-changed', updateGiscusTheme)
-
   if (giscusContainer) {
     giscusContainer.innerHTML = ''
     giscusContainer = null
@@ -123,4 +119,5 @@ function cleanupGiscus() {
 
 document.addEventListener('astro:page-load', setupGiscus)
 document.addEventListener('astro:before-swap', cleanupGiscus)
+document.addEventListener('theme-changed', updateGiscusTheme)
 </script>
