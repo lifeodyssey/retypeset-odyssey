@@ -2,7 +2,7 @@
   "name": "astro-theme-retypeset",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@10.23.0",
+  "packageManager": "pnpm@10.24.0",
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
