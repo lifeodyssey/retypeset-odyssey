@@ -9,9 +9,11 @@ interface GithubRepoData {
 
 const compactNumberFormat = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 })
 
+// Fetch repository data from GitHub API with caching
 async function fetchRepoData(repo: string): Promise<GithubRepoData | null> {
   const cacheKey = `github-repo-${repo}`
 
+  // Check session storage for cached data
   try {
     const cachedData = sessionStorage.getItem(cacheKey)
     if (cachedData) {
@@ -25,6 +27,7 @@ async function fetchRepoData(repo: string): Promise<GithubRepoData | null> {
     catch {}
   }
 
+  // Fetch from API if not cached
   try {
     const response = await fetch(`https://api.github.com/repos/${repo}`)
     if (!response.ok) {
@@ -41,6 +44,7 @@ async function fetchRepoData(repo: string): Promise<GithubRepoData | null> {
       license: raw.license ? { spdx_id: raw.license.spdx_id } : null,
     }
 
+    // Cache the successful response
     try {
       sessionStorage.setItem(cacheKey, JSON.stringify(data))
     }
@@ -54,6 +58,7 @@ async function fetchRepoData(repo: string): Promise<GithubRepoData | null> {
   }
 }
 
+// Update card UI with repository data
 function updateCardUI(card: HTMLElement, data: GithubRepoData | null) {
   const setText = (selector: string, text: string) => {
     const el = card.querySelector<HTMLElement>(selector)
@@ -78,6 +83,7 @@ function updateCardUI(card: HTMLElement, data: GithubRepoData | null) {
   setText('.gc-license-info', data.license?.spdx_id ?? 'No License')
 }
 
+// Load data for a specific card element
 async function loadRepoData(card: HTMLElement) {
   const repo = card.dataset.repo
   if (!repo) {
@@ -88,6 +94,7 @@ async function loadRepoData(card: HTMLElement) {
   updateCardUI(card, data)
 }
 
+// Initialize all GitHub cards on the page
 function setupGithubCards() {
   const cards = document.querySelectorAll<HTMLElement>('.gc-container')
   if (cards.length === 0) {
