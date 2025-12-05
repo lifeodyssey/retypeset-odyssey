@@ -162,5 +162,6 @@ function setupAutoScroll() {
   ticking = true
 }
 
+document.addEventListener('astro:before-swap', () => lastLink = null)
 document.addEventListener('scroll', setupAutoScroll, { passive: true })
 </script>
