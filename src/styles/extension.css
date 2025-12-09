@@ -159,6 +159,9 @@ lite-youtube > .lty-playbtn {
 .twitter-tweet {
   --at-apply: 'mx-auto';
 }
+.codepen-embed {
+  --at-apply: 'aspect-video min-h-75 w-full';
+}
 
 /* Mermaid */
 pre.mermaid svg {

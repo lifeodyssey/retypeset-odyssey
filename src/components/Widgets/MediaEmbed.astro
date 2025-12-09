@@ -15,7 +15,7 @@ async function setupYouTubeEmbeds() {
     await import('lite-youtube-embed')
   }
   catch (error) {
-    console.error('Failed to load YouTube embed:', error)
+    console.error('[MediaEmbed] Failed to load YouTube embed:', error)
   }
 }
 
@@ -62,7 +62,7 @@ async function setupMermaidEmbeds() {
     mermaid.run()
   }
   catch (error) {
-    console.error('Failed to load Mermaid:', error)
+    console.error('[MediaEmbed] Failed to load Mermaid:', error)
   }
 }
 
@@ -99,7 +99,7 @@ function updateMermaidTheme() {
 
     mermaid.run()
   }).catch((error) => {
-    console.error('Failed to update Mermaid theme:', error)
+    console.error('[MediaEmbed] Failed to update Mermaid theme:', error)
   })
 }
 
