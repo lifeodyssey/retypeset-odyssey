@@ -126,6 +126,39 @@ const embedHandlers = {
     </figure>
     `
   },
+
+  // Spotify
+  spotify: (node) => {
+    const url = node.attributes?.url ?? ''
+    if (!url) {
+      console.warn(`Missing Spotify URL`)
+      return false
+    }
+
+    const match = url.match(/open\.spotify\.com\/(track|album|playlist|artist|episode|show)\/([^/?#]+)/)
+    if (!match) {
+      console.warn(`Invalid Spotify URL: ${url}`)
+      return false
+    }
+
+    const [, type, id] = match
+    const height = ['track', 'episode', 'show'].includes(type) ? 152 : 352
+
+    return `
+    <figure>
+      <iframe
+        style="border-radius:12px"
+        src="https://open.spotify.com/embed/${type}/${id}"
+        width="100%"
+        height="${height}"
+        frameBorder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+    </figure>
+    `
+  },
 }
 
 export function remarkLeafDirectives() {
