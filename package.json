@@ -2,7 +2,7 @@
   "name": "astro-theme-retypeset",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@10.24.0",
+  "packageManager": "pnpm@10.25.0",
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
@@ -26,7 +26,7 @@
     "astro-og-canvas": "^0.7.2",
     "canvaskit-wasm": "^0.40.0",
     "feed": "^5.1.0",
-    "katex": "^0.16.25",
+    "katex": "^0.16.27",
     "lite-youtube-embed": "^0.3.4",
     "markdown-it": "^14.1.0",
     "mdast-util-to-string": "^4.0.0",
@@ -44,10 +44,10 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^6.4.2",
+    "@antfu/eslint-config": "^6.5.1",
     "@astrojs/check": "^0.9.6",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.10.2",
     "@types/sanitize-html": "^2.16.0",
     "@unocss/eslint-plugin": "66.5.10",
     "@unocss/preset-attributify": "66.5.10",
