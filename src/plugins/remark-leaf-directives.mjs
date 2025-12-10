@@ -75,6 +75,7 @@ const embedHandlers = {
         src="//player.bilibili.com/player.html?isOutside=true&bvid=${bvid}&p=1&autoplay=0&muted=0"
         title="Bilibili video player"
         allowfullscreen
+        loading="lazy"
       ></iframe>
     </figure>
     `
@@ -147,12 +148,10 @@ const embedHandlers = {
     return `
     <figure>
       <iframe
-        style="border-radius:12px"
+        class="spotify-embed"
         src="https://open.spotify.com/embed/${type}/${id}"
-        width="100%"
+        title="Spotify Embed"
         height="${height}"
-        frameBorder="0"
-        allowfullscreen=""
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
       ></iframe>
