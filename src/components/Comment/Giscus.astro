@@ -25,7 +25,6 @@ const matchedLang = Object.keys(giscusLocaleMap).find(code => pathWithoutBase.st
 const lang = (matchedLang ?? defaultLocale) as keyof typeof giscusLocaleMap
 
 const giscusConfig = {
-
   repo,
   repoId,
   category,
