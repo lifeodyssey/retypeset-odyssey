@@ -53,18 +53,31 @@
   - Removed: about-{es,ru,zh-tw}.md, posts/{guides,examples}/*-{es,ru,zh-tw}.md
 
 ### Phase 2: Content Loader
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:24
 - Actions taken:
-  -
+  - Updated content.config.ts schema for Hexo frontmatter:
+    - Accept both `date` and `published` (transform maps date→published)
+    - Accept `tags` and `categories` as string or array
+    - Accept hex abbrlink format (e.g., '17683e80')
+    - Added mathjax, password, copyright fields
+  - Moved content loader path to `./content/posts` (Option A per PRD)
+  - Removed src/content/posts examples
+  - Tested with 2 Hexo posts - successfully builds to /posts/{abbrlink}.html
 - Files created/modified:
-  -
+  - src/content.config.ts (modified)
+  - content/posts/ (created with test posts)
+  - Removed: src/content/posts/
 
 ### Phase 3: Custom Routing
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:24
 - Actions taken:
-  -
+  - Verified existing routing uses `abbrlink || post.id` for slug
+  - No changes needed - Retypeset already supports abbrlink-based URLs
+  - Confirmed URL output: /posts/17683e80.html, /posts/6ff151e3.html
 - Files created/modified:
-  -
+  - None - existing routing works correctly
 
 ### Phase 4: Content Migration
 - **Status:** pending
