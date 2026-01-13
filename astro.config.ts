@@ -28,7 +28,10 @@ const imageConfig = imageHostURL
 export default defineConfig({
   site,
   base,
-  trailingSlash: 'always', // Not recommended to change
+  build: {
+    format: 'file', // Generates /posts/xxx.html instead of /posts/xxx/index.html
+  },
+  trailingSlash: 'never', // Required for build.format: 'file'
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport', // hover, tap, viewport, load

@@ -24,18 +24,33 @@
   - progress.md (created)
 
 ### Phase 0: Safety Checkpoint & Baseline
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:14
 - Actions taken:
-  -
+  - Renamed origin remote to upstream
+  - Reset to upstream/master to get fresh Retypeset template
+  - Restored planning files from backup branch
+  - Verified baseline build succeeds (103 pages, ~54s)
+  - Committed planning files on top of Retypeset baseline
 - Files created/modified:
-  -
+  - PRD.md, findings.md, progress.md, task_plan.md (added)
 
 ### Phase 1: Astro Project Setup
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:18
 - Actions taken:
-  -
+  - Configured `build.format: 'file'` for .html URLs
+  - Changed `trailingSlash: 'never'`
+  - Updated site URL to `https://blog.zhenjia.org`
+  - Set locale to zh with moreLocales: ['en', 'ja']
+  - Updated site metadata (title, subtitle, author)
+  - Disabled comments, cleared analytics IDs
+  - Removed unsupported language content (es, ru, zh-tw)
+  - Verified build produces .html files (52 pages)
 - Files created/modified:
-  -
+  - astro.config.ts (modified)
+  - src/config.ts (modified)
+  - Removed: about-{es,ru,zh-tw}.md, posts/{guides,examples}/*-{es,ru,zh-tw}.md
 
 ### Phase 2: Content Loader
 - **Status:** pending
