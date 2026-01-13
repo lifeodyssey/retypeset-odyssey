@@ -202,7 +202,7 @@ Phase 0
   - No console errors on page load
   - Lighthouse score > 90 for Performance
 
-### Phase 8: Cloudflare Pages Deployment
+<!-- ### Phase 8: Cloudflare Pages Deployment
 - [ ] Create Cloudflare Pages project
 - [ ] Configure build settings:
   - Build command: `pnpm build`
@@ -251,7 +251,7 @@ Phase 0
 - **Acceptance Criteria:**
   - Sitemap indexed by Google
   - 404 rate < 1%
-  - No significant ranking drops after 30 days
+  - No significant ranking drops after 30 days -->
 
 ## Key Questions
 1. **Math rendering:** KaTeX vs MathJax - which provides better Hexo compatibility?
