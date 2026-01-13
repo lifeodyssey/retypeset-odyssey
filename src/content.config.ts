@@ -5,8 +5,8 @@ import { allLocales, themeConfig } from '@/config'
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './content/posts' }),
   schema: z.object({
-    // required
-    title: z.string(),
+    // Title - optional with fallback to empty (posts without title become drafts)
+    title: z.string().optional().default(''),
     // Support both Hexo 'date' and Retypeset 'published' fields
     published: z.coerce.date().optional(),
     date: z.coerce.date().optional(),
@@ -16,33 +16,54 @@ const posts = defineCollection({
       val => val === '' ? undefined : val,
       z.coerce.date().optional(),
     ),
-    tags: z.union([
-      z.array(z.string()),
-      z.string().transform(s => s ? [s] : []),
-    ]).optional().default([]),
-    // Hexo categories (convert to tags or keep separate)
-    categories: z.union([
-      z.array(z.string()),
-      z.string().transform(s => s ? [s] : []),
-    ]).optional().default([]),
-    // Advanced
-    draft: z.boolean().optional().default(false),
-    pin: z.number().int().min(0).max(99).optional().default(0),
-    toc: z.boolean().optional().default(themeConfig.global.toc),
-    lang: z.enum(['', ...allLocales]).optional().default(''),
-    // Hexo abbrlink - supports hex format like '17683e80'
-    abbrlink: z.string().optional().default('').refine(
-      abbrlink => !abbrlink || /^[a-zA-Z0-9\-]*$/.test(abbrlink),
-      { message: 'Abbrlink can only contain letters, numbers and hyphens' },
+    tags: z.preprocess(
+      val => val === null ? [] : val,
+      z.union([
+        z.array(z.string()),
+        z.string().transform(s => s ? [s] : []),
+      ]).optional().default([]),
     ),
-    // Hexo-specific optional fields
-    mathjax: z.boolean().optional().default(false),
-    password: z.string().optional(),
-    copyright: z.boolean().optional().default(true),
-  }).transform((data) => {
+    // Hexo categories (convert to tags or keep separate)
+    categories: z.preprocess(
+      val => val === null ? [] : val,
+      z.union([
+        z.array(z.string()),
+        z.string().transform(s => s ? [s] : []),
+      ]).optional().default([]),
+    ),
+    // Advanced (handle null values)
+    draft: z.preprocess(val => val === null ? false : val, z.boolean().optional().default(false)),
+    pin: z.preprocess(val => val === null ? 0 : val, z.number().int().min(0).max(99).optional().default(0)),
+    toc: z.preprocess(val => val === null ? undefined : val, z.boolean().optional().default(themeConfig.global.toc)),
+    lang: z.preprocess(val => val === null ? '' : val, z.enum(['', ...allLocales]).optional().default('')),
+    // Hexo abbrlink - supports hex format like '17683e80' (handle null from YAML)
+    abbrlink: z.preprocess(
+      val => val === null ? '' : val,
+      z.string().optional().default('').refine(
+        abbrlink => !abbrlink || /^[a-zA-Z0-9\-]*$/.test(abbrlink),
+        { message: 'Abbrlink can only contain letters, numbers and hyphens' },
+      ),
+    ),
+    // Hexo-specific optional fields (handle null values from YAML)
+    mathjax: z.preprocess(
+      val => val === null ? undefined : val,
+      z.boolean().optional().default(false),
+    ),
+    password: z.preprocess(
+      val => val === null ? undefined : val,
+      z.string().optional(),
+    ),
+    copyright: z.preprocess(
+      val => val === null ? undefined : val,
+      z.boolean().optional().default(true),
+    ),
+    // Allow passthrough of unknown Hexo fields
+  }).passthrough().transform((data) => {
     // Map Hexo 'date' to 'published' if 'published' is not set
     const published = data.published || data.date || new Date();
-    return { ...data, published };
+    // Mark posts without title as draft
+    const draft = data.draft || !data.title;
+    return { ...data, published, draft };
   }),
 })
 

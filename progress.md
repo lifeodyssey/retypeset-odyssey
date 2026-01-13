@@ -80,11 +80,20 @@
   - None - existing routing works correctly
 
 ### Phase 4: Content Migration
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:34
 - Actions taken:
-  -
+  - Copied 175 posts from Blog-src/source/_posts/
+  - Copied 16 asset folders alongside posts
+  - Fixed content schema to handle null YAML values (preprocess)
+  - Removed 4 empty draft posts (abbrlink: '0')
+  - Fixed 2 duplicate abbrlinks (fc1cc4fb, fbd0b1b0)
+  - Final count: 171 posts → 169 published (2 marked draft)
+  - Build: 823 pages in ~93s
 - Files created/modified:
-  -
+  - content/posts/*.md (171 posts)
+  - content/posts/*/ (16 asset folders)
+  - src/content.config.ts (null value handling)
 
 ### Phase 5: Feature Parity
 - **Status:** pending
