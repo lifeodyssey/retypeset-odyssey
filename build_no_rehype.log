@@ -1,0 +1,380 @@
+
+> astro-theme-retypeset@1.0.0 build /Users/zhenjiazhou/Documents/blog/Blog-astro
+> astro check && astro build && pnpm apply-lqip
+
+11:49:35 [content] Syncing content
+11:49:35 [content] Synced content
+11:49:35 [types] Generated 925ms
+11:49:35 [check] Getting diagnostics for Astro files in /Users/zhenjiazhou/Documents/blog/Blog-astro...
+[96mastro.config.ts[0m:[93m17[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'rehypeImageProcessor' is declared but its value is never read.
+
+[7m17[0m import { rehypeImageProcessor } from './src/plugins/rehype-image-processor.mjs'
+[7m  [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mscripts/migrate-content.mjs[0m:[93m27[0m:[93m9[0m - [93mwarning[0m[90m ts(6133): [0m'totalLength' is declared but its value is never read.
+
+[7m27[0m   const totalLength = content.length;
+[7m  [0m [93m        ~~~~~~~~~~~[0m
+
+[96msrc/components/EncryptedPost.astro[0m:[93m25[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m25[0m <script define:vars={{ password }}>
+[7m  [0m [93m        ~~~~~~~~~~~[0m
+
+Result (66 files): 
+- 0 errors
+- 0 warnings
+- 3 hints
+
+11:49:42 [content] Syncing content
+11:49:42 [content] Synced content
+11:49:42 [types] Generated 731ms
+11:49:42 [build] output: "static"
+11:49:42 [build] mode: "static"
+11:49:42 [build] directory: /Users/zhenjiazhou/Documents/blog/Blog-astro/dist/
+11:49:42 [build] Collecting build info...
+11:49:42 [build] ✓ Completed in 948ms.
+11:49:42 [build] Building static entrypoints...
+11:49:44 [vite] ✓ built in 1.96s
+11:49:44 [build] ✓ Completed in 1.98s.
+
+ building client (vite) 
+11:49:51 [vite] transforming...
+11:49:56 [vite] ✓ 1776 modules transformed.
+11:49:56 [vite] rendering chunks...
+11:49:56 [vite] computing gzip size...
+11:49:56 [vite] dist/_astro/page.BNYwb576.js                                                 0.04 kB │ gzip:   0.06 kB
+11:49:56 [vite] dist/_astro/clone.BgesMGLQ.js                                                0.10 kB │ gzip:   0.11 kB
+11:49:56 [vite] dist/_astro/channel.D9ZEHShj.js                                              0.12 kB │ gzip:   0.13 kB
+11:49:56 [vite] dist/_astro/init.Gi6I4Gst.js                                                 0.15 kB │ gzip:   0.13 kB
+11:49:56 [vite] dist/_astro/chunk-QZHKN3VN.CExgtO1I.js                                       0.20 kB │ gzip:   0.16 kB
+11:49:56 [vite] dist/_astro/chunk-4BX2VUAB.QwYdTGvM.js                                       0.23 kB │ gzip:   0.17 kB
+11:49:56 [vite] dist/_astro/chunk-55IACEB6.DyhgJmR3.js                                       0.24 kB │ gzip:   0.21 kB
+11:49:56 [vite] dist/_astro/chunk-FMBD7UC4.CC5iLOZR.js                                       0.37 kB │ gzip:   0.27 kB
+11:49:56 [vite] dist/_astro/stateDiagram-v2-UMBNRL4Z.BCowj1Oc.js                             0.43 kB │ gzip:   0.31 kB
+11:49:56 [vite] dist/_astro/classDiagram-KNZD7YFC.B6wQXUgB.js                                0.47 kB │ gzip:   0.33 kB
+11:49:56 [vite] dist/_astro/classDiagram-v2-RKCZMP56.B6wQXUgB.js                             0.47 kB │ gzip:   0.33 kB
+11:49:56 [vite] dist/_astro/chunk-QN33PNHL.OQ4qFAsD.js                                       0.51 kB │ gzip:   0.36 kB
+11:49:56 [vite] dist/_astro/infoDiagram-STP46IZ2.DSv5f-Rj.js                                 0.73 kB │ gzip:   0.48 kB
+11:49:56 [vite] dist/_astro/ordinal.BYWQX77i.js                                              1.19 kB │ gzip:   0.57 kB
+11:49:56 [vite] dist/_astro/chunk-TZMSLE5B.CAW9epum.js                                       1.44 kB │ gzip:   0.63 kB
+11:49:56 [vite] dist/_astro/index.Bel2lkwj.js                                                2.22 kB │ gzip:   1.00 kB
+11:49:56 [vite] dist/_astro/_basePickBy.DCy3RoG6.js                                          2.59 kB │ gzip:   1.29 kB
+11:49:56 [vite] dist/_astro/MediaEmbed.astro_astro_type_script_index_0_lang.wKrCMCCr.js      3.01 kB │ gzip:   1.31 kB
+11:49:56 [vite] dist/_astro/lite-yt-embed.Dkyb9mLy.js                                        3.43 kB │ gzip:   1.44 kB
+11:49:56 [vite] dist/_astro/arc.DRbOQjHz.js                                                  3.44 kB │ gzip:   1.49 kB
+11:49:56 [vite] dist/_astro/diagram-S2PKOQOG.v12g8vdY.js                                     4.35 kB │ gzip:   1.91 kB
+11:49:56 [vite] dist/_astro/defaultLocale.C4B-KCzX.js                                        4.55 kB │ gzip:   2.13 kB
+11:49:56 [vite] dist/_astro/pieDiagram-ADFJNKIX.CY_oSRFF.js                                  5.29 kB │ gzip:   2.35 kB
+11:49:56 [vite] dist/_astro/linear.Dmb9kw4Q.js                                               5.66 kB │ gzip:   2.31 kB
+11:49:56 [vite] dist/_astro/graph.BgJkE-u4.js                                                5.92 kB │ gzip:   1.87 kB
+11:49:56 [vite] dist/_astro/diagram-QEK2KX5R.DU0S6KBr.js                                     5.95 kB │ gzip:   2.52 kB
+11:49:56 [vite] dist/_astro/stateDiagram-KXAO66HF.DQ4zuN7O.js                               10.43 kB │ gzip:   3.67 kB
+11:49:56 [vite] dist/_astro/dagre-5GWH7T2D.DQWfKRyv.js                                      11.05 kB │ gzip:   4.13 kB
+11:49:56 [vite] dist/_astro/_baseUniq.BsBptqYZ.js                                           11.89 kB │ gzip:   4.65 kB
+11:49:56 [vite] dist/_astro/ClientRouter.astro_astro_type_script_index_0_lang.1k2cUud7.js   12.67 kB │ gzip:   4.35 kB
+11:49:56 [vite] dist/_astro/diagram-N5W7TBWH.BY2mof4i.js                                    15.91 kB │ gzip:   5.70 kB
+11:49:56 [vite] dist/_astro/kanban-definition-6OIFK2YF.CVL2qbJO.js                          20.24 kB │ gzip:   7.20 kB
+11:49:56 [vite] dist/_astro/mindmap-definition-Q6HEUPPD.CIbMB4PO.js                         20.83 kB │ gzip:   7.27 kB
+11:49:56 [vite] dist/_astro/sankeyDiagram-GR3RE2ED.DjMQXRzk.js                              22.16 kB │ gzip:   8.15 kB
+11:49:56 [vite] dist/_astro/journeyDiagram-BIP6EPQ6.DuOis92K.js                             23.58 kB │ gzip:   8.35 kB
+11:49:56 [vite] dist/_astro/timeline-definition-XQNQX7LJ.BKEPkfiH.js                        23.63 kB │ gzip:   8.26 kB
+11:49:56 [vite] dist/_astro/gitGraphDiagram-NY62KEGX.Db_6ok8G.js                            24.18 kB │ gzip:   7.46 kB
+11:49:56 [vite] dist/_astro/erDiagram-AWTI2OKA.Cse43kdE.js                                  25.28 kB │ gzip:   8.86 kB
+11:49:56 [vite] dist/_astro/layout.CArkO-sF.js                                              27.21 kB │ gzip:   9.68 kB
+11:49:56 [vite] dist/_astro/requirementDiagram-4UW4RH46.Io3t_ZRE.js                         30.13 kB │ gzip:   9.45 kB
+11:49:56 [vite] dist/_astro/quadrantDiagram-LMRXKWRM.f4yJGOV8.js                            33.88 kB │ gzip:   9.97 kB
+11:49:56 [vite] dist/_astro/chunk-TVAH2DTR.BWbtY34o.js                                      36.34 kB │ gzip:  11.83 kB
+11:49:56 [vite] dist/_astro/xychartDiagram-6GGTOJPD.wWSfVGFF.js                             40.22 kB │ gzip:  11.38 kB
+11:49:56 [vite] dist/_astro/chunk-K7UQS3LO.Bve96EP_.js                                      45.31 kB │ gzip:  14.68 kB
+11:49:56 [vite] dist/_astro/flowDiagram-PVAE7QVJ._aUcCAez.js                                60.49 kB │ gzip:  19.45 kB
+11:49:56 [vite] dist/_astro/ganttDiagram-OWAHRB6G.D-NvwoVR.js                               62.73 kB │ gzip:  21.32 kB
+11:49:56 [vite] dist/_astro/c4Diagram-FPNF74CW.yWcrDdem.js                                  70.17 kB │ gzip:  19.70 kB
+11:49:56 [vite] dist/_astro/blockDiagram-QIGZ2CNN.D9JEFuxF.js                               71.85 kB │ gzip:  20.52 kB
+11:49:56 [vite] dist/_astro/cose-bilkent-S5V4N54A.Q70JvcR-.js                               81.74 kB │ gzip:  22.51 kB
+11:49:56 [vite] dist/_astro/sequenceDiagram-C3RYC4MD.QRRTy4ju.js                            97.85 kB │ gzip:  26.88 kB
+11:49:56 [vite] dist/_astro/architectureDiagram-W76B3OCA.FpqPVx0A.js                       148.55 kB │ gzip:  42.02 kB
+11:49:56 [vite] dist/_astro/katex.DsmCZfJr.js                                              265.43 kB │ gzip:  77.50 kB
+11:49:56 [vite] dist/_astro/treemap-75Q7IDZK.CgB65qxf.js                                   329.32 kB │ gzip:  80.22 kB
+11:49:56 [vite] dist/_astro/cytoscape.esm.DtBltrT8.js                                      442.41 kB │ gzip: 141.91 kB
+11:49:56 [vite] dist/_astro/mermaid.core.BazNMkrU.js                                       487.75 kB │ gzip: 136.88 kB
+11:49:56 [vite] ✓ built in 11.99s
+
+ generating static routes 
+11:49:56 ▶ src/pages/404.astro
+11:49:56   └─ /404.html (+12ms) 
+11:49:56 λ src/pages/atom.xml.ts
+11:49:56   └─ /atom.xml (+171ms) 
+11:49:57 λ src/pages/og/[...image].ts
+11:49:57   ├─ /og/2020.png[astro-og-canvas] Loading https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/SubsetOTF/SC/NotoSansSC-Bold.otf
+[astro-og-canvas] Loading https://cdn.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf
+[astro-og-canvas] Loaded 1 font families:
+Noto Sans SC
+ (+17.68s) 
+11:50:14   ├─ /og/a-ph-d-is-not-enough.png (+2ms) 
+11:50:14   ├─ /og/2021-10-13-goci-ii-data-is-available-now.png (+1ms) 
+11:50:14   ├─ /og/awoc-kjwoc-online-2020-presentation.png (+1ms) 
+11:50:14   ├─ /og/annotated-bibliography-2020-11-24-11-29.png (+1ms) 
+11:50:14   ├─ /og/annotated-bibliography-2020-10-5-10-11.png (+2ms) 
+11:50:14   ├─ /og/2021年终总结.png (+2ms) 
+11:50:14   ├─ /og/annotated-bibliography-2020-11-17-11-201.png (+1ms) 
+11:50:14   ├─ /og/aws-inspector-mystery-cycle.png (+1ms) 
+11:50:14   ├─ /og/annotated-bibliography-2021-1-8-1-17.png (+1ms) 
+11:50:14   ├─ /og/annotated-bibliography-2020-11-30-12-6.png (+1ms) 
+11:50:14   ├─ /og/annotated-bibliography-2020-9-28-10-4.png (+1ms) 
+11:50:14   ├─ /og/atmospheric-correction-by-he.png (+1ms) 
+11:50:14   ├─ /og/bayes-theorem-1.png (+1ms) 
+11:50:14   ├─ /og/cli.png (+2ms) 
+11:50:14   ├─ /og/auto-sklearn-and-xgboost.png (+1ms) 
+11:50:14   ├─ /og/chla-retrieval.png (+1ms) 
+11:50:14   ├─ /og/carbon-flux-by-bai.png (+1ms) 
+11:50:14   ├─ /og/cmds-summer-course-day1.png (+1ms) 
+11:50:14   ├─ /og/amf.png (+1ms) 
+11:50:14   ├─ /og/cousera机器学习基石第五周笔记-machine-learning-foundation-week-5-note-in-cousera.png (+1ms) 
+11:50:14   ├─ /og/cousera机器学习基石第一周笔记-machine-learning-foudation-nweek-1-note-in-cousera.png (+1ms) 
+11:50:14   ├─ /og/cousera机器学习基石第三周笔记-machine-learning-foundation-week-3-note-in-cousera.png (+1ms) 
+11:50:14   ├─ /og/cousera机器学习基石第四周笔记-machine-learning-foundation-week-4-note-in-cousera.png (+1ms) 
+11:50:14   ├─ /og/data-fusion-series-note.png (+1ms) 
+11:50:14   ├─ /og/detection-and-tracking-of-chattonella-spp-and-skeletonema-spp-blooms-using-geostationary-ocean-color-imager-goci-in-ariake-sea-japan.png (+1ms) 
+11:50:14   ├─ /og/binary-search.png (+1ms) 
+11:50:14   ├─ /og/clean-code-refactoring-and-test-driven-development.png (+2ms) 
+11:50:14   ├─ /og/esa-oceanic-carbon-from-space-2022.png (+1ms) 
+11:50:14   ├─ /og/evaluating-gpto1-preview-and-claude-35-sonnet.png (+1ms) 
+11:50:14   ├─ /og/fy4a.png (+1ms) 
+11:50:14   ├─ /og/hash.png (+1ms) 
+11:50:14   ├─ /og/greedy.png (+1ms) 
+11:50:14   ├─ /og/how-to-follow-the-nearst-research-in-oceanography.png (+1ms) 
+11:50:14   ├─ /og/it-is-ok-to-quit-your-ph-d.png (+1ms) 
+11:50:14   ├─ /og/idea-debug.png (+1ms) 
+11:50:14   ├─ /og/jpgu-agu-joint-meeting-2020-poster.png (+1ms) 
+11:50:14   ├─ /og/jupyer-lab.png (+1ms) 
+11:50:14   ├─ /og/modis-l2-oc-batch-download.png (+1ms) 
+11:50:14   ├─ /og/keras-tuner.png (+1ms) 
+11:50:14   ├─ /og/leetcode面试高频题分类刷题总结.png (+1ms) 
+11:50:14   ├─ /og/modis水色数据处理教程.png (+1ms) 
+11:50:14   ├─ /og/mixture-density-network-3.png (+1ms) 
+11:50:14   ├─ /og/mixture-density-network2.png (+1ms) 
+11:50:14   ├─ /og/mixture-density-network.png (+1ms) 
+11:50:14   ├─ /og/note-in-writing-and-presentation.png (+1ms) 
+11:50:14   ├─ /og/obsidian-daily-record-system.png (+1ms) 
+11:50:14   ├─ /og/my-grind.png (+1ms) 
+11:50:14   ├─ /og/obsidian.png (+2ms) 
+11:50:14   ├─ /og/ocean-color-environment-on-server.png (+1ms) 
+11:50:14   ├─ /og/passion.png (+1ms) 
+11:50:14   ├─ /og/peer-pressur-and-experience.png (+1ms) 
+11:50:14   ├─ /og/pytorch.png (+2ms) 
+11:50:14   ├─ /og/publishable-plot-using-python-r.png (+2ms) 
+11:50:14   ├─ /og/qaa.png (+1ms) 
+11:50:14   ├─ /og/seadas-ocssw及大气矫正-2022年使用指北.png (+1ms) 
+11:50:14   ├─ /og/robust-fit.png (+1ms) 
+11:50:14   ├─ /og/sgli-user-tool.png (+1ms) 
+11:50:14   ├─ /og/scipy-optimize.png (+1ms) 
+11:50:14   ├─ /og/tennary-plot.png (+1ms) 
+11:50:14   ├─ /og/thoughtworks-super-x.png (+1ms) 
+11:50:14   ├─ /og/the-optics-of-backscattering.png (+1ms) 
+11:50:14   ├─ /og/tutorial-for-handling-modis-ocean-color-data.png (+1ms) 
+11:50:14   ├─ /og/what-i-really-like.png (+1ms) 
+11:50:14   ├─ /og/write-thesis-with-markdown.png (+1ms) 
+11:50:14   ├─ /og/wsl.png (+1ms) 
+11:50:14   ├─ /og/tdd.png (+1ms) 
+11:50:14   ├─ /og/how-i-understand-react-as-a-backend-developer.png (+1ms) 
+11:50:14   ├─ /og/absorption-measurement.png (+2ms) 
+11:50:14   ├─ /og/universal-post.png (+1ms) 
+11:50:14   ├─ /og/assert.png (+2ms) 
+11:50:14   ├─ /og/book-reading-note-4.png (+1ms) 
+11:50:14   ├─ /og/agentic-ai-note-en.png (+3ms) 
+11:50:14   ├─ /og/agentic-ai-note.png (+2ms) 
+11:50:14   ├─ /og/agentic-ai-note-jp.png (+1ms) 
+11:50:14   ├─ /og/agent-coding-experience-and-future-.png (+4ms) 
+11:50:14   ├─ /og/agent-coding-experience-and-futureen.png (+1ms) 
+11:50:14   ├─ /og/agent-coding-experience-and-futureja.png (+1ms) 
+11:50:14   ├─ /og/book-reading-note.png (+1ms) 
+11:50:14   ├─ /og/book-reading-note2.png (+1ms) 
+11:50:14   ├─ /og/book-reading-note3.png (+1ms) 
+11:50:14   ├─ /og/cartopy.png (+1ms) 
+11:50:14   ├─ /og/gdal.png (+1ms) 
+11:50:14   ├─ /og/fast-track-andrew-ng-agentic-ai.png (+1ms) 
+11:50:14   ├─ /og/in-python.png (+2ms) 
+11:50:14   ├─ /og/html-css.png (+1ms) 
+11:50:14   ├─ /og/hello-world.png (+1ms) 
+11:50:14   ├─ /og/hyperspectral-and-phytoplankton.png (+1ms) 
+11:50:14   ├─ /og/kotlin.png (+1ms) 
+11:50:14   ├─ /og/javascript.png (+1ms) 
+11:50:14   ├─ /og/kriging.png (+2ms) 
+11:50:14   ├─ /og/lfs.png (+2ms) 
+11:50:14   ├─ /og/lambda.png (+2ms) 
+11:50:14   ├─ /og/machine-learning-on-sever.png (+1ms) 
+11:50:14   ├─ /og/linux常用命令.png (+1ms) 
+11:50:14   ├─ /og/matplotlib-xarray-h5py-conflict.png (+1ms) 
+11:50:14   ├─ /og/ml-foundation-week-6.png (+1ms) 
+11:50:14   ├─ /og/matplotlib-subplot.png (+2ms) 
+11:50:14   ├─ /og/material-for-ocean-color.png (+1ms) 
+11:50:14   ├─ /og/java.png (+1ms) 
+11:50:14   ├─ /og/note-for-ocean-optic-web-book.png (+1ms) 
+11:50:14   ├─ /og/np-ma-mask.png (+1ms) 
+11:50:14   ├─ /og/pandas-cheat-sheet.png (+2ms) 
+11:50:14   ├─ /og/ocean-color-data-download-script.png (+1ms) 
+11:50:14   ├─ /og/pandas基础.png (+1ms) 
+11:50:14   ├─ /og/probabilistic-method-in-machine-learning.png (+1ms) 
+11:50:14   ├─ /og/plot.png (+1ms) 
+11:50:14   ├─ /og/particle-backscattering.png (+1ms) 
+11:50:14   ├─ /og/python-step-wise-mlr.png (+1ms) 
+11:50:14   ├─ /og/py6s.png (+1ms) 
+11:50:14   ├─ /og/python学术绘图.png (+1ms) 
+11:50:14   ├─ /og/retrieving-using-uv-propoteis.png (+1ms) 
+11:50:14   ├─ /og/recursive.png (+1ms) 
+11:50:14   ├─ /og/stay-alive-at-academic.png (+1ms) 
+11:50:14   ├─ /og/super-x-roadmap.png (+1ms) 
+11:50:14   ├─ /og/synchronization-for-blog-and-obisidian.png (+1ms) 
+11:50:14   ├─ /og/tensorflow.png (+1ms) 
+11:50:14   ├─ /og/two-r2.png (+2ms) 
+11:50:14   ├─ /og/two-pointers.png (+1ms) 
+11:50:14   ├─ /og/uv-properties-1.png (+5ms) 
+11:50:14   ├─ /og/乡土中国摘录与笔记.png (+2ms) 
+11:50:14   ├─ /og/sql.png (+1ms) 
+11:50:14   ├─ /og/文凭社会.png (+1ms) 
+11:50:14   ├─ /og/一个神奇的kotlinspringbootdocker启动bug.png (+1ms) 
+11:50:14   ├─ /og/ギターと孤独と蒼い惑星-.png (+1ms) 
+11:50:14   ├─ /og/上班原来真的好累啊.png (+2ms) 
+11:50:14   ├─ /og/二周目.png (+2ms) 
+11:50:14   ├─ /og/人生は最高の暇つぶし.png (+1ms) 
+11:50:14   ├─ /og/人生实验室.png (+1ms) 
+11:50:14   ├─ /og/北京某遥感公司.png (+1ms) 
+11:50:14   ├─ /og/water-classification.png (+1ms) 
+11:50:14   ├─ /og/北京某遥感公司2.png (+1ms) 
+11:50:14   ├─ /og/博客更换主题子页面设置及乱码解决.png (+2ms) 
+11:50:14   ├─ /og/博客定制优化.png (+1ms) 
+11:50:14   ├─ /og/在我成为井井有条的大人之前.png (+1ms) 
+11:50:14   ├─ /og/国内网络问题.png (+1ms) 
+11:50:14   ├─ /og/君の名は希望.png (+1ms) 
+11:50:14   ├─ /og/在日本买手机和手机卡.png (+1ms) 
+11:50:14   ├─ /og/在日本买游戏本.png (+1ms) 
+11:50:14   ├─ /og/如何在国内拥有一个能够接受境外短信的手机号.png (+1ms) 
+11:50:14   ├─ /og/广义加性模型-1.png (+3ms) 
+11:50:14   ├─ /og/我为什么喜欢做科研.png (+1ms) 
+11:50:14   ├─ /og/怎么写研究计划书.png (+1ms) 
+11:50:14   ├─ /og/我对国内水色遥感的看法.png (+1ms) 
+11:50:14   ├─ /og/文献管理.png (+1ms) 
+11:50:14   ├─ /og/新的春天.png (+1ms) 
+11:50:14   ├─ /og/日本留学申请经验贴一.png (+1ms) 
+11:50:14   ├─ /og/日本留学申请四经管类申请.png (+1ms) 
+11:50:14   ├─ /og/日本語ノート-1.png (+1ms) 
+11:50:14   ├─ /og/易混カタカナ.png (+1ms) 
+11:50:14   ├─ /og/未选择的路.png (+1ms) 
+11:50:14   ├─ /og/机器学习基石第二周笔记machine-learning-foundation-week-2-note.png (+1ms) 
+11:50:14   ├─ /og/本科总结-1.png (+1ms) 
+11:50:14   ├─ /og/某公司从零自学过笔试.png (+1ms) 
+11:50:14   ├─ /og/树莓派nas.png (+1ms) 
+11:50:14   ├─ /og/樱花和桂花.png (+1ms) 
+11:50:14   ├─ /og/没有大气校正和实测数据怎么搞水色.png (+1ms) 
+11:50:14   ├─ /og/清华大学研究生学位论文的选题方法讲座实录.png (+1ms) 
+11:50:14   ├─ /og/清华苏州环境创新研究员面试经历.png (+1ms) 
+11:50:14   ├─ /og/游戏人生.png (+1ms) 
+11:50:14   ├─ /og/游戏策划笔试整理.png (+2ms) 
+11:50:14   ├─ /og/游戏策划面试总结.png (+2ms) 
+11:50:14   ├─ /og/硕士一年.png (+1ms) 
+11:50:14   ├─ /og/狼总访谈.png (+1ms) 
+11:50:14   ├─ /og/湖州某遥感公司.png (+1ms) 
+11:50:14   ├─ /og/秋招进程记录.png (+1ms) 
+11:50:14   ├─ /og/精致的利己主义者.png (+1ms) 
+11:50:14   ├─ /og/经验贴三申请准备及流程.png (+1ms) 
+11:50:14   ├─ /og/经验贴二日日本留学制度介绍.png (+1ms) 
+11:50:14   ├─ /og/苏州某小公司实习生.png (+2ms) 
+11:50:14   ├─ /og/examples/katex-mathematical-demo-en.png (+1ms) 
+11:50:14   ├─ /og/examples/katex-mathematical-demo-es.png (+1ms) 
+11:50:14   ├─ /og/examples/katex-mathematical-demo-ja.png (+1ms) 
+11:50:14   ├─ /og/examples/katex-mathematical-demo-zh-tw.png (+1ms) 
+11:50:14   ├─ /og/examples/katex-mathematical-demo-ru.png (+1ms) 
+11:50:14   ├─ /og/examples/katex-mathematical-demo-zh.png (+1ms) 
+11:50:14   ├─ /og/examples/容忍与自由-en.png (+1ms) 
+11:50:14   ├─ /og/examples/容忍与自由-es.png (+1ms) 
+11:50:14   ├─ /og/examples/容忍与自由-ja.png (+1ms) 
+11:50:14   ├─ /og/examples/容忍与自由-ru.png (+2ms) 
+11:50:14   ├─ /og/examples/容忍与自由-zh-tw.png (+1ms) 
+11:50:14   ├─ /og/examples/容忍与自由-zh.png (+1ms) 
+11:50:14   ├─ /og/examples/故乡-en.png (+1ms) 
+11:50:14   ├─ /og/examples/故乡-es.png (+1ms) 
+11:50:14   ├─ /og/examples/故乡-ja.png (+1ms) 
+11:50:14   ├─ /og/examples/故乡-ru.png (+1ms) 
+11:50:14   ├─ /og/examples/故乡-zh-tw.png (+1ms) 
+11:50:15   ├─ /og/examples/故乡-zh.png (+1ms) 
+11:50:15   ├─ /og/examples/羅生門-en.png (+1ms) 
+11:50:15   ├─ /og/examples/羅生門-es.png (+1ms) 
+11:50:15   ├─ /og/examples/羅生門-zh-tw.png (+1ms) 
+11:50:15   ├─ /og/examples/羅生門-ja.png (+1ms) 
+11:50:15   ├─ /og/examples/羅生門-zh.png (+1ms) 
+11:50:15   ├─ /og/examples/羅生門-ru.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-extended-features-en.png (+2ms) 
+11:50:15   ├─ /og/guides/markdown-extended-features-es.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-extended-features-ja.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-extended-features-ru.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-extended-features-zh-tw.png (+2ms) 
+11:50:15   ├─ /og/guides/markdown-extended-features-zh.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-style-guide-es.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-style-guide-en.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-style-guide-ja.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-style-guide-ru.png (+1ms) 
+11:50:15   ├─ /og/guides/markdown-style-guide-zh-tw.png (+2ms) 
+11:50:15   ├─ /og/guides/markdown-style-guide-zh.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-color-schemes-en.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-color-schemes-es.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-color-schemes-ja.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-color-schemes-ru.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-color-schemes-zh-tw.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-color-schemes-zh.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-guide-en.png (+2ms) 
+11:50:15   ├─ /og/guides/theme-guide-ja.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-guide-es.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-guide-ru.png (+1ms) 
+11:50:15   ├─ /og/guides/theme-guide-zh-tw.png (+4ms) 
+11:50:15   └─ /og/guides/theme-guide-zh.png (+1ms) 
+11:50:15 λ src/pages/robots.txt.ts
+11:50:15   └─ /robots.txt (+0ms) 
+11:50:15 λ src/pages/rss.xml.ts
+11:50:15   └─ /rss.xml (+65ms) 
+11:50:15 λ src/pages/search.json.ts
+11:50:15   └─ /search.json (+2ms) 
+11:50:15 λ src/pages/[lang]/atom.xml.ts
+11:50:15   ├─ /en/atom.xml (+30ms) 
+11:50:15   ├─ /es/atom.xml (+13ms) 
+11:50:15   ├─ /ja/atom.xml (+12ms) 
+11:50:15   ├─ /ru/atom.xml (+12ms) 
+11:50:15   └─ /zh-tw/atom.xml (+35ms) 
+11:50:15 λ src/pages/[lang]/rss.xml.ts
+11:50:15   ├─ /en/rss.xml (+36ms) 
+11:50:15   ├─ /es/rss.xml (+12ms) 
+11:50:15   ├─ /ja/rss.xml (+11ms) 
+11:50:15   ├─ /ru/rss.xml (+11ms) 
+11:50:15   └─ /zh-tw/rss.xml (+10ms) 
+11:50:15 ▶ src/pages/[...about].astro
+11:50:15   ├─ /about.html (+3ms) 
+11:50:15   ├─ /en/about.html (+2ms) 
+11:50:15   ├─ /es/about.html (+1ms) 
+11:50:15   ├─ /ja/about.html (+2ms) 
+11:50:15   ├─ /ru/about.html (+2ms) 
+11:50:15   └─ /zh-tw/about.html (+1ms) 
+11:50:15 ▶ src/pages/[...index].astro
+11:50:15   ├─ /index.html (+11.31s) 
+11:50:26   ├─ /en.html (+16.69s) 
+11:50:43   ├─ /es.html (+2.32s) 
+11:50:45   ├─ /ja.html (+2.21s) 
+11:50:47   ├─ /ru.html (+2.06s) 
+11:50:49   └─ /zh-tw.html (+2.47s) 
+11:50:52 ▶ src/pages/[...posts_slug].astro
+11:50:52 [ERROR] [build] Failed to call getStaticPaths for src/pages/[...posts_slug].astro
+Duplicate post slugs:
+Duplicate slug "fc1cc4fb" found in "zh" language post
+  Location:
+    /Users/zhenjiazhou/Documents/blog/Blog-astro/node_modules/.pnpm/astro@5.13.7_@types+node@24.3.1_jiti@2.5.1_lightningcss@1.29.3_rollup@4.50.1_terser@5.3_9716fe73f0eec9e823ed9c7e3fb71dd6/node_modules/astro/dist/core/render/route-cache.js:29:17
+  Stack trace:
+    at Module.getStaticPaths (file:///Users/zhenjiazhou/Documents/blog/Blog-astro/dist/pages/_---posts_slug_.astro.mjs?time=1763524252363:211:11)
+    at async getPathsForRoute (file:///Users/zhenjiazhou/Documents/blog/Blog-astro/node_modules/.pnpm/astro@5.13.7_@types+node@24.3.1_jiti@2.5.1_lightningcss@1.29.3_rollup@4.50.1_terser@5.3_9716fe73f0eec9e823ed9c7e3fb71dd6/node_modules/astro/dist/core/build/generate.js:212:25)
+    at async generatePages (file:///Users/zhenjiazhou/Documents/blog/Blog-astro/node_modules/.pnpm/astro@5.13.7_@types+node@24.3.1_jiti@2.5.1_lightningcss@1.29.3_rollup@4.50.1_terser@5.3_9716fe73f0eec9e823ed9c7e3fb71dd6/node_modules/astro/dist/core/build/generate.js:98:7)
+    at async AstroBuilder.build (file:///Users/zhenjiazhou/Documents/blog/Blog-astro/node_modules/.pnpm/astro@5.13.7_@types+node@24.3.1_jiti@2.5.1_lightningcss@1.29.3_rollup@4.50.1_terser@5.3_9716fe73f0eec9e823ed9c7e3fb71dd6/node_modules/astro/dist/core/build/index.js:154:5)
+    at async build (file:///Users/zhenjiazhou/Documents/blog/Blog-astro/node_modules/.pnpm/astro@5.13.7_@types+node@24.3.1_jiti@2.5.1_lightningcss@1.29.3_rollup@4.50.1_terser@5.3_9716fe73f0eec9e823ed9c7e3fb71dd6/node_modules/astro/dist/core/build/index.js:45:3)
+    at async runCommand (file:///Users/zhenjiazhou/Documents/blog/Blog-astro/node_modules/.pnpm/astro@5.13.7_@types+node@24.3.1_jiti@2.5.1_lightningcss@1.29.3_rollup@4.50.1_terser@5.3_9716fe73f0eec9e823ed9c7e3fb71dd6/node_modules/astro/dist/cli/index.js:142:7)
+ ELIFECYCLE  Command failed with exit code 1.

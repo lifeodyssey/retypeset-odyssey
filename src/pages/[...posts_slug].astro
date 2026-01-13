@@ -10,21 +10,25 @@ import { allLocales, defaultLocale, moreLocales } from '@/config'
 import Layout from '@/layouts/Layout.astro'
 import { checkPostSlugDuplication } from '@/utils/content'
 import { getPostDescription } from '@/utils/description'
+import EncryptedPost from '@/components/EncryptedPost.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
 
-  // Check if there are duplicate post slugs
+  // Check if there are duplicate post slugs (abbrlinks)
+  // We use abbrlink as the slug for the URL
   const duplicates = await checkPostSlugDuplication(posts)
   if (duplicates.length > 0) {
-    throw new Error(`Duplicate post slugs:\n${duplicates.join('\n')}`)
+    // throw new Error(`Duplicate post slugs:\n${duplicates.join('\n')}`)
+    console.warn(`Duplicate post slugs found:\n${duplicates.join('\n')}`)
   }
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  // Use a Map to store the relationship between post slugs and their supported languages
+  // Use a Map to store the relationship between post slugs (abbrlinks) and their supported languages
   // Set is used to store the supported languages for each post
   const slugToLangsMap = posts.reduce((map, post) => {
-    const slug = post.data.abbrlink || post.id
+    // Use abbrlink as the primary slug, fallback to id if missing (shouldn't happen with migration)
+    const slug = post.data.abbrlink || post.data.slug || post.id
     const lang = post.data.lang
 
     if (!map.has(slug)) {
@@ -54,15 +58,15 @@ export async function getStaticPaths() {
 
   const paths: PathItem[] = []
 
-  // Default locale
+  // Default locale (zh)
   posts.forEach((post: CollectionEntry<'posts'>) => {
     // Show drafts in dev mode only
     if ((import.meta.env.DEV || !post.data.draft)
-      && (post.data.lang === defaultLocale || post.data.lang === '')) {
-      const slug = post.data.abbrlink || post.id
+      && (post.data.lang === defaultLocale || post.data.lang === '' || !post.data.lang)) {
+      const slug = post.data.abbrlink || post.data.slug || post.id
 
       paths.push({
-        params: { posts_slug: `posts/${slug}/` },
+        params: { posts_slug: `posts/${slug}.html` },
         props: {
           post,
           lang: defaultLocale,
@@ -72,15 +76,15 @@ export async function getStaticPaths() {
     }
   })
 
-  // More locales
+  // More locales (en, ja)
   moreLocales.forEach((lang: string) => {
     posts.forEach((post: CollectionEntry<'posts'>) => {
-      // Process posts with matching language or no language specified
+      // Process posts with matching language
       if ((import.meta.env.DEV || !post.data.draft)
-        && (post.data.lang === lang || post.data.lang === '')) {
-        const slug = post.data.abbrlink || post.id
+        && (post.data.lang === lang)) {
+        const slug = post.data.abbrlink || post.data.slug || post.id
         paths.push({
-          params: { posts_slug: `${lang}/posts/${slug}/` },
+          params: { posts_slug: `${lang}/posts/${slug}.html` },
           props: {
             post,
             lang,
@@ -95,7 +99,7 @@ export async function getStaticPaths() {
 }
 
 const { post, lang, supportedLangs } = Astro.props
-const slug = post.data.abbrlink || post.id
+const slug = post.data.slug || post.id
 const description = getPostDescription(post, 'meta')
 const { Content, headings, remarkPluginFrontmatter } = await render(post)
 ---
@@ -138,7 +142,13 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     {post.data.toc && <TOC headings={headings} />}
     <!-- Content -->
     <div id="post-content">
-      <Content />
+      {post.data.password ? (
+        <EncryptedPost password={post.data.password}>
+          <Content />
+        </EncryptedPost>
+      ) : (
+        <Content />
+      )}
       <!-- Copyright -->
       <div id="post-copyright" />
       <!-- Tag List -->

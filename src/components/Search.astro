@@ -1,0 +1,133 @@
+---
+---
+
+<li class="search-trigger">
+  <button 
+    id="search-open" 
+    class="highlight-hover transition-[colors,font-weight] after:bottom-0.7em hover:(c-primary font-bold) bg-transparent border-none cursor-pointer p-0 font-inherit"
+    aria-label="Search"
+  >
+    Search
+  </button>
+</li>
+
+<div id="search-modal" class="hidden fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black/20 backdrop-blur-sm" style="display: none;">
+  <div class="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg w-full max-w-2xl shadow-2xl border border-gray-200 dark:border-gray-800 mx-4">
+    <div class="flex justify-between items-center mb-4">
+      <input 
+        type="text" 
+        id="search-input" 
+        class="w-full p-3 text-lg border-b-2 border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:border-primary"
+        placeholder="Search posts..."
+      />
+      <button id="search-close" class="ml-4 text-2xl text-gray-500 hover:text-primary">&times;</button>
+    </div>
+    <div id="search-results" class="max-h-[60vh] overflow-y-auto custom-scrollbar">
+      <div class="text-center text-gray-500 py-8">Type to search...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  type SearchItem = {
+    title: string;
+    description?: string;
+    url: string;
+    date: string;
+    tags?: string[];
+  };
+
+  let searchIndex: SearchItem[] | null = null;
+  const modal = document.getElementById('search-modal');
+  const openBtn = document.getElementById('search-open');
+  const closeBtn = document.getElementById('search-close');
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const results = document.getElementById('search-results');
+
+  // Toggle Modal
+  function toggleModal(show: boolean) {
+    if (!modal) return;
+    if (show) {
+      modal.style.display = 'flex';
+      input?.focus();
+      if (!searchIndex) loadIndex();
+    } else {
+      modal.style.display = 'none';
+    }
+  }
+
+  openBtn?.addEventListener('click', () => toggleModal(true));
+  closeBtn?.addEventListener('click', () => toggleModal(false));
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) toggleModal(false);
+  });
+  
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (!modal) return;
+    if (e.key === 'Escape' && modal.style.display === 'flex') toggleModal(false);
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      toggleModal(true);
+    }
+  });
+
+  // Load Index
+  async function loadIndex() {
+    try {
+      const res = await fetch('/search.json');
+      searchIndex = await res.json();
+    } catch (e) {
+      console.error('Failed to load search index', e);
+    }
+  }
+
+  // Search Logic
+  input?.addEventListener('input', (e) => {
+    if (!searchIndex || !results) return;
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    
+    if (!query) {
+      results.innerHTML = '<div class="text-center text-gray-500 py-8">Type to search...</div>';
+      return;
+    }
+
+    const matches = searchIndex.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      (item.description && item.description.toLowerCase().includes(query))
+    );
+
+    renderResults(matches);
+  });
+
+  function renderResults(items: SearchItem[]) {
+    if (!results) return;
+    if (items.length === 0) {
+      results.innerHTML = '<div class="text-center text-gray-500 py-8">No results found</div>';
+      return;
+    }
+
+    results.innerHTML = items.map(item => `
+      <a href="${item.url}" class="block p-4 hover:bg-gray-50 dark:hover:bg-gray-800 rounded transition-colors border-b border-gray-100 dark:border-gray-800 last:border-0">
+        <h4 class="text-lg font-bold text-primary mb-1">${item.title}</h4>
+        ${item.description ? `<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">${item.description}</p>` : ''}
+        <div class="text-xs text-gray-400 mt-2 flex justify-between">
+          <span>${new Date(item.date).toLocaleDateString()}</span>
+        </div>
+      </a>
+    `).join('');
+  }
+</script>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 4px;
+  }
+</style>

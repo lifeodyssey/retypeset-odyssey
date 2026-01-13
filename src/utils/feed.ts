@@ -154,7 +154,7 @@ export async function generateFeed({ lang }: { lang?: string } = {}) {
 
   // Add posts to feed
   for (const post of recentPosts) {
-    const slug = post.data.abbrlink || post.id
+    const slug = post.data.slug || post.id
     const link = new URL(`posts/${slug}/`, siteURL).toString()
 
     // Optimize content processing

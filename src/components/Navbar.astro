@@ -1,6 +1,7 @@
 ---
 import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
+import Search from '@/components/Search.astro'
 
 const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
@@ -53,5 +54,6 @@ const navItems = [
         </a>
       </li>
     ))}
+    <Search />
   </ul>
 </nav>

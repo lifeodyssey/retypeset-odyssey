@@ -20,10 +20,13 @@ const posts = defineCollection({
     pin: z.number().int().min(0).max(99).optional().default(0),
     toc: z.boolean().optional().default(themeConfig.global.toc),
     lang: z.enum(['', ...allLocales]).optional().default(''),
-    abbrlink: z.string().optional().default('').refine(
-      abbrlink => !abbrlink || /^[a-z0-9\-]*$/.test(abbrlink),
-      { message: 'Abbrlink can only contain lowercase letters, numbers and hyphens' },
+    slug: z.string().optional().default('').refine(
+      slug => !slug || /^[a-z0-9\-]*$/.test(slug),
+      { message: 'Slug can only contain lowercase letters, numbers and hyphens' },
     ),
+    password: z.string().optional(),
+    categories: z.union([z.string(), z.array(z.string())]).optional(),
+    abbrlink: z.string().optional(),
   }),
 })
 

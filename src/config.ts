@@ -203,6 +203,6 @@ export const themeConfig: ThemeConfig = {
 export default themeConfig
 
 export const base = themeConfig.site.base === '/' ? '' : themeConfig.site.base.replace(/\/$/, '')
-export const defaultLocale = themeConfig.global.locale
-export const moreLocales = themeConfig.global.moreLocales
-export const allLocales = [defaultLocale, ...moreLocales]
+export const defaultLocale = 'zh'
+export const moreLocales = ['en', 'ja']
+export const allLocales = ['zh', 'en', 'ja']

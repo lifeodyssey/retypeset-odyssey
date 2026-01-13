@@ -1,0 +1,99 @@
+---
+interface Props {
+  password: string;
+}
+
+const { password } = Astro.props;
+---
+
+<div class="encrypted-container">
+  <div id="lock-screen" class="lock-screen">
+    <div class="lock-icon">🔒</div>
+    <h3>This post is password protected</h3>
+    <div class="input-group">
+      <input type="password" id="password-input" placeholder="Enter password" />
+      <button id="unlock-btn">Unlock</button>
+    </div>
+    <p id="error-msg" class="error-msg"></p>
+  </div>
+
+  <div id="content-area" class="hidden">
+    <slot />
+  </div>
+</div>
+
+<script define:vars={{ password }}>
+  const lockScreen = document.getElementById('lock-screen');
+  const contentArea = document.getElementById('content-area');
+  const input = document.getElementById('password-input');
+  const btn = document.getElementById('unlock-btn');
+  const errorMsg = document.getElementById('error-msg');
+
+  function unlock() {
+    if (input.value === password) {
+      lockScreen.style.display = 'none';
+      contentArea.classList.remove('hidden');
+      // Optional: Save state to sessionStorage
+      sessionStorage.setItem('unlocked-' + window.location.pathname, 'true');
+    } else {
+      errorMsg.textContent = 'Incorrect password';
+      input.value = '';
+    }
+  }
+
+  btn.addEventListener('click', unlock);
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') unlock();
+  });
+
+  // Check if already unlocked
+  if (sessionStorage.getItem('unlocked-' + window.location.pathname) === 'true') {
+    lockScreen.style.display = 'none';
+    contentArea.classList.remove('hidden');
+  }
+</script>
+
+<style>
+  .encrypted-container {
+    margin: 2rem 0;
+  }
+  .lock-screen {
+    text-align: center;
+    padding: 3rem;
+    background: var(--c-bg-soft);
+    border-radius: 8px;
+    border: 1px solid var(--c-border);
+  }
+  .lock-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .input-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+  input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+    background: var(--c-bg);
+    color: var(--c-text);
+  }
+  button {
+    padding: 0.5rem 1rem;
+    background: var(--c-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .error-msg {
+    color: #e06c75;
+    height: 1.5em;
+  }
+  .hidden {
+    display: none;
+  }
+</style>

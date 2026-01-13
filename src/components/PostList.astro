@@ -24,7 +24,7 @@ export interface Props {
 
 <ul>
   {posts.map((post) => {
-    const slug = post.data.abbrlink || post.id
+    const slug = post.data.slug || post.id
 
     return (
       <li

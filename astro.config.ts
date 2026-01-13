@@ -28,7 +28,9 @@ const imageConfig = imageHostURL
 export default defineConfig({
   site,
   base,
-  trailingSlash: 'always', // Not recommended to change
+  build: {
+    format: 'file',
+  },
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport', // hover, tap, viewport, load
@@ -73,7 +75,7 @@ export default defineConfig({
       [rehypeMermaid, { strategy: 'pre-mermaid' }],
       rehypeSlug,
       rehypeHeadingAnchor,
-      rehypeImageProcessor,
+      // rehypeImageProcessor,
       rehypeExternalLinks,
       rehypeCodeCopyButton,
     ],
