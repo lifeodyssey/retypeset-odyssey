@@ -14,7 +14,7 @@ export const themeConfig: ThemeConfig = {
     // author name
     author: 'Zhenjia',
     // site url
-    url: 'https://blog.zhenjia.org',
+    url: 'https://zhenjia.org',
     // base path
     // root directory for all pages and assets
     base: '/', // e.g., '/blog', '/docs'

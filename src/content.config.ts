@@ -44,6 +44,14 @@ const posts = defineCollection({
         { message: 'Abbrlink can only contain letters, numbers and hyphens' },
       ),
     ),
+    // Semantic URL slug - takes priority over abbrlink
+    slug: z.preprocess(
+      val => val === null ? '' : val,
+      z.string().optional().default('').refine(
+        slug => !slug || /^[a-zA-Z0-9\-]+$/.test(slug),
+        { message: 'Slug can only contain letters, numbers and hyphens' },
+      ),
+    ),
     // Hexo-specific optional fields (handle null values from YAML)
     mathjax: z.preprocess(
       val => val === null ? undefined : val,

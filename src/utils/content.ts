@@ -7,6 +7,61 @@ import { memoize } from '@/utils/cache'
 
 const metaCache = new Map<string, { minutes: number }>()
 
+// Tags that indicate technical content
+const TECH_TAGS = new Set([
+  // Programming & Development
+  'python', 'java', 'javascript', 'typescript', 'golang', 'rust',
+  'algorithm', 'leetcode', 'data structure',
+  'software engineering', 'programming', 'coding',
+  // AI & Machine Learning
+  'deep learning', 'machine learning', 'tensorflow', 'pytorch',
+  'ai', 'artificial intelligence', 'neural network',
+  'large language model', 'llm', 'agentic ai', 'claude code',
+  // Science & Research
+  'ocean color', 'remote sensing', 'oceanography', 'research',
+  'satellite', 'gis', 'earth observation',
+  // DevOps & Tools
+  'docker', 'kubernetes', 'aws', 'cloud', 'devops',
+  'git', 'linux', 'database', 'sql',
+])
+
+export type PostCategory = 'tech' | 'life'
+
+/**
+ * Get the URL slug for a post
+ * Priority: slug > abbrlink > post.id
+ */
+export function getPostSlug(post: CollectionEntry<'posts'>): string {
+  return post.data.slug || post.data.abbrlink || post.id
+}
+
+/**
+ * Determine the category of a post based on its tags
+ * Tech posts go to /tech/, life posts go to /life/
+ */
+export function getPostCategory(post: CollectionEntry<'posts'>): PostCategory {
+  const tags = post.data.tags || []
+  const normalizedTags = tags.map((t: string) => t.toLowerCase())
+
+  for (const tag of normalizedTags) {
+    if (TECH_TAGS.has(tag)) {
+      return 'tech'
+    }
+  }
+
+  return 'life'
+}
+
+/**
+ * Get the URL path for a post including its category subdirectory
+ */
+export function getPostPath(post: CollectionEntry<'posts'>, langPrefix?: string): string {
+  const category = getPostCategory(post)
+  const slug = getPostSlug(post)
+  const prefix = langPrefix ? `/${langPrefix}` : ''
+  return `${prefix}/${category}/posts/${slug}.html`
+}
+
 /**
  * Add metadata including reading time to a post
  *
@@ -45,7 +100,7 @@ export async function checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]
 
   posts.forEach((post) => {
     const lang = post.data.lang
-    const slug = post.data.abbrlink || post.id
+    const slug = getPostSlug(post)
 
     let slugSet = slugMap.get(lang)
     if (!slugSet) {
