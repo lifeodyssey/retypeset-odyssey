@@ -24,3 +24,16 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Cloudflare Wrangler
+.wrangler/
+
+# Playwright test artifacts
+playwright-report/
+test-results/
+
+# Content synced from Blog-src at build time
+# (Blog-astro is theme-only, content comes from Blog-src)
+content/posts/*
+!content/posts/.gitkeep
+!content/posts/_example-post.md
