@@ -2,6 +2,7 @@
 import TagList from '@/components/TagList.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
 import { getTagsWithCounts } from '@/utils/content'
 
@@ -13,14 +14,22 @@ export async function getStaticPaths() {
 
 const currentLang = getLangFromLocale(Astro.currentLocale)
 const tagsWithCounts = await getTagsWithCounts(currentLang)
+const totalTags = tagsWithCounts.length
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 ---
 
-<Layout>
-  <!-- Decorative Line -->
-  <div class="uno-decorative-line" />
-  <!-- Tag List -->
-  <TagList
-    tags={tagsWithCounts}
-    lang={currentLang}
-  />
+<Layout postTitle={currentUI.tags || 'Tags'}>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {currentUI.tags || 'Tags'}
+    </h1>
+    <p class="mb-6 text-3.5 c-secondary">
+      {totalTags} {currentUI.tagsInTotal || 'tags in total'}
+    </p>
+    <div class="uno-decorative-line" />
+    <TagList
+      tags={tagsWithCounts}
+      lang={currentLang}
+    />
+  </section>
 </Layout>
