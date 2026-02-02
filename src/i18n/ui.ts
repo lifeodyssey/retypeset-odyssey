@@ -14,6 +14,7 @@ interface Translation {
   science?: string
   categories?: string
   categoriesInTotal?: string
+  tagsInTotal?: string
 }
 
 export const ui: Record<Language, Translation> = {
@@ -41,6 +42,7 @@ export const ui: Record<Language, Translation> = {
     science: 'Science',
     categories: 'Categories',
     categoriesInTotal: 'categories in total',
+    tagsInTotal: 'tags in total',
   },
   'es': {
     title: 'Retipografía',
@@ -75,6 +77,7 @@ export const ui: Record<Language, Translation> = {
     life: '生活',
     science: '科学',
     categories: 'カテゴリー',
+    tagsInTotal: '個のタグ',
   },
   'ko': {
     title: '재조판',
@@ -130,6 +133,7 @@ export const ui: Record<Language, Translation> = {
     science: '科研',
     categories: '分类',
     categoriesInTotal: '个分类',
+    tagsInTotal: '个标签',
   },
   'zh-tw': {
     title: '重新編排',
@@ -145,5 +149,6 @@ export const ui: Record<Language, Translation> = {
     science: '科研',
     categories: '分類',
     categoriesInTotal: '個分類',
+    tagsInTotal: '個標籤',
   },
 }
