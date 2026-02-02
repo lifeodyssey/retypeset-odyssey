@@ -2,8 +2,9 @@
 import PostList from '@/components/PostList.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
-import { getPinnedPosts, getPostsByYear } from '@/utils/content'
+import { getPostsByCategory } from '@/utils/content'
 
 export async function getStaticPaths() {
   return allLocales.map(lang => ({
@@ -12,24 +13,19 @@ export async function getStaticPaths() {
 }
 
 const currentLang = getLangFromLocale(Astro.currentLocale)
-const pinnedPosts = await getPinnedPosts(currentLang)
-const postsByYear = await getPostsByYear(currentLang)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+
+// Homepage now shows Tech posts by default
+const techPosts = await getPostsByCategory('tech', currentLang)
+const categoryLabel = currentUI.tech || 'Tech'
 ---
 
 <Layout>
-  <!-- Pinned Posts -->
-  {pinnedPosts.length > 0 && (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
-      <PostList posts={pinnedPosts} lang={currentLang} pinned={true} />
-    </section>
-  )}
-
-  <!-- Regular Posts -->
-  {[...postsByYear.entries()].map(([_year, posts]) => (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
-      <PostList posts={posts} lang={currentLang} />
-    </section>
-  ))}
+  <section class="mb-7.5">
+    <h1 class="mb-6 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {categoryLabel}
+    </h1>
+    <div class="uno-decorative-line" />
+    <PostList posts={techPosts} lang={currentLang} />
+  </section>
 </Layout>

@@ -34,13 +34,8 @@ const htmlEntityMap: Record<string, string> = {
   '&nbsp;': ' ',
 }
 
-// Creates a clean text excerpt with length limits by language and scene
-function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
-  const isCJK = (lang: Language) => ['zh', 'zh-tw', 'ja', 'ko'].includes(lang)
-  const length = isCJK(lang)
-    ? excerptLengths[scene].cjk
-    : excerptLengths[scene].other
-
+// Cleans text by removing HTML tags and normalizing whitespace
+function cleanTextContent(text: string): string {
   // Remove HTML tags
   let cleanText = text.replace(/<[^>]*>/g, '')
 
@@ -55,6 +50,17 @@ function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
   // Normalize CJK punctuation spacing
   cleanText = cleanText.replace(/([。？！："」』])\s+/g, '$1')
 
+  return cleanText.trim()
+}
+
+// Creates a clean text excerpt with length limits by language and scene
+function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
+  const isCJK = (lang: Language) => ['zh', 'zh-tw', 'ja', 'ko'].includes(lang)
+  const length = isCJK(lang)
+    ? excerptLengths[scene].cjk
+    : excerptLengths[scene].other
+
+  const cleanText = cleanTextContent(text)
   const excerpt = cleanText.slice(0, length).trim()
 
   // Remove trailing punctuation and add ellipsis
@@ -80,8 +86,20 @@ export function getPostDescription(
   }
 
   const rawContent = post.body || ''
-  const cleanContent = rawContent
-    .replace(/<!--[\s\S]*?-->/g, '') // Remove HTML comments
+
+  // Check for <!-- more --> marker (Hexo-style excerpt boundary)
+  const moreMarkerRegex = /<!--\s*more\s*-->/i
+  const moreMatch = rawContent.match(moreMarkerRegex)
+  const hasMoreMarker = moreMatch && moreMatch.index !== undefined
+
+  // Get content to process (before <!-- more --> if exists)
+  let contentToProcess = rawContent
+  if (hasMoreMarker) {
+    contentToProcess = rawContent.substring(0, moreMatch.index)
+  }
+
+  const cleanContent = contentToProcess
+    .replace(/<!--[\s\S]*?-->/g, '') // Remove remaining HTML comments
     .replace(/```[\s\S]*?```/g, '') // Remove code blocks
     .replace(/^\s*#{1,6}\s+\S.*$/gm, '') // Remove Markdown headings
     .replace(/^\s*::.*$/gm, '') // Remove directive containers
@@ -89,5 +107,12 @@ export function getPostDescription(
     .replace(/\n{2,}/g, '\n\n') // Normalize newlines
 
   const renderedContent = markdownParser.render(cleanContent)
+
+  // For 'list' scene with <!-- more --> marker, return full content without truncation
+  if (scene === 'list' && hasMoreMarker) {
+    return cleanTextContent(renderedContent)
+  }
+
+  // Otherwise, apply truncation
   return getExcerpt(renderedContent, lang, scene)
 }

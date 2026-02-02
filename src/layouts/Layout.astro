@@ -1,9 +1,11 @@
 ---
 import type { Language } from '@/i18n/config'
+import type { MarkdownHeading } from 'astro'
 import Button from '@/components/Button.astro'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import Navbar from '@/components/Navbar.astro'
+import Sidebar from '@/components/Sidebar.astro'
 import CodeCopyButton from '@/components/Widgets/CodeCopyButton.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
 import ImageZoom from '@/components/Widgets/ImageZoom.astro'
@@ -25,14 +27,12 @@ interface Props {
   postDescription?: string
   postSlug?: string
   supportedLangs?: Language[]
+  headings?: MarkdownHeading[]
 }
 
-const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
+const { postTitle, postDescription, postSlug, supportedLangs = [], headings = [] } = Astro.props
 const { isPost } = getPageInfo(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
-const MarginBottom = isPost && themeConfig.comment.enabled
-  ? 'mb-10' // Post page with comment
-  : 'mb-12' // Other pages without comment
 ---
 
 <html
@@ -44,16 +44,21 @@ const MarginBottom = isPost && themeConfig.comment.enabled
 >
   <Head {postTitle} {postDescription} {postSlug} />
   <body>
-    <div
-      class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
-      p="x-[min(7.25vw,3.731rem)] y-10"
-      lg="mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),44rem)] min-h-full p-0"
-    >
-      <Header />
-      <Navbar />
-      <main class={MarginBottom}>
-        <slot />
-      </main>
+    <div class="site-container">
+      <!-- Top Header Area -->
+      <div class="top-header-area">
+        <Header />
+        <Navbar />
+      </div>
+
+      <!-- Main Content Area with Sidebar -->
+      <div class="content-wrapper">
+        <main class="main-content">
+          <slot />
+        </main>
+        <Sidebar headings={headings} isPost={isPost} />
+      </div>
+
       <Footer />
     </div>
     <Button supportedLangs={supportedLangs} />
@@ -64,3 +69,23 @@ const MarginBottom = isPost && themeConfig.comment.enabled
     <ImageZoom />
   </body>
 </html>
+
+<style>
+.site-container {
+  --at-apply: 'mx-auto min-h-dvh w-full';
+  --at-apply: 'px-4 py-8 lg:(px-8 py-12)';
+  max-width: 1200px;
+}
+
+.top-header-area {
+  --at-apply: 'mb-8 lg:mb-10';
+}
+
+.content-wrapper {
+  --at-apply: 'lg:(flex gap-8)';
+}
+
+.main-content {
+  --at-apply: 'flex-1 min-w-0 mb-12';
+}
+</style>

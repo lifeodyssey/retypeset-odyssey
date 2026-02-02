@@ -1,37 +1,75 @@
 ---
 import type { Language } from '@/i18n/config'
+import type { TagWithCount } from '@/utils/content'
 import { getTagPath } from '@/i18n/path'
+import { ui } from '@/i18n/ui'
 
 interface Props {
-  tags: string[]
+  tags: TagWithCount[] | string[]
   currentTag?: string
   lang: Language
 }
 
-const { tags, currentTag = '', lang } = Astro.props
+const { tags: rawTags, currentTag = '', lang } = Astro.props
+const currentUI = ui[lang as keyof typeof ui] ?? {}
+
+// Normalize tags to TagWithCount format
+const tags: TagWithCount[] = rawTags.map(tag =>
+  typeof tag === 'string' ? { name: tag, count: 0 } : tag
+)
+const hasCount = tags.some(t => t.count > 0)
+
+// Calculate font size class based on normalized count
+function getFontSizeClass(count: number, max: number, min: number): string {
+  if (!hasCount || max === min) return 'text-3.5'
+  const normalized = (count - min) / (max - min)
+  // 5 tiers of font sizes
+  if (normalized >= 0.8) return 'text-5.5 font-semibold'
+  if (normalized >= 0.6) return 'text-4.5 font-medium'
+  if (normalized >= 0.4) return 'text-4'
+  if (normalized >= 0.2) return 'text-3.5'
+  return 'text-3'
+}
+
+const maxCount = Math.max(...tags.map(t => t.count))
+const minCount = Math.min(...tags.map(t => t.count))
+const postsText = currentUI.posts || 'posts'
 ---
 
-<div class="no-heti flex flex-wrap gap-x-3 gap-y-3.2">
-  {tags.map(tag => (
-    <a
-      href={getTagPath(tag, lang)}
-      class:list={[
-        'relative inline-block border border-secondary/25 rounded-full px-3.2 py-0.7 ring-secondary/80',
-        'transition-[colors,box-shadow] ease-out hover:(border-secondary/80 c-primary font-medium ring-0.2)',
-        currentTag === tag
-          ? 'border-secondary/80 c-primary font-medium ring-0.2'
-          : 'ring-0',
-      ]}
-    >
-      <span class="absolute inset-0 flex items-center justify-center whitespace-nowrap transition-font-weight">
-        {tag}
-      </span>
-      <span
-        class="inline-block font-medium opacity-0"
-        aria-hidden="true"
+<div class="tag-cloud no-heti">
+  {tags.map(tag => {
+    const fontSizeClass = getFontSizeClass(tag.count, maxCount, minCount)
+    const isActive = currentTag === tag.name
+
+    return (
+      <a
+        href={getTagPath(tag.name, lang)}
+        class:list={[
+          'tag-item',
+          fontSizeClass,
+          isActive && 'active',
+        ]}
+        title={hasCount ? `${tag.count} ${postsText}` : undefined}
       >
-        {tag}
-      </span>
-    </a>
-  ))}
+        {tag.name}
+      </a>
+    )
+  })}
 </div>
+
+<style>
+.tag-cloud {
+  --at-apply: 'flex flex-wrap items-baseline justify-center gap-x-4 gap-y-2';
+  --at-apply: 'leading-relaxed';
+}
+
+.tag-item {
+  --at-apply: 'inline-block c-secondary/80';
+  --at-apply: 'transition-colors';
+  --at-apply: 'hover:c-primary';
+}
+
+.tag-item.active {
+  --at-apply: 'c-primary font-bold';
+}
+</style>

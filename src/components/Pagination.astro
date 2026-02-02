@@ -1,0 +1,147 @@
+---
+interface Props {
+  currentPage: number
+  totalPages: number
+  baseUrl: string
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props
+
+// Generate page URL - page 1 has no suffix, others have /2, /3, etc.
+function getPageUrl(page: number): string {
+  if (page === 1) {
+    return baseUrl
+  }
+  // Remove trailing slash from baseUrl if present, then add page number
+  const cleanBase = baseUrl.replace(/\/$/, '')
+  return `${cleanBase}/${page}`
+}
+
+const hasPrev = currentPage > 1
+const hasNext = currentPage < totalPages
+const prevUrl = hasPrev ? getPageUrl(currentPage - 1) : null
+const nextUrl = hasNext ? getPageUrl(currentPage + 1) : null
+
+// Generate visible page numbers (show max 5 pages around current)
+function getVisiblePages(): number[] {
+  const pages: number[] = []
+  const maxVisible = 5
+  let start = Math.max(1, currentPage - Math.floor(maxVisible / 2))
+  let end = Math.min(totalPages, start + maxVisible - 1)
+
+  // Adjust start if we're near the end
+  if (end - start + 1 < maxVisible) {
+    start = Math.max(1, end - maxVisible + 1)
+  }
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+  return pages
+}
+
+const visiblePages = getVisiblePages()
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="Pagination">
+    <div class="pagination-inner">
+      {/* Previous button */}
+      {hasPrev ? (
+        <a href={prevUrl} class="pagination-btn" aria-label="Previous page">
+          <span class="pagination-arrow">←</span>
+          <span class="pagination-text">Prev</span>
+        </a>
+      ) : (
+        <span class="pagination-btn disabled" aria-disabled="true">
+          <span class="pagination-arrow">←</span>
+          <span class="pagination-text">Prev</span>
+        </span>
+      )}
+
+      {/* Page numbers */}
+      <div class="pagination-pages">
+        {visiblePages[0] > 1 && (
+          <>
+            <a href={getPageUrl(1)} class="pagination-page">1</a>
+            {visiblePages[0] > 2 && <span class="pagination-ellipsis">...</span>}
+          </>
+        )}
+
+        {visiblePages.map(page => (
+          page === currentPage ? (
+            <span class="pagination-page current" aria-current="page">{page}</span>
+          ) : (
+            <a href={getPageUrl(page)} class="pagination-page">{page}</a>
+          )
+        ))}
+
+        {visiblePages[visiblePages.length - 1] < totalPages && (
+          <>
+            {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
+              <span class="pagination-ellipsis">...</span>
+            )}
+            <a href={getPageUrl(totalPages)} class="pagination-page">{totalPages}</a>
+          </>
+        )}
+      </div>
+
+      {/* Next button */}
+      {hasNext ? (
+        <a href={nextUrl} class="pagination-btn" aria-label="Next page">
+          <span class="pagination-text">Next</span>
+          <span class="pagination-arrow">→</span>
+        </a>
+      ) : (
+        <span class="pagination-btn disabled" aria-disabled="true">
+          <span class="pagination-text">Next</span>
+          <span class="pagination-arrow">→</span>
+        </span>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+.pagination {
+  --at-apply: 'mt-8 mb-4';
+}
+
+.pagination-inner {
+  --at-apply: 'flex items-center justify-center gap-2 flex-wrap';
+}
+
+.pagination-btn {
+  --at-apply: 'flex items-center gap-1 px-3 py-1.5 text-sm rounded-md';
+  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10 transition-colors';
+}
+
+.pagination-btn.disabled {
+  --at-apply: 'c-tertiary cursor-not-allowed hover:c-tertiary hover:bg-transparent';
+}
+
+.pagination-arrow {
+  --at-apply: 'text-xs';
+}
+
+.pagination-text {
+  --at-apply: 'hidden sm:inline';
+}
+
+.pagination-pages {
+  --at-apply: 'flex items-center gap-1';
+}
+
+.pagination-page {
+  --at-apply: 'min-w-8 h-8 flex items-center justify-center text-sm rounded-md';
+  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10 transition-colors';
+}
+
+.pagination-page.current {
+  --at-apply: 'c-primary bg-primary/10 font-medium';
+}
+
+.pagination-ellipsis {
+  --at-apply: 'px-1 c-tertiary';
+}
+</style>

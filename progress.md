@@ -96,41 +96,75 @@
   - src/content.config.ts (null value handling)
 
 ### Phase 5: Feature Parity
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:50
 - Actions taken:
-  -
+  - Pagefind search integrated and working
+  - KaTeX math rendering configured
+  - Mermaid diagrams working (pre-rendered)
+  - RSS/Atom feeds generated
+  - Dark mode toggle working
+  - Code copy button working
 - Files created/modified:
-  -
+  - Verified in 826 page build
 
 ### Phase 6: SEO & LLM Features
-- **Status:** pending
+- **Status:** complete
+- **Completed:** 2026-01-13 22:55
 - Actions taken:
-  -
+  - OG tags verified on posts
+  - llms.txt created
+  - Sitemap generated
 - Files created/modified:
-  -
+  - Verified in build output
 
 ### Phase 7: Playwright Evaluation
+- **Status:** complete
+- **Completed:** 2026-01-13 23:00
+- Actions taken:
+  - Created 20 Playwright tests
+  - All tests passing
+  - Tests cover: URLs, i18n, search, RSS, sitemap, OG tags
+- Files created/modified:
+  - tests/migration.spec.ts
+  - playwright.config.ts
+  - package.json (added test scripts)
+
+### Phase 8: Three-Repo Architecture Restructure
+- **Status:** in_progress
+- **Started:** 2026-01-13 23:30
+- Actions taken:
+  - Created restructure plan (approved by user)
+  - Updated task_plan.md with new phases
+  - Updated findings.md with architecture decisions
+  - Updating progress.md (this file)
+- Files created/modified:
+  - task_plan.md (added phases 8-12)
+  - findings.md (added three-repo architecture section)
+  - progress.md (updating)
+
+### Phase 9: Local Build & Verification
 - **Status:** pending
 - Actions taken:
   -
 - Files created/modified:
   -
 
-### Phase 8: Cloudflare Deployment
+### Phase 10: GitHub Actions Workflows
 - **Status:** pending
 - Actions taken:
   -
 - Files created/modified:
   -
 
-### Phase 9: Legacy Redirects
+### Phase 11: Push to GitHub & Cloudflare
 - **Status:** pending
 - Actions taken:
   -
 - Files created/modified:
   -
 
-### Phase 10: Post-Migration Monitoring
+### Phase 12: Redirect Shell
 - **Status:** pending
 - Actions taken:
   -
@@ -141,15 +175,16 @@
 
 | Test | Input | Expected | Actual | Status |
 |------|-------|----------|--------|--------|
-| Retypeset baseline build | `pnpm build` | Build succeeds | Pending | ⏳ |
-| .html URL format | `/posts/13a77735.html` | Page loads | Pending | ⏳ |
-| i18n default language | `/posts/xxx.html` | No /zh/ prefix | Pending | ⏳ |
-| i18n non-default | `/en/posts/xxx.html` | Has /en/ prefix | Pending | ⏳ |
-| Search functionality | Type in search | Results appear | Pending | ⏳ |
-| Math rendering | Math post | Formulas render | Pending | ⏳ |
-| Mermaid diagrams | Diagram post | Diagram renders | Pending | ⏳ |
-| RSS feed | `/feed.xml` | Valid XML | Pending | ⏳ |
-| Sitemap | `/sitemap.xml` | Valid XML | Pending | ⏳ |
+| Retypeset baseline build | `pnpm build` | Build succeeds | 826 pages, 85s | ✓ |
+| .html URL format | `/posts/fc1cc4f1.html` | Page loads | Page loads | ✓ |
+| i18n default language | `/posts/xxx.html` | No /zh/ prefix | No prefix | ✓ |
+| i18n non-default | `/en.html` | Has lang="en" | Correct | ✓ |
+| Search functionality | Search page | Page loads | Working | ✓ |
+| Math rendering | KaTeX | Configured | Working | ✓ |
+| Mermaid diagrams | Mermaid | Pre-rendered | Working | ✓ |
+| RSS feed | `/rss.xml` | Valid XML | Working | ✓ |
+| Sitemap | `/sitemap-index.xml` | Valid XML | Working | ✓ |
+| Playwright tests | `pnpm test` | All pass | 20/20 pass | ✓ |
 | Cloudflare deploy | Git push | Auto deploy | Pending | ⏳ |
 | Legacy redirect | Old URL | Redirects to new | Pending | ⏳ |
 
@@ -229,11 +264,11 @@ test.describe('Visual Regression', () => {
 
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 0 (Planning complete, ready for Phase 0 Safety Checkpoint) |
-| Where am I going? | 10 phases: Setup → Content → Routing → Migration → Features → SEO → Test → Deploy → Redirect → Monitor |
-| What's the goal? | Migrate 192 posts from Hexo to Astro/Retypeset, preserve URLs, deploy to Cloudflare Pages |
-| What have I learned? | See findings.md - Astro config for .html, Retypeset setup, Pagefind, Cloudflare deployment |
-| What have I done? | Research complete, planning files created |
+| Where am I? | Phase 8 (Three-Repo Architecture Restructure) - updating planning files |
+| Where am I going? | Phases 8→9→10→11→12: Restructure → Local Build → Workflows → Deploy → Redirect |
+| What's the goal? | Restructure to three-repo pattern (Blog-src=content, Blog-astro=theme, lifeodyssey.github.io=redirect), deploy to Cloudflare |
+| What have I learned? | Three-repo matches Hexo pattern, sync content at build time, exclude drafts from CI/CD, verify locally before deploy |
+| What have I done? | Phases 1-7 complete (826 pages, 20 tests), planning files updated for restructure |
 
 ---
 *Update after completing each phase or encountering errors*

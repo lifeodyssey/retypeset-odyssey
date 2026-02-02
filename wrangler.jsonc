@@ -1,0 +1,8 @@
+{
+  // Wrangler configuration for Cloudflare Pages deployment
+  // See: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+  "name": "life-odyssey",
+  "compatibility_date": "2026-01-13",
+  "pages_build_output_dir": "./dist"
+}

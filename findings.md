@@ -144,6 +144,54 @@ test("home page", async ({ page }) => {
 | KaTeX for math | Better Astro integration than MathJax |
 | astro-pagefind for search | Official integration, automatic indexing |
 | Custom content loader | Needed to map Hexo frontmatter to Retypeset schema |
+| **Three-repo architecture** | Matches original Hexo pattern (Blog-src + theme + deploy) |
+| **Content sync at build time** | Blog-src stays as source of truth, synced to Blog-astro at build |
+| **Drafts excluded from CI/CD** | `source/_drafts/**` changes don't trigger deployment |
+| **Local verification first** | Build locally, open HTML files directly before online deploy |
+
+## Three-Repo Architecture
+
+**Rationale:** User requested pattern matching original Hexo setup where:
+- Blog-src = source markdown content
+- Theme repo = separate (like themes/next was for Hexo)
+- Deploy repo = generated output or redirect shell
+
+**Architecture:**
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│    Blog-src     │     │   Blog-astro    │     │lifeodyssey.github.io│
+│  (Content)      │     │   (Theme)       │     │  (Redirect)     │
+├─────────────────┤     ├─────────────────┤     ├─────────────────┤
+│source/_posts/*.md│     │src/pages/       │     │index.html       │
+│source/_drafts/  │     │src/components/  │     │(JS redirect to  │
+│source/about/    │     │astro.config.ts  │     │ blog.zhenjia.org)│
+└────────┬────────┘     └────────┬────────┘     └─────────────────┘
+         │                       │
+         └───────────┬───────────┘
+                     ▼
+         ┌─────────────────────────┐
+         │    GitHub Actions       │
+         │  Copy → Build → Deploy  │
+         └───────────┬─────────────┘
+                     ▼
+         ┌─────────────────────────┐
+         │   Cloudflare Pages      │
+         │   blog.zhenjia.org      │
+         └─────────────────────────┘
+```
+
+**Content Types:**
+| Source Path | Target | Deployed |
+|-------------|--------|----------|
+| `source/_posts/*.md` | `content/posts/*.md` | ✓ Yes |
+| `source/_drafts/*.md` | N/A | ✗ No (excluded) |
+| `source/about/index.md` | `content/about.md` | ✓ Yes |
+| `source/robots.txt` | `public/robots.txt` | ✓ Yes |
+
+**Build Process:**
+1. Sync content from Blog-src to Blog-astro (`scripts/sync-content.sh`)
+2. Run Astro build (`pnpm build`)
+3. Deploy to Cloudflare Pages
 
 ## Issues Encountered
 

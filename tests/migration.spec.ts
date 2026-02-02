@@ -82,7 +82,7 @@ test.describe('Blog Migration Evaluation', () => {
   test('navigation contains all items', async ({ page }) => {
     await page.goto(BASE_URL)
     const nav = page.locator('nav[aria-label="Site Navigation"]')
-    await expect(nav.locator('a')).toHaveCount(4) // Posts, Tags, Search, About
+    await expect(nav.locator('a')).toHaveCount(6) // Tech, Life, Science, Tags, Search, About
   })
 
   test('post has OG tags', async ({ page }) => {

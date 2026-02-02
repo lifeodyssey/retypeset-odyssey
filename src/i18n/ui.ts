@@ -9,6 +9,11 @@ interface Translation {
   about: string
   search: string
   toc: string
+  tech?: string
+  life?: string
+  science?: string
+  categories?: string
+  categoriesInTotal?: string
 }
 
 export const ui: Record<Language, Translation> = {
@@ -31,6 +36,11 @@ export const ui: Record<Language, Translation> = {
     about: 'About',
     search: 'Search',
     toc: 'Table of Contents',
+    tech: 'Tech',
+    life: 'Life',
+    science: 'Science',
+    categories: 'Categories',
+    categoriesInTotal: 'categories in total',
   },
   'es': {
     title: 'Retipografía',
@@ -61,6 +71,10 @@ export const ui: Record<Language, Translation> = {
     about: '概要',
     search: '検索',
     toc: '目次',
+    tech: '技術',
+    life: '生活',
+    science: '科学',
+    categories: 'カテゴリー',
   },
   'ko': {
     title: '재조판',
@@ -111,6 +125,11 @@ export const ui: Record<Language, Translation> = {
     about: '关于',
     search: '搜索',
     toc: '目录',
+    tech: '技术',
+    life: '生活',
+    science: '科研',
+    categories: '分类',
+    categoriesInTotal: '个分类',
   },
   'zh-tw': {
     title: '重新編排',
@@ -121,5 +140,10 @@ export const ui: Record<Language, Translation> = {
     about: '關於',
     search: '搜尋',
     toc: '目錄',
+    tech: '技術',
+    life: '生活',
+    science: '科研',
+    categories: '分類',
+    categoriesInTotal: '個分類',
   },
 }

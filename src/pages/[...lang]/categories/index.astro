@@ -1,0 +1,35 @@
+---
+import CategoryList from '@/components/CategoryList.astro'
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { ui } from '@/i18n/ui'
+import Layout from '@/layouts/Layout.astro'
+import { getUserCategoriesWithCounts } from '@/utils/content'
+
+export async function getStaticPaths() {
+  return allLocales.map(lang => ({
+    params: { lang: getLangRouteParam(lang) },
+  }))
+}
+
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const categoriesWithCounts = await getUserCategoriesWithCounts(currentLang)
+const totalCategories = categoriesWithCounts.length
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+---
+
+<Layout postTitle={currentUI.categories || 'Categories'}>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {currentUI.categories || 'Categories'}
+    </h1>
+    <p class="mb-6 text-3.5 c-secondary">
+      {totalCategories} {currentUI.categoriesInTotal || 'categories in total'}
+    </p>
+    <div class="uno-decorative-line" />
+    <CategoryList
+      categories={categoriesWithCounts}
+      lang={currentLang}
+    />
+  </section>
+</Layout>

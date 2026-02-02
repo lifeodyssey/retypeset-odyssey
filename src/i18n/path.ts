@@ -15,6 +15,17 @@ export function getTagPath(tagName: string, lang: Language): string {
 }
 
 /**
+ * Get path to a specific category page with language support
+ */
+export function getCategoryPath(category: PostCategory, lang: Language): string {
+  const categoryPath = lang === defaultLocale
+    ? `/${category}/`
+    : `/${lang}/${category}/`
+
+  return base ? `${base}${categoryPath}` : categoryPath
+}
+
+/**
  * Get path to a specific post page with language and category support
  */
 export function getPostPath(slug: string, lang: Language, category?: PostCategory): string {
@@ -38,9 +49,10 @@ export function getLocalizedPath(path: string, currentLang?: Language) {
   const lang = currentLang ?? getLangFromPath(path)
 
   const langPrefix = lang === defaultLocale ? '' : `/${lang}`
+  // Don't add trailing slash since trailingSlash is set to 'never'
   const localizedPath = normalizedPath === ''
     ? `${langPrefix}/`
-    : `${langPrefix}/${normalizedPath}/`
+    : `${langPrefix}/${normalizedPath}`
 
   return base ? `${base}${localizedPath}` : localizedPath
 }

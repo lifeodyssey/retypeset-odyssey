@@ -253,6 +253,57 @@ Phase 0
   - 404 rate < 1%
   - No significant ranking drops after 30 days -->
 
+### Phase 8: Three-Repo Architecture Restructure
+- [ ] Update planning files (task_plan.md, findings.md, progress.md)
+- [ ] Add `.gitignore` entry for `content/posts/*.md` (content from Blog-src)
+- [ ] Create `scripts/sync-content.sh` for content copying
+- [ ] Test sync script locally
+- **Status:** in_progress
+- **Acceptance Criteria:**
+  - Planning files updated with three-repo architecture
+  - Sync script copies posts, about page, robots.txt
+  - Drafts excluded from sync
+
+### Phase 9: Local Build & Verification
+- [ ] Run sync script with Blog-src content
+- [ ] Build: `pnpm build`
+- [ ] Open HTML files directly to verify
+- [ ] Check all features work in local HTML
+- **Status:** pending
+- **Acceptance Criteria:**
+  - All 169 posts render correctly
+  - About page renders
+  - Search, math, mermaid features work
+
+### Phase 10: GitHub Actions Workflows
+- [ ] Create Blog-astro workflow (deploy on theme change)
+- [ ] Update Blog-src workflow (deploy on content change)
+- [ ] Exclude `source/_drafts/**` from triggers
+- **Status:** pending
+- **Acceptance Criteria:**
+  - Both workflows have correct triggers
+  - Drafts don't trigger deployment
+
+### Phase 11: Push to GitHub & Cloudflare Deployment
+- [ ] Push Blog-astro to `lifeodyssey/Blog-astro`
+- [ ] Configure Cloudflare Pages project
+- [ ] Add secrets to both repos
+- [ ] Set custom domain: blog.zhenjia.org
+- **Status:** pending
+- **Acceptance Criteria:**
+  - Blog-astro repo created on GitHub
+  - Cloudflare Pages project configured
+  - Custom domain working
+
+### Phase 12: Redirect Shell for lifeodyssey.github.io
+- [ ] Create redirect HTML
+- [ ] Push to lifeodyssey.github.io repo
+- [ ] Verify redirects work
+- **Status:** pending
+- **Acceptance Criteria:**
+  - Old URLs redirect to new domain
+  - Path preserved in redirect
+
 ## Key Questions
 1. **Math rendering:** KaTeX vs MathJax - which provides better Hexo compatibility?
 2. **Password posts:** Is build-time encryption required, or is CSS hiding acceptable?

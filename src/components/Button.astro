@@ -1,8 +1,10 @@
 ---
 import type { Language } from '@/i18n/config'
 import LanguageSwitcherIcon from '@/assets/icons/language-switcher.svg'
+import SearchIcon from '@/assets/icons/search-icon.svg'
 import ThemeToggleIcon from '@/assets/icons/theme-toggle.svg'
 import { moreLocales, themeConfig } from '@/config'
+import { getLocalizedPath } from '@/i18n/path'
 import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
 
 interface Props {
@@ -17,6 +19,11 @@ const {
 const { supportedLangs } = Astro.props
 const currentPath = Astro.url.pathname
 
+// Get current language for search path
+const langMatch = currentPath.match(/^\/(en|ja|zh-tw)\//)
+const currentLang = langMatch ? langMatch[1] : 'zh'
+const searchPath = getLocalizedPath('/search', currentLang as Language)
+
 // Check if there are other languages to switch
 const showLanguageSwitcher = moreLocales.length > 0
 // Choose a language switch list according to supported languages
@@ -26,11 +33,20 @@ const nextUrl = supportedLangs.length > 0
 ---
 
 <div
-  class:list={[
-  'absolute right-7.25vw top-14.6 flex gap-6 min-[823px]:max-lg:right-[calc(50vw-22rem)]',
-  'lg:(fixed bottom-[min(10.27rem+1.92vw,12rem)] right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
-]}
+  class="fixed top-4 right-4 flex gap-4 z-50 lg:(top-8 right-8)"
 >
+  <!-- Search -->
+  <a
+    href={searchPath}
+    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    aria-label="Search"
+  >
+    <SearchIcon
+      aria-hidden="true"
+      fill="currentColor"
+    />
+  </a>
+
   <!-- Language Switcher -->
   {showLanguageSwitcher && (
     <a

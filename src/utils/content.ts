@@ -7,6 +7,13 @@ import { memoize } from '@/utils/cache'
 
 const metaCache = new Map<string, { minutes: number }>()
 
+// Tags that indicate science/research content (checked first, highest priority)
+const SCIENCE_TAGS = new Set([
+  'ocean color', 'remote sensing', 'oceanography', 'research',
+  'satellite', 'gis', 'earth observation',
+  'climate', 'environmental science', 'geospatial',
+])
+
 // Tags that indicate technical content
 const TECH_TAGS = new Set([
   // Programming & Development
@@ -17,15 +24,12 @@ const TECH_TAGS = new Set([
   'deep learning', 'machine learning', 'tensorflow', 'pytorch',
   'ai', 'artificial intelligence', 'neural network',
   'large language model', 'llm', 'agentic ai', 'claude code',
-  // Science & Research
-  'ocean color', 'remote sensing', 'oceanography', 'research',
-  'satellite', 'gis', 'earth observation',
   // DevOps & Tools
   'docker', 'kubernetes', 'aws', 'cloud', 'devops',
   'git', 'linux', 'database', 'sql',
 ])
 
-export type PostCategory = 'tech' | 'life'
+export type PostCategory = 'tech' | 'life' | 'science'
 
 /**
  * Get the URL slug for a post
@@ -37,12 +41,21 @@ export function getPostSlug(post: CollectionEntry<'posts'>): string {
 
 /**
  * Determine the category of a post based on its tags
- * Tech posts go to /tech/, life posts go to /life/
+ * Priority: Science > Tech > Life
+ * Science posts go to /science/, Tech posts go to /tech/, life posts go to /life/
  */
 export function getPostCategory(post: CollectionEntry<'posts'>): PostCategory {
   const tags = post.data.tags || []
   const normalizedTags = tags.map((t: string) => t.toLowerCase())
 
+  // Check science tags first (highest priority)
+  for (const tag of normalizedTags) {
+    if (SCIENCE_TAGS.has(tag)) {
+      return 'science'
+    }
+  }
+
+  // Then check tech tags
   for (const tag of normalizedTags) {
     if (TECH_TAGS.has(tag)) {
       return 'tech'
@@ -256,6 +269,29 @@ async function _getAllTags(lang?: Language) {
 export const getAllTags = memoize(_getAllTags)
 
 /**
+ * Tag with post count interface
+ */
+export interface TagWithCount {
+  name: string
+  count: number
+}
+
+/**
+ * Get all tags with their post counts
+ *
+ * @param lang The language code to filter by
+ * @returns Array of tags with counts, sorted by popularity
+ */
+async function _getTagsWithCounts(lang?: Language): Promise<TagWithCount[]> {
+  const tagMap = await getPostsGroupByTags(lang)
+  return Array.from(tagMap.entries())
+    .map(([name, posts]) => ({ name, count: posts.length }))
+    .sort((a, b) => b.count - a.count)
+}
+
+export const getTagsWithCounts = memoize(_getTagsWithCounts)
+
+/**
  * Get all posts that contain a specific tag
  *
  * @param tag The tag name to filter posts by
@@ -291,3 +327,150 @@ async function _getTagSupportedLangs(tag: string): Promise<Language[]> {
 }
 
 export const getTagSupportedLangs = memoize(_getTagSupportedLangs)
+
+/**
+ * Get posts filtered by category (tech, life, or science)
+ *
+ * @param category The category to filter by ('tech', 'life', or 'science')
+ * @param lang The language code to filter by, defaults to site's default language
+ *             Note: Science category ignores language filtering and shows all posts
+ * @returns Posts filtered by category (and language for non-science), sorted by date
+ */
+async function _getPostsByCategory(category: PostCategory, lang?: Language) {
+  // Science category shows all posts regardless of language
+  if (category === 'science') {
+    const allPosts = await getCollection(
+      'posts',
+      ({ data }: CollectionEntry<'posts'>) => {
+        return import.meta.env.DEV || !data.draft
+      },
+    )
+    const enhancedPosts = await Promise.all(allPosts.map(addMetaToPost))
+    return enhancedPosts
+      .filter(post => getPostCategory(post) === category)
+      .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
+  }
+
+  // Tech and Life categories filter by language
+  const posts = await getPosts(lang)
+  return posts.filter(post => getPostCategory(post) === category)
+}
+
+export const getPostsByCategory = memoize(_getPostsByCategory)
+
+/**
+ * Category with post count interface
+ */
+export interface CategoryWithCount {
+  name: PostCategory
+  count: number
+}
+
+/**
+ * Get all categories with their post counts
+ */
+async function _getCategoriesWithCounts(lang?: Language): Promise<CategoryWithCount[]> {
+  const categories: PostCategory[] = ['tech', 'life', 'science']
+  const results = await Promise.all(
+    categories.map(async cat => ({
+      name: cat,
+      count: (await getPostsByCategory(cat, lang)).length,
+    })),
+  )
+  return results.sort((a, b) => b.count - a.count)
+}
+
+export const getCategoriesWithCounts = memoize(_getCategoriesWithCounts)
+
+/**
+ * Check which languages support a specific category
+ *
+ * @param category The category to check language support for
+ * @returns Array of language codes that have posts in the specified category
+ */
+async function _getCategorySupportedLangs(category: PostCategory): Promise<Language[]> {
+  const posts = await getCollection(
+    'posts',
+    ({ data }) => !data.draft,
+  )
+  const { allLocales } = await import('@/config')
+
+  return allLocales.filter(locale =>
+    posts.some((post) => {
+      const postCategory = getPostCategory(post)
+      return postCategory === category
+        && (post.data.lang === locale || post.data.lang === '')
+    }),
+  )
+}
+
+export const getCategorySupportedLangs = memoize(_getCategorySupportedLangs)
+
+/**
+ * User-defined category with post count interface
+ * These are categories defined in post frontmatter, not computed categories
+ */
+export interface UserCategoryWithCount {
+  name: string
+  count: number
+}
+
+/**
+ * Group posts by their user-defined categories (from frontmatter)
+ *
+ * @param lang The language code to filter by
+ * @returns Map where keys are category names and values are arrays of posts
+ */
+async function _getPostsGroupByUserCategories(lang?: Language) {
+  const posts = await getPosts(lang)
+  const categoryMap = new Map<string, Post[]>()
+
+  posts.forEach((post: Post) => {
+    const categories = post.data.categories || []
+    // Handle both string and array formats
+    const categoryList = Array.isArray(categories) ? categories : [categories]
+
+    categoryList.forEach((category: string) => {
+      if (!category) return
+      let categoryPosts = categoryMap.get(category)
+      if (!categoryPosts) {
+        categoryPosts = []
+        categoryMap.set(category, categoryPosts)
+      }
+      categoryPosts.push(post)
+    })
+  })
+
+  return categoryMap
+}
+
+export const getPostsGroupByUserCategories = memoize(_getPostsGroupByUserCategories)
+
+/**
+ * Get all user-defined categories with their post counts
+ *
+ * @param lang The language code to filter by
+ * @returns Array of categories with counts, sorted by popularity
+ */
+async function _getUserCategoriesWithCounts(lang?: Language): Promise<UserCategoryWithCount[]> {
+  const categoryMap = await getPostsGroupByUserCategories(lang)
+  return Array.from(categoryMap.entries())
+    .map(([name, posts]) => ({ name, count: posts.length }))
+    .sort((a, b) => b.count - a.count)
+}
+
+export const getUserCategoriesWithCounts = memoize(_getUserCategoriesWithCounts)
+
+/**
+ * Get all posts that belong to a specific user-defined category
+ *
+ * @param category The category name to filter posts by
+ * @param lang The language code to filter by
+ * @returns Array of posts in the specified category
+ */
+async function _getPostsByUserCategory(category: string, lang?: Language) {
+  const categoryMap = await getPostsGroupByUserCategories(lang)
+  return categoryMap.get(category) ?? []
+}
+
+export const getPostsByUserCategory = memoize(_getPostsByUserCategory)

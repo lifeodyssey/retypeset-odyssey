@@ -3,7 +3,7 @@ import TagList from '@/components/TagList.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
-import { getAllTags } from '@/utils/content'
+import { getTagsWithCounts } from '@/utils/content'
 
 export async function getStaticPaths() {
   return allLocales.map(lang => ({
@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const currentLang = getLangFromLocale(Astro.currentLocale)
-const allTags = await getAllTags(currentLang)
+const tagsWithCounts = await getTagsWithCounts(currentLang)
 ---
 
 <Layout>
@@ -20,7 +20,7 @@ const allTags = await getAllTags(currentLang)
   <div class="uno-decorative-line" />
   <!-- Tag List -->
   <TagList
-    tags={allTags}
+    tags={tagsWithCounts}
     lang={currentLang}
   />
 </Layout>

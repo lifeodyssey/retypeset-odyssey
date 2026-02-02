@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content'
+import { ui } from '@/i18n/ui'
+import { getPageInfo } from '@/utils/page'
+import { getPostCategory } from '@/utils/content'
+
+const { currentLang } = getPageInfo(Astro.url.pathname)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+
+// Get all posts
+const allPosts = await getCollection('posts')
+
+// Count posts by category using the getPostCategory function
+const techPosts = allPosts.filter(post => getPostCategory(post) === 'tech')
+const lifePosts = allPosts.filter(post => getPostCategory(post) === 'life')
+const sciencePosts = allPosts.filter(post => getPostCategory(post) === 'science')
+
+// Get unique tags
+const allTags = new Set<string>()
+allPosts.forEach(post => {
+  if (post.data.tags) {
+    post.data.tags.forEach(tag => allTags.add(tag))
+  }
+})
+
+const stats = {
+  total: allPosts.length,
+  tech: techPosts.length,
+  life: lifePosts.length,
+  science: sciencePosts.length,
+  tags: allTags.size,
+}
+---
+
+<div class="site-stats">
+  <h3 class="stats-title">Site Stats</h3>
+  <ul class="stats-list">
+    <li>
+      <span class="stats-label">{currentUI.posts || 'Posts'}</span>
+      <span class="stats-value">{stats.total}</span>
+    </li>
+    <li>
+      <span class="stats-label">{currentUI.tech || 'Tech'}</span>
+      <span class="stats-value">{stats.tech}</span>
+    </li>
+    <li>
+      <span class="stats-label">{currentUI.science || 'Science'}</span>
+      <span class="stats-value">{stats.science}</span>
+    </li>
+    <li>
+      <span class="stats-label">{currentUI.life || 'Life'}</span>
+      <span class="stats-value">{stats.life}</span>
+    </li>
+    <li>
+      <span class="stats-label">{currentUI.tags || 'Tags'}</span>
+      <span class="stats-value">{stats.tags}</span>
+    </li>
+  </ul>
+</div>
+
+<style>
+.site-stats {
+  --at-apply: 'mb-6 p-4 bg-secondary/5 rounded-lg';
+}
+
+.stats-title {
+  --at-apply: 'text-sm font-semibold c-primary mb-3';
+}
+
+.stats-list {
+  --at-apply: 'list-none p-0 m-0 space-y-2';
+}
+
+.stats-list li {
+  --at-apply: 'flex justify-between text-sm';
+}
+
+.stats-label {
+  --at-apply: 'c-secondary';
+}
+
+.stats-value {
+  --at-apply: 'c-primary font-medium';
+}
+</style>
