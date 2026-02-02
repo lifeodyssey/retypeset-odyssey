@@ -33,7 +33,7 @@ const nextUrl = supportedLangs.length > 0
 ---
 
 <div
-  class="fixed top-4 right-4 flex gap-4 z-50 lg:(top-8 right-8)"
+  class="fixed top-4 flex gap-4 z-50 lg:top-8 button-container"
 >
   <!-- Search -->
   <a
@@ -142,3 +142,9 @@ function handleSystemChange(event: MediaQueryListEvent) {
 document.addEventListener('click', handleThemeToggle)
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleSystemChange)
 </script>
+
+<style>
+.button-container {
+  right: max(1rem, calc((100vw - 1200px) / 2 + 2rem));
+}
+</style>

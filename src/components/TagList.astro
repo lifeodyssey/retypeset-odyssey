@@ -65,11 +65,13 @@ const postsText = currentUI.posts || 'posts'
 
 .tag-item {
   --at-apply: 'inline-block c-secondary/80';
-  --at-apply: 'transition-colors';
-  --at-apply: 'hover:c-primary';
+  --at-apply: 'px-3 py-1 rounded-full';
+  --at-apply: 'border border-secondary/30';
+  --at-apply: 'transition-all';
+  --at-apply: 'hover:c-primary hover:border-primary/50';
 }
 
 .tag-item.active {
-  --at-apply: 'c-primary font-bold';
+  --at-apply: 'c-primary font-bold border-primary/50';
 }
 </style>
