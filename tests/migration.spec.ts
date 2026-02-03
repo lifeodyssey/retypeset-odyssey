@@ -10,15 +10,14 @@ test.describe('Blog Migration Evaluation', () => {
   })
 
   test('post page loads with correct URL format', async ({ page }) => {
-    // Test a tech post with abbrlink (Binary search - fc1cc4fb)
     // Note: trailingSlash is set to 'never', so no trailing slash
-    const response = await page.goto(`${BASE_URL}/tech/posts/fc1cc4fb`)
+    const response = await page.goto(`${BASE_URL}/posts/binary-search`)
     expect(response?.status()).toBe(200)
     await expect(page.locator('h1').first()).toContainText('Binary search')
   })
 
   test('search page loads', async ({ page }) => {
-    const response = await page.goto(`${BASE_URL}/search.html`)
+    const response = await page.goto(`${BASE_URL}/search`)
     expect(response?.status()).toBe(200)
     // Page content should contain search heading
     const content = await page.content()
@@ -26,7 +25,7 @@ test.describe('Blog Migration Evaluation', () => {
   })
 
   test('tags page loads', async ({ page }) => {
-    const response = await page.goto(`${BASE_URL}/tags.html`)
+    const response = await page.goto(`${BASE_URL}/tags`)
     expect(response?.status()).toBe(200)
     // Page should have tag links
     const content = await page.content()
@@ -34,7 +33,7 @@ test.describe('Blog Migration Evaluation', () => {
   })
 
   test('about page loads', async ({ page }) => {
-    const response = await page.goto(`${BASE_URL}/about.html`)
+    const response = await page.goto(`${BASE_URL}/about`)
     expect(response?.status()).toBe(200)
   })
 
@@ -66,14 +65,14 @@ test.describe('Blog Migration Evaluation', () => {
   })
 
   test('English locale works', async ({ page }) => {
-    const response = await page.goto(`${BASE_URL}/en.html`)
+    const response = await page.goto(`${BASE_URL}/en`)
     expect(response?.status()).toBe(200)
     const content = await page.content()
     expect(content).toContain('lang="en')
   })
 
   test('Japanese locale works', async ({ page }) => {
-    const response = await page.goto(`${BASE_URL}/ja.html`)
+    const response = await page.goto(`${BASE_URL}/ja`)
     expect(response?.status()).toBe(200)
     const content = await page.content()
     expect(content).toContain('lang="ja')
@@ -82,11 +81,11 @@ test.describe('Blog Migration Evaluation', () => {
   test('navigation contains all items', async ({ page }) => {
     await page.goto(BASE_URL)
     const nav = page.locator('nav[aria-label="Site Navigation"]')
-    await expect(nav.locator('a')).toHaveCount(6) // Tech, Life, Science, Tags, Search, About
+    await expect(nav.locator('a')).toHaveCount(3) // Posts, Tags, About
   })
 
   test('post has OG tags', async ({ page }) => {
-    await page.goto(`${BASE_URL}/tech/posts/fc1cc4fb`)
+    await page.goto(`${BASE_URL}/posts/binary-search`)
     const content = await page.content()
     expect(content).toContain('property="og:type"')
     expect(content).toContain('property="og:title"')
@@ -97,7 +96,7 @@ test.describe('Blog Migration Evaluation', () => {
 // Feature Parity Tests - comparing against lifeodyssey.github.io functionality
 test.describe('Feature Parity Evaluation', () => {
   test('Pagefind search is available (replaces local-search.js)', async ({ page }) => {
-    await page.goto(`${BASE_URL}/search.html`)
+    await page.goto(`${BASE_URL}/search`)
     // Check for Pagefind UI component
     const content = await page.content()
     // Pagefind injects its search UI
@@ -124,7 +123,7 @@ test.describe('Feature Parity Evaluation', () => {
 
   test('code blocks have copy functionality', async ({ page }) => {
     // Navigate to a tech post known to have code blocks
-    await page.goto(`${BASE_URL}/tech/posts/fc1cc4fb`)
+    await page.goto(`${BASE_URL}/posts/binary-search`)
     const content = await page.content()
     // Should have code blocks with copy button
     expect(content).toMatch(/pre|code/i)
@@ -141,26 +140,13 @@ test.describe('Feature Parity Evaluation', () => {
     }
   })
 
-  test('URL format uses category-based routing (/tech/posts/ and /life/posts/)', async ({ page }) => {
-    // Tech posts should be under /tech/posts/
-    // Note: trailingSlash is set to 'never'
-    // Using abbrlink since Binary-search doesn't have a slug field
-    const techPosts = [
-      { slug: 'fc1cc4fb', title: 'Binary search' },
-    ]
+  test('URL format uses /posts/ routing', async ({ page }) => {
+    const response = await page.goto(`${BASE_URL}/posts/binary-search`)
+    expect(response?.status()).toBe(200)
 
-    for (const post of techPosts) {
-      const response = await page.goto(`${BASE_URL}/tech/posts/${post.slug}`)
-      expect(response?.status()).toBe(200)
-    }
-
-    // Life posts should be under /life/posts/
-    // (using abbrlink as fallback for posts without slug)
-    const lifePosts = page.locator('a[href*="/life/posts/"]')
-    // Just verify the pattern exists on homepage
     await page.goto(BASE_URL)
     const content = await page.content()
-    expect(content).toMatch(/\/(tech|life)\/posts\//)
+    expect(content).toMatch(/\/posts\//)
   })
 
   test('responsive design works (mobile viewport)', async ({ page }) => {
@@ -172,7 +158,7 @@ test.describe('Feature Parity Evaluation', () => {
 
   test('posts list is accessible from homepage', async ({ page }) => {
     await page.goto(BASE_URL)
-    // Should have links to posts under /tech/posts/ or /life/posts/
+    // Should have links to posts under /posts/
     const postLinks = page.locator('a[href*="/posts/"]')
     const count = await postLinks.count()
     expect(count).toBeGreaterThan(0)
