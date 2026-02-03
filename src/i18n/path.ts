@@ -2,6 +2,32 @@ import type { Language } from '@/i18n/config'
 import { allLocales, base, defaultLocale } from '@/config'
 import { getLangFromPath, getNextGlobalLang } from '@/i18n/lang'
 
+function stripLeadingLang(path: string, lang: Language): string {
+  const normalized = path.replace(/^\/+/, '')
+  if (!normalized) {
+    return '/'
+  }
+
+  const [first, ...rest] = normalized.split('/')
+  const firstNoHtml = first.replace(/\.html$/, '')
+  if (firstNoHtml !== lang) {
+    return path
+  }
+
+  // /en , /en.html -> /
+  if (rest.length === 0) {
+    return '/'
+  }
+
+  const restPath = `/${rest.join('/')}`
+  // Guard against bad states like /en/en.html
+  if (restPath === `/${lang}` || restPath === `/${lang}.html`) {
+    return '/'
+  }
+
+  return restPath
+}
+
 /**
  * Get path to a specific tag page with language support
  */
@@ -59,7 +85,7 @@ export function getNextLangPath(currentPath: string, currentLang: Language, next
 
   const pagePath = currentLang === defaultLocale
     ? pathWithoutBase
-    : pathWithoutBase.replace(`/${currentLang}`, '')
+    : stripLeadingLang(pathWithoutBase, currentLang)
 
   return getLocalizedPath(pagePath, nextLang)
 }

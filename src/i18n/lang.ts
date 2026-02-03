@@ -40,7 +40,15 @@ export function getLangFromPath(path: string): Language {
     ? path.slice(base.length)
     : path
 
-  return moreLocales.find(lang => pathWithoutBase.startsWith(`/${lang}/`)) ?? defaultLocale
+  const normalized = pathWithoutBase.replace(/^\/+/, '')
+  if (!normalized) {
+    return defaultLocale
+  }
+
+  const [firstSegment] = normalized.split('/')
+  const maybeLang = firstSegment.replace(/\.html$/, '') as Language
+
+  return moreLocales.includes(maybeLang) ? maybeLang : defaultLocale
 }
 
 /**

@@ -6,7 +6,6 @@ import PostList from '@/components/PostList.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
-import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
 import { getPosts } from '@/utils/content'
 
@@ -32,9 +31,6 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 const page = Astro.props.page as Page<Post>
 const currentLang = getLangFromLocale(Astro.currentLocale)
-const currentUI = ui[currentLang as keyof typeof ui] ?? {}
-
-const titleLabel = currentUI.posts || 'Posts'
 
 // Base URL for pagination (root path for the language)
 const baseUrl = getLocalizedPath('/', currentLang)
@@ -42,9 +38,6 @@ const baseUrl = getLocalizedPath('/', currentLang)
 
 <Layout>
   <section class="mb-7.5">
-    <h1 class="mb-6 text-5 font-bold cjk:tracking-wide lg:text-6">
-      {titleLabel}
-    </h1>
     <div class="uno-decorative-line" />
     <PostList posts={page.data} lang={currentLang} />
     <Pagination

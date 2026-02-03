@@ -2,6 +2,10 @@ import { base, moreLocales } from '@/config'
 import { getLangFromPath } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 
+function stripHtmlExtension(path: string): string {
+  return path.endsWith('.html') ? path.slice(0, -'.html'.length) : path
+}
+
 // Determine if the path matches a specific page type
 function matchPageType(path: string, prefix: string = '') {
   // Remove base path if configured
@@ -10,11 +14,31 @@ function matchPageType(path: string, prefix: string = '') {
     : path
 
   // Remove leading and trailing slashes from the path
-  const normalizedPath = pathWithoutBase.replace(/^\/|\/$/g, '')
+  const normalizedPath = stripHtmlExtension(pathWithoutBase.replace(/^\/|\/$/g, ''))
 
-  // Homepage check: matches root path ('') or language code ('en', 'zh-tw')
+  // Homepage check: matches root path ('') or language code ('en')
   if (prefix === '') {
-    return normalizedPath === '' || (moreLocales as readonly string[]).includes(normalizedPath)
+    if (normalizedPath === '') {
+      return true
+    }
+
+    const locales = moreLocales as readonly string[]
+    if (locales.includes(normalizedPath)) {
+      return true
+    }
+
+    // Pagination pages: /2, /3 ... and /en/2, /ja/3 ...
+    if (/^\d+$/.test(normalizedPath)) {
+      return true
+    }
+
+    return locales.some((lang) => {
+      if (!normalizedPath.startsWith(`${lang}/`)) {
+        return false
+      }
+      const rest = normalizedPath.slice(lang.length + 1)
+      return /^\d+$/.test(rest)
+    })
   }
 
   // Ensure strict segment boundary matching to prevent partial matches
