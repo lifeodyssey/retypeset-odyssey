@@ -33,7 +33,7 @@ const supportedLangs = await getTagSupportedLangs(tag)
   <div class="uno-decorative-line" />
   <!-- Tag List -->
   <TagList
-    tags={tagsWithCounts}
+    tags={tagsWithCounts.map(t => t.name)}
     currentTag={tag}
     lang={currentLang}
   />

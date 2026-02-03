@@ -2,19 +2,12 @@
 import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
 
-const { currentLang, isHome, isTag, isAbout, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const { currentLang, isHome, isPost, isTag, isAbout, getLocalizedPath } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
-const isTech = Astro.url.pathname.includes('/tech') || isHome
-const isLife = Astro.url.pathname.includes('/life')
-const isScience = Astro.url.pathname.includes('/science')
-const isCategory = Astro.url.pathname.includes('/categories')
 
+const isPostActive = isHome || isPost
 const isTagActive = isTag
 const isAboutActive = isAbout
-const isCategoryActive = isCategory
-const isTechActive = isTech && !isLife && !isScience && !isCategory
-const isLifeActive = isLife
-const isScienceActive = isScience
 
 function getNavItemClass(isActive: boolean) {
   return isActive
@@ -22,35 +15,19 @@ function getNavItemClass(isActive: boolean) {
     : 'highlight-hover transition-[colors,font-weight] after:bottom-0.7em hover:(c-primary font-bold)'
 }
 
-// Navigation items - Tech/Life/Science/Tags/Category/About
 const navItems = [
   {
-    href: '/tech',
-    label: currentUI.tech || 'Tech',
-    className: getNavItemClass(isTechActive),
+    href: '/',
+    label: currentUI.posts,
+    className: getNavItemClass(isPostActive),
   },
   {
-    href: '/life',
-    label: currentUI.life || 'Life',
-    className: getNavItemClass(isLifeActive),
-  },
-  {
-    href: '/science',
-    label: currentUI.science || 'Science',
-    className: getNavItemClass(isScienceActive),
-  },
-  {
-    href: '/tags',
+    href: '/tags/',
     label: currentUI.tags,
     className: getNavItemClass(isTagActive),
   },
   {
-    href: '/categories',
-    label: currentUI.categories || 'Categories',
-    className: getNavItemClass(isCategoryActive),
-  },
-  {
-    href: '/about',
+    href: '/about/',
     label: currentUI.about,
     className: getNavItemClass(isAboutActive),
   },
@@ -59,9 +36,13 @@ const navItems = [
 
 <nav
   aria-label="Site Navigation"
-  class="top-navbar"
+  class:list={[
+    'mb-10.5 text-3.6 font-semibold leading-2.45em font-navbar',
+    'lg:(uno-desktop-column text-4 bottom-[min(9.04rem+3.85vw,12.5rem)]) cjk:tracking-wide',
+    isPost ? 'hidden lg:block' : '',
+  ]}
 >
-  <ul class="nav-list">
+  <ul>
     {navItems.map(item => (
       <li>
         <a
@@ -74,17 +55,3 @@ const navItems = [
     ))}
   </ul>
 </nav>
-
-<style>
-.top-navbar {
-  --at-apply: 'text-3.6 font-semibold font-navbar cjk:tracking-wide';
-}
-
-.nav-list {
-  --at-apply: 'flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0';
-}
-
-.nav-list li {
-  --at-apply: 'leading-2em';
-}
-</style>

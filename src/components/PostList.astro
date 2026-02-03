@@ -4,7 +4,6 @@ import type { Post } from '@/types'
 import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { getPostPath } from '@/i18n/path'
-import { getPostCategory, getPostSlug } from '@/utils/content'
 import { getPostDescription } from '@/utils/description'
 import { isHomePage } from '@/utils/page'
 
@@ -20,8 +19,7 @@ const isHome = isHomePage(Astro.url.pathname)
 
 <ul>
   {posts.map((post) => {
-    const slug = getPostSlug(post)
-    const category = getPostCategory(post)
+    const slug = post.data.abbrlink || post.id
 
     return (
       <li
@@ -37,7 +35,7 @@ const isHome = isHomePage(Astro.url.pathname)
               'cjk:tracking-wide',
               isHome ? 'lg:font-medium lg:text-4.5' : '',
             ]}
-            href={getPostPath(slug, lang, category)}
+            href={getPostPath(slug, lang)}
             transition:name={`post-${slug}${lang ? `-${lang}` : ''}`}
             data-disable-theme-toggle-transition
           >
@@ -73,12 +71,15 @@ const isHome = isHomePage(Astro.url.pathname)
           />
         </div>
 
-        {/* post description/excerpt */}
-        <div class="heti mt-2">
-          <p class="c-secondary text-3.5 lg:text-3.65">
-            {getPostDescription(post, 'list')}
-          </p>
-        </div>
+        {/* desktop post description */}
+        {isHome && (
+          <div
+            class="heti hidden"
+            lg="mt-2.25 block"
+          >
+            <p>{getPostDescription(post, 'list')}</p>
+          </div>
+        )}
       </li>
     )
   })}
