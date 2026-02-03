@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
 import Comment from '@/components/Comment/Index.astro'
 import PostDate from '@/components/PostDate.astro'
 import TagList from '@/components/TagList.astro'
@@ -10,61 +10,31 @@ import TOC from '@/components/Widgets/TOC.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
-import { checkPostSlugDuplication, getPostCategory, getPostSlug } from '@/utils/content'
+import { getPostGroups, getPostSlug } from '@/utils/content'
 import { getPostDescription } from '@/utils/description'
 
 export async function getStaticPaths() {
-  const posts: CollectionEntry<'posts'>[] = await getCollection('posts')
+  const groups = await getPostGroups()
 
-  // Check for duplicate slugs
-  const duplicates = await checkPostSlugDuplication(posts)
-  if (duplicates.length > 0) {
-    throw new Error(`Duplicate post slugs:\n${duplicates.join('\n')}`)
-  }
+  return allLocales.flatMap(lang => groups
+    .map((group) => {
+      const post = group.byLang[lang]
+      if (!post) {
+        return null
+      }
 
-  // Build slug to languages map
-  const slugToLangsMap = new Map<string, Set<Language>>()
-
-  for (const post of posts) {
-    const slug = getPostSlug(post)
-    const lang = post.data.lang
-
-    let langSet = slugToLangsMap.get(slug)
-    if (!langSet) {
-      langSet = new Set()
-      slugToLangsMap.set(slug, langSet)
-    }
-
-    if (lang) {
-      langSet.add(lang as Language)
-    } else {
-      allLocales.forEach(locale => langSet.add(locale))
-    }
-  }
-
-  // Convert map to sorted record
-  const slugToLangs: Record<string, Language[]> = {}
-  for (const [slug, langs] of slugToLangsMap) {
-    slugToLangs[slug] = [...langs].sort(
-      (a, b) => allLocales.indexOf(a) - allLocales.indexOf(b)
-    )
-  }
-
-  return allLocales.flatMap(lang => posts
-    .filter(post => import.meta.env.DEV || !post.data.draft)
-    .filter(post => post.data.lang === lang || post.data.lang === '')
-    .map((post) => {
-      const slug = getPostSlug(post)
-      const category = getPostCategory(post)
       return {
         params: {
           lang: getLangRouteParam(lang),
-          category,
-          slug,
+          slug: group.slug,
         },
-        props: { post, supportedLangs: slugToLangs[slug] },
+        props: {
+          post,
+          supportedLangs: group.supportedLangs,
+        },
       }
-    }),
+    })
+    .filter(Boolean),
   )
 }
 
@@ -73,7 +43,7 @@ interface Props {
   supportedLangs: Language[]
 }
 
-const { post, supportedLangs } = Astro.props
+const { post, supportedLangs } = Astro.props as Props
 const currentLang = getLangFromLocale(Astro.currentLocale)
 const slug = getPostSlug(post)
 const description = getPostDescription(post, 'meta')
@@ -128,3 +98,4 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
     </div>
   </article>
 </Layout>
+

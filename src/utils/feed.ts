@@ -1,16 +1,15 @@
 import type { APIContext, ImageMetadata } from 'astro'
-import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
 import { getImage } from 'astro:assets'
-import { getCollection } from 'astro:content'
 import { Feed } from 'feed'
 import MarkdownIt from 'markdown-it'
 import { parse } from 'node-html-parser'
 import sanitizeHtml from 'sanitize-html'
 import { base, defaultLocale, themeConfig } from '@/config'
+import { getPostPath } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
 import { memoize } from '@/utils/cache'
-import { getPostCategory, getPostSlug } from '@/utils/content'
+import { getPosts, getPostSlug } from '@/utils/content'
 import { getPostDescription } from '@/utils/description'
 
 const markdownParser = new MarkdownIt()
@@ -112,7 +111,7 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
  */
 export async function generateFeed({ lang }: { lang?: Language } = {}) {
   const currentUI = ui[lang as keyof typeof ui] ?? ui[defaultLocale as keyof typeof ui] ?? {}
-  const siteURL = lang ? `${url}${base}/${lang}/` : `${url}${base}/`
+  const siteURL = lang ? `${url}${base}/${lang}` : `${url}${base}/`
 
   // Create Feed instance
   const feed = new Feed({
@@ -136,29 +135,17 @@ export async function generateFeed({ lang }: { lang?: Language } = {}) {
     },
   })
 
-  // Filter posts by language and exclude drafts
-  const posts = await getCollection(
-    'posts',
-    ({ data }: { data: CollectionEntry<'posts'>['data'] }) => {
-      const isNotDraft = !data.draft
-      const isCorrectLang = data.lang === lang
-        || data.lang === ''
-        || (lang === undefined && data.lang === defaultLocale)
-
-      return isNotDraft && isCorrectLang
-    },
-  )
-
-  // Sort posts by published date in descending order and limit to the latest 25
-  const recentPosts = [...posts]
-    .sort((a, b) => new Date(b.data.published).getTime() - new Date(a.data.published).getTime())
+  // Language-aware selection (includes inferred base-language posts)
+  const recentPosts = (await getPosts(lang))
     .slice(0, 25)
 
   // Add posts to feed
   for (const post of recentPosts) {
     const slug = getPostSlug(post)
-    const category = getPostCategory(post)
-    const link = new URL(`${category}/posts/${slug}/`, siteURL).toString()
+    const link = new URL(
+      getPostPath(slug, (lang ?? defaultLocale) as Language),
+      url,
+    ).toString()
 
     // Optimize content processing
     const postContent = post.body

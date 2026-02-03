@@ -2,10 +2,101 @@ import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
 import type { Post } from '@/types'
 import { getCollection, render } from 'astro:content'
-import { defaultLocale } from '@/config'
+import { allLocales, defaultLocale } from '@/config'
 import { memoize } from '@/utils/cache'
 
 const metaCache = new Map<string, { minutes: number }>()
+
+function getPostBaseId(post: CollectionEntry<'posts'>): string {
+  const id = post.id.trim()
+
+  // Strip language suffix from filename (e.g. "foo.en" -> "foo")
+  for (const lang of allLocales) {
+    const suffix = `.${lang}`
+    if (id.endsWith(suffix)) {
+      return id.slice(0, -suffix.length)
+    }
+  }
+
+  return id
+}
+
+function slugifyPathSegment(input: string): string {
+  const slug = input
+    .normalize('NFKC')
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_]+/g, '-')
+    .replace(/[^\p{Letter}\p{Number}]+/gu, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+
+  return slug
+}
+
+export interface PostGroup {
+  baseId: string
+  slug: string
+  supportedLangs: Language[]
+  byLang: Partial<Record<Language, CollectionEntry<'posts'>>>
+}
+
+async function _getPostGroups(): Promise<PostGroup[]> {
+  const posts = await getCollection(
+    'posts',
+    ({ data }: CollectionEntry<'posts'>) => !data.draft,
+  )
+
+  const groups = new Map<string, CollectionEntry<'posts'>[]>()
+  for (const post of posts) {
+    const baseId = getPostBaseId(post)
+    const list = groups.get(baseId) ?? []
+    list.push(post)
+    groups.set(baseId, list)
+  }
+
+  const slugToBaseId = new Map<string, string>()
+  const results: PostGroup[] = []
+
+  for (const [baseId, entries] of groups) {
+    const slug = slugifyPathSegment(baseId) || baseId
+    const existing = slugToBaseId.get(slug)
+    if (existing && existing !== baseId) {
+      throw new Error(`Duplicate post slug "${slug}" from "${existing}" and "${baseId}"`)
+    }
+    slugToBaseId.set(slug, baseId)
+
+    const baseEntry = entries.find(e => !e.data.lang)
+    const zhEntry = entries.find(e => e.data.lang === 'zh')
+    const enEntry = entries.find(e => e.data.lang === 'en')
+    const jaEntry = entries.find(e => e.data.lang === 'ja')
+
+    // Base file language inference (best-effort):
+    // - If there is an explicit zh translation but no explicit en translation,
+    //   treat base entry as English.
+    const inferredEnFromBase = !enEntry && !!zhEntry ? baseEntry : undefined
+    const inferredZhFromBase = !zhEntry ? baseEntry : undefined
+
+    const byLang: PostGroup['byLang'] = {
+      zh: zhEntry ?? inferredZhFromBase,
+      en: enEntry ?? inferredEnFromBase,
+      ja: jaEntry,
+    }
+
+    const supportedLangs = allLocales.filter(lang => byLang[lang])
+
+    results.push({
+      baseId,
+      slug,
+      supportedLangs,
+      byLang,
+    })
+  }
+
+  return results
+}
+
+export const getPostGroups = memoize(_getPostGroups)
 
 // Tags that indicate science/research content (checked first, highest priority)
 const SCIENCE_TAGS = new Set([
@@ -32,11 +123,13 @@ const TECH_TAGS = new Set([
 export type PostCategory = 'tech' | 'life' | 'science'
 
 /**
- * Get the URL slug for a post
- * Priority: slug > abbrlink > post.id
+ * Get the URL slug for a post.
+ *
+ * Category routing is disabled; slug comes from the (base) filename.
  */
 export function getPostSlug(post: CollectionEntry<'posts'>): string {
-  return post.data.slug || post.data.abbrlink || post.id
+  const baseId = getPostBaseId(post)
+  return slugifyPathSegment(baseId) || post.data.abbrlink || baseId
 }
 
 /**
@@ -66,13 +159,14 @@ export function getPostCategory(post: CollectionEntry<'posts'>): PostCategory {
 }
 
 /**
- * Get the URL path for a post including its category subdirectory
+ * Get the URL path for a post.
+ *
+ * NOTE: Category-based routing is currently disabled.
  */
 export function getPostPath(post: CollectionEntry<'posts'>, langPrefix?: string): string {
-  const category = getPostCategory(post)
   const slug = getPostSlug(post)
   const prefix = langPrefix ? `/${langPrefix}` : ''
-  return `${prefix}/${category}/posts/${slug}.html`
+  return `${prefix}/posts/${slug}.html`
 }
 
 /**
@@ -144,18 +238,13 @@ export async function checkPostSlugDuplication(posts: CollectionEntry<'posts'>[]
  * @returns Posts filtered by language, enhanced with metadata, sorted by date
  */
 async function _getPosts(lang?: Language) {
-  const currentLang = lang || defaultLocale
+  const currentLang = lang && allLocales.includes(lang) ? lang : defaultLocale
+  const groups = await getPostGroups()
+  const selected = groups
+    .map(group => group.byLang[currentLang])
+    .filter(Boolean) as CollectionEntry<'posts'>[]
 
-  const filteredPosts = await getCollection(
-    'posts',
-    ({ data }: CollectionEntry<'posts'>) => {
-      // Always hide drafts (even in dev mode)
-      const shouldInclude = !data.draft
-      return shouldInclude && (data.lang === currentLang || data.lang === '')
-    },
-  )
-
-  const enhancedPosts = await Promise.all(filteredPosts.map(addMetaToPost))
+  const enhancedPosts = await Promise.all(selected.map(addMetaToPost))
 
   return enhancedPosts.sort((a, b) =>
     b.data.published.valueOf() - a.data.published.valueOf(),
@@ -312,17 +401,9 @@ export const getPostsByTag = memoize(_getPostsByTag)
  * @returns Array of language codes that support the specified tag
  */
 async function _getTagSupportedLangs(tag: string): Promise<Language[]> {
-  const posts = await getCollection(
-    'posts',
-    ({ data }) => !data.draft,
-  )
-  const { allLocales } = await import('@/config')
-
+  const groups = await getPostGroups()
   return allLocales.filter(locale =>
-    posts.some(post =>
-      post.data.tags?.includes(tag)
-      && (post.data.lang === locale || post.data.lang === ''),
-    ),
+    groups.some(group => group.byLang[locale]?.data.tags?.includes(tag)),
   )
 }
 

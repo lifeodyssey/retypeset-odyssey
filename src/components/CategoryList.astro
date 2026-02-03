@@ -1,7 +1,6 @@
 ---
 import type { Language } from '@/i18n/config'
 import type { UserCategoryWithCount } from '@/utils/content'
-import { ui } from '@/i18n/ui'
 
 interface Props {
   categories: UserCategoryWithCount[]
@@ -10,8 +9,6 @@ interface Props {
 }
 
 const { categories, currentCategory = '', lang } = Astro.props
-const currentUI = ui[lang as keyof typeof ui] ?? {}
-const postsText = currentUI.posts || 'posts'
 
 // Generate category path (user-defined categories)
 function getCategoryPagePath(category: string): string {

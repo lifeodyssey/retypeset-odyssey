@@ -31,8 +31,7 @@ export function isHomePage(path: string) {
 }
 
 export function isPostPage(path: string) {
-  // Match both /tech/posts/ and /life/posts/ patterns
-  return matchPageType(path, 'tech/posts') || matchPageType(path, 'life/posts')
+  return matchPageType(path, 'posts')
 }
 
 export function isTagPage(path: string) {

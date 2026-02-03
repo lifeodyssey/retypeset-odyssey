@@ -8,17 +8,17 @@ import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
-import { getPostsByCategory } from '@/utils/content'
+import { getPosts } from '@/utils/content'
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const POSTS_PER_PAGE = 10
   const results = []
 
   for (const lang of allLocales) {
-    const techPosts = await getPostsByCategory('tech', lang)
+    const posts = await getPosts(lang)
     const langParam = getLangRouteParam(lang)
 
-    const paginatedPages = paginate(techPosts, {
+    const paginatedPages = paginate(posts, {
       pageSize: POSTS_PER_PAGE,
       params: { lang: langParam },
       props: { lang },
@@ -30,12 +30,11 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   return results
 }
 
-const { lang } = Astro.props as { lang: string }
 const page = Astro.props.page as Page<Post>
 const currentLang = getLangFromLocale(Astro.currentLocale)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 
-const categoryLabel = currentUI.tech || 'Tech'
+const titleLabel = currentUI.posts || 'Posts'
 
 // Base URL for pagination (root path for the language)
 const baseUrl = getLocalizedPath('/', currentLang)
@@ -44,7 +43,7 @@ const baseUrl = getLocalizedPath('/', currentLang)
 <Layout>
   <section class="mb-7.5">
     <h1 class="mb-6 text-5 font-bold cjk:tracking-wide lg:text-6">
-      {categoryLabel}
+      {titleLabel}
     </h1>
     <div class="uno-decorative-line" />
     <PostList posts={page.data} lang={currentLang} />

@@ -5,6 +5,7 @@ import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { getPostPath } from '@/i18n/path'
 import { getPostDescription } from '@/utils/description'
+import { getPostSlug } from '@/utils/content'
 import { isHomePage } from '@/utils/page'
 
 export interface Props {
@@ -19,7 +20,7 @@ const isHome = isHomePage(Astro.url.pathname)
 
 <ul>
   {posts.map((post) => {
-    const slug = post.data.abbrlink || post.id
+    const slug = getPostSlug(post)
 
     return (
       <li

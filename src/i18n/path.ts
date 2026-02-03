@@ -1,5 +1,4 @@
 import type { Language } from '@/i18n/config'
-import type { PostCategory } from '@/utils/content'
 import { allLocales, base, defaultLocale } from '@/config'
 import { getLangFromPath, getNextGlobalLang } from '@/i18n/lang'
 
@@ -15,24 +14,12 @@ export function getTagPath(tagName: string, lang: Language): string {
 }
 
 /**
- * Get path to a specific category page with language support
- */
-export function getCategoryPath(category: PostCategory, lang: Language): string {
-  const categoryPath = lang === defaultLocale
-    ? `/${category}`
-    : `/${lang}/${category}`
-
-  return base ? `${base}${categoryPath}` : categoryPath
-}
-
-/**
  * Get path to a specific post page with language and category support
  */
-export function getPostPath(slug: string, lang: Language, category?: PostCategory): string {
-  const cat = category || 'life'
+export function getPostPath(slug: string, lang: Language): string {
   const postPath = lang === defaultLocale
-    ? `/${cat}/posts/${slug}`
-    : `/${lang}/${cat}/posts/${slug}`
+    ? `/posts/${slug}`
+    : `/${lang}/posts/${slug}`
 
   return base ? `${base}${postPath}` : postPath
 }
@@ -51,7 +38,7 @@ export function getLocalizedPath(path: string, currentLang?: Language) {
   const langPrefix = lang === defaultLocale ? '' : `/${lang}`
   // Don't add trailing slash since trailingSlash is set to 'never'
   const localizedPath = normalizedPath === ''
-    ? `${langPrefix}/`
+    ? `${langPrefix || '/'}`
     : `${langPrefix}/${normalizedPath}`
 
   return base ? `${base}${localizedPath}` : localizedPath
