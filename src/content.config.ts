@@ -3,7 +3,13 @@ import { defineCollection, z } from 'astro:content'
 import { allLocales, themeConfig } from '@/config'
 
 const posts = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './content/posts' }),
+  loader: glob({
+    pattern: '**/*.{md,mdx}',
+    base: './content/posts',
+    // Keep multi-dot filenames (e.g. `foo.en.md`) distinct in Astro Content Layer.
+    // Otherwise, `foo.md` and `foo.en.md` may collide and overwrite each other.
+    generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ''),
+  }),
   schema: z.object({
     // Title - optional with fallback to empty (posts without title become drafts)
     title: z.string().optional().default(''),
