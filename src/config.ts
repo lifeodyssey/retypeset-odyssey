@@ -10,7 +10,7 @@ export const themeConfig: ThemeConfig = {
     // site description
     description: 'A personal blog about life, technology, and reflections.',
     // use i18n title/subtitle/description from src/i18n/ui.ts instead of static ones above
-    i18nTitle: false, // true | false
+    i18nTitle: true, // true | false
     // author name
     author: 'Zhenjia',
     // site url
@@ -58,10 +58,10 @@ export const themeConfig: ThemeConfig = {
   // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   global: {
     // default language
-    locale: 'zh', // de | en | es | fr | ja | ko | pl | pt | ru | zh | zh-tw
+    locale: 'en', // de | en | es | fr | ja | ko | pl | pt | ru | zh | zh-tw
     // more languages
     // not fill in the locale code above again, can be an empty array []
-    moreLocales: ['en', 'ja'], // Only zh (default), en, ja per PRD
+    moreLocales: ['zh', 'ja'], // Only en (default), zh, ja per PRD
     // post font style
     fontStyle: 'sans', // sans | serif
     // post date format

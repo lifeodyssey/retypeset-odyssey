@@ -8,8 +8,8 @@ import { getLangFromPath, getNextGlobalLang } from '@/i18n/lang'
  */
 export function getTagPath(tagName: string, lang: Language): string {
   const tagPath = lang === defaultLocale
-    ? `/tags/${tagName}/`
-    : `/${lang}/tags/${tagName}/`
+    ? `/tags/${tagName}`
+    : `/${lang}/tags/${tagName}`
 
   return base ? `${base}${tagPath}` : tagPath
 }
@@ -19,8 +19,8 @@ export function getTagPath(tagName: string, lang: Language): string {
  */
 export function getCategoryPath(category: PostCategory, lang: Language): string {
   const categoryPath = lang === defaultLocale
-    ? `/${category}/`
-    : `/${lang}/${category}/`
+    ? `/${category}`
+    : `/${lang}/${category}`
 
   return base ? `${base}${categoryPath}` : categoryPath
 }
@@ -31,8 +31,8 @@ export function getCategoryPath(category: PostCategory, lang: Language): string 
 export function getPostPath(slug: string, lang: Language, category?: PostCategory): string {
   const cat = category || 'life'
   const postPath = lang === defaultLocale
-    ? `/${cat}/posts/${slug}/`
-    : `/${lang}/${cat}/posts/${slug}/`
+    ? `/${cat}/posts/${slug}`
+    : `/${lang}/${cat}/posts/${slug}`
 
   return base ? `${base}${postPath}` : postPath
 }

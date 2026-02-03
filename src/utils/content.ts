@@ -149,8 +149,8 @@ async function _getPosts(lang?: Language) {
   const filteredPosts = await getCollection(
     'posts',
     ({ data }: CollectionEntry<'posts'>) => {
-      // Show drafts in dev mode only
-      const shouldInclude = import.meta.env.DEV || !data.draft
+      // Always hide drafts (even in dev mode)
+      const shouldInclude = !data.draft
       return shouldInclude && (data.lang === currentLang || data.lang === '')
     },
   )
