@@ -32,8 +32,5 @@ pnpm-debug.log*
 playwright-report/
 test-results/
 
-# Content synced from Blog-src at build time
-# (Blog-astro is theme-only, content comes from Blog-src)
-content/posts/*
-!content/posts/.gitkeep
-!content/posts/_example-post.md
+## Content
+# `content/posts/` is tracked in this repo (Cloudflare Pages builds from this git repo).
