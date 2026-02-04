@@ -12,7 +12,12 @@ const { currentLang } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 
 const { headings = [] } = Astro.props
-const filteredHeadings = headings.filter(heading => heading.depth >= 2 && heading.depth <= 4)
+const filteredHeadings = headings.filter(heading => heading.depth >= 1 && heading.depth <= 4)
+const minDepth = filteredHeadings.reduce((min, heading) => Math.min(min, heading.depth), 6)
+const normalizedHeadings = filteredHeadings.map(heading => ({
+  ...heading,
+  tocDepth: heading.depth - minDepth,
+}))
 ---
 
 {filteredHeadings.length > 0 && (
@@ -56,26 +61,30 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 2 && headin
       >
         {/* TOC List */}
         <ul id="toc-links-list">
-          {filteredHeadings.map(heading => (
+          {normalizedHeadings.map((heading) => {
+            const depth = heading.tocDepth
+            return (
             <li
               class:list={{
-                'ml-0': heading.depth === 2,
-                'ml-4': heading.depth === 3,
-                'ml-8': heading.depth === 4,
+                'ml-0': depth === 0,
+                'ml-4': depth === 1,
+                'ml-8': depth === 2,
+                'ml-12': depth >= 3,
               }}
             >
               <a
                 href={`#${heading.slug}`}
                 class:list={[
-                  { 'no-heti toc-links-h2': heading.depth === 2 },
-                  { 'no-heti toc-links-h3': heading.depth === 3 },
-                  { 'no-heti toc-links-h4': heading.depth === 4 },
+                  { 'no-heti toc-links-h2': depth === 0 },
+                  { 'no-heti toc-links-h3': depth === 1 },
+                  { 'no-heti toc-links-h4': depth >= 2 },
                 ]}
               >
                 {heading.text}
               </a>
             </li>
-          ))}
+            )
+          })}
         </ul>
       </nav>
     </div>
