@@ -12,8 +12,8 @@ const { currentLang } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 
 const { headings = [] } = Astro.props
-const filteredHeadings = headings.filter(heading => heading.depth >= 1 && heading.depth <= 4)
-const minDepth = filteredHeadings.reduce((min, heading) => Math.min(min, heading.depth), 6)
+const filteredHeadings = headings.filter(heading => heading.depth >= 1 && heading.depth <= 6)
+const minDepth = filteredHeadings.reduce((min, heading) => Math.min(min, heading.depth), 7)
 const normalizedHeadings = filteredHeadings.map(heading => ({
   ...heading,
   tocDepth: heading.depth - minDepth,
@@ -69,7 +69,9 @@ const normalizedHeadings = filteredHeadings.map(heading => ({
                 'ml-0': depth === 0,
                 'ml-4': depth === 1,
                 'ml-8': depth === 2,
-                'ml-12': depth >= 3,
+                'ml-12': depth === 3,
+                'ml-16': depth === 4,
+                'ml-20': depth >= 5,
               }}
             >
               <a
@@ -77,7 +79,9 @@ const normalizedHeadings = filteredHeadings.map(heading => ({
                 class:list={[
                   { 'no-heti toc-links-h2': depth === 0 },
                   { 'no-heti toc-links-h3': depth === 1 },
-                  { 'no-heti toc-links-h4': depth >= 2 },
+                  { 'no-heti toc-links-h4': depth === 2 },
+                  { 'no-heti toc-links-h5': depth === 3 },
+                  { 'no-heti toc-links-h6': depth >= 4 },
                 ]}
               >
                 {heading.text}
@@ -103,7 +107,7 @@ const normalizedHeadings = filteredHeadings.map(heading => ({
 a:target-current {
     --at-apply: '2xl:(c-primary font-medium)';
 }
-.toc-links-h2, .toc-links-h3, .toc-links-h4 {
+.toc-links-h2, .toc-links-h3, .toc-links-h4, .toc-links-h5, .toc-links-h6 {
   --at-apply: 'text-balance text-sm font-normal no-underline after:bottom-0.15em 2xl:(text-3.2 c-secondary/80 hover:c-primary hover:font-medium)';
   transition: color 0.15s ease-out, font-weight 0.15s ease-out;
 }
