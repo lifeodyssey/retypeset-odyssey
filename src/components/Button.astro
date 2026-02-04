@@ -1,9 +1,13 @@
 ---
 import type { Language } from '@/i18n/config'
-import LanguageSwitcherIcon from '@/assets/icons/language-switcher.svg'
+import LangEnIcon from '@/assets/icons/lang-en.svg'
+import LangJaIcon from '@/assets/icons/lang-ja.svg'
+import LangZhIcon from '@/assets/icons/lang-zh.svg'
+import SearchIcon from '@/assets/icons/search-icon.svg'
 import ThemeToggleIcon from '@/assets/icons/theme-toggle.svg'
 import { allLocales, moreLocales, themeConfig } from '@/config'
 import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
+import { getPageInfo } from '@/utils/page'
 
 interface Props {
   supportedLangs: Language[]
@@ -16,14 +20,24 @@ const {
 
 const { supportedLangs } = Astro.props
 const currentPath = Astro.url.pathname
+const { currentLang } = getPageInfo(currentPath)
 
 const effectiveLangs = supportedLangs.length > 0 ? supportedLangs : allLocales
 const showLanguageSwitcher = moreLocales.length > 0 && effectiveLangs.length > 1
 
 // Choose a language switch list according to supported languages (when available)
 const nextUrl = supportedLangs.length > 1
-  ? getNextSupportedLangPath(currentPath, supportedLangs) // Use supported languages when available
-  : getNextGlobalLangPath(currentPath) // Fallback to all languages when no supported languages data
+  ? getNextSupportedLangPath(currentPath, supportedLangs)
+  : getNextGlobalLangPath(currentPath)
+
+// Determine which icon to show based on current language
+// Show the icon of the NEXT language user will switch to
+const langIconMap: Record<string, typeof LangEnIcon> = {
+  'zh': LangEnIcon,    // zh → en, show "A"
+  'en': LangJaIcon,    // en → ja, show "あ"
+  'ja': LangZhIcon,    // ja → zh, show "汉"
+}
+const CurrentLangIcon = langIconMap[currentLang] || LangEnIcon
 ---
 
 <div
@@ -32,6 +46,15 @@ const nextUrl = supportedLangs.length > 1
   'lg:(fixed bottom-[min(10.27rem+1.92vw,12rem)] right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
 ]}
 >
+  <!-- Search Button -->
+  <button
+    id="search-button"
+    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    aria-label="Search"
+  >
+    <SearchIcon aria-hidden="true" fill="currentColor" />
+  </button>
+
   <!-- Language Switcher -->
   {showLanguageSwitcher && (
     <a
@@ -40,7 +63,7 @@ const nextUrl = supportedLangs.length > 1
       class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
       aria-label="Switch website language"
     >
-      <LanguageSwitcherIcon
+      <CurrentLangIcon
         aria-hidden="true"
         fill="currentColor"
       />

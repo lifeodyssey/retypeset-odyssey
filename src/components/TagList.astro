@@ -2,36 +2,134 @@
 import type { Language } from '@/i18n/config'
 import { getTagPath } from '@/i18n/path'
 
-interface Props {
-  tags: string[]
-  currentTag?: string
-  lang: Language
+interface TagWithCount {
+  name: string
+  count: number
 }
 
-const { tags, currentTag = '', lang } = Astro.props
+interface Props {
+  tags: string[] | TagWithCount[]
+  currentTag?: string
+  lang: Language
+  cloudStyle?: boolean
+}
+
+const { tags, currentTag = '', lang, cloudStyle = false } = Astro.props
+
+// Normalize tags to TagWithCount format
+const normalizedTags: TagWithCount[] = tags.map(tag =>
+  typeof tag === 'string' ? { name: tag, count: 1 } : tag
+)
+
+// Calculate min/max for scaling
+const counts = normalizedTags.map(t => t.count)
+const maxCount = Math.max(...counts)
+const minCount = Math.min(...counts)
+const countRange = maxCount - minCount || 1
+
+// Shuffle tags for cloud style (using seeded random for SSR consistency)
+function seededShuffle<T>(array: T[], seed: number): T[] {
+  const result = [...array]
+  let currentSeed = seed
+  const random = () => {
+    currentSeed = (currentSeed * 9301 + 49297) % 233280
+    return currentSeed / 233280
+  }
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
+const displayTags = cloudStyle
+  ? seededShuffle(normalizedTags, 42)
+  : normalizedTags
+
+// Helper to calculate styles based on count ratio
+function getTagStyles(count: number) {
+  const ratio = (count - minCount) / countRange
+  const fontSize = 0.85 + ratio * 0.5 // 0.85rem to 1.35rem
+  const lightness = 55 - ratio * 30 // 55% to 25% (lighter to darker)
+  return { fontSize, lightness, ratio }
+}
 ---
 
-<div class="no-heti flex flex-wrap gap-x-3 gap-y-3.2">
-  {tags.map(tag => (
-    <a
-      href={getTagPath(tag, lang)}
-      class:list={[
-        'relative inline-block border border-secondary/25 rounded-full px-3.2 py-0.7 ring-secondary/80',
-        'transition-[colors,box-shadow] ease-out hover:(border-secondary/80 c-primary font-medium ring-0.2)',
-        currentTag === tag
-          ? 'border-secondary/80 c-primary font-medium ring-0.2'
-          : 'ring-0',
-      ]}
-    >
-      <span class="absolute inset-0 flex items-center justify-center whitespace-nowrap transition-font-weight">
-        {tag}
-      </span>
-      <span
-        class="inline-block font-medium opacity-0"
-        aria-hidden="true"
+{cloudStyle ? (
+  <div class="no-heti flex flex-wrap gap-3 justify-center items-center">
+    {displayTags.map(tag => {
+      const { fontSize, lightness } = getTagStyles(tag.count)
+      const isActive = currentTag === tag.name
+      return (
+        <a
+          href={getTagPath(tag.name, lang)}
+          class="tag-cloud-item"
+          style={`--tag-size: ${fontSize}rem; --tag-lightness: ${lightness}%;`}
+          data-active={isActive ? 'true' : undefined}
+        >
+          {tag.name}
+        </a>
+      )
+    })}
+  </div>
+) : (
+  <div class="no-heti flex flex-wrap gap-x-3 gap-y-3.2">
+    {displayTags.map(tag => (
+      <a
+        href={getTagPath(tag.name, lang)}
+        class:list={[
+          'relative inline-block border border-secondary/25 rounded-full px-3.2 py-0.7 ring-secondary/80',
+          'transition-[colors,box-shadow] ease-out hover:(border-secondary/80 c-primary font-medium ring-0.2)',
+          currentTag === tag.name
+            ? 'border-secondary/80 c-primary font-medium ring-0.2'
+            : 'ring-0',
+        ]}
       >
-        {tag}
-      </span>
-    </a>
-  ))}
-</div>
+        <span class="absolute inset-0 flex items-center justify-center whitespace-nowrap transition-font-weight">
+          {tag.name}
+        </span>
+        <span
+          class="inline-block font-medium opacity-0"
+          aria-hidden="true"
+        >
+          {tag.name}
+        </span>
+      </a>
+    ))}
+  </div>
+)}
+
+<style>
+  .tag-cloud-item {
+    display: inline-block;
+    padding: 0.5em 1em;
+    font-size: var(--tag-size);
+    color: oklch(var(--tag-lightness) 0.005 298);
+    border: 1px solid oklch(var(--tag-lightness) 0.005 298 / 0.4);
+    border-radius: 1.5em;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .tag-cloud-item:hover {
+    transform: scale(1.08);
+    box-shadow: 0 2px 8px oklch(25% 0.005 298 / 0.15);
+    border-color: oklch(var(--tag-lightness) 0.005 298 / 0.8);
+  }
+
+  .tag-cloud-item[data-active="true"] {
+    border-color: oklch(var(--tag-lightness) 0.005 298 / 0.8);
+    font-weight: 500;
+  }
+
+  :global(.dark) .tag-cloud-item {
+    color: oklch(calc(100% - var(--tag-lightness) + 15%) 0.005 298);
+    border-color: oklch(calc(100% - var(--tag-lightness) + 15%) 0.005 298 / 0.4);
+  }
+
+  :global(.dark) .tag-cloud-item:hover {
+    box-shadow: 0 2px 8px oklch(92% 0.005 298 / 0.15);
+    border-color: oklch(calc(100% - var(--tag-lightness) + 15%) 0.005 298 / 0.8);
+  }
+</style>

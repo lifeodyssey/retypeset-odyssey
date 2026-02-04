@@ -44,17 +44,17 @@ const visiblePages = getVisiblePages()
 ---
 
 {totalPages > 1 && (
-  <nav class="pagination" aria-label="Pagination">
+  <nav class="pagination" aria-label="Pagination" data-base-url={baseUrl} data-total-pages={totalPages}>
     <div class="pagination-inner">
       {/* Previous button */}
       {hasPrev ? (
         <a href={prevUrl} class="pagination-btn" aria-label="Previous page">
-          <span class="pagination-arrow">←</span>
+          <span class="pagination-arrow">‹</span>
           <span class="pagination-text">Prev</span>
         </a>
       ) : (
         <span class="pagination-btn disabled" aria-disabled="true">
-          <span class="pagination-arrow">←</span>
+          <span class="pagination-arrow">‹</span>
           <span class="pagination-text">Prev</span>
         </span>
       )}
@@ -64,7 +64,19 @@ const visiblePages = getVisiblePages()
         {visiblePages[0] > 1 && (
           <>
             <a href={getPageUrl(1)} class="pagination-page">1</a>
-            {visiblePages[0] > 2 && <span class="pagination-ellipsis">...</span>}
+            {visiblePages[0] > 2 && (
+              <div class="pagination-ellipsis-wrapper">
+                <button type="button" class="pagination-ellipsis" aria-label="Jump to page">•••</button>
+                <input
+                  type="number"
+                  class="pagination-input"
+                  min="1"
+                  max={totalPages}
+                  placeholder="Go"
+                  aria-label="Enter page number"
+                />
+              </div>
+            )}
           </>
         )}
 
@@ -79,7 +91,17 @@ const visiblePages = getVisiblePages()
         {visiblePages[visiblePages.length - 1] < totalPages && (
           <>
             {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
-              <span class="pagination-ellipsis">...</span>
+              <div class="pagination-ellipsis-wrapper">
+                <button type="button" class="pagination-ellipsis" aria-label="Jump to page">•••</button>
+                <input
+                  type="number"
+                  class="pagination-input"
+                  min="1"
+                  max={totalPages}
+                  placeholder="Go"
+                  aria-label="Enter page number"
+                />
+              </div>
             )}
             <a href={getPageUrl(totalPages)} class="pagination-page">{totalPages}</a>
           </>
@@ -90,12 +112,12 @@ const visiblePages = getVisiblePages()
       {hasNext ? (
         <a href={nextUrl} class="pagination-btn" aria-label="Next page">
           <span class="pagination-text">Next</span>
-          <span class="pagination-arrow">→</span>
+          <span class="pagination-arrow">›</span>
         </a>
       ) : (
         <span class="pagination-btn disabled" aria-disabled="true">
           <span class="pagination-text">Next</span>
-          <span class="pagination-arrow">→</span>
+          <span class="pagination-arrow">›</span>
         </span>
       )}
     </div>
@@ -104,24 +126,26 @@ const visiblePages = getVisiblePages()
 
 <style>
 .pagination {
-  --at-apply: 'mt-8 mb-4';
+  --at-apply: 'mt-10 mb-6';
 }
 
 .pagination-inner {
-  --at-apply: 'flex items-center justify-center gap-2 flex-wrap';
+  --at-apply: 'flex items-center justify-center gap-3 flex-wrap';
 }
 
 .pagination-btn {
-  --at-apply: 'flex items-center gap-1 px-3 py-1.5 text-sm rounded-md';
-  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10 transition-colors';
+  --at-apply: 'flex items-center gap-1.5 px-4 py-2 text-sm rounded-full';
+  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10';
+  --at-apply: 'transition-all duration-200 active:scale-95';
 }
 
 .pagination-btn.disabled {
-  --at-apply: 'c-tertiary cursor-not-allowed hover:c-tertiary hover:bg-transparent';
+  --at-apply: 'c-tertiary/50 cursor-not-allowed hover:c-tertiary/50 hover:bg-transparent';
+  --at-apply: 'active:scale-100';
 }
 
 .pagination-arrow {
-  --at-apply: 'text-xs';
+  --at-apply: 'text-base font-medium';
 }
 
 .pagination-text {
@@ -129,19 +153,107 @@ const visiblePages = getVisiblePages()
 }
 
 .pagination-pages {
-  --at-apply: 'flex items-center gap-1';
+  --at-apply: 'flex items-center gap-1.5';
 }
 
 .pagination-page {
-  --at-apply: 'min-w-8 h-8 flex items-center justify-center text-sm rounded-md';
-  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10 transition-colors';
+  --at-apply: 'min-w-9 h-9 flex items-center justify-center text-sm rounded-full';
+  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10';
+  --at-apply: 'transition-all duration-200 active:scale-95';
 }
 
 .pagination-page.current {
-  --at-apply: 'c-primary bg-primary/10 font-medium';
+  --at-apply: 'c-background bg-primary font-medium';
+  --at-apply: 'hover:bg-primary hover:c-background';
+}
+
+.pagination-ellipsis-wrapper {
+  --at-apply: 'relative';
 }
 
 .pagination-ellipsis {
-  --at-apply: 'px-1 c-tertiary';
+  --at-apply: 'min-w-9 h-9 flex items-center justify-center text-sm rounded-full';
+  --at-apply: 'c-tertiary hover:c-primary hover:bg-secondary/10 cursor-pointer';
+  --at-apply: 'transition-all duration-200 border-none bg-transparent';
+  letter-spacing: 0.1em;
+}
+
+.pagination-ellipsis.hidden {
+  --at-apply: 'invisible w-0 min-w-0 overflow-hidden';
+}
+
+.pagination-input {
+  --at-apply: 'absolute top-0 left-0 w-12 h-9 text-sm text-center rounded-full';
+  --at-apply: 'c-primary bg-secondary/20 border border-primary/30';
+  --at-apply: 'outline-none transition-all duration-200';
+  --at-apply: 'opacity-0 invisible';
+}
+
+.pagination-input:focus {
+  --at-apply: 'border-primary/60';
+}
+
+.pagination-input.active {
+  --at-apply: 'opacity-100 visible';
+}
+
+/* Hide number input spinners */
+.pagination-input::-webkit-outer-spin-button,
+.pagination-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination-input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>
+
+<script>
+document.addEventListener('astro:page-load', initPagination);
+document.addEventListener('DOMContentLoaded', initPagination);
+
+function initPagination() {
+  const nav = document.querySelector('.pagination') as HTMLElement | null;
+  if (!nav) return;
+
+  const baseUrl = nav.dataset.baseUrl || '';
+  const totalPages = parseInt(nav.dataset.totalPages || '1', 10);
+
+  document.querySelectorAll('.pagination-ellipsis').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrapper = btn.closest('.pagination-ellipsis-wrapper');
+      const input = wrapper?.querySelector('.pagination-input') as HTMLInputElement | null;
+      if (!input) return;
+
+      btn.classList.add('hidden');
+      input.classList.add('active');
+      input.focus();
+    });
+  });
+
+  document.querySelectorAll<HTMLInputElement>('.pagination-input').forEach(input => {
+    const wrapper = input.closest('.pagination-ellipsis-wrapper');
+    const btn = wrapper?.querySelector('.pagination-ellipsis');
+
+    input.addEventListener('blur', () => {
+      input.classList.remove('active');
+      input.value = '';
+      btn?.classList.remove('hidden');
+    });
+
+    input.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const page = parseInt(input.value, 10);
+        if (page >= 1 && page <= totalPages) {
+          const url = page === 1 ? baseUrl : `${baseUrl.replace(/\/$/, '')}/${page}`;
+          window.location.href = url;
+        }
+      } else if (e.key === 'Escape') {
+        input.blur();
+      }
+    });
+  });
+}
+</script>

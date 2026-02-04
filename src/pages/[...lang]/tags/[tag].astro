@@ -33,9 +33,10 @@ const supportedLangs = await getTagSupportedLangs(tag)
   <div class="uno-decorative-line" />
   <!-- Tag List -->
   <TagList
-    tags={tagsWithCounts.map(t => t.name)}
+    tags={tagsWithCounts}
     currentTag={tag}
     lang={currentLang}
+    cloudStyle={true}
   />
 
   <!-- Posts List -->

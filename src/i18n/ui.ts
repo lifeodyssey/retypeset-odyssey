@@ -8,6 +8,9 @@ interface Translation {
   tags: string
   about: string
   search: string
+  searchPlaceholder: string
+  searchNoResults: string
+  searchResultsFound: string
   toc: string
   tech?: string
   life?: string
@@ -26,6 +29,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Schlagwörter',
     about: 'Über',
     search: 'Suche',
+    searchPlaceholder: 'Suchbegriff eingeben...',
+    searchNoResults: 'Keine Ergebnisse gefunden',
+    searchResultsFound: 'Ergebnisse gefunden',
     toc: 'Inhaltsverzeichnis',
   },
   'en': {
@@ -36,6 +42,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'About',
     search: 'Search',
+    searchPlaceholder: 'Type to search...',
+    searchNoResults: 'No results found',
+    searchResultsFound: 'results found',
     toc: 'Table of Contents',
     tech: 'Tech',
     life: 'Life',
@@ -52,6 +61,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Etiquetas',
     about: 'Sobre',
     search: 'Buscar',
+    searchPlaceholder: 'Escribe para buscar...',
+    searchNoResults: 'No se encontraron resultados',
+    searchResultsFound: 'resultados encontrados',
     toc: 'Índice',
   },
   'fr': {
@@ -62,6 +74,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Étiquettes',
     about: 'À propos',
     search: 'Recherche',
+    searchPlaceholder: 'Tapez pour rechercher...',
+    searchNoResults: 'Aucun résultat trouvé',
+    searchResultsFound: 'résultats trouvés',
     toc: 'Table des matières',
   },
   'ja': {
@@ -72,6 +87,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'タグ',
     about: '概要',
     search: '検索',
+    searchPlaceholder: '検索キーワードを入力...',
+    searchNoResults: '結果が見つかりません',
+    searchResultsFound: '件の結果',
     toc: '目次',
     tech: '技術',
     life: '生活',
@@ -87,6 +105,9 @@ export const ui: Record<Language, Translation> = {
     tags: '태그',
     about: '소개',
     search: '검색',
+    searchPlaceholder: '검색어를 입력하세요...',
+    searchNoResults: '결과를 찾을 수 없습니다',
+    searchResultsFound: '개의 결과',
     toc: '목차',
   },
   'pl': {
@@ -97,6 +118,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tagi',
     about: 'O stronie',
     search: 'Szukaj',
+    searchPlaceholder: 'Wpisz, aby wyszukać...',
+    searchNoResults: 'Nie znaleziono wyników',
+    searchResultsFound: 'wyników',
     toc: 'Spis treści',
   },
   'pt': {
@@ -107,6 +131,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'Sobre',
     search: 'Pesquisar',
+    searchPlaceholder: 'Digite para pesquisar...',
+    searchNoResults: 'Nenhum resultado encontrado',
+    searchResultsFound: 'resultados encontrados',
     toc: 'Sumário',
   },
   'ru': {
@@ -117,6 +144,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Теги',
     about: 'О себе',
     search: 'Поиск',
+    searchPlaceholder: 'Введите для поиска...',
+    searchNoResults: 'Результаты не найдены',
+    searchResultsFound: 'результатов',
     toc: 'Оглавление',
   },
   'zh': {
@@ -127,6 +157,9 @@ export const ui: Record<Language, Translation> = {
     tags: '标签',
     about: '关于',
     search: '搜索',
+    searchPlaceholder: '输入关键词搜索...',
+    searchNoResults: '没有找到结果',
+    searchResultsFound: '个结果',
     toc: '目录',
     tech: '技术',
     life: '生活',
@@ -143,6 +176,9 @@ export const ui: Record<Language, Translation> = {
     tags: '標籤',
     about: '關於',
     search: '搜尋',
+    searchPlaceholder: '輸入關鍵字搜尋...',
+    searchNoResults: '沒有找到結果',
+    searchResultsFound: '個結果',
     toc: '目錄',
     tech: '技術',
     life: '生活',

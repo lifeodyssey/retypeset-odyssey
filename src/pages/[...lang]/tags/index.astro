@@ -28,8 +28,9 @@ const currentUI = ui[currentLang as keyof typeof ui] ?? {}
     </p>
     <div class="uno-decorative-line" />
     <TagList
-      tags={tagsWithCounts.map(t => t.name)}
+      tags={tagsWithCounts}
       lang={currentLang}
+      cloudStyle={true}
     />
   </section>
 </Layout>
