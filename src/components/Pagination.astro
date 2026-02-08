@@ -3,9 +3,10 @@ interface Props {
   currentPage: number
   totalPages: number
   baseUrl: string
+  pagePrefix?: string
 }
 
-const { currentPage, totalPages, baseUrl } = Astro.props
+const { currentPage, totalPages, baseUrl, pagePrefix } = Astro.props
 
 // Generate page URL - page 1 has no suffix, others have /2, /3, etc.
 function getPageUrl(page: number): string {
@@ -14,7 +15,9 @@ function getPageUrl(page: number): string {
   }
   // Remove trailing slash from baseUrl if present, then add page number
   const cleanBase = baseUrl.replace(/\/$/, '')
-  return `${cleanBase}/${page}`
+  return pagePrefix
+    ? `${cleanBase}/${pagePrefix}/${page}`
+    : `${cleanBase}/${page}`
 }
 
 const hasPrev = currentPage > 1
@@ -44,7 +47,13 @@ const visiblePages = getVisiblePages()
 ---
 
 {totalPages > 1 && (
-  <nav class="pagination" aria-label="Pagination" data-base-url={baseUrl} data-total-pages={totalPages}>
+  <nav
+    class="pagination"
+    aria-label="Pagination"
+    data-base-url={baseUrl}
+    data-total-pages={totalPages}
+    data-page-prefix={pagePrefix}
+  >
     <div class="pagination-inner">
       {/* Previous button */}
       {hasPrev ? (
@@ -130,22 +139,20 @@ const visiblePages = getVisiblePages()
 }
 
 .pagination-inner {
-  --at-apply: 'flex items-center justify-center gap-3 flex-wrap';
+  --at-apply: 'flex items-center justify-center gap-0';
 }
 
 .pagination-btn {
-  --at-apply: 'flex items-center gap-1.5 px-4 py-2 text-sm rounded-full';
-  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10';
-  --at-apply: 'transition-all duration-200 active:scale-95';
+  --at-apply: 'flex items-center gap-1 px-3 py-2 text-sm c-secondary hover:c-primary transition-colors duration-200';
+  letter-spacing: 0.05em;
 }
 
 .pagination-btn.disabled {
-  --at-apply: 'c-tertiary/50 cursor-not-allowed hover:c-tertiary/50 hover:bg-transparent';
-  --at-apply: 'active:scale-100';
+  --at-apply: 'c-tertiary/35 cursor-not-allowed hover:c-tertiary/35';
 }
 
 .pagination-arrow {
-  --at-apply: 'text-base font-medium';
+  --at-apply: 'text-base';
 }
 
 .pagination-text {
@@ -153,18 +160,18 @@ const visiblePages = getVisiblePages()
 }
 
 .pagination-pages {
-  --at-apply: 'flex items-center gap-1.5';
+  --at-apply: 'flex items-center gap-0 border-l border-r border-secondary/30';
 }
 
 .pagination-page {
-  --at-apply: 'min-w-9 h-9 flex items-center justify-center text-sm rounded-full';
-  --at-apply: 'c-secondary hover:c-primary hover:bg-secondary/10';
-  --at-apply: 'transition-all duration-200 active:scale-95';
+  --at-apply: 'min-w-9 h-9 flex items-center justify-center text-sm c-secondary hover:c-primary transition-colors duration-200 font-serif';
 }
 
 .pagination-page.current {
-  --at-apply: 'c-background bg-primary font-medium';
-  --at-apply: 'hover:bg-primary hover:c-background';
+  --at-apply: 'c-primary font-semibold';
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
 }
 
 .pagination-ellipsis-wrapper {
@@ -172,9 +179,7 @@ const visiblePages = getVisiblePages()
 }
 
 .pagination-ellipsis {
-  --at-apply: 'min-w-9 h-9 flex items-center justify-center text-sm rounded-full';
-  --at-apply: 'c-tertiary hover:c-primary hover:bg-secondary/10 cursor-pointer';
-  --at-apply: 'transition-all duration-200 border-none bg-transparent';
+  --at-apply: 'min-w-8 h-9 flex items-center justify-center text-sm c-tertiary hover:c-primary cursor-pointer transition-colors duration-200 border-none bg-transparent';
   letter-spacing: 0.1em;
 }
 
@@ -183,10 +188,7 @@ const visiblePages = getVisiblePages()
 }
 
 .pagination-input {
-  --at-apply: 'absolute top-0 left-0 w-12 h-9 text-sm text-center rounded-full';
-  --at-apply: 'c-primary bg-secondary/20 border border-primary/30';
-  --at-apply: 'outline-none transition-all duration-200';
-  --at-apply: 'opacity-0 invisible';
+  --at-apply: 'absolute top-0 left-0 w-12 h-9 text-sm text-center rounded c-primary bg-secondary/10 border border-secondary/30 outline-none transition-all duration-200 opacity-0 invisible font-serif';
 }
 
 .pagination-input:focus {
@@ -219,6 +221,7 @@ function initPagination() {
 
   const baseUrl = nav.dataset.baseUrl || '';
   const totalPages = parseInt(nav.dataset.totalPages || '1', 10);
+  const pagePrefix = nav.dataset.pagePrefix || '';
 
   document.querySelectorAll('.pagination-ellipsis').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -247,7 +250,12 @@ function initPagination() {
         e.preventDefault();
         const page = parseInt(input.value, 10);
         if (page >= 1 && page <= totalPages) {
-          const url = page === 1 ? baseUrl : `${baseUrl.replace(/\/$/, '')}/${page}`;
+          const cleanBase = baseUrl.replace(/\/$/, '');
+          const url = page === 1
+            ? baseUrl
+            : pagePrefix
+              ? `${cleanBase}/${pagePrefix}/${page}`
+              : `${cleanBase}/${page}`;
           window.location.href = url;
         }
       } else if (e.key === 'Escape') {
