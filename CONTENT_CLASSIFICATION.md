@@ -13,6 +13,15 @@
 ## ✅ 已移动到 Journal（`content/journals/`）
 
 - `Blog-astro/content/journals/ThoughtWorks-Super-X.md`
+- `Blog-astro/content/journals/2020.md`
+- `Blog-astro/content/journals/二周目.md`
+- `Blog-astro/content/journals/人生は最高の暇つぶし.md`
+- `Blog-astro/content/journals/人生实验室.md`
+- `Blog-astro/content/journals/在我成为井井有条的大人之前.md`
+- `Blog-astro/content/journals/新的春天.md`
+- `Blog-astro/content/journals/A-Long-Year.md`
+- `Blog-astro/content/journals/It-is-OK-to-quit-your-Ph-D.md`
+- `Blog-astro/content/journals/Peer-Pressur-and-Experience.md`
 - `Blog-astro/content/journals/上班原来真的好累啊.md`
 - `Blog-astro/content/journals/北京某遥感公司.md`
 - `Blog-astro/content/journals/北京某遥感公司2.md`
