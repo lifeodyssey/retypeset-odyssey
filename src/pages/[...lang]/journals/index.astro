@@ -1,7 +1,7 @@
 ---
 import JournalList from '@/components/JournalList.astro'
 import Pagination from '@/components/Pagination.astro'
-import { allLocales } from '@/config'
+import { JOURNALS_PER_PAGE, allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
@@ -13,8 +13,6 @@ export async function getStaticPaths() {
     params: { lang: getLangRouteParam(lang) },
   }))
 }
-
-const JOURNALS_PER_PAGE = 20
 
 const currentLang = getLangFromLocale(Astro.currentLocale)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
@@ -55,4 +53,3 @@ const baseUrl = getLocalizedPath('/journals/', currentLang)
     />
   </section>
 </Layout>
-

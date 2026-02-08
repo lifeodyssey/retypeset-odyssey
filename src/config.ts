@@ -196,3 +196,9 @@ export const base = themeConfig.site.base === '/' ? '' : themeConfig.site.base.r
 export const defaultLocale = themeConfig.global.locale
 export const moreLocales = themeConfig.global.moreLocales
 export const allLocales = [defaultLocale, ...moreLocales]
+
+// Pagination
+// Used by posts/notes/journals list pages.
+export const POSTS_PER_PAGE = 7
+export const NOTES_PER_PAGE = 7
+export const JOURNALS_PER_PAGE = 7
