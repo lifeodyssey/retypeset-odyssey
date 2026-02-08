@@ -72,20 +72,28 @@ function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
 }
 
 // Generates post description from existing description or content
-export function getPostDescription(
-  post: CollectionEntry<'posts'>,
+type DescribableEntry = {
+  data: {
+    description?: string
+    lang?: string
+  }
+  body?: string
+}
+
+function getEntryDescription(
+  entry: DescribableEntry,
   scene: ExcerptScene,
 ): string {
-  const lang = (post.data.lang || defaultLocale) as Language
+  const lang = (entry.data.lang || defaultLocale) as Language
 
-  if (post.data.description) {
+  if (entry.data.description) {
     // Only truncate for og scene, return full description for other scenes
     return scene === 'og'
-      ? getExcerpt(post.data.description, lang, scene)
-      : post.data.description
+      ? getExcerpt(entry.data.description, lang, scene)
+      : entry.data.description
   }
 
-  const rawContent = post.body || ''
+  const rawContent = entry.body || ''
 
   // Check for <!-- more --> marker (Hexo-style excerpt boundary)
   const moreMarkerRegex = /<!--\s*more\s*-->/i
@@ -115,4 +123,25 @@ export function getPostDescription(
 
   // Otherwise, apply truncation
   return getExcerpt(renderedContent, lang, scene)
+}
+
+export function getPostDescription(
+  post: CollectionEntry<'posts'>,
+  scene: ExcerptScene,
+): string {
+  return getEntryDescription(post, scene)
+}
+
+export function getNoteDescription(
+  note: CollectionEntry<'notes'>,
+  scene: ExcerptScene,
+): string {
+  return getEntryDescription(note, scene)
+}
+
+export function getJournalDescription(
+  journal: CollectionEntry<'journals'>,
+  scene: ExcerptScene,
+): string {
+  return getEntryDescription(journal, scene)
 }

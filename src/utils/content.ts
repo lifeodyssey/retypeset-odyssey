@@ -1,11 +1,13 @@
 import type { CollectionEntry } from 'astro:content'
 import type { Language } from '@/i18n/config'
-import type { Post } from '@/types'
+import type { Journal, Note, Post } from '@/types'
 import { getCollection, render } from 'astro:content'
 import { allLocales, defaultLocale } from '@/config'
 import { memoize } from '@/utils/cache'
 
 const metaCache = new Map<string, { minutes: number }>()
+const noteMetaCache = new Map<string, { minutes: number }>()
+const journalMetaCache = new Map<string, { minutes: number }>()
 
 function getPostBaseId(post: CollectionEntry<'posts'>): string {
   const id = post.id.trim()
@@ -97,6 +99,266 @@ async function _getPostGroups(): Promise<PostGroup[]> {
 }
 
 export const getPostGroups = memoize(_getPostGroups)
+
+function getNoteBaseId(note: CollectionEntry<'notes'>): string {
+  const id = note.id.trim()
+
+  // Strip language suffix from filename (e.g. "foo.en" -> "foo")
+  for (const lang of allLocales) {
+    const suffix = `.${lang}`
+    if (id.endsWith(suffix)) {
+      return id.slice(0, -suffix.length)
+    }
+  }
+
+  return id
+}
+
+export interface NoteGroup {
+  baseId: string
+  slug: string
+  supportedLangs: Language[]
+  byLang: Partial<Record<Language, CollectionEntry<'notes'>>>
+}
+
+async function _getNoteGroups(): Promise<NoteGroup[]> {
+  let notes: CollectionEntry<'notes'>[] = []
+  try {
+    notes = await getCollection(
+      'notes',
+      ({ data }: CollectionEntry<'notes'>) => !data.draft,
+    )
+  }
+  catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    if (message.includes('The collection "notes" does not exist') || message.includes('The collection "notes" is empty')) {
+      return []
+    }
+    throw error
+  }
+
+  const groups = new Map<string, CollectionEntry<'notes'>[]>()
+  for (const note of notes) {
+    const baseId = getNoteBaseId(note)
+    const list = groups.get(baseId) ?? []
+    list.push(note)
+    groups.set(baseId, list)
+  }
+
+  const slugToBaseId = new Map<string, string>()
+  const results: NoteGroup[] = []
+
+  for (const [baseId, entries] of groups) {
+    const slug = slugifyPathSegment(baseId) || baseId
+    const existing = slugToBaseId.get(slug)
+    if (existing && existing !== baseId) {
+      throw new Error(`Duplicate note slug "${slug}" from "${existing}" and "${baseId}"`)
+    }
+    slugToBaseId.set(slug, baseId)
+
+    const baseEntry = entries.find(e => !e.data.lang)
+    const zhEntry = entries.find(e => e.data.lang === 'zh')
+    const enEntry = entries.find(e => e.data.lang === 'en')
+    const jaEntry = entries.find(e => e.data.lang === 'ja')
+
+    // Base file language inference (best-effort):
+    // - If there is an explicit zh translation but no explicit en translation,
+    //   treat base entry as English.
+    const inferredEnFromBase = !enEntry && !!zhEntry ? baseEntry : undefined
+    const inferredZhFromBase = !zhEntry ? baseEntry : undefined
+
+    const byLang: NoteGroup['byLang'] = {
+      zh: zhEntry ?? inferredZhFromBase,
+      en: enEntry ?? inferredEnFromBase,
+      ja: jaEntry,
+    }
+
+    const supportedLangs = allLocales.filter(lang => byLang[lang])
+
+    results.push({
+      baseId,
+      slug,
+      supportedLangs,
+      byLang,
+    })
+  }
+
+  return results
+}
+
+export const getNoteGroups = memoize(_getNoteGroups)
+
+export function getNoteSlug(note: CollectionEntry<'notes'>): string {
+  const baseId = getNoteBaseId(note)
+  return slugifyPathSegment(baseId) || baseId
+}
+
+async function addMetaToNote(note: CollectionEntry<'notes'>): Promise<Note> {
+  const cacheKey = `${note.id}-${note.data.lang || 'universal'}`
+  const cachedMeta = noteMetaCache.get(cacheKey)
+  if (cachedMeta) {
+    return {
+      ...note,
+      remarkPluginFrontmatter: cachedMeta,
+    }
+  }
+
+  const { remarkPluginFrontmatter } = await render(note)
+  const meta = remarkPluginFrontmatter as { minutes: number }
+  noteMetaCache.set(cacheKey, meta)
+
+  return {
+    ...note,
+    remarkPluginFrontmatter: meta,
+  }
+}
+
+async function _getNotes(lang?: Language) {
+  const currentLang = lang && allLocales.includes(lang) ? lang : defaultLocale
+  const groups = await getNoteGroups()
+  const selected = groups
+    .map(group => group.byLang[currentLang])
+    .filter(Boolean) as CollectionEntry<'notes'>[]
+
+  const enhancedNotes = await Promise.all(selected.map(addMetaToNote))
+
+  const getSortKey = (note: CollectionEntry<'notes'>) =>
+    (note.data.updated ?? note.data.published).valueOf()
+
+  return enhancedNotes.sort((a, b) => getSortKey(b) - getSortKey(a))
+}
+
+export const getNotes = memoize(_getNotes)
+
+function getJournalBaseId(journal: CollectionEntry<'journals'>): string {
+  const id = journal.id.trim()
+
+  // Strip language suffix from filename (e.g. "foo.en" -> "foo")
+  for (const lang of allLocales) {
+    const suffix = `.${lang}`
+    if (id.endsWith(suffix)) {
+      return id.slice(0, -suffix.length)
+    }
+  }
+
+  return id
+}
+
+export interface JournalGroup {
+  baseId: string
+  slug: string
+  supportedLangs: Language[]
+  byLang: Partial<Record<Language, CollectionEntry<'journals'>>>
+}
+
+async function _getJournalGroups(): Promise<JournalGroup[]> {
+  let journals: CollectionEntry<'journals'>[] = []
+  try {
+    journals = await getCollection(
+      'journals',
+      ({ data }: CollectionEntry<'journals'>) => !data.draft,
+    )
+  }
+  catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    if (message.includes('The collection "journals" does not exist') || message.includes('The collection "journals" is empty')) {
+      return []
+    }
+    throw error
+  }
+
+  const groups = new Map<string, CollectionEntry<'journals'>[]>()
+  for (const journal of journals) {
+    const baseId = getJournalBaseId(journal)
+    const list = groups.get(baseId) ?? []
+    list.push(journal)
+    groups.set(baseId, list)
+  }
+
+  const slugToBaseId = new Map<string, string>()
+  const results: JournalGroup[] = []
+
+  for (const [baseId, entries] of groups) {
+    const slug = slugifyPathSegment(baseId) || baseId
+    const existing = slugToBaseId.get(slug)
+    if (existing && existing !== baseId) {
+      throw new Error(`Duplicate journal slug "${slug}" from "${existing}" and "${baseId}"`)
+    }
+    slugToBaseId.set(slug, baseId)
+
+    const baseEntry = entries.find(e => !e.data.lang)
+    const zhEntry = entries.find(e => e.data.lang === 'zh')
+    const enEntry = entries.find(e => e.data.lang === 'en')
+    const jaEntry = entries.find(e => e.data.lang === 'ja')
+
+    // Base file language inference (best-effort):
+    // - If there is an explicit zh translation but no explicit en translation,
+    //   treat base entry as English.
+    const inferredEnFromBase = !enEntry && !!zhEntry ? baseEntry : undefined
+    const inferredZhFromBase = !zhEntry ? baseEntry : undefined
+
+    const byLang: JournalGroup['byLang'] = {
+      zh: zhEntry ?? inferredZhFromBase,
+      en: enEntry ?? inferredEnFromBase,
+      ja: jaEntry,
+    }
+
+    const supportedLangs = allLocales.filter(lang => byLang[lang])
+
+    results.push({
+      baseId,
+      slug,
+      supportedLangs,
+      byLang,
+    })
+  }
+
+  return results
+}
+
+export const getJournalGroups = memoize(_getJournalGroups)
+
+export function getJournalSlug(journal: CollectionEntry<'journals'>): string {
+  const baseId = getJournalBaseId(journal)
+  return slugifyPathSegment(baseId) || baseId
+}
+
+async function addMetaToJournal(journal: CollectionEntry<'journals'>): Promise<Journal> {
+  const cacheKey = `${journal.id}-${journal.data.lang || 'universal'}`
+  const cachedMeta = journalMetaCache.get(cacheKey)
+  if (cachedMeta) {
+    return {
+      ...journal,
+      remarkPluginFrontmatter: cachedMeta,
+    }
+  }
+
+  const { remarkPluginFrontmatter } = await render(journal)
+  const meta = remarkPluginFrontmatter as { minutes: number }
+  journalMetaCache.set(cacheKey, meta)
+
+  return {
+    ...journal,
+    remarkPluginFrontmatter: meta,
+  }
+}
+
+async function _getJournals(lang?: Language) {
+  const currentLang = lang && allLocales.includes(lang) ? lang : defaultLocale
+  const groups = await getJournalGroups()
+  const selected = groups
+    .map(group => group.byLang[currentLang])
+    .filter(Boolean) as CollectionEntry<'journals'>[]
+
+  const enhancedJournals = await Promise.all(selected.map(addMetaToJournal))
+
+  const getSortKey = (journal: CollectionEntry<'journals'>) =>
+    (journal.data.updated ?? journal.data.published).valueOf()
+
+  return enhancedJournals.sort((a, b) => getSortKey(b) - getSortKey(a))
+}
+
+export const getJournals = memoize(_getJournals)
 
 // Tags that indicate science/research content (checked first, highest priority)
 const SCIENCE_TAGS = new Set([

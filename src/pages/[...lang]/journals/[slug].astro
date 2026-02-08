@@ -1,0 +1,89 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { Language } from '@/i18n/config'
+import { render } from 'astro:content'
+import PostDate from '@/components/PostDate.astro'
+import BackButton from '@/components/Widgets/BackButton.astro'
+import TOC from '@/components/Widgets/TOC.astro'
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import Layout from '@/layouts/Layout.astro'
+import { getJournalGroups, getJournalSlug } from '@/utils/content'
+import { getJournalDescription } from '@/utils/description'
+
+export async function getStaticPaths() {
+  const groups = await getJournalGroups()
+
+  return allLocales.flatMap(lang => groups
+    .map((group) => {
+      const journal = group.byLang[lang]
+      if (!journal) {
+        return null
+      }
+
+      return {
+        params: {
+          lang: getLangRouteParam(lang),
+          slug: group.slug,
+        },
+        props: {
+          journal,
+          supportedLangs: group.supportedLangs,
+        },
+      }
+    })
+    .filter(Boolean),
+  )
+}
+
+interface Props {
+  journal: CollectionEntry<'journals'>
+  supportedLangs: Language[]
+}
+
+const { journal, supportedLangs } = Astro.props as Props
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const slug = getJournalSlug(journal)
+const description = getJournalDescription(journal, 'meta')
+const { Content, headings, remarkPluginFrontmatter } = await render(journal)
+---
+
+<Layout
+  postTitle={journal.data.title}
+  postDescription={description}
+  postSlug={`journals/${journal.id}`}
+  supportedLangs={supportedLangs}
+>
+  <article class="heti">
+    <div class="relative">
+      <BackButton />
+      <h1 class="post-title">
+        <span
+          transition:name={`journal-${slug}${currentLang ? `-${currentLang}` : ''}`}
+          data-disable-theme-toggle-transition
+        >
+          {journal.data.title}
+        </span>
+      </h1>
+    </div>
+
+    <div
+      class="mb-17.2 block c-primary font-time"
+      transition:name={`journal-time-${slug}${currentLang ? `-${currentLang}` : ''}`}
+      data-disable-theme-toggle-transition
+    >
+      <PostDate
+        date={journal.data.published}
+        updatedDate={journal.data.updated}
+        minutes={remarkPluginFrontmatter.minutes}
+      />
+    </div>
+
+    {journal.data.toc && <TOC headings={headings} />}
+
+    <div id="post-content">
+      <Content />
+    </div>
+  </article>
+</Layout>
+

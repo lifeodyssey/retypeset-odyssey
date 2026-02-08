@@ -1,0 +1,56 @@
+---
+import type { Language } from '@/i18n/config'
+import type { Journal } from '@/types'
+import PostDate from '@/components/PostDate.astro'
+import { getJournalPath } from '@/i18n/path'
+import { getJournalDescription } from '@/utils/description'
+import { getJournalSlug } from '@/utils/content'
+
+export interface Props {
+  journals: Journal[]
+  lang: Language
+}
+
+const { journals, lang } = Astro.props
+---
+
+<ul>
+  {journals.map((journal) => {
+    const slug = getJournalSlug(journal)
+
+    return (
+      <li class="mb-5.5 lg:mb-7.5">
+        {/* journal title */}
+        <h3 class="inline transition-colors hover:c-primary">
+          <a
+            class="cjk:tracking-wide lg:font-medium lg:text-4.25"
+            href={getJournalPath(slug, lang)}
+            transition:name={`journal-${slug}${lang ? `-${lang}` : ''}`}
+            data-disable-theme-toggle-transition
+          >
+            {journal.data.title}
+          </a>
+        </h3>
+
+        {/* journal time */}
+        <div
+          class="py-0.8 text-3.5 font-time"
+          transition:name={`journal-time-${slug}${lang ? `-${lang}` : ''}`}
+          data-disable-theme-toggle-transition
+        >
+          <PostDate
+            date={journal.data.published}
+            updatedDate={journal.data.updated}
+            minutes={journal.remarkPluginFrontmatter.minutes}
+          />
+        </div>
+
+        {/* journal description */}
+        <div class="heti hidden lg:block">
+          <p>{getJournalDescription(journal, 'list')}</p>
+        </div>
+      </li>
+    )
+  })}
+</ul>
+

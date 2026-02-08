@@ -51,6 +51,28 @@ export function getPostPath(slug: string, lang: Language): string {
 }
 
 /**
+ * Get path to a specific note page with language support
+ */
+export function getNotePath(slug: string, lang: Language): string {
+  const notePath = lang === defaultLocale
+    ? `/notes/${slug}`
+    : `/${lang}/notes/${slug}`
+
+  return base ? `${base}${notePath}` : notePath
+}
+
+/**
+ * Get path to a specific journal page with language support
+ */
+export function getJournalPath(slug: string, lang: Language): string {
+  const journalPath = lang === defaultLocale
+    ? `/journals/${slug}`
+    : `/${lang}/journals/${slug}`
+
+  return base ? `${base}${journalPath}` : journalPath
+}
+
+/**
  * Generate localized path based on current language
  *
  * @param path Path to localize

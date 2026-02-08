@@ -1,0 +1,58 @@
+---
+import JournalList from '@/components/JournalList.astro'
+import Pagination from '@/components/Pagination.astro'
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { getLocalizedPath } from '@/i18n/path'
+import { ui } from '@/i18n/ui'
+import Layout from '@/layouts/Layout.astro'
+import { getJournals } from '@/utils/content'
+
+export async function getStaticPaths() {
+  return allLocales.map(lang => ({
+    params: { lang: getLangRouteParam(lang) },
+  }))
+}
+
+const JOURNALS_PER_PAGE = 20
+
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+const allJournals = await getJournals(currentLang)
+const totalPages = Math.max(1, Math.ceil(allJournals.length / JOURNALS_PER_PAGE))
+const journals = allJournals.slice(0, JOURNALS_PER_PAGE)
+const baseUrl = getLocalizedPath('/journals/', currentLang)
+---
+
+<Layout
+  postTitle={currentUI.journals ?? 'Journal'}
+  postDescription={currentUI.journalsIntro}
+>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {currentUI.journals ?? 'Journal'}
+    </h1>
+    {currentUI.journalsIntro && (
+      <p class="mb-6 text-3.5 c-secondary">
+        {currentUI.journalsIntro}
+      </p>
+    )}
+    <div class="uno-decorative-line" />
+
+    {journals.length > 0
+      ? <JournalList journals={journals} lang={currentLang} />
+      : (
+          <p class="mt-6 text-3.5 c-secondary">
+            {currentUI.journalsEmpty ?? 'No journal entries yet.'}
+          </p>
+        )}
+
+    <Pagination
+      currentPage={1}
+      totalPages={totalPages}
+      baseUrl={baseUrl}
+      pagePrefix="page"
+    />
+  </section>
+</Layout>
+

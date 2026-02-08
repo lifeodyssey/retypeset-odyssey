@@ -29,7 +29,8 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
-const { isPost } = getPageInfo(Astro.url.pathname)
+const { isPost, isNote, isJournal } = getPageInfo(Astro.url.pathname)
+const isArticle = isPost || isNote || isJournal
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 const MarginBottom = isPost && themeConfig.comment.enabled
   ? 'mb-10' // Post page with comment
@@ -40,7 +41,7 @@ const MarginBottom = isPost && themeConfig.comment.enabled
   lang={Astro.currentLocale}
   class:list={[
     fontStyle,
-    isPost ? 'scroll-smooth' : '',
+    isArticle ? 'scroll-smooth' : '',
   ]}
 >
   <Head {postTitle} {postDescription} {postSlug} />

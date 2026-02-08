@@ -1,0 +1,56 @@
+---
+import type { Language } from '@/i18n/config'
+import type { Note } from '@/types'
+import PostDate from '@/components/PostDate.astro'
+import { getNotePath } from '@/i18n/path'
+import { getNoteDescription } from '@/utils/description'
+import { getNoteSlug } from '@/utils/content'
+
+export interface Props {
+  notes: Note[]
+  lang: Language
+}
+
+const { notes, lang } = Astro.props
+---
+
+<ul>
+  {notes.map((note) => {
+    const slug = getNoteSlug(note)
+
+    return (
+      <li class="mb-5.5 lg:mb-7.5">
+        {/* note title */}
+        <h3 class="inline transition-colors hover:c-primary">
+          <a
+            class="cjk:tracking-wide lg:font-medium lg:text-4.25"
+            href={getNotePath(slug, lang)}
+            transition:name={`note-${slug}${lang ? `-${lang}` : ''}`}
+            data-disable-theme-toggle-transition
+          >
+            {note.data.title}
+          </a>
+        </h3>
+
+        {/* note time */}
+        <div
+          class="py-0.8 text-3.5 font-time"
+          transition:name={`note-time-${slug}${lang ? `-${lang}` : ''}`}
+          data-disable-theme-toggle-transition
+        >
+          <PostDate
+            date={note.data.published}
+            updatedDate={note.data.updated}
+            minutes={note.remarkPluginFrontmatter.minutes}
+          />
+        </div>
+
+        {/* note description */}
+        <div class="heti hidden lg:block">
+          <p>{getNoteDescription(note, 'list')}</p>
+        </div>
+      </li>
+    )
+  })}
+</ul>
+

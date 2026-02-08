@@ -7,6 +7,18 @@ export type Post = CollectionEntry<'posts'> & {
   }
 }
 
+export type Note = CollectionEntry<'notes'> & {
+  remarkPluginFrontmatter: {
+    minutes: number
+  }
+}
+
+export type Journal = CollectionEntry<'journals'> & {
+  remarkPluginFrontmatter: {
+    minutes: number
+  }
+}
+
 export interface ThemeConfig {
   site: {
     title: string

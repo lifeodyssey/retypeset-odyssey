@@ -1,0 +1,70 @@
+---
+import JournalList from '@/components/JournalList.astro'
+import Pagination from '@/components/Pagination.astro'
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { getLocalizedPath } from '@/i18n/path'
+import { ui } from '@/i18n/ui'
+import Layout from '@/layouts/Layout.astro'
+import { getJournals } from '@/utils/content'
+
+export async function getStaticPaths() {
+  const JOURNALS_PER_PAGE = 20
+  const paths = []
+
+  for (const lang of allLocales) {
+    const journals = await getJournals(lang)
+    const totalPages = Math.ceil(journals.length / JOURNALS_PER_PAGE)
+
+    for (let page = 2; page <= totalPages; page++) {
+      paths.push({
+        params: {
+          lang: getLangRouteParam(lang),
+          page: String(page),
+        },
+      })
+    }
+  }
+
+  return paths
+}
+
+const JOURNALS_PER_PAGE = 20
+
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+const pageNumber = Number(Astro.params.page)
+const allJournals = await getJournals(currentLang)
+const totalPages = Math.max(1, Math.ceil(allJournals.length / JOURNALS_PER_PAGE))
+
+const start = (pageNumber - 1) * JOURNALS_PER_PAGE
+const journals = allJournals.slice(start, start + JOURNALS_PER_PAGE)
+const baseUrl = getLocalizedPath('/journals/', currentLang)
+---
+
+<Layout
+  postTitle={`${currentUI.journals ?? 'Journal'} - ${pageNumber}`}
+  postDescription={currentUI.journalsIntro}
+>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {currentUI.journals ?? 'Journal'}
+    </h1>
+    {currentUI.journalsIntro && (
+      <p class="mb-6 text-3.5 c-secondary">
+        {currentUI.journalsIntro}
+      </p>
+    )}
+    <div class="uno-decorative-line" />
+
+    <JournalList journals={journals} lang={currentLang} />
+
+    <Pagination
+      currentPage={pageNumber}
+      totalPages={totalPages}
+      baseUrl={baseUrl}
+      pagePrefix="page"
+    />
+  </section>
+</Layout>
+

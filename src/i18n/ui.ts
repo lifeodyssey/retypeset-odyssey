@@ -5,6 +5,12 @@ interface Translation {
   subtitle: string
   description: string
   posts: string
+  notes?: string
+  notesIntro?: string
+  notesEmpty?: string
+  journals?: string
+  journalsIntro?: string
+  journalsEmpty?: string
   tags: string
   about: string
   search: string
@@ -39,6 +45,12 @@ export const ui: Record<Language, Translation> = {
     subtitle: 'A journey through life, technology, and reflections',
     description: 'A personal blog about life, technology, and reflections.',
     posts: 'Posts',
+    notes: 'Notes',
+    notesIntro: 'Personal study notes (often rough, incomplete, and subject to change).',
+    notesEmpty: 'No notes yet.',
+    journals: 'Journal',
+    journalsIntro: 'Personal journal entries (diary-like and unpolished).',
+    journalsEmpty: 'No journal entries yet.',
     tags: 'Tags',
     about: 'About',
     search: 'Search',
@@ -84,6 +96,12 @@ export const ui: Record<Language, Translation> = {
     subtitle: '人生、技術、そして思索の旅',
     description: '人生、技術、思索についての個人ブログ。',
     posts: '記事',
+    notes: 'ノート',
+    notesIntro: '学習・問題演習中の個人メモです。未整理・未完成の内容が含まれ、予告なく更新されます。',
+    notesEmpty: 'ノートはまだありません。',
+    journals: '日記',
+    journalsIntro: '日々の記録です（私的な内容を含み、未整理なことがあります）。',
+    journalsEmpty: '日記はまだありません。',
     tags: 'タグ',
     about: '概要',
     search: '検索',
@@ -154,6 +172,12 @@ export const ui: Record<Language, Translation> = {
     subtitle: '人生若只如初见',
     description: '关于生活、技术与思考的个人博客。',
     posts: '文章',
+    notes: '笔记',
+    notesIntro: '这里主要是我学习、刷题时的随手记录，偏自用，可能不完整或随时修改。',
+    notesEmpty: '还没有笔记。',
+    journals: '日记',
+    journalsIntro: 'this is my odyssey',
+    journalsEmpty: '还没有日记。',
     tags: '标签',
     about: '关于',
     search: '搜索',

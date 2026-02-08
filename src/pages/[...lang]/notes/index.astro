@@ -1,0 +1,58 @@
+---
+import NoteList from '@/components/NoteList.astro'
+import Pagination from '@/components/Pagination.astro'
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { getLocalizedPath } from '@/i18n/path'
+import { ui } from '@/i18n/ui'
+import Layout from '@/layouts/Layout.astro'
+import { getNotes } from '@/utils/content'
+
+export async function getStaticPaths() {
+  return allLocales.map(lang => ({
+    params: { lang: getLangRouteParam(lang) },
+  }))
+}
+
+const NOTES_PER_PAGE = 20
+
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+const allNotes = await getNotes(currentLang)
+const totalPages = Math.max(1, Math.ceil(allNotes.length / NOTES_PER_PAGE))
+const notes = allNotes.slice(0, NOTES_PER_PAGE)
+const baseUrl = getLocalizedPath('/notes/', currentLang)
+---
+
+<Layout
+  postTitle={currentUI.notes ?? 'Notes'}
+  postDescription={currentUI.notesIntro}
+>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {currentUI.notes ?? 'Notes'}
+    </h1>
+    {currentUI.notesIntro && (
+      <p class="mb-6 text-3.5 c-secondary">
+        {currentUI.notesIntro}
+      </p>
+    )}
+    <div class="uno-decorative-line" />
+
+    {notes.length > 0
+      ? <NoteList notes={notes} lang={currentLang} />
+      : (
+          <p class="mt-6 text-3.5 c-secondary">
+            {currentUI.notesEmpty ?? 'No notes yet.'}
+          </p>
+        )}
+
+    <Pagination
+      currentPage={1}
+      totalPages={totalPages}
+      baseUrl={baseUrl}
+      pagePrefix="page"
+    />
+  </section>
+</Layout>
+

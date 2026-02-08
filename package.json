@@ -14,6 +14,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "new-post": "tsx scripts/new-post.ts",
+    "translate:new-posts": "node scripts/translation/run.mjs",
     "apply-lqip": "tsx scripts/apply-lqip.ts",
     "format-posts": "tsx scripts/format-posts.ts",
     "update-theme": "tsx scripts/update-theme.ts"
@@ -62,6 +63,7 @@
     "eslint-plugin-astro": "^1.5.0",
     "fast-glob": "^3.3.3",
     "lint-staged": "^16.2.7",
+    "opentype.js": "^1.3.4",
     "playwright": "^1.57.0",
     "simple-git-hooks": "^2.13.1",
     "tsx": "^4.21.0",

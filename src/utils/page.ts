@@ -58,6 +58,14 @@ export function isPostPage(path: string) {
   return matchPageType(path, 'posts')
 }
 
+export function isNotePage(path: string) {
+  return matchPageType(path, 'notes')
+}
+
+export function isJournalPage(path: string) {
+  return matchPageType(path, 'journals')
+}
+
 export function isTagPage(path: string) {
   return matchPageType(path, 'tags')
 }
@@ -71,6 +79,8 @@ export function getPageInfo(path: string) {
   const currentLang = getLangFromPath(path)
   const isHome = isHomePage(path)
   const isPost = isPostPage(path)
+  const isNote = isNotePage(path)
+  const isJournal = isJournalPage(path)
   const isTag = isTagPage(path)
   const isAbout = isAboutPage(path)
 
@@ -78,6 +88,8 @@ export function getPageInfo(path: string) {
     currentLang,
     isHome,
     isPost,
+    isNote,
+    isJournal,
     isTag,
     isAbout,
     getLocalizedPath: (targetPath: string) =>
