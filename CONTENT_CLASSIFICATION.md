@@ -72,6 +72,11 @@
 - `Blog-astro/content/notes/Cousera机器学习基石第四周笔记-Machine-Learning-Foundation-Week-4-Note-in-Cousera.md`
 - `Blog-astro/content/notes/Cousera机器学习基石第五周笔记-Machine-Learning-Foundation-Week-5-Note-in-Cousera.md`
 
+### 语言学习 / 日语笔记
+
+- `Blog-astro/content/notes/易混カタカナ.md`
+- `Blog-astro/content/notes/日本語ノート-1.md`
+
 ## ✅ 保留为 Post（`content/posts/`，按你要求 Work Note 不迁移）
 
 > 这些内容虽然更“技术/工作笔记”，但目前按你要求继续作为 Post 维护；如果后续想拆到 Note，我可以再做第二轮迁移。
