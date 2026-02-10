@@ -21,16 +21,35 @@ interface ContentEntry {
   draft: boolean
 }
 
+interface GroupMeta {
+  key: string
+  kind: RouteKind
+  baseId: string
+}
+
 const COLLECTIONS: CollectionSpec[] = [
   { kind: 'posts', baseDir: 'content/posts' },
   { kind: 'journals', baseDir: 'content/journals' },
   { kind: 'notes', baseDir: 'content/notes' },
 ]
 
+const KIND_PRIORITY: Record<RouteKind, number> = {
+  posts: 0,
+  notes: 1,
+  journals: 2,
+}
+
+// Explicit owner mapping for known legacy collisions verified against old-site URLs.
+const LEGACY_ABBRLINK_OWNER_OVERRIDES: Record<string, string> = {
+  fbd0b1b0: 'posts:Mixture-Density-Network',
+  fc1cc4fb: 'notes:Leetcode面试高频题分类刷题总结',
+}
+
 const OUTPUT_FILE = 'public/_redirects'
 const EOL = '\n'
 const conflicts: string[] = []
 const skippedDrafts: string[] = []
+const ownershipWarnings: string[] = []
 
 function stripQuotes(value: string): string {
   const trimmed = value.trim()
@@ -126,31 +145,82 @@ function addRedirect(
   redirectMap.set(sourcePath, targetPath)
 }
 
-function getPreferredAbbrlink(entries: ContentEntry[]): string {
-  const nonEmptyAbbrlinks = entries
-    .map(entry => entry.abbrlink.trim())
-    .filter(Boolean)
-
-  if (nonEmptyAbbrlinks.length === 0) {
-    return ''
+function getLegacyAbbrlinks(entries: ContentEntry[]): string[] {
+  const unique = new Set<string>()
+  for (const entry of entries) {
+    const abbrlink = entry.abbrlink.trim().toLowerCase()
+    if (isLegacyAbbrlink(abbrlink)) {
+      unique.add(abbrlink)
+    }
   }
 
-  const uniqueAbbrlinks = [...new Set(nonEmptyAbbrlinks)]
-  if (uniqueAbbrlinks.length === 1) {
-    return uniqueAbbrlinks[0]
+  return [...unique].sort((left, right) => left.localeCompare(right))
+}
+
+function parseGroupKey(groupKey: string): GroupMeta {
+  const [kindString, ...rest] = groupKey.split(':')
+  return {
+    key: groupKey,
+    kind: kindString as RouteKind,
+    baseId: rest.join(':'),
+  }
+}
+
+function compareGroupKeys(left: string, right: string): number {
+  const leftMeta = parseGroupKey(left)
+  const rightMeta = parseGroupKey(right)
+  const kindDiff = (KIND_PRIORITY[leftMeta.kind] ?? Number.MAX_SAFE_INTEGER)
+    - (KIND_PRIORITY[rightMeta.kind] ?? Number.MAX_SAFE_INTEGER)
+  if (kindDiff !== 0) {
+    return kindDiff
   }
 
-  const baseEntry = entries.find(entry => !entry.lang && entry.abbrlink)
-  if (baseEntry) {
-    return baseEntry.abbrlink
+  return left.localeCompare(right)
+}
+
+function resolveAbbrlinkOwners(groupedEntries: Map<string, ContentEntry[]>): Map<string, string> {
+  const abbrlinkCandidates = new Map<string, Set<string>>()
+
+  for (const [groupKey, groupEntries] of groupedEntries) {
+    for (const abbrlink of getLegacyAbbrlinks(groupEntries)) {
+      const candidates = abbrlinkCandidates.get(abbrlink) ?? new Set<string>()
+      candidates.add(groupKey)
+      abbrlinkCandidates.set(abbrlink, candidates)
+    }
   }
 
-  const defaultLocaleEntry = entries.find(entry => entry.lang === defaultLocale && entry.abbrlink)
-  if (defaultLocaleEntry) {
-    return defaultLocaleEntry.abbrlink
+  const owners = new Map<string, string>()
+  for (const [abbrlink, candidateSet] of abbrlinkCandidates) {
+    const candidates = [...candidateSet]
+    let owner = ''
+    const override = LEGACY_ABBRLINK_OWNER_OVERRIDES[abbrlink]
+
+    if (override) {
+      if (candidateSet.has(override)) {
+        owner = override
+      } else {
+        ownershipWarnings.push(
+          `override_miss: ${abbrlink} => ${override} (candidates: ${candidates.join(', ')})`,
+        )
+      }
+    }
+
+    if (!owner) {
+      const sortedCandidates = [...candidates].sort(compareGroupKeys)
+      owner = sortedCandidates[0] ?? ''
+      if (sortedCandidates.length > 1) {
+        ownershipWarnings.push(
+          `owner_inferred: ${abbrlink} => ${owner} (candidates: ${sortedCandidates.join(', ')})`,
+        )
+      }
+    }
+
+    if (owner) {
+      owners.set(abbrlink, owner)
+    }
   }
 
-  return uniqueAbbrlinks[0]
+  return owners
 }
 
 function buildByLang(entries: ContentEntry[]): Partial<Record<string, ContentEntry>> {
@@ -232,14 +302,17 @@ function generateRedirectLines(entries: ContentEntry[]): string[] {
     groupedEntries.set(groupKey, bucket)
   }
 
+  const abbrlinkOwners = resolveAbbrlinkOwners(groupedEntries)
   const redirectMap = new Map<string, string>()
 
   for (const [groupKey, groupEntries] of groupedEntries) {
     const [kindString, baseId] = groupKey.split(':')
     const kind = kindString as RouteKind
     const slug = slugifyPathSegment(baseId) || baseId
-    const abbrlink = getPreferredAbbrlink(groupEntries)
-    if (!abbrlink || !isLegacyAbbrlink(abbrlink)) {
+    const ownedAbbrlinks = getLegacyAbbrlinks(groupEntries)
+      .filter(abbrlink => abbrlinkOwners.get(abbrlink) === groupKey)
+
+    if (ownedAbbrlinks.length === 0) {
       continue
     }
 
@@ -255,12 +328,14 @@ function generateRedirectLines(entries: ContentEntry[]): string[] {
 
     const context = `${kind}:${baseId}`
 
-    // Legacy Hexo links were /posts/:abbrlink.html for every article.
-    addRedirect(redirectMap, `/posts/${abbrlink}.html`, defaultTargetPath, context)
-    addRedirect(redirectMap, `/posts/${abbrlink}`, defaultTargetPath, context)
-
     // Normalize accidental .html variants of current slug URLs.
     addRedirect(redirectMap, buildPath(kind, `${slug}.html`, targetLang), defaultTargetPath, context)
+
+    for (const abbrlink of ownedAbbrlinks) {
+      // Legacy Hexo links were /posts/:abbrlink.html for every article.
+      addRedirect(redirectMap, `/posts/${abbrlink}.html`, defaultTargetPath, context)
+      addRedirect(redirectMap, `/posts/${abbrlink}`, defaultTargetPath, context)
+    }
 
     for (const lang of supportedLangs) {
       if (lang === defaultLocale) {
@@ -268,9 +343,11 @@ function generateRedirectLines(entries: ContentEntry[]): string[] {
       }
 
       const localizedTargetPath = buildPath(kind, slug, lang)
-      addRedirect(redirectMap, `/${lang}/posts/${abbrlink}.html`, localizedTargetPath, context)
-      addRedirect(redirectMap, `/${lang}/posts/${abbrlink}`, localizedTargetPath, context)
       addRedirect(redirectMap, buildPath(kind, `${slug}.html`, lang), localizedTargetPath, context)
+      for (const abbrlink of ownedAbbrlinks) {
+        addRedirect(redirectMap, `/${lang}/posts/${abbrlink}.html`, localizedTargetPath, context)
+        addRedirect(redirectMap, `/${lang}/posts/${abbrlink}`, localizedTargetPath, context)
+      }
     }
   }
 
@@ -311,6 +388,17 @@ function main() {
 
   if (skippedDrafts.length > 0) {
     console.warn(`[generate-legacy-redirects] skipped ${skippedDrafts.length} draft/unpublished entries with legacy abbrlink`)
+  }
+
+  if (ownershipWarnings.length > 0) {
+    const sample = ownershipWarnings.slice(0, 10)
+    console.warn(`[generate-legacy-redirects] ${ownershipWarnings.length} ownership warnings detected`)
+    for (const item of sample) {
+      console.warn(`  - ${item}`)
+    }
+    if (ownershipWarnings.length > sample.length) {
+      console.warn(`  - ... and ${ownershipWarnings.length - sample.length} more`)
+    }
   }
 
   console.log(`[generate-legacy-redirects] entries=${entries.length}, redirects=${redirectLines.length}, output=${OUTPUT_FILE}`)
