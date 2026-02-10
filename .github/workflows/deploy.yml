@@ -5,13 +5,17 @@
 name: Deploy on Theme Change
 
 on:
-  # push:              # DISABLED - now using Cloudflare Git integration
+  # push: # DISABLED - now using Cloudflare Git integration
   #   branches: [main]
-  workflow_dispatch:  # Allow manual trigger (kept for emergency use)
+  workflow_dispatch: # Allow manual trigger (kept for emergency use)
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    env:
+      PRIMARY_SITE_URL: https://zhenjia.org
+      PRIMARY_URL_MODE: slug
+      ENABLE_LEGACY_REDIRECTS: true
     steps:
       - name: Checkout Blog-astro (theme)
         uses: actions/checkout@v4
@@ -23,12 +27,7 @@ jobs:
           path: Blog-src
 
       - name: Sync content from Blog-src
-        run: |
-          echo "Syncing content from Blog-src..."
-          cp -r Blog-src/source/_posts/* content/posts/
-          cp Blog-src/source/about/index.md content/about.md 2>/dev/null || true
-          cp Blog-src/source/robots.txt public/robots.txt 2>/dev/null || true
-          echo "Content synced!"
+        run: ./scripts/sync-content.sh Blog-src
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -38,14 +37,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: 22
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build site
         run: pnpm build
+
+      - name: Verify legacy redirects
+        run: |
+          test -f dist/_redirects
+          rg '^/posts/[0-9a-f]{6,8}\.html /' dist/_redirects -q
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

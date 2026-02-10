@@ -14,7 +14,7 @@ Primary deployment: **Cloudflare Pages**
 The main deployment is handled by GitHub Actions (`.github/workflows/deploy.yml`):
 
 1. **Trigger**: Push to `main` branch
-2. **Build**: `pnpm build` (generates static site)
+2. **Build**: `pnpm build` (generates static site + legacy redirects)
 3. **Deploy**: Upload to Cloudflare Pages via Wrangler
 
 ## Environment Variables
@@ -22,6 +22,11 @@ The main deployment is handled by GitHub Actions (`.github/workflows/deploy.yml`
 Required secrets in GitHub repository settings:
 - `CLOUDFLARE_API_TOKEN` - API token with Pages deployment permission
 - `CLOUDFLARE_ACCOUNT_ID` - Cloudflare account ID
+
+Recommended environment variables:
+- `PRIMARY_SITE_URL` - canonical site URL (e.g. `https://zhenjia.org`)
+- `PRIMARY_URL_MODE` - primary URL strategy (`slug`)
+- `ENABLE_LEGACY_REDIRECTS` - generate `/posts/:abbrlink(.html)` compatibility redirects
 
 ## Manual Deployment
 
@@ -53,5 +58,8 @@ Pull requests automatically get preview deployments:
 ## Related Files
 
 - `.github/workflows/deploy.yml` - GitHub Actions workflow
+- `.github/workflows/ci.yml` - Theme validation workflow
 - `astro.config.ts` - Astro configuration
 - `wrangler.toml` - Cloudflare Wrangler config (if using)
+- `scripts/seo/generate-legacy-redirects.ts` - Generates `public/_redirects` for legacy URL compatibility
+- `public/_redirects` - Generated redirect rules shipped with static output

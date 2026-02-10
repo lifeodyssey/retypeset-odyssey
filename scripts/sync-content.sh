@@ -46,7 +46,9 @@ echo "📁 Copied $ASSET_FOLDERS asset folders"
 echo "📄 Copying about page..."
 if [ -f "$BLOG_SRC/source/about/index.md" ]; then
     cp "$BLOG_SRC/source/about/index.md" content/about.md 2>/dev/null || true
-    echo "   ✓ about.md"
+    mkdir -p src/content/about
+    cp "$BLOG_SRC/source/about/index.md" src/content/about/about-zh.md 2>/dev/null || true
+    echo "   ✓ content/about.md + src/content/about/about-zh.md"
 else
     echo "   ⚠ No about page found"
 fi
