@@ -11,11 +11,11 @@ Primary deployment: **Cloudflare Pages**
 
 ## CI/CD Workflow
 
-The main deployment is handled by GitHub Actions (`.github/workflows/deploy.yml`):
+Primary deployment is handled by **Cloudflare Pages Git integration** from `Blog-astro`.
 
-1. **Trigger**: Push to `main` branch
-2. **Build**: `pnpm build` (generates static site + legacy redirects)
-3. **Deploy**: Upload to Cloudflare Pages via Wrangler
+GitHub Actions in this repo are used for:
+1. **Validation** (`.github/workflows/ci.yml`) on push/PR
+2. **Emergency direct upload** (`.github/workflows/deploy.yml`) via manual trigger only
 
 ## Environment Variables
 
@@ -30,7 +30,7 @@ Recommended environment variables:
 
 ## Manual Deployment
 
-If needed, manual deployment can be done:
+If needed, manual deployment can be done from this repo:
 
 ```bash
 # Build the site
@@ -42,9 +42,7 @@ npx wrangler pages deploy dist --project-name=life-odyssey
 
 ## Preview Deployments
 
-Pull requests automatically get preview deployments:
-- Each PR gets a unique preview URL
-- Preview deploys allow testing changes before merge
+Preview deployments are provided by Cloudflare Pages Git integration (when enabled in Cloudflare project settings).
 
 ## Distinction from Migration Scripts
 

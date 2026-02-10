@@ -1,13 +1,10 @@
-# Deploy to Cloudflare Pages on theme changes
-# Triggers when Blog-astro (theme) is updated
-# DISABLED: Using Cloudflare Pages Git integration instead
+# Emergency direct-upload deployment for Blog-astro only.
+# Primary deployment should use Cloudflare Pages Git integration.
 
-name: Deploy on Theme Change
+name: Emergency Deploy (Direct Upload)
 
 on:
-  # push: # DISABLED - now using Cloudflare Git integration
-  #   branches: [main]
-  workflow_dispatch: # Allow manual trigger (kept for emergency use)
+  workflow_dispatch:
 
 jobs:
   build-deploy:
@@ -17,17 +14,8 @@ jobs:
       PRIMARY_URL_MODE: slug
       ENABLE_LEGACY_REDIRECTS: true
     steps:
-      - name: Checkout Blog-astro (theme)
+      - name: Checkout Blog-astro
         uses: actions/checkout@v4
-
-      - name: Checkout Blog-src (content)
-        uses: actions/checkout@v4
-        with:
-          repository: lifeodyssey/Blog-src
-          path: Blog-src
-
-      - name: Sync content from Blog-src
-        run: ./scripts/sync-content.sh Blog-src
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
