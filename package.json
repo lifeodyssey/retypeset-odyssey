@@ -6,7 +6,7 @@
   "repository": "https://github.com/radishzzz/astro-theme-retypeset",
   "scripts": {
     "dev": "astro check && astro dev",
-    "build": "astro check && astro build && pnpm apply-lqip",
+    "build": "pnpm generate-legacy-redirects && astro check && astro build && pnpm apply-lqip",
     "preview": "astro preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
@@ -15,6 +15,7 @@
     "lint:fix": "eslint . --fix",
     "new-post": "tsx scripts/new-post.ts",
     "translate:new-posts": "node scripts/translation/run.mjs",
+    "generate-legacy-redirects": "tsx scripts/seo/generate-legacy-redirects.ts",
     "apply-lqip": "tsx scripts/apply-lqip.ts",
     "format-posts": "tsx scripts/format-posts.ts",
     "update-theme": "tsx scripts/update-theme.ts"
