@@ -1,74 +1,149 @@
 #!/bin/bash
-# sync-content.sh - Syncs content from Blog-src to Blog-astro
+# sync-content.sh - Sync content from Blog-src into Blog-astro
 #
-# ONE-TIME or CI/CD USE: Run this before `pnpm build`
-# This script copies content from Blog-src (the source repo) to Blog-astro (the theme repo)
-#
-# Usage:
-#   ./scripts/sync-content.sh ../Blog-src      # Local development
-#   ./scripts/sync-content.sh Blog-src         # In GitHub Actions
+# Supports two source layouts:
+# 1) Structured (preferred):
+#    source/_posts/{posts|notes|journals}/{zh|en|ja}/...
+# 2) Legacy flat:
+#    source/_posts/*
 
-set -e
+set -euo pipefail
 
 BLOG_SRC=${1:-"../Blog-src"}
+COLLECTIONS=(posts notes journals)
+LANGS=(zh en ja)
+
+normalize_target_name() {
+  local file_name="$1"
+  local lang="$2"
+  local ext="${file_name##*.}"
+  local stem="${file_name%.*}"
+
+  if [[ "$ext" != "md" && "$ext" != "mdx" ]]; then
+    echo "$file_name"
+    return
+  fi
+
+  if [[ "$lang" == "zh" ]]; then
+    echo "$file_name"
+    return
+  fi
+
+  if [[ "$lang" == "en" ]]; then
+    if [[ "$stem" == *.en ]]; then
+      echo "$file_name"
+    elif [[ "$stem" == *-en ]]; then
+      echo "${stem%-en}.en.${ext}"
+    else
+      echo "${stem}.en.${ext}"
+    fi
+    return
+  fi
+
+  if [[ "$lang" == "ja" ]]; then
+    if [[ "$stem" == *.ja ]]; then
+      echo "$file_name"
+    elif [[ "$stem" == *-ja ]]; then
+      echo "${stem%-ja}.ja.${ext}"
+    elif [[ "$stem" == *-jp ]]; then
+      echo "${stem%-jp}.ja.${ext}"
+    else
+      echo "${stem}.ja.${ext}"
+    fi
+    return
+  fi
+
+  echo "$file_name"
+}
+
+sync_about() {
+  mkdir -p src/content/about
+
+  local zh_source=""
+  if [[ -f "$BLOG_SRC/source/about/zh.md" ]]; then
+    zh_source="$BLOG_SRC/source/about/zh.md"
+  elif [[ -f "$BLOG_SRC/source/about/index.md" ]]; then
+    zh_source="$BLOG_SRC/source/about/index.md"
+  fi
+
+  if [[ -n "$zh_source" ]]; then
+    cp "$zh_source" src/content/about/about-zh.md
+    cp "$zh_source" content/about.md
+  fi
+
+  if [[ -f "$BLOG_SRC/source/about/en.md" ]]; then
+    cp "$BLOG_SRC/source/about/en.md" src/content/about/about-en.md
+  fi
+
+  if [[ -f "$BLOG_SRC/source/about/ja.md" ]]; then
+    cp "$BLOG_SRC/source/about/ja.md" src/content/about/about-ja.md
+  fi
+}
+
+sync_robots() {
+  mkdir -p public
+  if [[ -f "$BLOG_SRC/source/robots.txt" ]]; then
+    cp "$BLOG_SRC/source/robots.txt" public/robots.txt
+  fi
+}
 
 echo "================================================"
-echo "Content Sync: Blog-src → Blog-astro"
+echo "Content Sync: Blog-src -> Blog-astro"
 echo "================================================"
 echo "Source: $BLOG_SRC"
 echo ""
 
-# Verify source exists
-if [ ! -d "$BLOG_SRC/source/_posts" ]; then
-    echo "❌ Error: Blog-src not found at $BLOG_SRC"
-    echo "   Expected: $BLOG_SRC/source/_posts/"
-    exit 1
+if [[ ! -d "$BLOG_SRC/source/_posts" ]]; then
+  echo "Error: Blog-src source/_posts not found at $BLOG_SRC"
+  exit 1
 fi
 
-# Count source posts
-POST_COUNT=$(find "$BLOG_SRC/source/_posts" -maxdepth 1 -name "*.md" | wc -l | tr -d ' ')
-echo "📝 Found $POST_COUNT posts in Blog-src"
+for collection in "${COLLECTIONS[@]}"; do
+  mkdir -p "content/${collection}"
+  # Only clear generated markdown + asset directories.
+  # Preserve loose static files (e.g. legacy image placeholders).
+  find "content/${collection}" -mindepth 1 -type d -not -name ".gitkeep" -exec rm -rf {} + 2>/dev/null || true
+  find "content/${collection}" -mindepth 1 -type f \( -name "*.md" -o -name "*.mdx" \) -delete 2>/dev/null || true
+done
 
-# Clear previous content (but keep .gitkeep)
-echo ""
-echo "🗑️  Clearing previous content..."
-find content/posts -mindepth 1 -not -name ".gitkeep" -delete 2>/dev/null || true
+if [[ -d "$BLOG_SRC/source/_posts/posts" && -d "$BLOG_SRC/source/_posts/notes" && -d "$BLOG_SRC/source/_posts/journals" ]]; then
+  echo "Structured source detected."
+  shopt -s nullglob
 
-# Copy posts (not drafts)
-echo "📋 Copying posts..."
-cp -r "$BLOG_SRC/source/_posts/"* content/posts/ 2>/dev/null || true
+  copied_files=0
+  copied_dirs=0
+  for collection in "${COLLECTIONS[@]}"; do
+    for lang in "${LANGS[@]}"; do
+      src_dir="$BLOG_SRC/source/_posts/${collection}/${lang}"
+      [[ -d "$src_dir" ]] || continue
 
-# Copy asset folders (folders inside _posts/)
-ASSET_FOLDERS=$(find "$BLOG_SRC/source/_posts" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
-echo "📁 Copied $ASSET_FOLDERS asset folders"
+      for entry in "$src_dir"/*; do
+        name="$(basename "$entry")"
+        if [[ -d "$entry" ]]; then
+          cp -R "$entry" "content/${collection}/${name}"
+          copied_dirs=$((copied_dirs + 1))
+          continue
+        fi
 
-# Copy about page
-echo "📄 Copying about page..."
-if [ -f "$BLOG_SRC/source/about/index.md" ]; then
-    cp "$BLOG_SRC/source/about/index.md" content/about.md 2>/dev/null || true
-    mkdir -p src/content/about
-    cp "$BLOG_SRC/source/about/index.md" src/content/about/about-zh.md 2>/dev/null || true
-    echo "   ✓ content/about.md + src/content/about/about-zh.md"
+        target_name="$(normalize_target_name "$name" "$lang")"
+        cp "$entry" "content/${collection}/${target_name}"
+        copied_files=$((copied_files + 1))
+      done
+    done
+  done
+
+  shopt -u nullglob
+  echo "Copied markdown files: $copied_files"
+  echo "Copied asset dirs: $copied_dirs"
 else
-    echo "   ⚠ No about page found"
+  echo "Legacy flat source detected. Copying all into content/posts..."
+  cp -r "$BLOG_SRC/source/_posts/"* content/posts/ 2>/dev/null || true
 fi
 
-# Copy robots.txt
-echo "🤖 Copying robots.txt..."
-if [ -f "$BLOG_SRC/source/robots.txt" ]; then
-    cp "$BLOG_SRC/source/robots.txt" public/robots.txt 2>/dev/null || true
-    echo "   ✓ robots.txt"
-else
-    echo "   ⚠ No robots.txt found"
-fi
+sync_about
+sync_robots
 
-# Final count
-SYNCED_COUNT=$(find content/posts -maxdepth 1 -name "*.md" | wc -l | tr -d ' ')
 echo ""
 echo "================================================"
-echo "✅ Sync complete!"
-echo "   Posts synced: $SYNCED_COUNT"
-echo "   Asset folders: $ASSET_FOLDERS"
+echo "Sync complete."
 echo "================================================"
-echo ""
-echo "Next: Run 'pnpm build' to generate the site"
