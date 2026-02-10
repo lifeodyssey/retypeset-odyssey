@@ -14,7 +14,7 @@ const baseName = basename(rawPath).replace(/\.(md|mdx)$/, '')
 const targetFile = ['.md', '.mdx'].includes(extname(rawPath))
   ? rawPath
   : `${rawPath}.md`
-const fullPath = join('src/content/posts', targetFile)
+const fullPath = join('content/posts', targetFile)
 
 // Check if file already exists
 if (existsSync(fullPath)) {

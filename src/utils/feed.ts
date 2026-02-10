@@ -17,9 +17,9 @@ const { title, description, i18nTitle, url, author } = themeConfig.site
 const { follow } = themeConfig.seo ?? {}
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// Dynamically import all images from /src/content/posts/_images
+// Dynamically import all images from /content/posts
 const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/content/posts/_images/**/*.{jpeg,jpg,png,gif,webp}',
+  '/content/posts/**/*.{jpeg,jpg,png,gif,webp,svg}',
 )
 
 /**
@@ -32,7 +32,7 @@ const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
 async function _getAbsoluteImageUrl(srcPath: string, baseUrl: string) {
   // Remove relative path prefixes (../ and ./) from image source path
   const prefixRemoved = srcPath.replace(/^(?:\.\.\/)+|^\.\//, '')
-  const absolutePath = `/src/content/posts/${prefixRemoved}`
+  const absolutePath = `/content/posts/${prefixRemoved}`
   const imageImporter = imagesGlob[absolutePath]
 
   if (!imageImporter) {
@@ -79,12 +79,12 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
 
     imagePromises.push((async () => {
       try {
-        // Skip if not a relative path to src/content/posts/_images directory
+        // Skip absolute URLs and unsupported sources
         if (!src.startsWith('./') && !src.startsWith('../') && !src.startsWith('_images/')) {
           return
         }
 
-        // Process images from src/content/posts/_images directory
+        // Process images from content/posts
         const absoluteImageUrl = await getAbsoluteImageUrl(src, baseUrl)
         if (absoluteImageUrl) {
           img.setAttribute('src', absoluteImageUrl)
