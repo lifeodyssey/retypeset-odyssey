@@ -34,3 +34,14 @@ test-results/
 
 ## Content
 # `content/posts/` is tracked in this repo (Cloudflare Pages builds from this git repo).
+
+# Personal blog content (synced from Blog-src)
+content/posts/
+content/journals/
+content/notes/
+content/about.md
+src/content/about/
+
+# Personal LLM declarations
+public/llms.txt
+public/llms-full.txt
