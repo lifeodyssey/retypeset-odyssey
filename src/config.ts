@@ -136,8 +136,9 @@ export const themeConfig: ThemeConfig = {
       // https://ziyuan.baidu.com
       baidu: '',
     },
-    // google analytics
-    // https://analytics.google.com
+    // google analytics — GA4 measurement ID (format: G-XXXXXXXXXX)
+    // NOT the old UA-XXXXXXXX-X format (deprecated July 2023)
+    // Get yours at: https://analytics.google.com → Admin → Data Streams → Measurement ID
     googleAnalyticsID: '',
     // umami analytics
     // https://cloud.umami.is
