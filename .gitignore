@@ -37,10 +37,14 @@ test-results/
 
 # Personal blog content (synced from Blog-src)
 content/posts/
+!content/posts/_example-post.md
 content/journals/
+!content/journals/_example-journal.md
 content/notes/
+!content/notes/_example-note.md
 content/about.md
 src/content/about/
+!src/content/about/_example-about-en.md
 
 # Personal LLM declarations
 public/llms.txt

@@ -1,0 +1,5 @@
+# Cloudflare Workers configuration
+name = "my-blog"
+compatibility_date = "2026-02-01"
+
+[env.production]
