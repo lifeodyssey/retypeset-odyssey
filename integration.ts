@@ -65,8 +65,9 @@ export default function retypesetTheme(): AstroIntegration {
 
         // --- Make @/ alias resolve to theme's src/ ---
         // --- Point publicDir to theme's public/ so static assets (fonts, icons, etc.) are bundled ---
+        // Astro internally calls fileURLToPath() on publicDir, so it must be a URL object.
         updateConfig({
-          publicDir: fileURLToPath(new URL('./public/', import.meta.url)),
+          publicDir: new URL('./public/', import.meta.url) as any,
           vite: {
             resolve: {
               alias: {
