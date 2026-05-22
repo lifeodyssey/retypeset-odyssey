@@ -1,4 +1,5 @@
 import type { AstroIntegration } from 'astro'
+import { fileURLToPath } from 'node:url'
 
 /**
  * Retypeset Odyssey theme integration.
@@ -65,11 +66,11 @@ export default function retypesetTheme(): AstroIntegration {
         // --- Make @/ alias resolve to theme's src/ ---
         // --- Point publicDir to theme's public/ so static assets (fonts, icons, etc.) are bundled ---
         updateConfig({
-          publicDir: new URL('./public/', import.meta.url).pathname,
+          publicDir: fileURLToPath(new URL('./public/', import.meta.url)),
           vite: {
             resolve: {
               alias: {
-                '@/': new URL('./src/', import.meta.url).pathname,
+                '@/': fileURLToPath(new URL('./src/', import.meta.url)),
               },
             },
           },
