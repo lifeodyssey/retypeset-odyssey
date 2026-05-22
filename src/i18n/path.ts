@@ -32,9 +32,10 @@ function stripLeadingLang(path: string, lang: Language): string {
  * Get path to a specific tag page with language support
  */
 export function getTagPath(tagName: string, lang: Language): string {
+  const encodedTag = encodeURIComponent(tagName)
   const tagPath = lang === defaultLocale
-    ? `/tags/${tagName}`
-    : `/${lang}/tags/${tagName}`
+    ? `/tags/${encodedTag}`
+    : `/${lang}/tags/${encodedTag}`
 
   return base ? `${base}${tagPath}` : tagPath
 }

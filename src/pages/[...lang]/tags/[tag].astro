@@ -10,7 +10,7 @@ export async function getStaticPaths() {
   const paths = await Promise.all(allLocales.map(async (lang) => {
     const langTags = await getAllTags(lang)
     return langTags.map(tag => ({
-      params: { lang: getLangRouteParam(lang), tag },
+      params: { lang: getLangRouteParam(lang), tag: encodeURIComponent(tag) },
       props: { tag },
     }))
   }))
