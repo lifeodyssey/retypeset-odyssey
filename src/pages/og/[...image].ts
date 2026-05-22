@@ -1,12 +1,24 @@
 import type { CollectionEntry } from 'astro:content'
-import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
 import { getJournalDescription, getNoteDescription, getPostDescription } from '@/utils/description'
 
-// Resolve font paths relative to this theme package, not the consuming project's cwd.
-const FONT_BOLD = fileURLToPath(new URL('../../../public/fonts/NotoSansSC-Bold.otf', import.meta.url))
-const FONT_REGULAR = fileURLToPath(new URL('../../../public/fonts/NotoSansSC-Regular.otf', import.meta.url))
+// Resolve font paths from the theme package's installed location.
+// Use createRequire so it works whether the theme is the project root (./public/fonts)
+// or installed under node_modules/retypeset-odyssey/public/fonts.
+const themeRequire = createRequire(import.meta.url)
+let themeRoot: string
+try {
+  themeRoot = dirname(themeRequire.resolve('retypeset-odyssey/package.json'))
+}
+catch {
+  // Fallback: theme IS the project root (template/standalone use case)
+  themeRoot = process.cwd()
+}
+const FONT_BOLD = join(themeRoot, 'public/fonts/NotoSansSC-Bold.otf')
+const FONT_REGULAR = join(themeRoot, 'public/fonts/NotoSansSC-Regular.otf')
 
 // eslint-disable-next-line antfu/no-top-level-await
 const posts = await getCollection('posts')
