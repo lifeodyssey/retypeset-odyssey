@@ -63,7 +63,9 @@ export default function retypesetTheme(): AstroIntegration {
         injectRoute({ pattern: '/robots.txt', entrypoint: resolve('./src/pages/robots.txt.ts'), prerender: true })
 
         // --- Make @/ alias resolve to theme's src/ ---
+        // --- Point publicDir to theme's public/ so static assets (fonts, icons, etc.) are bundled ---
         updateConfig({
+          publicDir: new URL('./public/', import.meta.url).pathname,
           vite: {
             resolve: {
               alias: {
