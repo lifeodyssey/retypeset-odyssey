@@ -19,6 +19,7 @@ catch {
 }
 const FONT_BOLD = join(themeRoot, 'public/fonts/NotoSansSC-Bold.otf')
 const FONT_REGULAR = join(themeRoot, 'public/fonts/NotoSansSC-Regular.otf')
+const OG_LOGO = join(themeRoot, 'public/icons/og-logo.png')
 
 // eslint-disable-next-line antfu/no-top-level-await
 const posts = await getCollection('posts')
@@ -87,7 +88,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     title: page.title,
     description: page.description,
     logo: {
-      path: './public/icons/og-logo.png', // Required local path and PNG format
+      path: OG_LOGO,
       size: [250],
     },
     border: {
