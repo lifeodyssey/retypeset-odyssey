@@ -1,74 +1,115 @@
-# Retypeset
+# Retypeset Odyssey
 
-![Cover Image](assets/images/v1/retypeset-en-desktop.webp)
-![Cover Image](assets/images/v1/retypeset-en-mobile.webp)
+A fork of [astro-theme-retypeset](https://github.com/radishzzz/astro-theme-retypeset) — extended to work both as a standalone Astro template **and** as an installable npm package for content-only repositories.
 
-[简体中文](assets/docs/README.zh.md)｜[繁体中文](assets/docs/README.zh-tw.md)｜[日本語](assets/docs/README.ja.md)｜[Español](assets/docs/README.es.md)｜[Français](assets/docs/README.fr.md)｜[Русский](assets/docs/README.ru.md)
+Powering [zhenjia.org](https://zhenjia.org).
 
-Retypeset is a static blog theme based on the [Astro](https://astro.build/) framework. Inspired by [Typography](https://astro-theme-typography.vercel.app/), Retypeset establishes a new visual standard and reimagines the layout of all pages, creating a reading experience reminiscent of paper books, reviving the beauty of typography. Details in every sight, elegance in every space.
+## What's different from upstream
 
-## Demo
+This fork adds the ability to consume the theme as a dependency, so you can keep your content in a separate repository and pull the theme via `pnpm install`. The original "clone and edit" workflow still works unchanged.
 
-- [Retypeset](https://retypeset.radishzz.cc/en/)
-- [Retipografía](https://retypeset.radishzz.cc/es/)
-- [Переверстка](https://retypeset.radishzz.cc/ru/)
-- [重新编排](https://retypeset.radishzz.cc/)
-- [重新編排](https://retypeset.radishzz.cc/zh-tw/)
-- [再組版](https://retypeset.radishzz.cc/ja/)
+| Use case | Approach |
+|----------|----------|
+| Personal blog, all in one repo | Fork & clone (same as upstream Retypeset) |
+| Content repo + reusable theme | Install `retypeset-odyssey` as a dependency |
+
+Other deltas from upstream: trilingual content support (zh / en / ja) with `.en.md` / `.ja.md` filename convention, tag URL encoding (so tags like `CI/CD` work), legacy Hexo `abbrlink` redirects, GitHub Actions translation pipeline.
 
 ## Features
 
-- Built with Astro and UnoCSS
-- Support for SEO, Sitemap, OpenGraph, RSS, MDX, LaTeX, Mermaid, and TOC
-- i18n support
-- Light / Dark mode
-- Elegant view transitions
-- Rich theme customization
-- Optimized typography
-- Responsive design
-- Comment system
+- Built with Astro 5 and UnoCSS
+- SEO, Sitemap, OpenGraph (with generated cards), RSS, MDX, LaTeX, Mermaid, TOC
+- i18n with route-level language switching
+- Light / Dark mode with view transitions
+- Pagefind full-text search
+- Responsive, typography-first layout
 
-## Performance
+## Usage A — Standalone (fork & clone)
 
-<br>
-<p align="center">
-  <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2Fen%2F&form_factor=desktop">
-    <img width="710" alt="Retypeset Lighthouse Score" src="assets/images/retypeset-lighthouse-score.svg">
-  <a>
-</p>
+```bash
+git clone https://github.com/lifeodyssey/retypeset-odyssey.git
+cd retypeset-odyssey
+pnpm install
+pnpm dev
+```
 
-## Getting Started
+Edit `src/config.ts` for site settings. Put markdown in `content/{posts,notes,journals}/`. Build with `pnpm build`.
 
-1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) this repository, or use this template to create a new repository.
-2. Run the following commands in your terminal:
+## Usage B — As an npm package
 
-   ```bash
-   # Clone the repository
-   git clone <repository-url>
+Set up your own minimal Astro project that consumes this theme:
 
-   # Navigate to the project directory
-   cd <repository-name>
+```jsonc
+// package.json
+{
+  "name": "my-blog",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey",
+    "astro": "^5.17.1",
+    "canvaskit-wasm": "^0.41.1"
+  }
+}
+```
 
-   # Install pnpm globally (if not already installed)
-   npm install -g pnpm
+```ts
+// astro.config.ts
+import { defineConfig } from 'astro/config'
+import retypeset from 'retypeset-odyssey/integration'
 
-   # Install dependencies
-   pnpm install
+export default defineConfig({
+  site: 'https://your-domain.com',
+  build: { format: 'file' },
+  trailingSlash: 'never',
+  integrations: [retypeset()],
+})
+```
 
-   # Start the development server
-   pnpm dev
-   ```
+```ts
+// src/content.config.ts
+export { collections } from 'retypeset-odyssey/content-config'
+```
 
-3. Refer to the [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/) to customize your blog and create new posts.
-4. Refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) to deploy your blog to Netlify, Vercel, or other platforms.
+Then put markdown directly in your repo:
 
-&emsp;[![Deploy to Netlify](assets/images/deploy-netlify.svg)](https://app.netlify.com/start) [![Deploy to Vercel](assets/images/deploy-vercel.svg)](https://vercel.com/new)
+```
+content/
+├── posts/
+│   ├── article.md          (zh, default)
+│   ├── article.en.md       (English)
+│   └── article.ja.md       (Japanese)
+├── notes/
+└── journals/
+```
 
-## Updates
+Build:
 
-Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time. Simply run `pnpm update-theme` to update the theme. If you encounter merge conflicts, please refer to [this video](https://youtu.be/lz5OuKzvadQ?si=sH_ALNgqxrYqNVQT) for manual resolution.
+```bash
+pnpm install
+pnpm build  # → dist/
+```
+
+### What the integration does
+
+- Injects all 18 theme routes (`posts/[slug]`, `tags/[tag]`, RSS, OG images, etc.) via Astro's `injectRoute` API.
+- Aliases `@/` to the package's own `src/`, so theme imports resolve correctly when running from a consumer project.
+- Points `publicDir` at the package's own `public/`, so fonts, icons, and other assets are bundled without copying.
+
+## Customization
+
+For both usage modes:
+
+- **Site config**: edit `src/config.ts` (standalone) or override the export in your consumer's `astro.config.ts` (TBD — currently config is bundled with the theme).
+- **About pages**: place markdown in `src/content/about/about-{zh|en|ja}.md`.
+- **Static assets** (favicon, OG logo, fonts): standalone users edit `public/`; package consumers inherit from the installed theme.
 
 ## Credits
+
+Forked from [astro-theme-retypeset](https://github.com/radishzzz/astro-theme-retypeset) by [@radishzzz](https://github.com/radishzzz). Upstream inspirations:
 
 - [Typography](https://github.com/moeyua/astro-theme-typography)
 - [Fuwari](https://github.com/saicaca/fuwari)
@@ -77,13 +118,6 @@ Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retyp
 - [heti](https://github.com/sivan/heti)
 - [EarlySummerSerif](https://github.com/GuiWonder/EarlySummerSerif)
 
-## Star History
+## License
 
-<p align="center">
-<a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=radishzzz/astro-theme-retypeset&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=radishzzz/astro-theme-retypeset&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=radishzzz/astro-theme-retypeset&type=Date" />
-  </picture>
-</p>
+Same as upstream: MIT (see `LICENSE`).
