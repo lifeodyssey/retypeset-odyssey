@@ -1,9 +1,26 @@
 {
-  "name": "astro-theme-retypeset",
+  "name": "retypeset-odyssey",
   "type": "module",
   "version": "1.0.0",
   "packageManager": "pnpm@10.26.0",
-  "repository": "https://github.com/radishzzz/astro-theme-retypeset",
+  "repository": "https://github.com/lifeodyssey/retypeset-odyssey",
+  "exports": {
+    "./integration": "./integration.ts",
+    "./config": "./src/config.ts",
+    "./content-config": "./src/content.config.ts",
+    "./astro.config": "./astro.config.ts"
+  },
+  "files": [
+    "src",
+    "public",
+    "content",
+    "patches",
+    "scripts",
+    "integration.ts",
+    "astro.config.ts",
+    "tsconfig.json",
+    "uno.config.ts"
+  ],
   "scripts": {
     "dev": "astro check && astro dev",
     "build": "pnpm generate-legacy-redirects && astro check && astro build && pnpm apply-lqip",
