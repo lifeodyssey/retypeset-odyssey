@@ -1,7 +1,12 @@
 import type { CollectionEntry } from 'astro:content'
+import { fileURLToPath } from 'node:url'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
 import { getJournalDescription, getNoteDescription, getPostDescription } from '@/utils/description'
+
+// Resolve font paths relative to this theme package, not the consuming project's cwd.
+const FONT_BOLD = fileURLToPath(new URL('../../../public/fonts/NotoSansSC-Bold.otf', import.meta.url))
+const FONT_REGULAR = fileURLToPath(new URL('../../../public/fonts/NotoSansSC-Regular.otf', import.meta.url))
 
 // eslint-disable-next-line antfu/no-top-level-await
 const posts = await getCollection('posts')
@@ -90,10 +95,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
         lineHeight: 1.5,
       },
     },
-    fonts: [
-      './public/fonts/NotoSansSC-Bold.otf',
-      './public/fonts/NotoSansSC-Regular.otf',
-    ],
+    fonts: [FONT_BOLD, FONT_REGULAR],
     bgGradient: [[242, 241, 245]],
   }),
 })
