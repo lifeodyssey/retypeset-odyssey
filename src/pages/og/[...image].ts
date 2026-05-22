@@ -13,13 +13,10 @@ let themeRoot: string
 try {
   themeRoot = dirname(themeRequire.resolve('retypeset-odyssey/package.json'))
 }
-catch (e) {
+catch {
   // Fallback: theme IS the project root (template/standalone use case)
-  console.warn('[OG] retypeset-odyssey package.json not found, falling back to cwd:', (e as Error).message)
-  console.warn('[OG] import.meta.url was:', import.meta.url)
   themeRoot = process.cwd()
 }
-console.log('[OG] themeRoot resolved to:', themeRoot)
 const FONT_BOLD = join(themeRoot, 'public/fonts/NotoSansSC-Bold.otf')
 const FONT_REGULAR = join(themeRoot, 'public/fonts/NotoSansSC-Regular.otf')
 

@@ -5,10 +5,12 @@
   "packageManager": "pnpm@10.26.0",
   "repository": "https://github.com/lifeodyssey/retypeset-odyssey",
   "exports": {
+    ".": "./integration.ts",
     "./integration": "./integration.ts",
     "./config": "./src/config.ts",
     "./content-config": "./src/content.config.ts",
-    "./astro.config": "./astro.config.ts"
+    "./astro.config": "./astro.config.ts",
+    "./package.json": "./package.json"
   },
   "files": [
     "src",
