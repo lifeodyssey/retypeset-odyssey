@@ -284,9 +284,17 @@ export const JOURNALS_PER_PAGE = 7
           vite: {
             plugins: [
               {
+                // Vite 7 (Astro 6) is stricter about resolve.alias replacements:
+                // pointing an alias at a virtual module specifier (which then
+                // gets resolved by a separate plugin) is no longer reliable
+                // across all build environments (the content-collections /
+                // prerender bundle does not pick it up). Intercept the
+                // `@/config` import directly in `resolveId` so the virtual
+                // module always wins, regardless of alias evaluation order.
                 name: 'retypeset-config-loader',
+                enforce: 'pre',
                 resolveId(id) {
-                  if (id === VIRTUAL_ID)
+                  if (id === '@/config' || id === '@/config.ts' || id === VIRTUAL_ID)
                     return RESOLVED_VIRTUAL_ID
                   return null
                 },
@@ -306,11 +314,10 @@ export const JOURNALS_PER_PAGE = 7
               },
             ],
             resolve: {
-              // Array form: more specific aliases first.
-              // `@/config` (and `@/config.ts`) must hit the virtual module
-              // before the generic `@/` prefix rule kicks in.
+              // Generic `@/*` alias for all other source paths. `@/config` is
+              // handled by the plugin above (which runs in the `pre` phase,
+              // before alias resolution).
               alias: [
-                { find: /^@\/config(\.ts)?$/, replacement: VIRTUAL_ID },
                 {
                   find: /^@\/(.*)/,
                   replacement: `${themePath('./src/')}$1`,

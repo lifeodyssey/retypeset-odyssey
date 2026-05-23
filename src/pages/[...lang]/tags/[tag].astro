@@ -10,7 +10,11 @@ export async function getStaticPaths() {
   const paths = await Promise.all(allLocales.map(async (lang) => {
     const langTags = await getAllTags(lang)
     return langTags.map(tag => ({
-      params: { lang: getLangRouteParam(lang), tag: encodeURIComponent(tag) },
+      // Astro 6 auto-encodes params for URLs and decodes them on route match,
+      // so we hand it the raw tag. Slashes are the one exception: a `/` would
+      // split the `[tag]` segment in two; pre-encode just that character so
+      // tags like `CI/CD` survive routing.
+      params: { lang: getLangRouteParam(lang), tag: tag.replace(/\//g, '%2F') },
       props: { tag },
     }))
   }))
