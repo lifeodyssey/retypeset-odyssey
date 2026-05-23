@@ -124,6 +124,34 @@ The full schema lives in [`src/config-schema.ts`](./src/config-schema.ts) and th
 - **About pages**: place markdown in `src/content/about/about-{zh|en|ja}.md`.
 - **Static assets** (favicon, OG logo, fonts): standalone users edit `public/`; package consumers inherit from the installed theme.
 
+## Migrating from Hexo
+
+If you're coming from Hexo (or another markdown-first SSG) and want to bring your existing posts over, this theme ships with a one-off migration helper plus a 301-bridge generator for SEO.
+
+### Quick path
+
+1. **Start from the starter template** — [retypeset-starter](https://github.com/lifeodyssey/retypeset-starter) is a minimal consumer repo (one `package.json`, one `astro.config.ts`, one YAML). Click *Use this template* on GitHub, clone the new repo, then `pnpm install`.
+
+2. **Bring your Hexo posts over with the migration script.** Copy `scripts/migration/migrate-hexo.ts` out of the installed theme into your own repo, edit the two source/target path constants at the top, then:
+
+   ```bash
+   pnpm tsx scripts/migrate-hexo.ts
+   ```
+
+   It walks every file under your Hexo `source/_posts/`, converts the frontmatter (`date` → `published`, accepts string-or-array `tags`/`categories`, preserves `abbrlink`, drops Hexo-private fields gracefully), and writes the result to `content/posts/`. Multilingual variants use the `.en.md` / `.ja.md` suffix convention.
+
+3. **(Optional) verify abbrlinks weren't lost.** A sibling `validate-abbrlinks.ts` cross-checks every output file's `abbrlink` against the original Hexo source so you can catch silent drops.
+
+4. **Run `pnpm dev`** and click around. If a post fails frontmatter validation, the integration's Zod schema is permissive — most Hexo frontmatter quirks are accepted — but missing `title` or unparseable `date` will surface as a clear error pointing at the file.
+
+### Preserve your SEO
+
+If your Hexo site was deployed under a domain you can't drop (e.g. `username.github.io`), use [`scripts/generate-redirect-pages.mjs`](https://github.com/lifeodyssey/Blog-src/blob/main/scripts/generate-redirect-pages.mjs) (in the content-repo example, not in this package) to generate a per-page 301 bridge: for every old `posts/<abbrlink>.html` URL, it emits a static HTML with `<meta http-equiv="refresh">` + `<link rel="canonical">` pointing at the new domain. Deploy the generated files to the old host and search engine weight transfers over.
+
+### Story version
+
+For a long-form walkthrough of why the migration was structured this way, including the trade-offs around frontmatter compatibility, SEO continuity, and `abbrlink` preservation, see [我是怎么用 AI 把博客从 Hexo 迁到 Astro 的](https://zhenjia.org/posts/how-i-migrated-blog-with-ai-v3) (Chinese; the migration was originally documented from a non-frontend developer's perspective).
+
 ## Credits
 
 Forked from [astro-theme-retypeset](https://github.com/radishzzz/astro-theme-retypeset) by [@radishzzz](https://github.com/radishzzz). Upstream inspirations:
