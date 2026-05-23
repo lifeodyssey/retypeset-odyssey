@@ -1,0 +1,121 @@
+# Retypeset Odyssey — default theme configuration.
+#
+# This file is the authoritative source of defaults. A consumer can override
+# any subset of these keys in their own `retypeset.config.yaml` at the project
+# root; values are deep-merged on top of this file.
+
+# ---- SITE -------------------------------------------------------------------
+site:
+  # Site title.
+  title: Life Odyssey
+  # Site subtitle (tagline).
+  subtitle: 人生若只如初见
+  # Site description (for SEO + RSS).
+  description: A personal blog about life, technology, and reflections.
+  # Use i18n title/subtitle/description from src/i18n/ui.ts instead of the
+  # static strings above.
+  i18nTitle: true
+  # Author name.
+  author: Zhenjia
+  # Canonical site URL (no trailing slash).
+  url: https://zhenjia.org
+  # Base path. Use '/' unless the site is served from a subpath.
+  base: /
+  # Favicon URL. Recommended formats: svg, png, ico.
+  favicon: /icons/favicon.svg
+
+# ---- COLOR ------------------------------------------------------------------
+color:
+  # Default theme mode: light | dark | auto.
+  mode: light
+  light:
+    primary: oklch(25% 0.005 298)
+    secondary: oklch(40% 0.005 298)
+    background: oklch(96% 0.005 298)
+    highlight: oklch(0.93 0.195089 103.2532 / 0.5)
+  dark:
+    primary: oklch(92% 0.005 298)
+    secondary: oklch(77% 0.005 298)
+    background: oklch(22% 0.005 298)
+    highlight: oklch(0.93 0.195089 103.2532 / 0.2)
+
+# ---- GLOBAL -----------------------------------------------------------------
+global:
+  # Default language: de | en | es | fr | ja | ko | pl | pt | ru | zh | zh-tw.
+  locale: zh
+  # Additional languages (do not include the default locale here).
+  moreLocales:
+    - en
+    - ja
+  # Post font style: sans | serif.
+  fontStyle: sans
+  # Date format: YYYY-MM-DD | MM-DD-YYYY | DD-MM-YYYY | MMM D YYYY | D MMM YYYY.
+  dateFormat: YYYY-MM-DD
+  # Enable table of contents.
+  toc: true
+  # Enable KaTeX math rendering.
+  katex: true
+  # Reduce motion.
+  reduceMotion: false
+
+# ---- COMMENT ----------------------------------------------------------------
+comment:
+  # Enable comment system.
+  enabled: false
+  giscus:
+    repo: ''
+    repoId: ''
+    category: ''
+    categoryId: ''
+    mapping: pathname
+    strict: '0'
+    reactionsEnabled: '1'
+    emitMetadata: '0'
+    inputPosition: bottom
+  twikoo:
+    envId: ''
+  waline:
+    serverURL: https://retypeset-comment.radishzz.cc
+    emoji:
+      - https://unpkg.com/@waline/emojis@1.2.0/tw-emoji
+    search: false
+    imageUploader: false
+
+# ---- SEO --------------------------------------------------------------------
+seo:
+  # @twitter ID.
+  twitterID: ''
+  verification:
+    google: ''
+    bing: ''
+    yandex: ''
+    baidu: ''
+  # Google Analytics 4 measurement ID (G-XXXXXXXXXX). Not the legacy UA-* form.
+  googleAnalyticsID: ''
+  # Umami analytics ID (https://cloud.umami.is).
+  umamiAnalyticsID: ''
+  # Follow.is verification.
+  follow:
+    feedID: ''
+    userID: ''
+  # ApiFlash access key (https://apiflash.com/) for generating OG screenshots.
+  apiflashKey: ''
+
+# ---- FOOTER -----------------------------------------------------------------
+footer:
+  links:
+    - name: RSS
+      url: /atom.xml
+    - name: GitHub
+      url: https://github.com/lifeodyssey
+  # Year the site was first published.
+  startYear: 2016
+
+# ---- PRELOAD ----------------------------------------------------------------
+preload:
+  # Image hosting URL. Used to optimize remote images and generate LQIP.
+  imageHostURL: ''
+  # Custom GA proxy endpoint.
+  customGoogleAnalyticsJS: ''
+  # Custom Umami proxy endpoint.
+  customUmamiAnalyticsJS: ''

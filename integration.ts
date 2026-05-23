@@ -1,10 +1,21 @@
 import type { AstroIntegration } from 'astro'
+import mdx from '@astrojs/mdx'
+import partytown from '@astrojs/partytown'
+import sitemap from '@astrojs/sitemap'
+import Compress from 'astro-compress'
+import pagefind from 'astro-pagefind'
+import { existsSync, readFileSync } from 'node:fs'
+import { isAbsolute, resolve as resolvePath } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import rehypeKatex from 'rehype-katex'
 import rehypeMermaid from 'rehype-mermaid'
 import rehypeSlug from 'rehype-slug'
 import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
+import UnoCSS from 'unocss/astro'
+import yaml from 'yaml'
+import { ThemeConfigSchema } from './src/config-schema'
+import { langMap } from './src/i18n/config'
 import { rehypeCodeCopyButton } from './src/plugins/rehype-code-copy-button.mjs'
 import { rehypeExternalLinks } from './src/plugins/rehype-external-links.mjs'
 import { rehypeHeadingAnchor } from './src/plugins/rehype-heading-anchor.mjs'
@@ -13,72 +24,232 @@ import { remarkContainerDirectives } from './src/plugins/remark-container-direct
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
+interface RetypesetOptions {
+  /**
+   * Path to a user `retypeset.config.yaml`.
+   *
+   * - Absolute path: used as-is.
+   * - Relative path: resolved against the consumer project root.
+   * - Omitted: looks for `retypeset.config.yaml` at the project root.
+   */
+  config?: string
+}
+
+/**
+ * Minimal deep-merge for plain objects + arrays.
+ *
+ * Arrays are replaced wholesale (so a consumer overriding `footer.links`
+ * gets exactly what they wrote, not the defaults concatenated with their
+ * additions). Objects are merged key by key. Anything else is replaced.
+ */
+function deepMerge<T>(base: T, override: unknown): T {
+  if (override === undefined || override === null)
+    return base
+  if (
+    typeof base !== 'object'
+    || base === null
+    || Array.isArray(base)
+    || typeof override !== 'object'
+    || Array.isArray(override)
+  ) {
+    return override as T
+  }
+  const out: Record<string, unknown> = { ...(base as Record<string, unknown>) }
+  for (const [key, value] of Object.entries(override as Record<string, unknown>)) {
+    out[key] = deepMerge((base as Record<string, unknown>)[key], value)
+  }
+  return out as T
+}
+
 /**
  * Retypeset Odyssey theme integration.
  *
- * Injects all theme pages/routes so the theme can be consumed
- * as a dependency from a separate content repository.
+ * Responsibilities:
+ *
+ * 1. Read `default-config.yaml` (shipped with the package) and optionally a
+ *    consumer `retypeset.config.yaml` from the project root; deep-merge and
+ *    Zod-validate them.
+ * 2. Expose the merged config via a Vite virtual module
+ *    (`virtual:retypeset/config`) and re-route `@/config` imports to it, so
+ *    every theme file that does `import ... from '@/config'` automatically
+ *    sees consumer overrides without any code change.
+ * 3. Drive the Astro top-level config from the same YAML — `site`,
+ *    `build.format`, `trailingSlash`, `prefetch`, `i18n`, and `image.domains`
+ *    are all set from the validated config so the consumer's
+ *    `astro.config.ts` can shrink to `integrations: [retypeset()]`.
+ * 4. Register UnoCSS, MDX, partytown, sitemap, pagefind, compress, and the
+ *    markdown plugin pipeline, so consumers do not import any of those.
+ * 5. Inject all theme pages/routes.
  *
  * Usage in consumer's astro.config.ts:
  *   import retypeset from 'retypeset-odyssey/integration'
  *   export default defineConfig({ integrations: [retypeset()] })
  */
-export default function retypesetTheme(): AstroIntegration {
+export default function retypesetTheme(options: RetypesetOptions = {}): AstroIntegration {
   return {
     name: 'retypeset-odyssey',
     hooks: {
-      'astro:config:setup': ({ injectRoute, updateConfig }) => {
-        // Resolve paths relative to this package
-        const resolve = (path: string) => new URL(path, import.meta.url)
+      'astro:config:setup': ({ injectRoute, updateConfig, config }) => {
+        // Resolve paths relative to this package.
+        const themeUrl = (path: string) => new URL(path, import.meta.url)
+        const themePath = (path: string) => fileURLToPath(themeUrl(path))
 
-        // --- Inject all theme pages ---
+        // --- 1. Load + validate configuration ---
+
+        const defaultYamlPath = themePath('./default-config.yaml')
+        const defaultConfig = yaml.parse(readFileSync(defaultYamlPath, 'utf-8'))
+
+        const projectRoot = fileURLToPath(config.root)
+        let userConfigPath: string | null = null
+        if (options.config) {
+          userConfigPath = isAbsolute(options.config)
+            ? options.config
+            : resolvePath(projectRoot, options.config)
+        }
+        else {
+          const candidate = resolvePath(projectRoot, 'retypeset.config.yaml')
+          if (existsSync(candidate))
+            userConfigPath = candidate
+        }
+
+        let userConfig: unknown = {}
+        if (userConfigPath && existsSync(userConfigPath)) {
+          userConfig = yaml.parse(readFileSync(userConfigPath, 'utf-8')) ?? {}
+        }
+
+        const merged = deepMerge(defaultConfig, userConfig)
+        const validated = ThemeConfigSchema.parse(merged)
+
+        const base = validated.site.base === '/' ? '' : validated.site.base.replace(/\/$/, '')
+        const defaultLocale = validated.global.locale
+        const moreLocales = validated.global.moreLocales
+        const allLocales = [defaultLocale, ...moreLocales]
+
+        // --- 2. Build the virtual module body ---
+        //
+        // Mirrors the public surface of src/config.ts exactly so any file
+        // importing from '@/config' keeps working.
+        const configJson = JSON.stringify(validated)
+        const allLocalesJson = JSON.stringify(allLocales)
+        const moreLocalesJson = JSON.stringify(moreLocales)
+        const virtualConfigCode = `// Auto-generated by retypeset-odyssey integration. Do not edit.
+export const themeConfig = ${configJson}
+export const base = ${JSON.stringify(base)}
+export const defaultLocale = ${JSON.stringify(defaultLocale)}
+export const moreLocales = ${moreLocalesJson}
+export const allLocales = ${allLocalesJson}
+export const POSTS_PER_PAGE = 7
+export const NOTES_PER_PAGE = 7
+export const JOURNALS_PER_PAGE = 7
+`
+
+        const VIRTUAL_ID = 'virtual:retypeset/config'
+        const RESOLVED_VIRTUAL_ID = `\0${VIRTUAL_ID}`
+
+        // --- 3. Inject all theme pages ---
 
         // 404
-        injectRoute({ pattern: '/404', entrypoint: resolve('./src/pages/404.astro'), prerender: true })
+        injectRoute({ pattern: '/404', entrypoint: themeUrl('./src/pages/404.astro'), prerender: true })
 
         // Homepage / paginated index
-        injectRoute({ pattern: '/[...lang]/[...page]', entrypoint: resolve('./src/pages/[...lang]/[...page].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/[...page]', entrypoint: themeUrl('./src/pages/[...lang]/[...page].astro'), prerender: true })
 
         // About
-        injectRoute({ pattern: '/[...lang]/about', entrypoint: resolve('./src/pages/[...lang]/about.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/about', entrypoint: themeUrl('./src/pages/[...lang]/about.astro'), prerender: true })
 
         // Feeds
-        injectRoute({ pattern: '/[...lang]/atom.xml', entrypoint: resolve('./src/pages/[...lang]/atom.xml.ts'), prerender: true })
-        injectRoute({ pattern: '/[...lang]/rss.xml', entrypoint: resolve('./src/pages/[...lang]/rss.xml.ts'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/atom.xml', entrypoint: themeUrl('./src/pages/[...lang]/atom.xml.ts'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/rss.xml', entrypoint: themeUrl('./src/pages/[...lang]/rss.xml.ts'), prerender: true })
 
         // Categories
-        injectRoute({ pattern: '/[...lang]/categories', entrypoint: resolve('./src/pages/[...lang]/categories/index.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/categories', entrypoint: themeUrl('./src/pages/[...lang]/categories/index.astro'), prerender: true })
 
         // Posts
-        injectRoute({ pattern: '/[...lang]/posts/[slug]', entrypoint: resolve('./src/pages/[...lang]/posts/[slug].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/posts/[slug]', entrypoint: themeUrl('./src/pages/[...lang]/posts/[slug].astro'), prerender: true })
 
         // Notes
-        injectRoute({ pattern: '/[...lang]/notes/[slug]', entrypoint: resolve('./src/pages/[...lang]/notes/[slug].astro'), prerender: true })
-        injectRoute({ pattern: '/[...lang]/notes', entrypoint: resolve('./src/pages/[...lang]/notes/index.astro'), prerender: true })
-        injectRoute({ pattern: '/[...lang]/notes/page/[page]', entrypoint: resolve('./src/pages/[...lang]/notes/page/[page].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/notes/[slug]', entrypoint: themeUrl('./src/pages/[...lang]/notes/[slug].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/notes', entrypoint: themeUrl('./src/pages/[...lang]/notes/index.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/notes/page/[page]', entrypoint: themeUrl('./src/pages/[...lang]/notes/page/[page].astro'), prerender: true })
 
         // Journals
-        injectRoute({ pattern: '/[...lang]/journals/[slug]', entrypoint: resolve('./src/pages/[...lang]/journals/[slug].astro'), prerender: true })
-        injectRoute({ pattern: '/[...lang]/journals', entrypoint: resolve('./src/pages/[...lang]/journals/index.astro'), prerender: true })
-        injectRoute({ pattern: '/[...lang]/journals/page/[page]', entrypoint: resolve('./src/pages/[...lang]/journals/page/[page].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/journals/[slug]', entrypoint: themeUrl('./src/pages/[...lang]/journals/[slug].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/journals', entrypoint: themeUrl('./src/pages/[...lang]/journals/index.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/journals/page/[page]', entrypoint: themeUrl('./src/pages/[...lang]/journals/page/[page].astro'), prerender: true })
 
         // Search
-        injectRoute({ pattern: '/[...lang]/search', entrypoint: resolve('./src/pages/[...lang]/search.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/search', entrypoint: themeUrl('./src/pages/[...lang]/search.astro'), prerender: true })
 
         // Tags
-        injectRoute({ pattern: '/[...lang]/tags', entrypoint: resolve('./src/pages/[...lang]/tags/index.astro'), prerender: true })
-        injectRoute({ pattern: '/[...lang]/tags/[tag]', entrypoint: resolve('./src/pages/[...lang]/tags/[tag].astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/tags', entrypoint: themeUrl('./src/pages/[...lang]/tags/index.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/tags/[tag]', entrypoint: themeUrl('./src/pages/[...lang]/tags/[tag].astro'), prerender: true })
 
         // OG images
-        injectRoute({ pattern: '/og/[...image]', entrypoint: resolve('./src/pages/og/[...image].ts'), prerender: true })
+        injectRoute({ pattern: '/og/[...image]', entrypoint: themeUrl('./src/pages/og/[...image].ts'), prerender: true })
 
         // robots.txt
-        injectRoute({ pattern: '/robots.txt', entrypoint: resolve('./src/pages/robots.txt.ts'), prerender: true })
+        injectRoute({ pattern: '/robots.txt', entrypoint: themeUrl('./src/pages/robots.txt.ts'), prerender: true })
 
-        // --- Make @/ alias resolve to theme's src/ ---
-        // --- Point publicDir to theme's public/ so static assets (fonts, icons, etc.) are bundled ---
-        // Astro internally calls fileURLToPath() on publicDir, so it must be a URL object.
+        // --- 4. Compute optional image config ---
+        // Only set `image.domains` when the user provides a host.
+        const { imageHostURL } = validated.preload ?? {}
+        const imageConfig = imageHostURL
+          ? {
+              image: {
+                domains: [imageHostURL],
+                remotePatterns: [{ protocol: 'https' as const }],
+              },
+            }
+          : {}
+
+        // --- 5. Push everything onto the Astro config ---
         updateConfig({
+          site: validated.site.url,
+          base,
+          build: {
+            format: 'file', // Generates /posts/xxx.html instead of /posts/xxx/index.html
+          },
+          trailingSlash: 'never', // Required for build.format: 'file'
+          prefetch: {
+            prefetchAll: true,
+            defaultStrategy: 'viewport',
+          },
+          ...imageConfig,
+          i18n: {
+            locales: allLocales.map(lang => ({
+              path: lang,
+              codes: [...langMap[lang]] as [string, ...string[]],
+            })),
+            defaultLocale,
+            // Provide an explicit routing object so mergeConfig does not leave
+            // it undefined (Astro's downstream code reads `routing.redirectToDefaultLocale`).
+            routing: {
+              prefixDefaultLocale: false,
+              redirectToDefaultLocale: false,
+              fallbackType: 'redirect',
+            },
+          },
+          integrations: [
+            UnoCSS({
+              configFile: themePath('./uno.config.ts'),
+              injectReset: true,
+            }),
+            mdx(),
+            partytown({
+              config: {
+                forward: ['dataLayer.push', 'gtag'],
+              },
+            }),
+            sitemap(),
+            pagefind(),
+            Compress({
+              CSS: true,
+              HTML: true,
+              Image: false,
+              JavaScript: true,
+              SVG: false,
+            }),
+          ],
           markdown: {
             remarkPlugins: [
               remarkDirective,
@@ -107,12 +278,44 @@ export default function retypesetTheme(): AstroIntegration {
               },
             },
           },
-          publicDir: new URL('./public/', import.meta.url) as any,
+          // Astro internally calls fileURLToPath() on publicDir, so it must
+          // be a URL object.
+          publicDir: themeUrl('./public/') as any,
           vite: {
-            resolve: {
-              alias: {
-                '@/': fileURLToPath(new URL('./src/', import.meta.url)),
+            plugins: [
+              {
+                name: 'retypeset-config-loader',
+                resolveId(id) {
+                  if (id === VIRTUAL_ID)
+                    return RESOLVED_VIRTUAL_ID
+                  return null
+                },
+                load(id) {
+                  if (id === RESOLVED_VIRTUAL_ID)
+                    return virtualConfigCode
+                  return null
+                },
               },
+              {
+                name: 'retypeset-prefix-font-urls-with-base',
+                transform(code, id) {
+                  if (!id.endsWith('src/styles/font.css'))
+                    return null
+                  return code.replace(/url\("\/fonts\//g, `url("${base}/fonts/`)
+                },
+              },
+            ],
+            resolve: {
+              // Array form: more specific aliases first.
+              // `@/config` (and `@/config.ts`) must hit the virtual module
+              // before the generic `@/` prefix rule kicks in.
+              alias: [
+                { find: /^@\/config(\.ts)?$/, replacement: VIRTUAL_ID },
+                {
+                  find: /^@\/(.*)/,
+                  replacement: `${themePath('./src/')}$1`,
+                },
+              ],
             },
           },
         })

@@ -37,7 +37,7 @@ Edit `src/config.ts` for site settings. Put markdown in `content/{posts,notes,jo
 
 ## Usage B — As an npm package
 
-Set up your own minimal Astro project that consumes this theme:
+Set up your own minimal Astro project that consumes this theme. One install, one YAML, one line of Astro config.
 
 ```jsonc
 // package.json
@@ -49,9 +49,8 @@ Set up your own minimal Astro project that consumes this theme:
     "build": "astro build"
   },
   "dependencies": {
-    "retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey",
     "astro": "^5.17.1",
-    "canvaskit-wasm": "^0.41.1"
+    "retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey"
   }
 }
 ```
@@ -62,11 +61,25 @@ import { defineConfig } from 'astro/config'
 import retypeset from 'retypeset-odyssey/integration'
 
 export default defineConfig({
-  site: 'https://your-domain.com',
-  build: { format: 'file' },
-  trailingSlash: 'never',
   integrations: [retypeset()],
 })
+```
+
+```yaml
+# retypeset.config.yaml — at project root. Any subset of keys; the rest fall back to defaults.
+site:
+  title: My Blog
+  subtitle: Hello world
+  author: Your Name
+  url: https://your-domain.com
+global:
+  locale: en
+  moreLocales: []
+footer:
+  links:
+    - name: RSS
+      url: /atom.xml
+  startYear: 2024
 ```
 
 ```ts
@@ -95,15 +108,19 @@ pnpm build  # → dist/
 
 ### What the integration does
 
-- Injects all 18 theme routes (`posts/[slug]`, `tags/[tag]`, RSS, OG images, etc.) via Astro's `injectRoute` API.
-- Aliases `@/` to the package's own `src/`, so theme imports resolve correctly when running from a consumer project.
-- Points `publicDir` at the package's own `public/`, so fonts, icons, and other assets are bundled without copying.
+- Loads `default-config.yaml` (shipped with the package), deep-merges your `retypeset.config.yaml` on top, and validates the result with Zod. The merged config is exposed to the theme via a Vite virtual module (`virtual:retypeset/config`) — every theme file that does `import ... from '@/config'` automatically picks up your overrides without any code change on your side.
+- Drives Astro's top-level config from the same YAML: `site`, `base`, `build.format`, `trailingSlash`, `prefetch`, `i18n`, and `image.domains` are all set automatically.
+- Registers UnoCSS (with the theme's `uno.config.ts`), MDX, partytown, sitemap, pagefind, and astro-compress — so you do not import any of them yourself.
+- Injects all theme routes (`posts/[slug]`, `tags/[tag]`, RSS, OG images, etc.) via Astro's `injectRoute` API.
+- Points `publicDir` at the package's own `public/`, so fonts, icons, and other assets ship without copying.
+
+### Configuration reference
+
+The full schema lives in [`src/config-schema.ts`](./src/config-schema.ts) and the defaults in [`default-config.yaml`](./default-config.yaml). Top-level groups: `site`, `color`, `global`, `comment`, `seo`, `footer`, `preload`. Any field you do not set in your YAML falls back to the default. Validation errors surface at `astro build` time with a clear path into the YAML.
 
 ## Customization
 
-For both usage modes:
-
-- **Site config**: edit `src/config.ts` (standalone) or override the export in your consumer's `astro.config.ts` (TBD — currently config is bundled with the theme).
+- **Site config**: edit `default-config.yaml` (standalone) or write your own `retypeset.config.yaml` next to `astro.config.ts` (package consumers). Any subset of keys is allowed; the rest fall back to the defaults.
 - **About pages**: place markdown in `src/content/about/about-{zh|en|ja}.md`.
 - **Static assets** (favicon, OG logo, fonts): standalone users edit `public/`; package consumers inherit from the installed theme.
 

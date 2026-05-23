@@ -1,197 +1,34 @@
 import type { ThemeConfig } from '@/types'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import yaml from 'yaml'
+import { ThemeConfigSchema } from './config-schema'
 
-export const themeConfig: ThemeConfig = {
-  // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  site: {
-    // site title
-    title: 'Life Odyssey',
-    // site subtitle
-    subtitle: '人生若只如初见',
-    // site description
-    description: 'A personal blog about life, technology, and reflections.',
-    // use i18n title/subtitle/description from src/i18n/ui.ts instead of static ones above
-    i18nTitle: true, // true | false
-    // author name
-    author: 'Zhenjia',
-    // site url
-    url: 'https://zhenjia.org',
-    // base path
-    // root directory for all pages and assets
-    base: '/', // e.g., '/blog', '/docs'
-    // favicon url
-    // recommended formats: svg, png or ico
-    favicon: '/icons/favicon.svg', // or https://example.com/favicon.svg
-  },
-  // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
+/**
+ * Theme configuration entry point.
+ *
+ * Two modes:
+ *
+ * 1. **Theme dev mode** (this file is read directly via `@/config`).
+ *    Happens when developing retypeset-odyssey itself or when no consumer
+ *    project is in play. We synchronously load `default-config.yaml` from the
+ *    package root, validate it, and export `themeConfig`.
+ *
+ * 2. **Consumer mode** (this file is replaced by `virtual:retypeset/config`).
+ *    The integration installs a Vite alias that re-routes `@/config` to a
+ *    virtual module whose contents are computed from the consumer's
+ *    `retypeset.config.yaml` deep-merged on top of the same defaults. The
+ *    code in this file is therefore never executed in consumer builds.
+ *
+ * Either way, the public exports of this module — `themeConfig`, `base`,
+ * `defaultLocale`, `moreLocales`, `allLocales`, and pagination constants —
+ * stay identical, so the 200+ `from '@/config'` import sites do not change.
+ */
 
-  // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  color: {
-    // default theme mode
-    mode: 'light', // light | dark | auto
-    light: {
-      // primary color
-      // used for title, hover, etc
-      // oklch color picker: https://oklch.com/
-      primary: 'oklch(25% 0.005 298)',
-      // secondary color
-      // used for post text
-      secondary: 'oklch(40% 0.005 298)',
-      // background color
-      background: 'oklch(96% 0.005 298)',
-      // highlight color
-      // used for navbar, selected text, etc
-      highlight: 'oklch(0.93 0.195089 103.2532 / 0.5)', // rgba(255,235,0,0.5)
-    },
-    dark: {
-      // primary color
-      primary: 'oklch(92% 0.005 298)',
-      // secondary color
-      secondary: 'oklch(77% 0.005 298)',
-      // background color
-      background: 'oklch(22% 0.005 298)',
-      // highlight color
-      highlight: 'oklch(0.93 0.195089 103.2532 / 0.2)', // rgba(255,235,0,0.2)
-    },
-  },
-  // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
+const defaultYamlPath = fileURLToPath(new URL('../default-config.yaml', import.meta.url))
+const rawDefaults = yaml.parse(readFileSync(defaultYamlPath, 'utf-8'))
 
-  // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  global: {
-    // default language
-    locale: 'zh', // de | en | es | fr | ja | ko | pl | pt | ru | zh | zh-tw
-    // more languages
-    // not fill in the locale code above again, can be an empty array []
-    moreLocales: ['en', 'ja'], // Only zh (default), en, ja
-    // post font style
-    fontStyle: 'sans', // sans | serif
-    // post date format
-    dateFormat: 'YYYY-MM-DD', // YYYY-MM-DD | MM-DD-YYYY | DD-MM-YYYY | MMM D YYYY | D MMM YYYY
-    // enable table of contents
-    toc: true, // true | false
-    // enable katex math rendering
-    katex: true, // true | false
-    // reduce motion
-    reduceMotion: false, // true | false
-  },
-  // GLOBAL SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-
-  // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  comment: {
-    // enable comment system
-    enabled: false, // Disabled for now
-    // giscus
-    // https://giscus.app/
-    giscus: {
-      repo: '',
-      repoId: '',
-      category: '',
-      categoryId: '',
-      mapping: 'pathname',
-      strict: '0',
-      reactionsEnabled: '1',
-      emitMetadata: '0',
-      inputPosition: 'bottom',
-    },
-    // twikoo
-    // https://twikoo.js.org/
-    twikoo: {
-      envId: '',
-      // version: frontend version can be changed in package.json
-    },
-    // waline
-    // https://waline.js.org/en/
-    waline: {
-      // server url
-      serverURL: 'https://retypeset-comment.radishzz.cc',
-      // emoji url
-      emoji: [
-        'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
-        // 'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
-        // more emojis: https://waline.js.org/en/guide/features/emoji.html
-      ],
-      // gif search
-      search: false, // true | false
-      // image uploader
-      imageUploader: false, // true | false
-    },
-  },
-  // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-
-  // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  seo: {
-    // @twitter ID
-    twitterID: '',
-    // site verification
-    verification: {
-      // google search console
-      // https://search.google.com/search-console
-      google: '',
-      // bing webmaster tools
-      // https://www.bing.com/webmasters
-      bing: '',
-      // yandex webmaster
-      // https://webmaster.yandex.com
-      yandex: '',
-      // baidu search
-      // https://ziyuan.baidu.com
-      baidu: '',
-    },
-    // google analytics — GA4 measurement ID (format: G-XXXXXXXXXX)
-    // NOT the old UA-XXXXXXXX-X format (deprecated July 2023)
-    // Get yours at: https://analytics.google.com → Admin → Data Streams → Measurement ID
-    googleAnalyticsID: '',
-    // umami analytics
-    // https://cloud.umami.is
-    umamiAnalyticsID: '',
-    // follow verification
-    // https://follow.is/
-    follow: {
-      // feed ID
-      feedID: '',
-      // user ID
-      userID: '',
-    },
-    // apiflash access key
-    // generate website screenshots for open graph images
-    // get your access key at: https://apiflash.com/
-    apiflashKey: '',
-  },
-  // SEO SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-
-  // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  footer: {
-    // social links
-    links: [
-      {
-        name: 'RSS',
-        url: '/atom.xml', // or /rss.xml
-      },
-      {
-        name: 'GitHub',
-        url: 'https://github.com/lifeodyssey',
-      },
-    ],
-    // year of website start
-    startYear: 2016,
-  },
-  // FOOTER SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-
-  // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
-  preload: {
-    // image hosting url
-    // optimize remote images and generate low-quality placeholders
-    imageHostURL: '',
-    // custom google analytics js
-    // for users who proxy tracking scripts to a custom domain
-    // see https://gist.github.com/xiaopc/0602f06ca465d76bd9efd3dda9393738
-    customGoogleAnalyticsJS: '',
-    // custom umami analytics js
-    // for users who self-deploy umami or proxy tracking scripts to a custom domain
-    // see https://umami.is/docs/bypass-ad-blockers
-    customUmamiAnalyticsJS: '',
-  },
-  // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
-}
+export const themeConfig: ThemeConfig = ThemeConfigSchema.parse(rawDefaults) as ThemeConfig
 
 export const base = themeConfig.site.base === '/' ? '' : themeConfig.site.base.replace(/\/$/, '')
 export const defaultLocale = themeConfig.global.locale

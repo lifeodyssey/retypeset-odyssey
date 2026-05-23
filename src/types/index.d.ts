@@ -19,6 +19,9 @@ export type Journal = CollectionEntry<'journals'> & {
   }
 }
 
+// The runtime shape is now derived from the Zod schema in config-schema.ts.
+// The interface below is kept for editor tooling / docs and is structurally
+// compatible with the inferred type.
 export interface ThemeConfig {
   site: {
     title: string
