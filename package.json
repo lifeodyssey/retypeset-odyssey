@@ -19,6 +19,7 @@
     "patches",
     "scripts",
     "integration.ts",
+    "discover-collections.ts",
     "astro.config.ts",
     "tsconfig.json",
     "uno.config.ts",
