@@ -9,7 +9,12 @@ const { title, subtitle, i18nTitle } = themeConfig.site
 
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 const headerTitle = i18nTitle ? currentUI.title : title
-const headerSubtitle = i18nTitle ? currentUI.subtitle : subtitle
+// subtitle may be a plain string (legacy) or a per-language map. When it is
+// a map, the current locale's value takes priority over ui.ts; otherwise fall
+// back to the existing i18nTitle behaviour.
+const headerSubtitle = typeof subtitle === 'object' && subtitle !== null
+  ? ((subtitle as Record<string, string>)[currentLang] || currentUI.subtitle)
+  : (i18nTitle ? currentUI.subtitle : subtitle)
 
 const TitleTag = isArticle ? 'h2' : 'h1'
 const SubtitleTag = isArticle ? 'div' : 'h2'

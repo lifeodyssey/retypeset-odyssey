@@ -33,7 +33,7 @@ import { ThemeConfigSchema } from './config-schema'
 const defaults = {
   site: {
     title: 'Life Odyssey',
-    subtitle: '人生若只如初见',
+    subtitle: '',
     description: 'A personal blog about life, technology, and reflections.',
     i18nTitle: true,
     author: 'Zhenjia',

@@ -28,7 +28,10 @@ const { customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfi
 // Site Metadata
 const metaTheme = defaultMode === 'dark' ? darkMode : lightMode
 const siteTitle = i18nTitle ? currentUI.title : title
-const siteSubtitle = i18nTitle ? currentUI.subtitle : subtitle
+// subtitle may be a plain string (legacy) or a per-language map; see Header.astro.
+const siteSubtitle = typeof subtitle === 'object' && subtitle !== null
+  ? ((subtitle as Record<string, string>)[currentLang] || currentUI.subtitle)
+  : (i18nTitle ? currentUI.subtitle : subtitle)
 const siteDescription = i18nTitle ? currentUI.description : description
 
 // Page Metadata

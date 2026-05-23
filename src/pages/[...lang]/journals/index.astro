@@ -1,7 +1,7 @@
 ---
 import JournalList from '@/components/JournalList.astro'
 import Pagination from '@/components/Pagination.astro'
-import { JOURNALS_PER_PAGE, allLocales } from '@/config'
+import { JOURNALS_PER_PAGE, allLocales, themeConfig } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
@@ -20,19 +20,21 @@ const allJournals = await getJournals(currentLang)
 const totalPages = Math.max(1, Math.ceil(allJournals.length / JOURNALS_PER_PAGE))
 const journals = allJournals.slice(0, JOURNALS_PER_PAGE)
 const baseUrl = getLocalizedPath('/journals/', currentLang)
+const intro = (themeConfig.collections?.journals as { intro?: Record<string, string> } | undefined)?.intro?.[currentLang]
+  ?? currentUI.journalsIntro
 ---
 
 <Layout
   postTitle={currentUI.journals ?? 'Journal'}
-  postDescription={currentUI.journalsIntro}
+  postDescription={intro}
 >
   <section class="mb-7.5">
     <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
       {currentUI.journals ?? 'Journal'}
     </h1>
-    {currentUI.journalsIntro && (
+    {intro && (
       <p class="mb-6 text-3.5 c-secondary">
-        {currentUI.journalsIntro}
+        {intro}
       </p>
     )}
     <div class="uno-decorative-line" />

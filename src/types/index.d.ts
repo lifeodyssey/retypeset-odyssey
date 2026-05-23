@@ -25,7 +25,8 @@ export type Journal = CollectionEntry<'journals'> & {
 export interface ThemeConfig {
   site: {
     title: string
-    subtitle: string
+    // Either a single subtitle for all languages, or a per-language map.
+    subtitle: string | Partial<Record<Language, string>>
     description: string
     i18nTitle: boolean
     author: string
@@ -108,4 +109,9 @@ export interface ThemeConfig {
     customGoogleAnalyticsJS?: string
     customUmamiAnalyticsJS?: string
   }
+  collections?: Record<string, {
+    enabled?: boolean
+    intro?: Partial<Record<Language, string>>
+    [key: string]: unknown
+  }>
 }

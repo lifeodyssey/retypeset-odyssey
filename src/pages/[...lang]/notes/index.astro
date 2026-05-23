@@ -1,7 +1,7 @@
 ---
 import NoteList from '@/components/NoteList.astro'
 import Pagination from '@/components/Pagination.astro'
-import { NOTES_PER_PAGE, allLocales } from '@/config'
+import { NOTES_PER_PAGE, allLocales, themeConfig } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import { getLocalizedPath } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
@@ -20,19 +20,21 @@ const allNotes = await getNotes(currentLang)
 const totalPages = Math.max(1, Math.ceil(allNotes.length / NOTES_PER_PAGE))
 const notes = allNotes.slice(0, NOTES_PER_PAGE)
 const baseUrl = getLocalizedPath('/notes/', currentLang)
+const intro = (themeConfig.collections?.notes as { intro?: Record<string, string> } | undefined)?.intro?.[currentLang]
+  ?? currentUI.notesIntro
 ---
 
 <Layout
   postTitle={currentUI.notes ?? 'Notes'}
-  postDescription={currentUI.notesIntro}
+  postDescription={intro}
 >
   <section class="mb-7.5">
     <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
       {currentUI.notes ?? 'Notes'}
     </h1>
-    {currentUI.notesIntro && (
+    {intro && (
       <p class="mb-6 text-3.5 c-secondary">
-        {currentUI.notesIntro}
+        {intro}
       </p>
     )}
     <div class="uno-decorative-line" />

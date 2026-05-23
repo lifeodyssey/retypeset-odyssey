@@ -8,12 +8,19 @@
 site:
   # Site title.
   title: Life Odyssey
-  # Site subtitle (tagline).
-  subtitle: 人生若只如初见
+  # Site subtitle (tagline). Either a single string (used for all languages)
+  # or a per-language map, e.g.
+  #   subtitle:
+  #     zh: 你的中文副标题
+  #     en: Your English subtitle
+  #     ja: あなたの日本語サブタイトル
+  # When omitted (or empty) and `i18nTitle: true`, the per-language defaults
+  # in src/i18n/ui.ts are used.
+  subtitle: ''
   # Site description (for SEO + RSS).
   description: A personal blog about life, technology, and reflections.
-  # Use i18n title/subtitle/description from src/i18n/ui.ts instead of the
-  # static strings above.
+  # When true, title/subtitle/description fall back to src/i18n/ui.ts for the
+  # current locale whenever the values above are not set as per-language maps.
   i18nTitle: true
   # Author name.
   author: Zhenjia
@@ -123,8 +130,19 @@ collections:
     enabled: true
   notes:
     enabled: true
+    # Optional per-language tagline shown under the Notes title on /notes.
+    # Omit to fall back to ui.ts (notesIntro).
+    # intro:
+    #   zh: 我的笔记本
+    #   en: My notes
+    #   ja: 私のノート
   journals:
     enabled: true
+    # Optional per-language tagline for /journals. See `notes.intro` above.
+    # intro:
+    #   zh: 一段旅程
+    #   en: A journey
+    #   ja: ある旅
 
 # ---- PRELOAD ----------------------------------------------------------------
 preload:

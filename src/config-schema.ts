@@ -26,10 +26,18 @@ const LanguageCode = z.enum([
   'zh-tw',
 ])
 
+// A string that can either be a single value (used for all languages) or a
+// per-language map. When a map is given, the value for the current locale is
+// preferred; missing locales fall back to the i18n defaults in src/i18n/ui.ts.
+const LocalizedString = z.union([
+  z.string(),
+  z.record(LanguageCode, z.string()),
+])
+
 export const ThemeConfigSchema = z.object({
   site: z.object({
     title: z.string(),
-    subtitle: z.string().optional().default(''),
+    subtitle: LocalizedString.optional().default(''),
     description: z.string().optional().default(''),
     i18nTitle: z.boolean().default(true),
     author: z.string(),
@@ -145,15 +153,19 @@ export const ThemeConfigSchema = z.object({
     })
     .optional()
     .default({}),
-  // Collection toggles. Keys are collection names (built-in or auto-discovered
-  // folders under `content/`); values control whether the collection is built
-  // and routed. Folders not listed here default to `enabled: true`.
+  // Collection settings. Keys are collection names (built-in or auto-discovered
+  // folders under `content/`). `enabled` controls whether the collection is
+  // built and routed (folders not listed here default to `enabled: true`).
+  // `intro` is an optional per-language tagline shown under the collection
+  // title on its list page; when omitted, the page falls back to the i18n
+  // defaults in src/i18n/ui.ts (e.g. notesIntro, journalsIntro).
   collections: z
     .record(
       z.string(),
       z
         .object({
           enabled: z.boolean().optional().default(true),
+          intro: z.record(LanguageCode, z.string()).optional(),
         })
         .passthrough(),
     )
