@@ -17,13 +17,22 @@ function matchPageType(path: string, prefix: string = '') {
   const normalizedPath = stripHtmlExtension(pathWithoutBase.replace(/^\/|\/$/g, ''))
 
   // Homepage check: matches root path ('') or language code ('en')
+  //
+  // Astro 6 with `build.format: 'file'` + `trailingSlash: 'never'` writes
+  // `dist/index.html` and reports `Astro.url.pathname === '/index.html'`
+  // for the homepage (Astro 5 used '/'). Normalising past the `.html` strip
+  // leaves us with 'index' or '<lang>/index' for the localised variants;
+  // treat those as homepage too so excerpt rendering keeps working.
   if (prefix === '') {
-    if (normalizedPath === '') {
+    if (normalizedPath === '' || normalizedPath === 'index') {
       return true
     }
 
     const locales = moreLocales as readonly string[]
     if (locales.includes(normalizedPath)) {
+      return true
+    }
+    if (locales.some(lang => normalizedPath === `${lang}/index`)) {
       return true
     }
 
