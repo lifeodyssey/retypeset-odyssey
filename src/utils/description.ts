@@ -34,10 +34,19 @@ const htmlEntityMap: Record<string, string> = {
   '&nbsp;': ' ',
 }
 
-// Cleans text by removing HTML tags and normalizing whitespace
+// Cleans text by removing HTML tags and normalizing whitespace.
+// Before stripping tags, inserts a middle-dot separator between adjacent
+// list items so excerpts of pre-`<!-- more -->` lists still read as a list
+// once flattened to a single paragraph. Without this, `<li>A</li><li>B</li>`
+// flattens to whitespace-joined `A B` and the excerpt loses its structure.
 function cleanTextContent(text: string): string {
-  // Remove HTML tags
-  let cleanText = text.replace(/<[^>]*>/g, '')
+  let cleanText = text
+    // Adjacent list items → middle-dot separator
+    .replace(/<\/li>\s*<li[^>]*>/gi, '</li> · <li>')
+    // <br /> behaves like a space
+    .replace(/<br\s*\/?>/gi, ' ')
+    // Remove HTML tags
+    .replace(/<[^>]*>/g, '')
 
   // Decode HTML entities
   Object.entries(htmlEntityMap).forEach(([entity, char]) => {
