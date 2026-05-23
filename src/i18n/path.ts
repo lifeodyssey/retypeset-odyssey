@@ -81,12 +81,18 @@ export function getJournalPath(slug: string, lang: Language): string {
  * @returns Localized path with language prefix
  */
 export function getLocalizedPath(path: string, currentLang?: Language) {
-  const normalizedPath = path.replace(/^\/|\/$/g, '')
+  // Astro 6 with build.format: 'file' emits dist/index.html and reports
+  // `Astro.url.pathname` as `/index.html` for the homepage, so we also
+  // need to recognise the stripped `index` form as "the homepage".
+  const normalizedPath = path
+    .replace(/^\/|\/$/g, '')
+    .replace(/\.html$/, '')
+  const isHomepage = normalizedPath === '' || normalizedPath === 'index'
   const lang = currentLang ?? getLangFromPath(path)
 
   const langPrefix = lang === defaultLocale ? '' : `/${lang}`
   // Don't add trailing slash since trailingSlash is set to 'never'
-  const localizedPath = normalizedPath === ''
+  const localizedPath = isHomepage
     ? `${langPrefix || '/'}`
     : `${langPrefix}/${normalizedPath}`
 
