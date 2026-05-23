@@ -17,12 +17,13 @@ Other deltas from upstream: trilingual content support (zh / en / ja) with `.en.
 
 ## Features
 
-- Built with Astro 5 and UnoCSS
+- Built with Astro 6 and UnoCSS
 - SEO, Sitemap, OpenGraph (with generated cards), RSS, MDX, LaTeX, Mermaid, TOC
-- i18n with route-level language switching
+- i18n with route-level language switching and per-language tagline / collection-intro overrides
 - Light / Dark mode with view transitions
 - Pagefind full-text search
 - Responsive, typography-first layout
+- Folder-based content collections — drop a new folder under `content/` and you get list + detail routes for free
 
 ## Usage A — Standalone (fork & clone)
 
@@ -49,11 +50,13 @@ Set up your own minimal Astro project that consumes this theme. One install, one
     "build": "astro build"
   },
   "dependencies": {
-    "astro": "^5.17.1",
-    "retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey"
+    "astro": "^6.3.7",
+    "retypeset-odyssey": "^0.1.3"
   }
 }
 ```
+
+(You can also pin to the GitHub tarball with `"retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey"` if you want to track an unreleased branch.)
 
 ```ts
 // astro.config.ts
@@ -69,17 +72,39 @@ export default defineConfig({
 # retypeset.config.yaml — at project root. Any subset of keys; the rest fall back to defaults.
 site:
   title: My Blog
-  subtitle: Hello world
+  # `subtitle` accepts either a single string (used for all languages) or a
+  # per-language map. The map form is recommended for multilingual sites.
+  subtitle:
+    en: A journey through ideas
+    zh: 一段关于想法的旅程
+    ja: アイデアの旅
   author: Your Name
   url: https://your-domain.com
 global:
   locale: en
-  moreLocales: []
+  moreLocales: []          # for multilingual sites add e.g. [zh, ja]
 footer:
   links:
     - name: RSS
       url: /atom.xml
   startYear: 2024
+
+# Per-collection settings. The built-in `posts`, `notes`, `journals`
+# collections are enabled by default. Set `enabled: false` to drop one.
+# `intro` is an optional per-language tagline shown under the collection
+# title on its list page (e.g. /notes, /journals); if you omit it the
+# generic fallback from src/i18n/ui.ts is used instead.
+collections:
+  notes:
+    intro:
+      en: My notes
+      zh: 我的笔记
+      ja: 私のノート
+  journals:
+    intro:
+      en: Personal diary entries
+      zh: 个人日记
+      ja: 個人的な日記
 ```
 
 ```ts
@@ -116,12 +141,16 @@ pnpm build  # → dist/
 
 ### Configuration reference
 
-The full schema lives in [`src/config-schema.ts`](./src/config-schema.ts) and the defaults in [`default-config.yaml`](./default-config.yaml). Top-level groups: `site`, `color`, `global`, `comment`, `seo`, `footer`, `preload`. Any field you do not set in your YAML falls back to the default. Validation errors surface at `astro build` time with a clear path into the YAML.
+The full schema lives in [`src/config-schema.ts`](./src/config-schema.ts) and the defaults in [`default-config.yaml`](./default-config.yaml). Top-level groups: `site`, `color`, `global`, `comment`, `seo`, `footer`, `preload`, `collections`. Any field you do not set in your YAML falls back to the default. Validation errors surface at `astro build` time with a clear path into the YAML.
+
+### Folder-based collections
+
+Drop any folder under `content/` (e.g. `content/tech/`) and the integration will auto-discover it, generate `/tech` as the list page and `/tech/<slug>` as detail pages — no code change needed. Folders prefixed with `_` or `.` are ignored, so `content/_drafts/` is a natural place to stash in-progress work. Disable a folder by setting `collections.<name>.enabled: false`, and give it a per-language tagline with `collections.<name>.intro.{zh,en,ja}` just like the built-ins.
 
 ## Customization
 
 - **Site config**: edit `default-config.yaml` (standalone) or write your own `retypeset.config.yaml` next to `astro.config.ts` (package consumers). Any subset of keys is allowed; the rest fall back to the defaults.
-- **About pages**: place markdown in `src/content/about/about-{zh|en|ja}.md`.
+- **About pages**: place markdown in `content/about/about-{zh|en|ja}.md` (the `lang` field in the frontmatter picks which language each file belongs to).
 - **Static assets** (favicon, OG logo, fonts): standalone users edit `public/`; package consumers inherit from the installed theme.
 
 ## Migrating from Hexo
