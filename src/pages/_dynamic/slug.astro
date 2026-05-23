@@ -1,0 +1,100 @@
+---
+/**
+ * Generic detail page for dynamically-discovered content collections.
+ *
+ * Mounted at `/[...lang]/[collection]/[slug]`. `getStaticPaths` walks every
+ * (lang, collection, slug) triple that exists in the dynamic folders, so
+ * Astro will not try to render this template for any URL the integration
+ * didn't anticipate.
+ */
+
+import type { Language } from '@/i18n/config'
+import { render } from 'astro:content'
+import PostDate from '@/components/PostDate.astro'
+import BackButton from '@/components/Widgets/BackButton.astro'
+import TOC from '@/components/Widgets/TOC.astro'
+import { allLocales } from '@/config'
+import { getLangRouteParam } from '@/i18n/lang'
+import Layout from '@/layouts/Layout.astro'
+import {
+  type DynamicEntry,
+  getDynamicGroups,
+} from '@/utils/dynamic-collections'
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-ignore - virtual module provided by the integration
+import { dynamicCollections } from 'virtual:retypeset/dynamic-collections'
+
+export async function getStaticPaths() {
+  const paths: Array<{
+    params: { lang: string | undefined, collection: string, slug: string }
+    props: { entry: DynamicEntry, supportedLangs: Language[], collection: string }
+  }> = []
+
+  for (const collection of dynamicCollections as string[]) {
+    const groups = await getDynamicGroups(collection)
+    for (const lang of allLocales) {
+      for (const group of groups) {
+        const entry = group.byLang[lang]
+        if (!entry)
+          continue
+        paths.push({
+          params: {
+            lang: getLangRouteParam(lang),
+            collection,
+            slug: group.slug,
+          },
+          props: {
+            entry,
+            supportedLangs: group.supportedLangs,
+            collection,
+          },
+        })
+      }
+    }
+  }
+  return paths
+}
+
+interface Props {
+  entry: DynamicEntry
+  supportedLangs: Language[]
+  collection: string
+}
+
+const { entry, supportedLangs, collection } = Astro.props as Props
+const { Content, headings, remarkPluginFrontmatter } = await render(entry)
+---
+
+<Layout
+  postTitle={entry.data.title}
+  postSlug={`${collection}/${entry.id}`}
+  supportedLangs={supportedLangs}
+>
+  <article class="heti">
+    <div class="relative">
+      <BackButton />
+      <h1 class="post-title">
+        <span data-disable-theme-toggle-transition>
+          {entry.data.title}
+        </span>
+      </h1>
+    </div>
+
+    <div
+      class="mb-17.2 block c-primary font-time"
+      data-disable-theme-toggle-transition
+    >
+      <PostDate
+        date={entry.data.published}
+        updatedDate={entry.data.updated}
+        minutes={remarkPluginFrontmatter.minutes}
+      />
+    </div>
+
+    {entry.data.toc && <TOC headings={headings} />}
+
+    <div id="post-content">
+      <Content />
+    </div>
+  </article>
+</Layout>

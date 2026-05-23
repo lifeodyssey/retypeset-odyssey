@@ -111,6 +111,21 @@ footer:
   # Year the site was first published.
   startYear: 2016
 
+# ---- COLLECTIONS ------------------------------------------------------------
+# Built-in collections (`posts`, `notes`, `journals`) are always enabled by
+# default. Any extra top-level folder under `content/` (e.g. `content/tech/`)
+# becomes its own collection automatically, with `/tech` as the list page and
+# `/tech/<slug>` as the detail page. You can disable any collection by setting
+# `enabled: false`. Folders prefixed with `_` or `.` are ignored, so use
+# `content/_drafts/` for in-progress material.
+collections:
+  posts:
+    enabled: true
+  notes:
+    enabled: true
+  journals:
+    enabled: true
+
 # ---- PRELOAD ----------------------------------------------------------------
 preload:
   # Image hosting URL. Used to optimize remote images and generate LQIP.

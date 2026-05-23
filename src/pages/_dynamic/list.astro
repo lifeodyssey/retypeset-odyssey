@@ -1,0 +1,101 @@
+---
+/**
+ * Generic list page for dynamically-discovered content collections.
+ *
+ * Mounted at `/[...lang]/[collection]`; `getStaticPaths` enumerates every
+ * (lang, folder) combination, where `folder` is a directory under
+ * `content/` that the integration discovered. Literal-segment routes
+ * (`/posts`, `/notes`, `/about`, etc.) take priority over this dynamic
+ * pattern in Astro's router, so the built-ins are unaffected.
+ */
+
+import Pagination from '@/components/Pagination.astro'
+import PostDate from '@/components/PostDate.astro'
+import { allLocales, base, defaultLocale } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import Layout from '@/layouts/Layout.astro'
+import { getDynamicEntries, getDynamicSlug } from '@/utils/dynamic-collections'
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-ignore - virtual module provided by the integration
+import { dynamicCollections } from 'virtual:retypeset/dynamic-collections'
+
+export async function getStaticPaths() {
+  const paths: Array<{
+    params: { lang: string | undefined, collection: string }
+    props: { collection: string }
+  }> = []
+  for (const collection of dynamicCollections as string[]) {
+    for (const lang of allLocales) {
+      paths.push({
+        params: {
+          lang: getLangRouteParam(lang),
+          collection,
+        },
+        props: { collection },
+      })
+    }
+  }
+  return paths
+}
+
+const PER_PAGE = 7
+
+const { collection } = Astro.props as { collection: string }
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const entries = await getDynamicEntries(collection, currentLang)
+const totalPages = Math.max(1, Math.ceil(entries.length / PER_PAGE))
+const pageEntries = entries.slice(0, PER_PAGE)
+const baseUrl = (currentLang === defaultLocale ? '' : `/${currentLang}`) + `/${collection}/`
+const title = collection.charAt(0).toUpperCase() + collection.slice(1)
+---
+
+<Layout postTitle={title}>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {title}
+    </h1>
+    <div class="uno-decorative-line" />
+
+    {pageEntries.length > 0
+      ? (
+          <ul>
+            {pageEntries.map((entry) => {
+              const slug = getDynamicSlug(entry)
+              const href = (currentLang === defaultLocale ? '' : `/${currentLang}`)
+                + `/${collection}/${slug}`
+              return (
+                <li class="mb-5.5 lg:mb-7.5">
+                  <h3 class="inline transition-colors hover:c-primary">
+                    <a
+                      class="cjk:tracking-wide lg:font-medium lg:text-4.25"
+                      href={(base ? base : '') + href}
+                    >
+                      {entry.data.title}
+                    </a>
+                  </h3>
+                  <div class="py-0.8 text-3.5 font-time">
+                    <PostDate
+                      date={entry.data.published}
+                      updatedDate={entry.data.updated}
+                      minutes={entry.remarkPluginFrontmatter.minutes}
+                    />
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        )
+      : (
+          <p class="mt-6 text-3.5 c-secondary">
+            No entries in this collection yet.
+          </p>
+        )}
+
+    <Pagination
+      currentPage={1}
+      totalPages={totalPages}
+      baseUrl={(base ? base : '') + baseUrl}
+      pagePrefix="page"
+    />
+  </section>
+</Layout>

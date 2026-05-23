@@ -1,6 +1,7 @@
 import { glob } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
 import { z } from 'astro/zod'
+import { discoverCollections } from '../discover-collections'
 import { allLocales, themeConfig } from '@/config'
 
 const posts = defineCollection({
@@ -214,4 +215,33 @@ const about = defineCollection({
   }),
 })
 
-export const collections = { posts, notes, journals, about }
+// --- Dynamic collections -----------------------------------------------------
+//
+// Auto-register a collection for every top-level folder under `content/` that
+// isn't a built-in (posts/notes/journals/_drafts/etc). Each one reuses the
+// `posts` collection schema, so any frontmatter that works in `posts/` also
+// works in a dynamic folder. See `discover-collections.ts` for the scan rules.
+
+const postSchema = (posts as any).schema
+
+const { dynamicFolders } = discoverCollections(process.cwd())
+
+const dynamicCollections: Record<string, ReturnType<typeof defineCollection>> = {}
+for (const folder of dynamicFolders) {
+  dynamicCollections[folder] = defineCollection({
+    loader: glob({
+      pattern: '**/*.{md,mdx}',
+      base: `./content/${folder}`,
+      generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ''),
+    }),
+    schema: postSchema,
+  })
+}
+
+export const collections = {
+  posts,
+  notes,
+  journals,
+  about,
+  ...dynamicCollections,
+}

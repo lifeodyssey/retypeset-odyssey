@@ -145,6 +145,20 @@ export const ThemeConfigSchema = z.object({
     })
     .optional()
     .default({}),
+  // Collection toggles. Keys are collection names (built-in or auto-discovered
+  // folders under `content/`); values control whether the collection is built
+  // and routed. Folders not listed here default to `enabled: true`.
+  collections: z
+    .record(
+      z.string(),
+      z
+        .object({
+          enabled: z.boolean().optional().default(true),
+        })
+        .passthrough(),
+    )
+    .optional()
+    .default({}),
 })
 
 export type ThemeConfig = z.infer<typeof ThemeConfigSchema>
