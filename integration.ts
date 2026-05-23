@@ -363,6 +363,15 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
                     return virtualConfigCode
                   if (id === RESOLVED_DYNAMIC_VIRTUAL_ID)
                     return dynamicCollectionsCode
+                  // Astro 6 / Vite 7's built-in alias plugin (also
+                  // `enforce: 'pre'`) rewrites `@/config` to the absolute
+                  // path of the standalone fallback before our resolveId
+                  // sees the unresolved specifier. Intercept the load by
+                  // file path too so the consumer-merged config always wins
+                  // over the inline TS defaults in src/config.ts.
+                  const configFile = themePath('./src/config.ts')
+                  if (id === configFile || id.startsWith(`${configFile}?`))
+                    return virtualConfigCode
                   return null
                 },
               },
