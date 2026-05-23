@@ -1,5 +1,17 @@
 import type { AstroIntegration } from 'astro'
 import { fileURLToPath } from 'node:url'
+import rehypeKatex from 'rehype-katex'
+import rehypeMermaid from 'rehype-mermaid'
+import rehypeSlug from 'rehype-slug'
+import remarkDirective from 'remark-directive'
+import remarkMath from 'remark-math'
+import { rehypeCodeCopyButton } from './src/plugins/rehype-code-copy-button.mjs'
+import { rehypeExternalLinks } from './src/plugins/rehype-external-links.mjs'
+import { rehypeHeadingAnchor } from './src/plugins/rehype-heading-anchor.mjs'
+import { rehypeImageProcessor } from './src/plugins/rehype-image-processor.mjs'
+import { remarkContainerDirectives } from './src/plugins/remark-container-directives.mjs'
+import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
+import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
 /**
  * Retypeset Odyssey theme integration.
@@ -67,6 +79,34 @@ export default function retypesetTheme(): AstroIntegration {
         // --- Point publicDir to theme's public/ so static assets (fonts, icons, etc.) are bundled ---
         // Astro internally calls fileURLToPath() on publicDir, so it must be a URL object.
         updateConfig({
+          markdown: {
+            remarkPlugins: [
+              remarkDirective,
+              remarkMath,
+              remarkContainerDirectives,
+              remarkLeafDirectives,
+              remarkReadingTime,
+            ],
+            rehypePlugins: [
+              rehypeKatex,
+              [rehypeMermaid, { strategy: 'pre-mermaid' }],
+              rehypeSlug,
+              rehypeHeadingAnchor,
+              rehypeImageProcessor,
+              rehypeExternalLinks,
+              rehypeCodeCopyButton,
+            ],
+            syntaxHighlight: {
+              type: 'shiki',
+              excludeLangs: ['mermaid'],
+            },
+            shikiConfig: {
+              themes: {
+                light: 'github-light',
+                dark: 'github-dark',
+              },
+            },
+          },
           publicDir: new URL('./public/', import.meta.url) as any,
           vite: {
             resolve: {
