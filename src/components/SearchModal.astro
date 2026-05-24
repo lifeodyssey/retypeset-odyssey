@@ -4,19 +4,31 @@ import { getPageInfo } from '@/utils/page'
 
 const { currentLang } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+
+// Input placeholder — librarian's note tone, doubles as empty-state hint.
+const placeholderText: Record<string, string> = {
+  'zh': '试着搜「agent」或「translate」…',
+  'en': 'Try “agent” or “translate”…',
+  'ja': '「agent」や「translate」で試してみてください…',
+}
+const inputPlaceholder = placeholderText[currentLang] ?? placeholderText.en
 ---
 
-<dialog id="search-modal" class="search-modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">{currentUI.search || 'Search'}</h2>
-      <button id="close-search-modal" class="close-btn" aria-label="Close">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-    <div id="search-container" data-placeholder={currentUI.searchPlaceholder} data-no-results={currentUI.searchNoResults} data-results-found={currentUI.searchResultsFound}></div>
+<dialog id="search-modal" class="search-modal" aria-label={currentUI.search || 'Search'}>
+  <div class="modal-card">
+    <button
+      type="button"
+      id="close-search-modal"
+      class="modal-close"
+      aria-label={currentUI.close || 'Close'}
+    >×</button>
+    <div
+      id="search-container"
+      class="modal-results"
+      data-placeholder={inputPlaceholder}
+      data-no-results={currentUI.searchNoResults}
+      data-results-found={currentUI.searchResultsFound}
+    ></div>
   </div>
 </dialog>
 
@@ -24,317 +36,431 @@ const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 <script is:inline src="/pagefind/pagefind-ui.js" type="text/javascript"></script>
 
 <script>
-let pagefindInitialized = false;
+let pagefindInitialized = false
 
 function initPagefind() {
-  if (pagefindInitialized) return;
-  if (typeof PagefindUI === 'undefined') return;
+  if (pagefindInitialized) return
+  if (typeof (window as any).PagefindUI === 'undefined') return
 
-  const container = document.getElementById('search-container');
-  const placeholder = container?.dataset.placeholder || 'Type to search...';
+  const container = document.getElementById('search-container')
+  if (!container) return
+  const placeholder = container.dataset.placeholder || 'Type to search...'
 
-  new PagefindUI({
+  new (window as any).PagefindUI({
     element: '#search-container',
     showImages: false,
-    showSubResults: true
-  });
+    showSubResults: true,
+  })
 
-  // Set placeholder after initialization
-  setTimeout(() => {
-    const input = document.querySelector('.pagefind-ui__search-input') as HTMLInputElement;
-    if (input) input.placeholder = placeholder;
-  }, 50);
+  // Pagefind UI mounts its own input next tick. Adopt our placeholder
+  // (the librarian-note we want shown while empty). No separate empty-state
+  // block — the placeholder itself carries that copy.
+  requestAnimationFrame(() => {
+    const input = document.querySelector('.pagefind-ui__search-input') as HTMLInputElement | null
+    if (!input) return
+    input.placeholder = placeholder
+  })
 
-  pagefindInitialized = true;
+  pagefindInitialized = true
 }
 
 function openSearchModal() {
-  const modal = document.getElementById('search-modal') as HTMLDialogElement;
-  if (modal) {
-    modal.showModal();
-    initPagefind();
-    setTimeout(() => {
-      const input = modal.querySelector('.pagefind-ui__search-input') as HTMLInputElement;
-      input?.focus();
-    }, 100);
-  }
+  const modal = document.getElementById('search-modal') as HTMLDialogElement | null
+  if (!modal) return
+  modal.showModal()
+  initPagefind()
+  setTimeout(() => {
+    const input = modal.querySelector('.pagefind-ui__search-input') as HTMLInputElement | null
+    input?.focus()
+  }, 80)
 }
 
 function closeSearchModal() {
-  const modal = document.getElementById('search-modal') as HTMLDialogElement;
-  modal?.close();
+  const modal = document.getElementById('search-modal') as HTMLDialogElement | null
+  modal?.close()
 }
 
+// Trigger button on the chrome + close button if any consumer renders one.
 document.addEventListener('click', (e) => {
-  const target = e.target as Element;
+  const target = e.target as Element
   if (target.closest('#search-button')) {
-    e.preventDefault();
-    openSearchModal();
+    e.preventDefault()
+    openSearchModal()
   }
   if (target.closest('#close-search-modal')) {
-    closeSearchModal();
+    closeSearchModal()
   }
-});
+})
 
+// Cmd+K / Ctrl+K to toggle. Skip when the user is typing in some other
+// editable field (so the OS / app shortcut still works there), unless
+// that field is the search input itself (closing should work from inside).
+document.addEventListener('keydown', (e) => {
+  if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'k') return
+  const active = document.activeElement as HTMLElement | null
+  const inSearch = active?.classList.contains('pagefind-ui__search-input') ?? false
+  const inEditable = !!active && (
+    active.tagName === 'INPUT'
+    || active.tagName === 'TEXTAREA'
+    || active.isContentEditable
+  )
+  if (inEditable && !inSearch) return
+  e.preventDefault()
+  const modal = document.getElementById('search-modal') as HTMLDialogElement | null
+  if (modal?.open) closeSearchModal()
+  else openSearchModal()
+})
+
+// Backdrop click closes. Standard <dialog> idiom: clicks on modal content
+// fire on inner elements (e.target = inner), clicks on the backdrop fire on
+// the dialog itself (e.target = dialog). Coordinate-based checks like the
+// previous bounding-rect math are unreliable because some browsers report
+// negative/oversized rects for full-viewport dialogs.
 document.getElementById('search-modal')?.addEventListener('click', (e) => {
-  const modal = e.currentTarget as HTMLDialogElement;
-  const rect = modal.getBoundingClientRect();
-  if (
-    e.clientX < rect.left ||
-    e.clientX > rect.right ||
-    e.clientY < rect.top ||
-    e.clientY > rect.bottom
-  ) {
-    closeSearchModal();
+  if (e.target === e.currentTarget) {
+    closeSearchModal()
   }
-});
+})
 
-(window as any).openSearchModal = openSearchModal;
+;(window as any).openSearchModal = openSearchModal
 </script>
 
 <style is:global>
-/* Modal Base */
+/* ============================================================
+   Search Modal — "white-paper" (variant 2C)
+   ------------------------------------------------------------
+   - Pure paper aesthetic: hairline frame, sharp 90° corners,
+     no shadow. Reads like a slip of paper pinned over the page,
+     not a SaaS popup.
+   - Typographic input: transparent, bottom-border only, serif.
+     The form bar isn't a "field" so much as a writing line.
+   - Yellow <mark> highlight is the theme's only accent token,
+     same as inline marks in body type.
+   - 0 `!important`. The `.search-modal .pagefind-ui …` chain
+     (specificity 0,3,1) outweighs Pagefind's defaults.
+   ============================================================ */
+
 .search-modal {
+  --sm-fg:        oklch(var(--un-preset-theme-colors-primary));
+  --sm-fg-soft:   oklch(var(--un-preset-theme-colors-secondary));
+  --sm-bg:        oklch(var(--un-preset-theme-colors-background));
+  --sm-highlight: oklch(
+    var(--un-preset-theme-colors-highlight) /
+    var(--un-preset-theme-colors-highlight--alpha)
+  );
+  /* Hairline surfaces derived from foreground at low alpha — keeps
+     rules in the same hue family as text. */
+  --sm-rule:        color-mix(in oklch, var(--sm-fg) 16%, transparent);
+  --sm-rule-soft:   color-mix(in oklch, var(--sm-fg) 8%, transparent);
+  --sm-row-hover:   color-mix(in oklch, var(--sm-fg) 5%, transparent);
+}
+
+/* ------------- dialog shell ---------------------------------- */
+
+.search-modal {
+  /* Drawer pulled down from the top edge, not centered popup. */
   padding: 0;
-  border: none;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 90vw;
-  background: transparent;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  margin: 0;
+  margin-inline: auto;
+  margin-top: max(8vh, 3rem);
+  border: 1px solid var(--sm-rule);
+  border-radius: 0;                            /* sharp paper corners */
+  width: min(560px, calc(100vw - 2rem));
+  max-width: 560px;
+  max-height: min(calc(100dvh - 16vh - 2rem), 560px);
+  background: var(--sm-bg);
+  color: var(--sm-fg);
+  /* No shadow — the paper aesthetic prefers a hairline frame over a lift. */
+  box-shadow: none;
+  overflow: visible;
 }
 
 .search-modal::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  /* Quiet overlay; light enough to keep the page legible behind. */
+  background: color-mix(in oklch, black 18%, transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
-.modal-content {
-  background: var(--c-bg);
-  border-radius: 12px;
+.search-modal .modal-card {
+  position: relative;
+  background: var(--sm-bg);
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
   overflow: hidden;
 }
 
-/* Header */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--c-divider, rgba(128, 128, 128, 0.2));
-}
-
-.modal-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--c-text-1);
-  margin: 0;
-}
-
-.close-btn {
-  padding: 0.25rem;
-  background: transparent;
-  border: none;
-  color: var(--c-text-2);
-  cursor: pointer;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s, background 0.2s;
-}
-
-.close-btn:hover {
-  color: var(--c-text-1);
-  background: rgba(128, 128, 128, 0.1);
-}
-
-/* Pagefind Container */
-#search-container {
+/* Visible close affordance for mouse users — kept tiny so it doesn't break
+   the bone-minimal paper aesthetic. Positioned vertically aligned with the
+   input row's center, on the right edge — same slot the Pagefind clear
+   button used to occupy (now hidden), so it reads as "the input row's
+   right-hand control". */
+.search-modal .modal-close {
+  position: absolute;
+  /* Input-row paddings: 1rem top + ~2.15rem input height + 0.875rem bottom.
+     Center of input ≈ 1rem + 2.15/2 ≈ 2.075rem from modal-card top.
+     Half the button height (1.5/2 = 0.75rem) backed off → ~1.325rem. */
+  top: 1.325rem;
+  right: 1rem;
+  z-index: 1;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1;
+  color: var(--sm-fg-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 120ms, background-color 120ms;
+}
+.search-modal .modal-close:hover {
+  color: var(--sm-fg);
+  background: color-mix(in oklch, var(--sm-fg) 6%, transparent);
+}
+.search-modal .modal-close:focus-visible {
+  outline: 1px solid var(--sm-fg);
+  outline-offset: 1px;
 }
 
-/* Pagefind UI Overrides */
+/* ============================================================
+   Pagefind UI overrides — scoped under .search-modal .pagefind-ui
+   (specificity 0,3,1) so we win without any !important.
+   ============================================================ */
+
 .search-modal .pagefind-ui {
-  --pagefind-ui-scale: 1;
-  --pagefind-ui-primary: var(--c-primary, #3b82f6);
-  --pagefind-ui-text: var(--c-text-1);
-  --pagefind-ui-background: var(--c-bg);
-  --pagefind-ui-border: var(--c-divider, rgba(128, 128, 128, 0.2));
+  --pagefind-ui-primary: var(--sm-fg);
+  --pagefind-ui-text: var(--sm-fg);
+  --pagefind-ui-background: var(--sm-bg);
+  --pagefind-ui-border: var(--sm-rule);
+  --pagefind-ui-tag: var(--sm-bg);
   --pagefind-ui-border-width: 1px;
-  --pagefind-ui-border-radius: 8px;
+  --pagefind-ui-border-radius: 0;
   --pagefind-ui-font: inherit;
 }
 
-.search-modal .pagefind-ui__form {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--c-divider, rgba(128, 128, 128, 0.2));
+/* ------------- input row ------------------------------------- */
+
+/* `position: relative` re-declared so the icon (Pagefind's `::before`)
+   anchors here. */
+.search-modal .pagefind-ui .pagefind-ui__form {
+  position: relative;
+  padding: 1rem 1.25rem 0.875rem;
 }
 
-.search-modal .pagefind-ui__search-input {
-  font-size: 0.95rem !important;
-  padding: 0.625rem 1rem !important;
-  height: auto !important;
-  background: var(--c-bg-soft, rgba(128, 128, 128, 0.05)) !important;
-  border: 1px solid var(--c-divider, rgba(128, 128, 128, 0.2)) !important;
-  border-radius: 8px !important;
-  color: var(--c-text-1) !important;
-  transition: border-color 0.2s, box-shadow 0.2s !important;
+/* Re-place Pagefind's magnifying-glass icon. Extra `.pagefind-ui` is
+   not a no-op: Pagefind's own rule is
+   `.pagefind-ui__form.svelte-xxxxx::before` (0,2,1); ours is 0,3,1. */
+.search-modal .pagefind-ui .pagefind-ui__form::before {
+  top: 50%;
+  left: 1.25rem;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  opacity: 0.5;
 }
 
-.search-modal .pagefind-ui__search-input:focus {
-  outline: none !important;
-  border-color: var(--c-primary, #3b82f6) !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-}
-
-.search-modal .pagefind-ui__search-input::placeholder {
-  color: var(--c-text-3, rgba(128, 128, 128, 0.6)) !important;
-}
-
-.search-modal .pagefind-ui__search-clear {
-  padding: 0.5rem !important;
-  right: 0.5rem !important;
-  color: var(--c-text-3) !important;
-  background: transparent !important;
-}
-
-.search-modal .pagefind-ui__search-clear:hover {
-  color: var(--c-text-1) !important;
-}
-
-/* Results Area */
-.search-modal .pagefind-ui__results-area {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.search-modal .pagefind-ui__message {
-  padding: 1rem 1.25rem !important;
-  font-size: 0.875rem !important;
-  color: var(--c-text-2) !important;
-  border-bottom: 1px solid var(--c-divider, rgba(128, 128, 128, 0.2)) !important;
-}
-
-.search-modal .pagefind-ui__results {
-  max-height: 50vh;
-  overflow-y: auto;
-  padding: 0 !important;
-}
-
-/* Individual Result */
-.search-modal .pagefind-ui__result {
-  padding: 1rem 1.25rem !important;
-  border-bottom: 1px solid var(--c-divider, rgba(128, 128, 128, 0.1)) !important;
-  transition: background 0.15s !important;
-}
-
-.search-modal .pagefind-ui__result:hover {
-  background: var(--c-bg-soft, rgba(128, 128, 128, 0.05)) !important;
-}
-
-.search-modal .pagefind-ui__result:last-child {
-  border-bottom: none !important;
-}
-
-.search-modal .pagefind-ui__result-inner {
-  padding: 0 !important;
-}
-
-.search-modal .pagefind-ui__result-title {
-  margin-bottom: 0.375rem !important;
-}
-
-.search-modal .pagefind-ui__result-link {
-  color: var(--c-text-1) !important;
-  font-weight: 600 !important;
-  font-size: 0.95rem !important;
-  text-decoration: none !important;
-  transition: color 0.15s !important;
-}
-
-.search-modal .pagefind-ui__result-link:hover {
-  color: var(--c-primary, #3b82f6) !important;
-}
-
-.search-modal .pagefind-ui__result-link::before {
-  content: "▸ " !important;
-  color: var(--c-text-3) !important;
-}
-
-.search-modal .pagefind-ui__result-excerpt {
-  font-size: 0.85rem !important;
-  line-height: 1.5 !important;
-  color: var(--c-text-2) !important;
-  margin-top: 0.25rem !important;
-}
-
-/* Highlight */
-.search-modal .pagefind-ui__result-excerpt mark,
-.search-modal mark {
-  background: rgba(250, 204, 21, 0.4) !important;
-  color: inherit !important;
-  padding: 0.1em 0.2em !important;
-  border-radius: 2px !important;
-}
-
-/* Sub Results */
-.search-modal .pagefind-ui__result-nested {
-  margin-left: 1rem !important;
-  padding-left: 0.75rem !important;
-  border-left: 2px solid var(--c-divider, rgba(128, 128, 128, 0.2)) !important;
-  margin-top: 0.5rem !important;
-}
-
-.search-modal .pagefind-ui__result-nested .pagefind-ui__result-link::before {
-  content: "⤷ " !important;
-}
-
-/* Button */
-.search-modal .pagefind-ui__button {
-  margin: 1rem 1.25rem !important;
-  padding: 0.625rem 1rem !important;
-  background: var(--c-bg-soft, rgba(128, 128, 128, 0.05)) !important;
-  border: 1px solid var(--c-divider, rgba(128, 128, 128, 0.2)) !important;
-  border-radius: 8px !important;
-  color: var(--c-text-2) !important;
-  font-size: 0.875rem !important;
-  cursor: pointer !important;
-  transition: all 0.15s !important;
-}
-
-.search-modal .pagefind-ui__button:hover {
-  background: var(--c-bg-mute, rgba(128, 128, 128, 0.1)) !important;
-  color: var(--c-text-1) !important;
-}
-
-/* Hide default drawer toggle */
-.search-modal .pagefind-ui__drawer {
-  display: none !important;
-}
-
-/* Loading state */
-.search-modal .pagefind-ui__loading {
-  padding: 2rem 1.25rem !important;
-  text-align: center !important;
-  color: var(--c-text-3) !important;
-}
-
-/* Scrollbar styling */
-.search-modal .pagefind-ui__results::-webkit-scrollbar {
-  width: 6px;
-}
-
-.search-modal .pagefind-ui__results::-webkit-scrollbar-track {
+/* Typographic input — no fill, no rounded chrome, just a writing line. */
+.search-modal .pagefind-ui .pagefind-ui__search-input {
+  width: 100%;
+  height: auto;
+  padding: 0.375rem 2.25rem 0.375rem 1.625rem;
   background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--sm-fg);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--at-font-serif, ui-serif, Georgia, "Times New Roman", serif);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--sm-fg);
+  transition: border-color 140ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.search-modal .pagefind-ui__results::-webkit-scrollbar-thumb {
-  background: var(--c-divider, rgba(128, 128, 128, 0.3));
-  border-radius: 3px;
+.search-modal .pagefind-ui .pagefind-ui__search-input:focus,
+.search-modal .pagefind-ui .pagefind-ui__search-input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--sm-fg);
 }
 
-.search-modal .pagefind-ui__results::-webkit-scrollbar-thumb:hover {
-  background: var(--c-text-3, rgba(128, 128, 128, 0.5));
+.search-modal .pagefind-ui .pagefind-ui__search-input::placeholder {
+  color: color-mix(in oklch, var(--sm-fg-soft) 65%, transparent);
+  font-style: italic;
+}
+
+/* Defang Chrome autofill — its yellow/blue would shatter the paper feel. */
+.search-modal .pagefind-ui .pagefind-ui__search-input:-webkit-autofill,
+.search-modal .pagefind-ui .pagefind-ui__search-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--sm-fg);
+  box-shadow: 0 0 0 100px var(--sm-bg) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Hide Pagefind's own clear-input × — we already render a close button
+   for the entire modal in the top-right corner (.modal-close), and a
+   second × pinned to the input itself would create a confusing double-
+   icon situation right when the user starts typing. Backspace / closing
+   the modal achieves the same thing. */
+.search-modal .pagefind-ui .pagefind-ui__search-clear {
+  display: none;
+}
+
+/* ------------- results --------------------------------------- */
+
+.search-modal .pagefind-ui .pagefind-ui__results-area {
+  padding: 0;
+  margin: 0;
+}
+.search-modal .pagefind-ui .pagefind-ui__results {
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+}
+.search-modal .pagefind-ui .pagefind-ui__results::-webkit-scrollbar { width: 5px; }
+.search-modal .pagefind-ui .pagefind-ui__results::-webkit-scrollbar-track { background: transparent; }
+.search-modal .pagefind-ui .pagefind-ui__results::-webkit-scrollbar-thumb {
+  background: var(--sm-rule);
+  border-radius: 0;
+}
+.search-modal .pagefind-ui .pagefind-ui__results::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklch, var(--sm-fg) 28%, transparent);
+}
+
+/* Result row — soft hairline rules between, no card chrome.
+   Focus / hover is a background tint only (kept under BAN 1). */
+.search-modal .pagefind-ui .pagefind-ui__result {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--sm-rule-soft);
+  transition: background-color 120ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.search-modal .pagefind-ui .pagefind-ui__result:first-child {
+  border-top: 1px solid var(--sm-rule);
+}
+.search-modal .pagefind-ui .pagefind-ui__result:hover,
+.search-modal .pagefind-ui .pagefind-ui__result:focus-within {
+  background: var(--sm-row-hover);
+}
+.search-modal .pagefind-ui .pagefind-ui__result-inner { padding: 0; }
+.search-modal .pagefind-ui .pagefind-ui__result-title { margin: 0 0 0.1875rem; }
+
+/* Title link — serif, typographic; :link/:visited covered so the
+   browser's default purple-blue for visited links cannot leak through. */
+.search-modal .pagefind-ui .pagefind-ui__result-link,
+.search-modal .pagefind-ui .pagefind-ui__result-link:link,
+.search-modal .pagefind-ui .pagefind-ui__result-link:visited,
+.search-modal .pagefind-ui .pagefind-ui__result-link:any-link {
+  display: block;
+  font-family: var(--at-font-serif, ui-serif, Georgia, serif);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--sm-fg);
+  text-decoration: none;
+  transition: color 120ms;
+}
+.search-modal .pagefind-ui .pagefind-ui__result-link:hover,
+.search-modal .pagefind-ui .pagefind-ui__result-link:focus-visible {
+  color: var(--sm-fg);
+  text-decoration: underline;
+  text-decoration-color: var(--sm-fg);
+  text-underline-offset: 3px;
+}
+
+.search-modal .pagefind-ui .pagefind-ui__result-excerpt {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--sm-fg-soft);
+}
+
+/* Sub-results (Pagefind's grouped sections) — kept slightly indented.
+   1px left rule is allowed (BAN 1 only prohibits >1px decorative stripes). */
+.search-modal .pagefind-ui .pagefind-ui__result-nested {
+  margin: 0.5rem 0 0;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--sm-rule);
+}
+.search-modal .pagefind-ui .pagefind-ui__result-nested .pagefind-ui__result-link::before {
+  content: '↳ ';
+  color: var(--sm-fg-soft);
+}
+
+/* Highlighted match — yellow, theme highlight token; same as body <mark>. */
+.search-modal .pagefind-ui .pagefind-ui__result-excerpt mark,
+.search-modal mark {
+  background: var(--sm-highlight);
+  color: inherit;
+  padding: 0.05em 0.15em;
+  border-radius: 0;
+  font-weight: 500;
+}
+
+/* Pagefind status / message line */
+.search-modal .pagefind-ui .pagefind-ui__message {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--sm-fg-soft);
+  font-style: italic;
+  border-top: 1px solid var(--sm-rule);
+}
+
+/* "Load more" button */
+.search-modal .pagefind-ui .pagefind-ui__button {
+  display: block;
+  width: calc(100% - 2.5rem);
+  margin: 0.75rem 1.25rem;
+  padding: 0.5rem 0.875rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--sm-fg-soft);
+  background: transparent;
+  border: 1px solid var(--sm-rule);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 120ms, color 120ms, border-color 120ms;
+}
+.search-modal .pagefind-ui .pagefind-ui__button:hover {
+  color: var(--sm-fg);
+  background: var(--sm-row-hover);
+  border-color: color-mix(in oklch, var(--sm-fg) 28%, transparent);
+}
+
+/* `.pagefind-ui__drawer` is the OUTER wrapper around results-area, NOT the
+   small "show filters" toggle (despite the name). Inherited from a legacy
+   override that set this to `display: none` — which silently collapsed all
+   results to 0×0px even though the DOM was populated. Force block layout
+   so it stacks below the form like prose. */
+.search-modal .pagefind-ui .pagefind-ui__drawer { display: block; }
+
+.search-modal .pagefind-ui .pagefind-ui__loading {
+  padding: 1.25rem 1.25rem;
+  text-align: center;
+  color: var(--sm-fg-soft);
+  font-style: italic;
+}
+
+/* Responsive — narrow screens get a bigger modal so excerpts have room. */
+@media (max-width: 480px) {
+  .search-modal {
+    margin-top: max(5vh, 1.5rem);
+    width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 10vh - 1rem);
+  }
+  .search-modal .pagefind-ui .pagefind-ui__results { max-height: 55vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-modal .pagefind-ui .pagefind-ui__search-input,
+  .search-modal .pagefind-ui .pagefind-ui__result,
+  .search-modal .pagefind-ui .pagefind-ui__result-link,
+  .search-modal .pagefind-ui .pagefind-ui__button,
+  .search-modal .pagefind-ui .pagefind-ui__search-clear,
+  .search-modal .pagefind-ui .pagefind-ui__search-clear::before {
+    transition: none;
+  }
 }
 </style>
