@@ -78,7 +78,10 @@ const isHome = isHomePage(Astro.url.pathname)
             class="heti hidden"
             lg="mt-2.25 block"
           >
-            <p>{getPostDescription(post, 'list')}</p>
+            {/* Pre-`<!-- more -->` excerpt rendered as raw markdown HTML
+                so blockquotes / lists / paragraphs keep their structure.
+                The `heti` parent provides Chinese typographic styling. */}
+            <Fragment set:html={getPostDescription(post, 'list')} />
           </div>
         )}
       </li>

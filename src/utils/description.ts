@@ -125,9 +125,16 @@ function getEntryDescription(
 
   const renderedContent = markdownParser.render(cleanContent)
 
-  // For 'list' scene with <!-- more --> marker, return full content without truncation
+  // For 'list' scene with an explicit <!-- more --> marker, return the
+  // *rendered HTML* (not stripped text) so blockquotes, lists, and
+  // paragraphs keep their structure on the homepage post list. The
+  // consumer (PostList / NoteList / JournalList) injects this via
+  // `<Fragment set:html={…} />` inside a `heti` typography wrapper.
+  // Other scenes (og, meta, feed) still receive plain text because they
+  // feed single-line metadata / RSS where HTML would leak through as raw
+  // tags.
   if (scene === 'list' && hasMoreMarker) {
-    return cleanTextContent(renderedContent)
+    return renderedContent
   }
 
   // Otherwise, apply truncation

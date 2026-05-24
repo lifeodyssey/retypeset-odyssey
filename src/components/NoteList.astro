@@ -47,7 +47,8 @@ const { notes, lang } = Astro.props
 
         {/* note description */}
         <div class="heti hidden lg:block">
-          <p>{getNoteDescription(note, 'list')}</p>
+          {/* Pre-`<!-- more -->` excerpt rendered as raw markdown HTML. */}
+          <Fragment set:html={getNoteDescription(note, 'list')} />
         </div>
       </li>
     )

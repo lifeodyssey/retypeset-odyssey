@@ -47,7 +47,8 @@ const { journals, lang } = Astro.props
 
         {/* journal description */}
         <div class="heti hidden lg:block">
-          <p>{getJournalDescription(journal, 'list')}</p>
+          {/* Pre-`<!-- more -->` excerpt rendered as raw markdown HTML. */}
+          <Fragment set:html={getJournalDescription(journal, 'list')} />
         </div>
       </li>
     )
