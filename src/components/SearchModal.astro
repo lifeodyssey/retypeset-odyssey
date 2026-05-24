@@ -12,6 +12,16 @@ const placeholderText: Record<string, string> = {
   'ja': '「agent」や「translate」で試してみてください…',
 }
 const inputPlaceholder = placeholderText[currentLang] ?? placeholderText.en
+
+// Close button aria-label by language — kept as an inline lookup so we
+// don't have to widen the theme's Translation interface in ui.ts for a
+// single component.
+const closeLabels: Record<string, string> = {
+  'zh': '关闭',
+  'en': 'Close',
+  'ja': '閉じる',
+}
+const closeLabel = closeLabels[currentLang] ?? closeLabels.en
 ---
 
 <dialog id="search-modal" class="search-modal" aria-label={currentUI.search || 'Search'}>
@@ -20,7 +30,7 @@ const inputPlaceholder = placeholderText[currentLang] ?? placeholderText.en
       type="button"
       id="close-search-modal"
       class="modal-close"
-      aria-label={currentUI.close || 'Close'}
+      aria-label={closeLabel}
     >×</button>
     <div
       id="search-container"
