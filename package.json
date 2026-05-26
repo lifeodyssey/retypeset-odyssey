@@ -1,7 +1,7 @@
 {
   "name": "retypeset-odyssey",
   "type": "module",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "packageManager": "pnpm@10.26.0",
   "repository": "https://github.com/lifeodyssey/retypeset-odyssey",
   "exports": {
