@@ -2,7 +2,7 @@
 
 A fork of [astro-theme-retypeset](https://github.com/radishzzz/astro-theme-retypeset) — extended to work both as a standalone Astro template **and** as an installable npm package for content-only repositories.
 
-Powering [zhenjia.org](https://zhenjia.org).
+Powering [zhenjia.dev](https://zhenjia.dev).
 
 ## What's different from upstream
 
@@ -179,7 +179,7 @@ If your Hexo site was deployed under a domain you can't drop (e.g. `username.git
 
 ### Story version
 
-For a long-form walkthrough of why the migration was structured this way, including the trade-offs around frontmatter compatibility, SEO continuity, and `abbrlink` preservation, see [我是怎么用 AI 把博客从 Hexo 迁到 Astro 的](https://zhenjia.org/posts/how-i-migrated-blog-with-ai-v3) (Chinese; the migration was originally documented from a non-frontend developer's perspective).
+For a long-form walkthrough of why the migration was structured this way, including the trade-offs around frontmatter compatibility, SEO continuity, and `abbrlink` preservation, see [我是怎么用 AI 把博客从 Hexo 迁到 Astro 的](https://zhenjia.dev/posts/how-i-migrated-blog-with-ai-v3) (Chinese; the migration was originally documented from a non-frontend developer's perspective).
 
 ## Credits
 
