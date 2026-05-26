@@ -261,9 +261,16 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
           : {}
 
         // --- 5. Push everything onto the Astro config ---
+        // Note: theme-internal `base` is `''` for `site.base: '/'` so string
+        // concat in `@/config` consumers and the font URL transform stays
+        // correct. Astro itself, though, must receive a truthy `'/'` here —
+        // `createAssetLink` treats a falsy `base` as "no base", skips the
+        // leading-slash prepend, and emits `href="_astro/Layout.css"` for
+        // auto-injected component CSS. With `build.format: 'file'` that
+        // resolves page-relative and 404s on every nested route.
         updateConfig({
           site: validated.site.url,
-          base,
+          base: base || '/',
           build: {
             format: 'file', // Generates /posts/xxx.html instead of /posts/xxx/index.html
           },
