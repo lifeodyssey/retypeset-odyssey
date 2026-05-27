@@ -49,3 +49,10 @@ src/content/about/
 # Personal LLM declarations
 public/llms.txt
 public/llms-full.txt
+
+# Design / layout mockups (kept on disk for local browsing during
+# iteration; not committed and not shipped in the npm package).
+# Convention: any file under public/ starting with `_dev-` is dev-only
+# scaffolding. Accessible at http://localhost:PORT/_dev-<name>.html
+# while the dev server runs; reuse the prefix for future mockups.
+public/_dev-*.html

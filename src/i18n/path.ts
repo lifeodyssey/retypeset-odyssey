@@ -41,6 +41,24 @@ export function getTagPath(tagName: string, lang: Language): string {
 }
 
 /**
+ * Get path to a specific category detail page with language support.
+ *
+ * Works for both system categories ('tech' / 'life' / 'science', kept
+ * lowercase to match the `PostCategory` type values) and user-defined
+ * categories (frontmatter values, case preserved). Case-sensitivity is
+ * what lets `/categories/tech` and `/categories/Tech` coexist as
+ * distinct routes if the author happens to use both surfaces.
+ */
+export function getCategoryPath(name: string, lang: Language): string {
+  const encoded = encodeURIComponent(name)
+  const catPath = lang === defaultLocale
+    ? `/categories/${encoded}`
+    : `/${lang}/categories/${encoded}`
+
+  return base ? `${base}${catPath}` : catPath
+}
+
+/**
  * Get path to a specific post page with language and category support
  */
 export function getPostPath(slug: string, lang: Language): string {

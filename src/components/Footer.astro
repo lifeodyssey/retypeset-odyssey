@@ -59,7 +59,9 @@ const socialLinks = links.map(({ name, url }) => {
     {socialLinks.map((link, index) => (
       <>
         <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" {...link}>{link.name}</a>
-        {index < socialLinks.length - 1 && '/'}
+        {index < socialLinks.length - 1 && (
+          <span class="mx-1.5 c-secondary/45 select-none" aria-hidden="true">·</span>
+        )}
       </>
     ))}
   </p>

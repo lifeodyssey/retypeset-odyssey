@@ -1,0 +1,109 @@
+---
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { ui } from '@/i18n/ui'
+import Layout from '@/layouts/Layout.astro'
+import { getTimelineByYear } from '@/utils/content'
+
+export async function getStaticPaths() {
+  return allLocales.map(lang => ({
+    params: { lang: getLangRouteParam(lang) },
+  }))
+}
+
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+
+const byYear = await getTimelineByYear(currentLang)
+const years = [...byYear.keys()]
+const totalEntries = [...byYear.values()].reduce((n, list) => n + list.length, 0)
+
+// Localized month-day formatter. CJK locales naturally render `5月26日`;
+// Latin locales render `May 26`. Snell-Bold (font-time) covers Latin
+// numerals only — CJK fallback to STIX is intentional and consistent
+// with how dates appear elsewhere in the theme.
+const dateFmt = new Intl.DateTimeFormat(currentLang, {
+  month: 'short',
+  day: 'numeric',
+})
+---
+
+<Layout postTitle={currentUI.timeline || 'Timeline'}>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {currentUI.timeline || 'Timeline'}
+    </h1>
+    <p class="mb-6 text-3.5 c-secondary">
+      {totalEntries} {currentUI.entriesInTotal || 'entries in total'}
+    </p>
+    <div class="uno-decorative-line" />
+
+    {/* Two-column on desktop: main entry flow + sticky year nav.
+        The year nav uses `position: sticky` inside the main content
+        grid (not the site-wide `uno-desktop-column` rail), so it
+        scrolls into view, pins, and only sits inside this page's
+        viewport. Hidden on mobile — the H1 + decorative-line scrolls
+        normally and the page works fine without it. */}
+    <div class="lg:grid lg:grid-cols-[1fr_5rem] lg:gap-8">
+      <div class="min-w-0">
+        {years.map((year, idx) => (
+          <section
+            id={`year-${year}`}
+            class:list={[idx === 0 ? 'mt-5' : 'mt-9', 'scroll-mt-20']}
+          >
+            {/* Year as the only sectional heading. font-time is Snell-Bold
+                for Latin numerals — the brand's "page number" register —
+                so the year looks engraved rather than declared. */}
+            <h2 class="mb-3 text-4.5 font-time c-primary tabular-nums">
+              {year}
+            </h2>
+            <ul class="list-none p-0 m-0 no-heti">
+              {byYear.get(year)!.map(entry => (
+                <li>
+                  <a
+                    href={entry.href}
+                    class:list={[
+                      'relative flex items-baseline gap-4',
+                      'py-2 c-secondary/85 hover:c-primary transition-colors',
+                      'highlight-hover after:bottom-0.35em',
+                    ]}
+                  >
+                    <time
+                      datetime={entry.date.toISOString()}
+                      class="shrink-0 min-w-12 text-3.5 font-time c-secondary/55 tabular-nums"
+                    >
+                      {dateFmt.format(entry.date)}
+                    </time>
+                    <span class="flex-1 text-4 cjk:tracking-wide">
+                      {entry.title}
+                    </span>
+                    <span class="shrink-0 text-3 font-navbar c-secondary/55">
+                      {(currentUI[entry.kind as keyof typeof currentUI] as string) || entry.kind}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <aside class="hidden lg:block lg:sticky lg:top-20 lg:self-start mt-5">
+        <nav aria-label="Year navigation">
+          <ul class="list-none p-0 m-0 leading-1.9">
+            {years.map(year => (
+              <li>
+                <a
+                  href={`#year-${year}`}
+                  class="block font-time text-3.5 c-secondary/55 hover:c-primary tabular-nums transition-colors"
+                >
+                  {year}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </section>
+</Layout>

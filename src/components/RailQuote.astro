@@ -1,0 +1,104 @@
+---
+// Right-rail marginalia: one short poem per page load, drawn from the
+// per-language pool in `themeConfig.poems[lang]`. Server-renders ALL
+// poems (with all but the first display:none); a tiny inline script
+// picks an unseen one client-side and swaps display. Seen state is
+// kept in localStorage keyed by `rail-quote-seen:<lang>`, using each
+// poem's stable `id`. Once every poem has been shown, the seen list
+// resets and a fresh cycle begins.
+//
+// Hidden below lg — the marginalia slot only exists in the desktop
+// right-rail layout; on mobile the page header / nav stack normally
+// and this would just be top-of-page clutter.
+//
+// All styles inline (plain CSS, theme tokens via the UnoCSS preset
+// variables). No `--at-apply` — that pattern bypasses the transformer
+// in Astro dev mode (CategoryList learned this the hard way).
+
+import { themeConfig } from '@/config'
+import { getLangFromPath } from '@/i18n/lang'
+
+const lang = getLangFromPath(Astro.url.pathname)
+const poems = themeConfig.poems?.[lang] ?? []
+const hasPool = poems.length > 0
+---
+
+{hasPool && (
+  <div class="rail-quote-area hidden lg:block" data-lang={lang}>
+    {poems.map((poem, i) => (
+      <article
+        class="rail-quote"
+        data-id={poem.id}
+        style={i === 0 ? '' : 'display:none'}
+      >
+        <div class="rail-quote-title">{poem.title}</div>
+        <div class="rail-quote-rule"></div>
+        {poem.lines.map(line => <div class="rail-quote-line">{line}</div>)}
+        <div class="rail-quote-author">— {poem.author}</div>
+      </article>
+    ))}
+  </div>
+)}
+
+<script is:inline>
+  // Once-seen-not-repeated picker. Runs on every page load. If the pool
+  // is fully seen, the seen list resets so the cycle restarts. Storage
+  // failures (private mode, full disk) silently fall through to "always
+  // show the first poem" — which is fine, never crashes the page.
+  (function () {
+    const areas = document.querySelectorAll('.rail-quote-area')
+    areas.forEach(function (area) {
+      const lang = area.getAttribute('data-lang')
+      const quotes = area.querySelectorAll('.rail-quote')
+      if (quotes.length <= 1) return
+      const key = 'rail-quote-seen:' + lang
+      let seen = []
+      try { seen = JSON.parse(localStorage.getItem(key) || '[]') } catch (e) {}
+      const allIds = Array.from(quotes).map(function (q) { return q.getAttribute('data-id') })
+      let unseen = allIds.filter(function (id) { return seen.indexOf(id) === -1 })
+      if (unseen.length === 0) { seen = []; unseen = allIds }
+      const pick = unseen[Math.floor(Math.random() * unseen.length)]
+      quotes.forEach(function (q) {
+        q.style.display = (q.getAttribute('data-id') === pick) ? '' : 'none'
+      })
+      seen.push(pick)
+      try { localStorage.setItem(key, JSON.stringify(seen)) } catch (e) {}
+    })
+  })()
+</script>
+
+<style>
+  .rail-quote-area {
+    margin-top: 32px;
+    margin-bottom: 8px;
+  }
+  .rail-quote-title {
+    font-family: 'STIX-Italic', 'EarlySummer', Georgia, serif;
+    font-size: 0.78rem;
+    color: oklch(var(--un-preset-theme-colors-secondary));
+    opacity: 0.75;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+  }
+  .rail-quote-rule {
+    width: 18px;
+    height: 1px;
+    background: oklch(var(--un-preset-theme-colors-secondary) / 0.25);
+    margin: 0 0 10px;
+  }
+  .rail-quote-line {
+    font-family: 'STIX', 'EarlySummer', Georgia, serif;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    letter-spacing: 0.04em;
+    color: oklch(var(--un-preset-theme-colors-primary));
+  }
+  .rail-quote-author {
+    font-family: 'STIX-Italic', Georgia, serif;
+    font-size: 0.72rem;
+    color: oklch(var(--un-preset-theme-colors-secondary));
+    opacity: 0.6;
+    margin-top: 12px;
+    text-align: right;
+  }
+</style>

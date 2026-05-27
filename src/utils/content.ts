@@ -817,3 +817,121 @@ async function _getPostsByUserCategory(category: string, lang?: Language) {
 }
 
 export const getPostsByUserCategory = memoize(_getPostsByUserCategory)
+
+/**
+ * Get all user-defined category names for a given language.
+ *
+ * Used by the `/categories/[cat]` route's `getStaticPaths` to enumerate
+ * the per-name detail pages alongside the three system categories.
+ *
+ * @param lang Language to scope the enumeration to.
+ * @returns The category names that appear in any post's frontmatter for
+ *          this language. No counts, no sort — caller can layer those on.
+ */
+async function _getAllUserCategories(lang?: Language): Promise<string[]> {
+  const map = await getPostsGroupByUserCategories(lang)
+  return Array.from(map.keys())
+}
+
+export const getAllUserCategories = memoize(_getAllUserCategories)
+
+/**
+ * Check which languages have at least one post tagged with the given
+ * user-defined category. Mirror of `getCategorySupportedLangs` for the
+ * frontmatter-driven category surface.
+ *
+ * @param name The exact category name as it appears in frontmatter.
+ * @returns Languages where this category resolves to ≥1 post.
+ */
+/**
+ * Unified timeline entry — flattens the three built-in collections
+ * (posts / notes / journals) into a single shape so a chronological
+ * page can mix them without caring which collection an entry came
+ * from. `kind` lets callers render a discriminator label.
+ */
+export interface TimelineEntry {
+  kind: 'posts' | 'notes' | 'journals'
+  slug: string
+  title: string
+  date: Date
+  href: string
+}
+
+/**
+ * Build a year → entries map across all three collections for the
+ * given language. Within each year, entries are sorted by date desc;
+ * years are returned newest-first. Drafts are excluded upstream by
+ * the per-collection getters.
+ */
+async function _getTimelineByYear(lang?: Language): Promise<Map<number, TimelineEntry[]>> {
+  const { getNotePath, getJournalPath, getPostPath } = await import('@/i18n/path')
+  const langKey = lang ?? defaultLocale
+
+  const [posts, notes, journals] = await Promise.all([
+    getPosts(lang),
+    getNotes(lang),
+    getJournals(lang),
+  ])
+
+  const entries: TimelineEntry[] = [
+    ...posts.map((p: Post): TimelineEntry => ({
+      kind: 'posts',
+      slug: getPostSlug(p),
+      title: p.data.title,
+      date: p.data.published,
+      href: getPostPath(getPostSlug(p), langKey),
+    })),
+    ...notes.map((n: Note): TimelineEntry => ({
+      kind: 'notes',
+      slug: getNoteSlug(n),
+      title: n.data.title,
+      date: n.data.published,
+      href: getNotePath(getNoteSlug(n), langKey),
+    })),
+    ...journals.map((j: Journal): TimelineEntry => ({
+      kind: 'journals',
+      slug: getJournalSlug(j),
+      title: j.data.title,
+      date: j.data.published,
+      href: getJournalPath(getJournalSlug(j), langKey),
+    })),
+  ]
+
+  const yearMap = new Map<number, TimelineEntry[]>()
+  for (const entry of entries) {
+    const year = entry.date.getFullYear()
+    let bucket = yearMap.get(year)
+    if (!bucket) {
+      bucket = []
+      yearMap.set(year, bucket)
+    }
+    bucket.push(entry)
+  }
+
+  for (const bucket of yearMap.values()) {
+    bucket.sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  }
+
+  return new Map([...yearMap.entries()].sort((a, b) => b[0] - a[0]))
+}
+
+export const getTimelineByYear = memoize(_getTimelineByYear)
+
+async function _getUserCategorySupportedLangs(name: string): Promise<Language[]> {
+  const posts = await getCollection(
+    'posts',
+    ({ data }: CollectionEntry<'posts'>) => !data.draft,
+  )
+  const { allLocales } = await import('@/config')
+
+  return allLocales.filter(locale =>
+    posts.some((post) => {
+      const cats = post.data.categories || []
+      const list = Array.isArray(cats) ? cats : [cats]
+      return list.includes(name)
+        && (post.data.lang === locale || post.data.lang === '')
+    }),
+  )
+}
+
+export const getUserCategorySupportedLangs = memoize(_getUserCategorySupportedLangs)

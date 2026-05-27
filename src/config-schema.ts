@@ -171,6 +171,27 @@ export const ThemeConfigSchema = z.object({
     )
     .optional()
     .default({}),
+  // Rail-quote poem pool. Each language has its own array of short poems
+  // shown in the right-rail "marginalia" slot. A stable `id` is required —
+  // the RailQuote component's client-side script uses it to track which
+  // poems the visitor has already seen via localStorage (per-language),
+  // so they don't see the same poem twice until the pool is exhausted.
+  // Loaded from default-poems.yaml by the integration; consumers can add
+  // or override entries in their own retypeset.config.yaml.
+  poems: z
+    .record(
+      LanguageCode,
+      z.array(
+        z.object({
+          id: z.string(),
+          title: z.string(),
+          author: z.string(),
+          lines: z.array(z.string()),
+        }),
+      ),
+    )
+    .optional()
+    .default({}),
 })
 
 export type ThemeConfig = z.infer<typeof ThemeConfigSchema>

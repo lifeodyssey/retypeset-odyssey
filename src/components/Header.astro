@@ -23,9 +23,14 @@ const SubtitleTag = isArticle ? 'div' : 'h2'
 <header
   class:list={[
     'lg:(uno-desktop-column top-20) cjk:tracking-wide',
+    // Mobile: bump bottom margin so subtitle doesn't visually crowd the
+    // active-nav yellow highlight in Navbar (homepage's "文章" being the
+    // active item lands its `highlight-static` stripe right under the
+    // subtitle). Desktop ignores this — Navbar is fixed-positioned at
+    // its own `lg:bottom-...` anchor so the header's mb is moot.
     isArticle
-    ? 'mb-10.8'
-    : 'mb-10.5',
+    ? 'mb-12 lg:mb-10.8'
+    : 'mb-14 lg:mb-10.5',
   ]}
 >
   <TitleTag

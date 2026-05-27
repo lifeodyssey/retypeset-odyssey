@@ -1,0 +1,98 @@
+---
+import type { PostCategory } from '@/utils/content'
+import PostList from '@/components/PostList.astro'
+import { allLocales } from '@/config'
+import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { ui } from '@/i18n/ui'
+import Layout from '@/layouts/Layout.astro'
+import {
+  getAllUserCategories,
+  getCategoriesWithCounts,
+  getCategorySupportedLangs,
+  getPostsByCategory,
+  getPostsByUserCategory,
+  getUserCategorySupportedLangs,
+} from '@/utils/content'
+
+type CategoryProps =
+  | { kind: 'system', sysName: PostCategory }
+  | { kind: 'user', userName: string }
+
+export async function getStaticPaths() {
+  const paths: Array<{
+    params: { lang: string, cat: string }
+    props: CategoryProps
+  }> = []
+
+  for (const lang of allLocales) {
+    // System categories: enumerate the three known names, skip
+    // (lang, cat) combos that resolve to zero posts.
+    const sysCats = await getCategoriesWithCounts(lang)
+    for (const cat of sysCats) {
+      if (cat.count > 0) {
+        paths.push({
+          params: { lang: getLangRouteParam(lang), cat: cat.name },
+          props: { kind: 'system', sysName: cat.name },
+        })
+      }
+    }
+
+    // User-defined categories: enumerate everything that exists in
+    // this language's frontmatter. The `/` → `%2F` pre-encode follows
+    // the tag-routing convention so names like "AWS/IAM" survive.
+    const userCats = await getAllUserCategories(lang)
+    for (const name of userCats) {
+      paths.push({
+        params: {
+          lang: getLangRouteParam(lang),
+          cat: name.replace(/\//g, '%2F'),
+        },
+        props: { kind: 'user', userName: name },
+      })
+    }
+  }
+
+  return paths
+}
+
+type Props = CategoryProps
+
+const props = Astro.props as Props
+const currentLang = getLangFromLocale(Astro.currentLocale)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+
+let displayName: string
+let posts: Awaited<ReturnType<typeof getPostsByCategory>>
+let supportedLangs: Awaited<ReturnType<typeof getCategorySupportedLangs>>
+
+if (props.kind === 'system') {
+  displayName = (currentUI[props.sysName as keyof typeof currentUI] as string) || props.sysName
+  posts = await getPostsByCategory(props.sysName, currentLang)
+  supportedLangs = await getCategorySupportedLangs(props.sysName)
+}
+else {
+  displayName = props.userName
+  posts = await getPostsByUserCategory(props.userName, currentLang)
+  supportedLangs = await getUserCategorySupportedLangs(props.userName)
+}
+
+const total = posts.length
+---
+
+<Layout postTitle={displayName} supportedLangs={supportedLangs}>
+  <section class="mb-7.5">
+    <h1 class="mb-2 text-5 font-bold cjk:tracking-wide lg:text-6">
+      {displayName}
+    </h1>
+
+    <p class="mb-6 text-3.5 c-secondary">
+      {total} {currentUI.postsInTotal || 'posts in total'}
+    </p>
+
+    <div class="uno-decorative-line" />
+
+    <div class="mt-7.5">
+      <PostList posts={posts} lang={currentLang} />
+    </div>
+  </section>
+</Layout>

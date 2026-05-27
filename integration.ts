@@ -100,6 +100,15 @@ export default function retypesetTheme(options: RetypesetOptions = {}): AstroInt
         const defaultYamlPath = themePath('./default-config.yaml')
         const defaultConfig = yaml.parse(readFileSync(defaultYamlPath, 'utf-8'))
 
+        // Rail-quote poems live in a separate YAML so the content pool can
+        // grow large (and be script-managed) without bloating default-config.
+        // Optional — if the file is missing the theme just renders without
+        // a rail-quote.
+        const defaultPoemsPath = themePath('./default-poems.yaml')
+        const defaultPoems = existsSync(defaultPoemsPath)
+          ? (yaml.parse(readFileSync(defaultPoemsPath, 'utf-8')) ?? {})
+          : {}
+
         const projectRoot = fileURLToPath(config.root)
         let userConfigPath: string | null = null
         if (options.config) {
@@ -118,7 +127,11 @@ export default function retypesetTheme(options: RetypesetOptions = {}): AstroInt
           userConfig = yaml.parse(readFileSync(userConfigPath, 'utf-8')) ?? {}
         }
 
-        const merged = deepMerge(defaultConfig, userConfig)
+        // Merge order: defaultConfig <- defaultPoems <- userConfig.
+        // The user's retypeset.config.yaml has the last word; they can
+        // add or replace poem entries via the same `poems:` key.
+        const mergedDefaults = deepMerge(defaultConfig, defaultPoems)
+        const merged = deepMerge(mergedDefaults, userConfig)
         const validated = ThemeConfigSchema.parse(merged)
 
         const base = validated.site.base === '/' ? '' : validated.site.base.replace(/\/$/, '')
@@ -193,6 +206,7 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
 
         // Categories
         injectRoute({ pattern: '/[...lang]/categories', entrypoint: themeUrl('./src/pages/[...lang]/categories/index.astro'), prerender: true })
+        injectRoute({ pattern: '/[...lang]/categories/[cat]', entrypoint: themeUrl('./src/pages/[...lang]/categories/[cat].astro'), prerender: true })
 
         // Posts (always injected; disabling `posts` only suppresses the navbar
         // entry — the homepage and tag pages still depend on the collection).
@@ -216,6 +230,10 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
 
         // Search
         injectRoute({ pattern: '/[...lang]/search', entrypoint: themeUrl('./src/pages/[...lang]/search.astro'), prerender: true })
+
+        // Timeline: mixed chronological feed of posts + notes + journals,
+        // grouped by year. Lives at `/timeline` (and `/{lang}/timeline`).
+        injectRoute({ pattern: '/[...lang]/timeline', entrypoint: themeUrl('./src/pages/[...lang]/timeline.astro'), prerender: true })
 
         // Tags
         injectRoute({ pattern: '/[...lang]/tags', entrypoint: themeUrl('./src/pages/[...lang]/tags/index.astro'), prerender: true })

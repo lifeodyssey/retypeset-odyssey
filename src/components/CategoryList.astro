@@ -1,66 +1,44 @@
 ---
-import type { Language } from '@/i18n/config'
-import type { UserCategoryWithCount } from '@/utils/content'
+// A book-index row: name on the left, count on the right, whitespace as
+// the only separator. Same font for both — count is differentiated by
+// size + color, not by a font shift, so the row reads as typesetting
+// rather than UI metadata. Caller computes href + display name.
+//
+// All styling is inline `class:list` (no scoped `<style>` block) so that
+// UnoCSS picks up the utility classes when scanning the template — Astro
+// scoped styles don't go through UnoCSS's transformer in dev mode, which
+// silently drops `--at-apply` and leaves the element unstyled. Inline
+// classes work in both dev and prod.
+
+export interface CategoryItem {
+  name: string
+  count: number
+  href: string
+  isActive?: boolean
+}
 
 interface Props {
-  categories: UserCategoryWithCount[]
-  currentCategory?: string
-  lang: Language
+  items: CategoryItem[]
 }
 
-const { categories, currentCategory = '', lang } = Astro.props
-
-// Generate category path (user-defined categories)
-function getCategoryPagePath(category: string): string {
-  const langPrefix = lang === 'zh' ? '' : `/${lang}`
-  return `${langPrefix}/categories/${encodeURIComponent(category)}`
-}
+const { items } = Astro.props
 ---
 
-<ul class="category-list no-heti">
-  {categories.map(cat => {
-    const isActive = currentCategory === cat.name
-    return (
-      <li class="category-item">
-        <a
-          href={getCategoryPagePath(cat.name)}
-          class:list={[
-            'category-link',
-            isActive && 'active',
-          ]}
-        >
-          <span class="category-name">{cat.name}</span>
-          <span class="category-count">({cat.count})</span>
-        </a>
-      </li>
-    )
-  })}
+<ul class="list-none p-0 m-0 no-heti">
+  {items.map(item => (
+    <li>
+      <a
+        href={item.href}
+        class:list={[
+          'relative flex items-baseline justify-between gap-6',
+          'py-2 transition-colors',
+          'highlight-hover after:bottom-0.35em',
+          item.isActive ? 'c-primary font-medium' : 'c-secondary/85 hover:c-primary',
+        ]}
+      >
+        <span class="text-4 cjk:tracking-wide">{item.name}</span>
+        <span class="text-3.5 c-secondary/55 tabular-nums">{item.count}</span>
+      </a>
+    </li>
+  ))}
 </ul>
-
-<style>
-.category-list {
-  --at-apply: 'list-none p-0 m-0';
-}
-
-.category-item {
-  --at-apply: 'py-1.5';
-}
-
-.category-link {
-  --at-apply: 'inline-flex items-center gap-2';
-  --at-apply: 'c-secondary/80 transition-colors';
-  --at-apply: 'hover:c-primary';
-}
-
-.category-link.active {
-  --at-apply: 'c-primary font-semibold';
-}
-
-.category-name {
-  --at-apply: 'text-4';
-}
-
-.category-count {
-  --at-apply: 'text-3.5 c-secondary/60';
-}
-</style>

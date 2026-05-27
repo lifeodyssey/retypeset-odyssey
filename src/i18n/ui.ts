@@ -23,7 +23,10 @@ interface Translation {
   science?: string
   categories?: string
   categoriesInTotal?: string
+  postsInTotal?: string
   tagsInTotal?: string
+  timeline?: string
+  entriesInTotal?: string
 }
 
 export const ui: Record<Language, Translation> = {
@@ -63,7 +66,10 @@ export const ui: Record<Language, Translation> = {
     science: 'Science',
     categories: 'Categories',
     categoriesInTotal: 'categories in total',
+    postsInTotal: 'posts in total',
     tagsInTotal: 'tags in total',
+    timeline: 'Timeline',
+    entriesInTotal: 'entries in total',
   },
   'es': {
     title: 'Retipografía',
@@ -113,7 +119,11 @@ export const ui: Record<Language, Translation> = {
     life: '生活',
     science: '科学',
     categories: 'カテゴリー',
+    categoriesInTotal: '件のカテゴリー',
+    postsInTotal: '件の記事',
     tagsInTotal: '個のタグ',
+    timeline: 'タイムライン',
+    entriesInTotal: '件のエントリー',
   },
   'ko': {
     title: '재조판',
@@ -190,7 +200,10 @@ export const ui: Record<Language, Translation> = {
     science: '科研',
     categories: '分类',
     categoriesInTotal: '个分类',
+    postsInTotal: '篇文章',
     tagsInTotal: '个标签',
+    timeline: '时间线',
+    entriesInTotal: '条记录',
   },
   'zh-tw': {
     title: '重新編排',
@@ -209,6 +222,9 @@ export const ui: Record<Language, Translation> = {
     science: '科研',
     categories: '分類',
     categoriesInTotal: '個分類',
+    postsInTotal: '篇文章',
     tagsInTotal: '個標籤',
+    timeline: '時間線',
+    entriesInTotal: '條記錄',
   },
 }

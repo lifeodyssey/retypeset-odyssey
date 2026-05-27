@@ -2,9 +2,13 @@
 import CategoryList from '@/components/CategoryList.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { getCategoryPath } from '@/i18n/path'
 import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
-import { getUserCategoriesWithCounts } from '@/utils/content'
+import {
+  getCategoriesWithCounts,
+  getUserCategoriesWithCounts,
+} from '@/utils/content'
 
 export async function getStaticPaths() {
   return allLocales.map(lang => ({
@@ -13,9 +17,30 @@ export async function getStaticPaths() {
 }
 
 const currentLang = getLangFromLocale(Astro.currentLocale)
-const categoriesWithCounts = await getUserCategoriesWithCounts(currentLang)
-const totalCategories = categoriesWithCounts.length
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
+
+// System: tech / life / science. URL is the lowercase type value;
+// display name comes from i18n (capitalized / localized). Filter out
+// zero-count rows — they'd link to a detail page that exists in
+// `getStaticPaths` only when count > 0.
+const systemCats = (await getCategoriesWithCounts(currentLang))
+  .filter(c => c.count > 0)
+  .map(c => ({
+    name: (currentUI[c.name as keyof typeof currentUI] as string) || c.name,
+    count: c.count,
+    href: getCategoryPath(c.name, currentLang),
+  }))
+
+// User: as-authored in frontmatter; case preserved in URL via encoding.
+const userCats = (await getUserCategoriesWithCounts(currentLang))
+  .map(c => ({
+    name: c.name,
+    count: c.count,
+    href: getCategoryPath(c.name, currentLang),
+  }))
+
+const totalCount = systemCats.length + userCats.length
+const hasBoth = systemCats.length > 0 && userCats.length > 0
 ---
 
 <Layout postTitle={currentUI.categories || 'Categories'}>
@@ -24,12 +49,24 @@ const currentUI = ui[currentLang as keyof typeof ui] ?? {}
       {currentUI.categories || 'Categories'}
     </h1>
     <p class="mb-6 text-3.5 c-secondary">
-      {totalCategories} {currentUI.categoriesInTotal || 'categories in total'}
+      {totalCount} {currentUI.categoriesInTotal || 'categories in total'}
     </p>
     <div class="uno-decorative-line" />
-    <CategoryList
-      categories={categoriesWithCounts}
-      lang={currentLang}
-    />
+
+    {/*
+      Two-source merge with no labels. System categories appear above
+      user ones; the alert reader perceives the rhythm break in the
+      whitespace, the casual reader just reads one continuous index.
+      Whitespace is the only group signal — DESIGN.md "strip on doubt".
+    */}
+    {systemCats.length > 0 && (
+      <CategoryList items={systemCats} />
+    )}
+
+    {userCats.length > 0 && (
+      <div class:list={hasBoth && 'mt-7.5 lg:mt-10.5'}>
+        <CategoryList items={userCats} />
+      </div>
+    )}
   </section>
 </Layout>

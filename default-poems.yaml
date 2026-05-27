@@ -1,0 +1,181 @@
+# Rail-quote poem pool — per language.
+#
+# Each entry has a stable `id` used by the RailQuote client-side script
+# to track which poems the visitor has already seen (via localStorage),
+# so they don't see the same one twice until the pool is exhausted.
+#
+# Hand-editable. Can also be extended via `pnpm fetch-poems` (in the
+# theme repo) which pulls from jinrishici (zh) + PoetryDB (en) and
+# merges new entries by id (dedup-safe).
+#
+# Convention: id = lang-author-titleslug (raw CJK allowed). Keep ids
+# stable across edits so seen-tracking survives rebuilds.
+
+poems:
+  zh:
+    - id: zh-baijuyi-wenliushijiu
+      title: 问刘十九
+      author: 白居易
+      lines:
+        - 绿蚁新醅酒
+        - 红泥小火炉
+        - 晚来天欲雪
+        - 能饮一杯无
+    - id: zh-wangwei-shanjuqiuming
+      title: 山居秋暝
+      author: 王维
+      lines:
+        - 空山新雨后
+        - 天气晚来秋
+        - 明月松间照
+        - 清泉石上流
+    - id: zh-lishangyin-yeyujibei
+      title: 夜雨寄北
+      author: 李商隐
+      lines:
+        - 君问归期未有期
+        - 巴山夜雨涨秋池
+        - 何当共剪西窗烛
+        - 却话巴山夜雨时
+    - id: zh-sushi-tixilinbi
+      title: 题西林壁
+      author: 苏轼
+      lines:
+        - 横看成岭侧成峰
+        - 远近高低各不同
+        - 不识庐山真面目
+        - 只缘身在此山中
+    - id: zh-zhangji-qiusi
+      title: 秋思
+      author: 张籍
+      lines:
+        - 洛阳城里见秋风
+        - 欲作家书意万重
+        - 复恐匆匆说不尽
+        - 行人临发又开封
+
+  en:
+    - id: en-frost-stopping-by-woods
+      title: Stopping by Woods on a Snowy Evening
+      author: Robert Frost
+      lines:
+        - The woods are lovely, dark and deep,
+        - But I have promises to keep,
+        - And miles to go before I sleep,
+        - And miles to go before I sleep.
+    - id: en-dickinson-hope-is-the-thing
+      title: Hope is the thing with feathers
+      author: Emily Dickinson
+      lines:
+        - "Hope is the thing with feathers —"
+        - "That perches in the soul —"
+        - And sings the tune without the words —
+        - "And never stops — at all —"
+    - id: en-blake-auguries-of-innocence
+      title: Auguries of Innocence
+      author: William Blake
+      lines:
+        - To see a World in a Grain of Sand
+        - And a Heaven in a Wild Flower,
+        - Hold Infinity in the palm of your hand
+        - And Eternity in an hour.
+    - id: en-oliver-when-death-comes
+      title: When Death Comes
+      author: Mary Oliver
+      lines:
+        - "When it's over, I want to say: all my life"
+        - I was a bride married to amazement.
+    - id: en-yeats-cloths-of-heaven
+      title: He Wishes for the Cloths of Heaven
+      author: W. B. Yeats
+      lines:
+        - I have spread my dreams under your feet;
+        - Tread softly because you tread on my dreams.
+
+  ja:
+    - id: ja-tenchitenno-akinotano
+      title: 百人一首 #1
+      author: 天智天皇
+      lines:
+        - 秋の田の
+        - かりほの庵の
+        - 苫をあらみ
+        - わが衣手は
+        - 露にぬれつつ
+    - id: ja-jitotenno-haruwasugite
+      title: 百人一首 #2
+      author: 持統天皇
+      lines:
+        - 春過ぎて
+        - 夏来にけらし
+        - 白妙の
+        - 衣ほすてふ
+        - 天の香具山
+    - id: ja-yamabenoakahito-tagonoura
+      title: 百人一首 #4
+      author: 山部赤人
+      lines:
+        - 田子の浦に
+        - うち出でてみれば
+        - 白妙の
+        - 富士の高嶺に
+        - 雪は降りつつ
+    - id: ja-sarumaru-okuyamani
+      title: 百人一首 #5
+      author: 猿丸大夫
+      lines:
+        - 奥山に
+        - 紅葉ふみわけ
+        - 鳴く鹿の
+        - 声きく時ぞ
+        - 秋はかなしき
+    - id: ja-narihira-chihayaburu
+      title: 百人一首 #17
+      author: 在原業平朝臣
+      lines:
+        - ちはやぶる
+        - 神代もきかず
+        - 龍田川
+        - からくれなゐに
+        - 水くくるとは
+    - id: ja-komachi-hananoiro
+      title: 百人一首 #9
+      author: 小野小町
+      lines:
+        - 花の色は
+        - うつりにけりな
+        - いたづらに
+        - わが身世にふる
+        - ながめせしまに
+    - id: ja-murasaki-meguriaite
+      title: 百人一首 #57
+      author: 紫式部
+      lines:
+        - めぐりあひて
+        - 見しやそれとも
+        - わかぬまに
+        - 雲がくれにし
+        - 夜半の月かな
+    - id: ja-tsurayuki-hitohaisa
+      title: 百人一首 #35
+      author: 紀貫之
+      lines:
+        - 人はいさ
+        - 心も知らず
+        - ふるさとは
+        - 花ぞ昔の
+        - 香に匂ひける
+    - id: ja-basho-furuikeya
+      title: 古池や
+      author: 松尾芭蕉
+      lines:
+        - 古池や
+        - 蛙飛び込む
+        - 水の音
+    - id: ja-buson-harunoumi
+      title: 春の海
+      author: 与謝蕪村
+      lines:
+        - 春の海
+        - 終日のたり
+        - のたりかな
