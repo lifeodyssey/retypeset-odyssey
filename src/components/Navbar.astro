@@ -14,9 +14,14 @@ const isTimelineActive = isTimeline
 const isAboutActive = isAbout
 
 function getNavItemClass(isActive: boolean) {
+  // `after:bottom-0.35em` matches the footer-link highlight position —
+  // closer to text baseline, away from the top of the line-box. Original
+  // `bottom-0.7em` parked the highlight stripe high in the `leading-2.45em`
+  // line-box, where it could collide with the previous element (subtitle)
+  // on mobile vertical layouts.
   return isActive
-    ? 'highlight-static c-primary font-bold after:bottom-0.7em'
-    : 'highlight-hover transition-[colors,font-weight] after:bottom-0.7em hover:(c-primary font-bold)'
+    ? 'highlight-static c-primary font-bold after:bottom-0.35em'
+    : 'highlight-hover transition-[colors,font-weight] after:bottom-0.35em hover:(c-primary font-bold)'
 }
 
 const navItems = [
