@@ -22,14 +22,16 @@ const SubtitleTag = isArticle ? 'div' : 'h2'
 
 <header
   class:list={[
-    'lg:(uno-desktop-column top-20) cjk:tracking-wide',
+    // Mobile: order-1 places this at the top of the body flex column
+    // (body uses display:flex on mobile and the parent aside uses
+    // display:contents, so Header is effectively a direct body child).
+    // Desktop: flow child of <aside.uno-desktop-rail> — no `fixed` here,
+    // the rail handles position.
+    'order-1 lg:order-none cjk:tracking-wide',
     // Mobile: aggressive bottom margin so CJK character bottom strokes
     // (notably "人" in the zh subtitle) don't visually touch the
-    // active-nav yellow highlight in Navbar. CJK glyphs extend further
-    // below baseline than Latin descenders, and the nav highlight sits
-    // high in its `leading-2.45em` line-box, so the two regions converge
-    // tight. mb-20 (80px) clears the collision zone for CJK fonts.
-    // Desktop unchanged — Navbar is fixed-positioned, header mb is moot.
+    // active-nav yellow highlight in Navbar. Desktop margin is the
+    // intra-rail spacing between Header and Navbar blocks.
     isArticle
     ? 'mb-16 lg:mb-10.8'
     : 'mb-20 lg:mb-10.5',

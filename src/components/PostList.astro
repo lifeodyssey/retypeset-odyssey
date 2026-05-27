@@ -29,11 +29,14 @@ const isHome = isHomePage(Astro.url.pathname)
           isHome ? 'lg:mb-10' : '',
         ]}
       >
-        {/* post title */}
-        <h3 class="inline transition-colors hover:c-primary">
+        {/* post title — overflow-wrap:anywhere + word-break:break-word
+            so long mixed-script titles (e.g. CJK + English "Prompt Cache")
+            wrap inside the mobile content column instead of overflowing
+            the right edge at 320-375px. */}
+        <h3 class="inline transition-colors hover:c-primary [overflow-wrap:anywhere] [word-break:break-word]">
           <a
             class:list={[
-              'cjk:tracking-wide',
+              'cjk:tracking-wide [overflow-wrap:anywhere] [word-break:break-word]',
               isHome ? 'lg:font-medium lg:text-4.5' : '',
             ]}
             href={getPostPath(slug, lang)}

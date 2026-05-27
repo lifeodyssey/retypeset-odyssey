@@ -52,8 +52,16 @@ const socialLinks = links.map(({ name, url }) => {
 ---
 
 <footer
-  class="text-3 leading-1.25em font-navbar"
-  lg="uno-desktop-column bottom-20 text-3.5"
+  class:list={[
+    'text-3 leading-1.25em font-navbar',
+    // Mobile: order-5 places Footer at the very bottom of the body flex
+    // column (below main, which is order-3).
+    // Desktop: flow child of <aside.uno-desktop-rail>. `mt-auto` pushes it
+    // to the bottom of the rail; the Button group above also uses mt-auto
+    // — the higher one wins, so this Footer ends up below Button by
+    // virtue of DOM order.
+    'order-5 lg:order-none lg:text-3.5 lg:mt-auto',
+  ]}
 >
   <p>
     {socialLinks.map((link, index) => (

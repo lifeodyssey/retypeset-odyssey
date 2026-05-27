@@ -67,7 +67,11 @@ const navItems = [
   aria-label="Site Navigation"
   class:list={[
     'mb-10.5 text-3.6 font-semibold leading-2.45em font-navbar',
-    'lg:(uno-desktop-column text-4 bottom-[min(9.04rem+3.85vw,12.5rem)]) cjk:tracking-wide',
+    // Mobile: order-2 places nav just under Header in the body flex column.
+    // Desktop: flow child of <aside.uno-desktop-rail> — no `fixed` here.
+    // The rail is the single source of column position; nav sits below
+    // Header in the flex flow and above the Button + Footer below.
+    'order-2 lg:order-none lg:text-4 cjk:tracking-wide',
     (isPost || isNote || isJournal || isCategory || isTimeline) ? 'hidden lg:block' : '',
   ]}
 >

@@ -82,11 +82,11 @@ const TIER_CLASS: Record<1 | 2 | 3 | 4 | 5 | 6, string> = {
 {cloudStyle ? (
   <ul class="list-none p-0 m-0 flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1 py-2 no-heti">
     {cloudTags.map(tag => (
-      <li>
+      <li class="max-w-full">
         <a
           href={getTagPath(tag.name, lang)}
           class:list={[
-            'relative z-0 inline-block px-0 py-0.5 tracking-wide-0.05',
+            'relative z-0 inline-block px-0 py-0.5 tracking-wide-0.05 [overflow-wrap:anywhere]',
             'highlight-hover after:bottom-0.12em transition-colors',
             TIER_CLASS[tierOf(tag.count)],
             currentTag === tag.name && 'font-semibold',
@@ -102,15 +102,15 @@ const TIER_CLASS: Record<1 | 2 | 3 | 4 | 5 | 6, string> = {
         <a
           href={getTagPath(tag.name, lang)}
           class:list={[
-            'relative inline-flex items-baseline justify-between gap-6',
+            'relative flex items-baseline justify-between gap-6',
             'py-1 transition-colors highlight-hover after:bottom-0.35em',
             currentTag === tag.name
               ? 'c-primary font-medium'
               : 'c-secondary/85 hover:c-primary',
           ]}
         >
-          <span class="text-4 cjk:tracking-wide">{tag.name}</span>
-          <span class="text-3.5 c-secondary/55 tabular-nums">{tag.count}</span>
+          <span class="flex-1 min-w-0 text-4 cjk:tracking-wide [overflow-wrap:anywhere]">{tag.name}</span>
+          <span class="shrink-0 text-3.5 c-secondary/55 tabular-nums">{tag.count}</span>
         </a>
       </li>
     ))}

@@ -38,13 +38,15 @@ const dateFmt = new Intl.DateTimeFormat(currentLang, {
     </p>
     <div class="uno-decorative-line" />
 
-    {/* Two-column on desktop: main entry flow + sticky year nav.
-        The year nav uses `position: sticky` inside the main content
-        grid (not the site-wide `uno-desktop-column` rail), so it
-        scrolls into view, pins, and only sits inside this page's
-        viewport. Hidden on mobile — the H1 + decorative-line scrolls
-        normally and the page works fine without it. */}
-    <div class="lg:grid lg:grid-cols-[1fr_5rem] lg:gap-8">
+    {/* Two-column on xl+ (1280+): main entry flow + sticky year nav.
+        Gated at `xl:` not `lg:` because at 1024-1279px the right-rail
+        (uno-desktop-rail) is already present and the year-aside crowds
+        the main column. The year nav uses `position: sticky` inside the
+        main content grid (not the site-wide rail), so it scrolls into
+        view, pins, and only sits inside this page's viewport. Hidden
+        below xl — the H1 + decorative-line scrolls normally and the
+        page works fine without it. */}
+    <div class="xl:grid xl:grid-cols-[1fr_5rem] xl:gap-8">
       <div class="min-w-0">
         {years.map((year, idx) => (
           <section
@@ -74,7 +76,7 @@ const dateFmt = new Intl.DateTimeFormat(currentLang, {
                     >
                       {dateFmt.format(entry.date)}
                     </time>
-                    <span class="flex-1 text-4 cjk:tracking-wide">
+                    <span class="flex-1 min-w-0 text-4 cjk:tracking-wide [overflow-wrap:anywhere]">
                       {entry.title}
                     </span>
                     <span class="shrink-0 text-3 font-navbar c-secondary/55">
@@ -88,7 +90,7 @@ const dateFmt = new Intl.DateTimeFormat(currentLang, {
         ))}
       </div>
 
-      <aside class="hidden lg:block lg:sticky lg:top-20 lg:self-start mt-5">
+      <aside class="hidden xl:block xl:sticky xl:top-20 xl:self-start mt-5">
         <nav aria-label="Year navigation">
           <ul class="list-none p-0 m-0 leading-1.9">
             {years.map(year => (

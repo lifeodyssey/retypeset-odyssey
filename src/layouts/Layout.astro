@@ -45,20 +45,45 @@ const MarginBottom = isPost && themeConfig.comment.enabled
   ]}
 >
   <Head {postTitle} {postDescription} {postSlug} />
-  <body>
-    <div
-      class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
-      p="x-[min(7.25vw,3.731rem)] y-10"
-      lg="mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),44rem)] min-h-full p-0"
+  {/*
+    Body acts as the mobile content column (centered max-width with padding).
+    On mobile body is a flex column; the rail aside's children flatten into
+    body via `display: contents` and pick up `order:N` to match legacy mobile
+    layout: Header → Navbar → main → Footer (Button is `position: absolute`
+    so order is moot).
+
+    On desktop body reverts to normal block layout; the centered content
+    column gets its own width via the inner wrapper, and the rail becomes a
+    fixed-positioned flex column to the right of it.
+  */}
+  <body
+    class:list={[
+      'mx-auto max-w-205.848 w-full min-h-vh min-h-dvh overflow-x-hidden',
+      'p-x-[min(7.25vw,3.731rem)] p-y-10',
+      'flex flex-col',
+      'lg:(block max-w-none mx-0 p-0 overflow-x-visible)',
+    ]}
+  >
+    <aside
+      class="max-lg:contents lg:uno-desktop-rail"
+      aria-label="Site chrome"
     >
       <Header />
       <Navbar />
-      <main class={MarginBottom}>
+      <Button supportedLangs={supportedLangs} />
+      <Footer />
+    </aside>
+    <div
+      class:list={[
+        'order-3 lg:order-none min-w-0',
+        // Desktop: centered narrow column to the left of the fixed rail
+        'lg:(mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),44rem)])',
+      ]}
+    >
+      <main class={`${MarginBottom} min-w-0`}>
         <slot />
       </main>
-      <Footer />
     </div>
-    <Button supportedLangs={supportedLangs} />
     <SoundEffect />
     <CodeCopyButton />
     <GithubCard />

@@ -42,14 +42,30 @@ const CurrentLangIcon = langIconMap[currentLang] || LangEnIcon
 
 <div
   class:list={[
-  'absolute right-7.25vw top-14.6 flex gap-6 min-[823px]:max-lg:right-[calc(50vw-22rem)]',
-  'lg:(fixed bottom-[min(10.27rem+1.92vw,12rem)] right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
-]}
+    // Mobile: absolute-positioned top-right corner (unchanged from legacy).
+    // The tighter `right-7.25vw top-14.6` puts it in the page's chrome
+    // band where the site title sits; on tablets >=823px it shifts a bit
+    // to align with the wider centered content column.
+    'absolute right-7.25vw top-14.6 flex gap-6 min-[823px]:max-lg:right-[calc(50vw-22rem)]',
+    // Desktop: flow child of <aside.uno-desktop-rail>. `mt-auto` pushes it
+    // toward the bottom of the rail, sitting just above Footer (Footer has
+    // its own mt-auto, but DOM order places Footer below Button so the
+    // visual stack is Header → Navbar → ... → Button → Footer).
+    // `static` resets the mobile `absolute` on desktop. `mb-6` provides
+    // breathing room between the icon row and Footer.
+    'lg:(static mt-auto mb-6 right-auto top-auto)',
+  ]}
 >
+  <!--
+    Visual icon = 16x16 (`w-4 h-4`). Hit area = 44x44 via the `::before`
+    pseudo-element pattern (`relative` + `before:absolute before:-inset-3.5`)
+    so the click/tap target meets WCAG 2.5.8 without inflating the icon's
+    visual footprint or expanding the gap between icons in the rail.
+  -->
   <!-- Search Button -->
   <button
     id="search-button"
-    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    class="relative aspect-square w-4 c-secondary active:scale-90 hover:c-primary before:(absolute -inset-3.5 content-empty)"
     aria-label="Search"
   >
     <SearchIcon aria-hidden="true" fill="currentColor" />
@@ -60,7 +76,7 @@ const CurrentLangIcon = langIconMap[currentLang] || LangEnIcon
     <a
       id="language-switcher"
       href={nextUrl}
-      class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+      class="relative aspect-square w-4 c-secondary active:scale-90 hover:c-primary before:(absolute -inset-3.5 content-empty)"
       aria-label="Switch website language"
     >
       <CurrentLangIcon
@@ -73,7 +89,7 @@ const CurrentLangIcon = langIconMap[currentLang] || LangEnIcon
   <!-- Theme Toggle -->
   <button
     id="theme-toggle-button"
-    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    class="relative aspect-square w-4 c-secondary active:scale-90 hover:c-primary before:(absolute -inset-3.5 content-empty)"
     data-light-mode={lightMode}
     data-dark-mode={darkMode}
     aria-label="Switch light/dark theme"
