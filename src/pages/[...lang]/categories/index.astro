@@ -64,7 +64,7 @@ const hasBoth = systemCats.length > 0 && userCats.length > 0
     )}
 
     {userCats.length > 0 && (
-      <div class:list={hasBoth && 'mt-7.5 lg:mt-10.5'}>
+      <div class:list={[hasBoth && 'mt-7.5 lg:mt-10.5']}>
         <CategoryList items={userCats} />
       </div>
     )}

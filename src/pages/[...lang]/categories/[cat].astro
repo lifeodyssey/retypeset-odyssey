@@ -19,8 +19,12 @@ type CategoryProps =
   | { kind: 'user', userName: string }
 
 export async function getStaticPaths() {
+  // `getLangRouteParam` returns `undefined` for the default locale (so the
+  // URL skips the `/<lang>` segment). Astro accepts undefined params; the
+  // Array element type below has to match or TypeScript balks at lang's
+  // possibly-undefined value.
   const paths: Array<{
-    params: { lang: string, cat: string }
+    params: { lang: string | undefined, cat: string }
     props: CategoryProps
   }> = []
 

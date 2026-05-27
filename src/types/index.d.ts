@@ -114,4 +114,10 @@ export interface ThemeConfig {
     intro?: Partial<Record<Language, string>>
     [key: string]: unknown
   }>
+  poems?: Partial<Record<Language, Array<{
+    id: string
+    title: string
+    author: string
+    lines: string[]
+  }>>>
 }
