@@ -21,7 +21,7 @@ const lang = currentLang === defaultLocale ? '' : `${currentLang}/`
 const { title, subtitle, description, i18nTitle, author, favicon } = themeConfig.site
 const { mode: defaultMode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const { katex: katexEnabled, reduceMotion } = themeConfig.global
-const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '', apiflashKey = '' } = themeConfig.seo ?? {}
+const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '', cloudflareAnalyticsToken = '', apiflashKey = '' } = themeConfig.seo ?? {}
 const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload ?? {}
 
@@ -201,6 +201,20 @@ const pageImage = postSlug
     type="text/partytown"
     src={customUmamiAnalyticsJS || 'https://cloud.umami.is/script.js'}
     data-website-id={umamiAnalyticsID}
+  />
+)}
+
+<!-- Cloudflare Web Analytics -->
+{/* Plain `defer` script (not Partytown) — Cloudflare's beacon documents
+    this form explicitly, and the beacon is small enough that web-worker
+    offload offers little gain. If a future consumer wants Partytown, swap
+    the attributes to `is:inline type="text/partytown"`. */}
+{cloudflareAnalyticsToken && (
+  <script
+    is:inline
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={`{"token": "${cloudflareAnalyticsToken}"}`}
   />
 )}
 </head>

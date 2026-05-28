@@ -123,6 +123,7 @@ export const ThemeConfigSchema = z.object({
         .default({}),
       googleAnalyticsID: z.string().optional().default(''),
       umamiAnalyticsID: z.string().optional().default(''),
+      cloudflareAnalyticsToken: z.string().optional().default(''),
       follow: z
         .object({
           feedID: z.string().optional().default(''),
