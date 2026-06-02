@@ -61,7 +61,8 @@ async function _getPostGroups(): Promise<PostGroup[]> {
   const results: PostGroup[] = []
 
   for (const [baseId, entries] of groups) {
-    const slug = slugifyPathSegment(baseId) || baseId
+    const explicitSlug = entries.map(e => e.data.slug).find(Boolean)
+    const slug = slugifyPathSegment(explicitSlug || baseId) || baseId
     const existing = slugToBaseId.get(slug)
     if (existing && existing !== baseId) {
       throw new Error(`Duplicate post slug "${slug}" from "${existing}" and "${baseId}"`)
@@ -149,7 +150,8 @@ async function _getNoteGroups(): Promise<NoteGroup[]> {
   const results: NoteGroup[] = []
 
   for (const [baseId, entries] of groups) {
-    const slug = slugifyPathSegment(baseId) || baseId
+    const explicitSlug = entries.map(e => e.data.slug).find(Boolean)
+    const slug = slugifyPathSegment(explicitSlug || baseId) || baseId
     const existing = slugToBaseId.get(slug)
     if (existing && existing !== baseId) {
       throw new Error(`Duplicate note slug "${slug}" from "${existing}" and "${baseId}"`)
@@ -190,7 +192,7 @@ export const getNoteGroups = memoize(_getNoteGroups)
 
 export function getNoteSlug(note: CollectionEntry<'notes'>): string {
   const baseId = getNoteBaseId(note)
-  return slugifyPathSegment(baseId) || baseId
+  return slugifyPathSegment(note.data.slug || baseId) || baseId
 }
 
 async function addMetaToNote(note: CollectionEntry<'notes'>): Promise<Note> {
@@ -279,7 +281,8 @@ async function _getJournalGroups(): Promise<JournalGroup[]> {
   const results: JournalGroup[] = []
 
   for (const [baseId, entries] of groups) {
-    const slug = slugifyPathSegment(baseId) || baseId
+    const explicitSlug = entries.map(e => e.data.slug).find(Boolean)
+    const slug = slugifyPathSegment(explicitSlug || baseId) || baseId
     const existing = slugToBaseId.get(slug)
     if (existing && existing !== baseId) {
       throw new Error(`Duplicate journal slug "${slug}" from "${existing}" and "${baseId}"`)
@@ -320,7 +323,7 @@ export const getJournalGroups = memoize(_getJournalGroups)
 
 export function getJournalSlug(journal: CollectionEntry<'journals'>): string {
   const baseId = getJournalBaseId(journal)
-  return slugifyPathSegment(baseId) || baseId
+  return slugifyPathSegment(journal.data.slug || baseId) || baseId
 }
 
 async function addMetaToJournal(journal: CollectionEntry<'journals'>): Promise<Journal> {
@@ -391,7 +394,8 @@ export type PostCategory = 'tech' | 'life' | 'science'
  */
 export function getPostSlug(post: CollectionEntry<'posts'>): string {
   const baseId = getPostBaseId(post)
-  return slugifyPathSegment(baseId) || post.data.abbrlink || baseId
+  // Frontmatter `slug` (validated to [A-Za-z0-9-]) takes priority, then filename, then abbrlink.
+  return slugifyPathSegment(post.data.slug || baseId) || post.data.abbrlink || baseId
 }
 
 /**
