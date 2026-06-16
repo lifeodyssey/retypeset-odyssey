@@ -245,6 +245,11 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
         // robots.txt
         injectRoute({ pattern: '/robots.txt', entrypoint: themeUrl('./src/pages/robots.txt.ts'), prerender: true })
 
+        // llms.txt — content index for AI agents/crawlers (https://llmstxt.org).
+        // `/llms.txt` is the link index; `/llms-full.txt` inlines every post body.
+        injectRoute({ pattern: '/llms.txt', entrypoint: themeUrl('./src/pages/llms.txt.ts'), prerender: true })
+        injectRoute({ pattern: '/llms-full.txt', entrypoint: themeUrl('./src/pages/llms-full.txt.ts'), prerender: true })
+
         // Dynamic folder routes. A single list pattern + single detail
         // pattern cover all discovered folders; `getStaticPaths` in the
         // template files only emits URLs for known folders, so Astro will

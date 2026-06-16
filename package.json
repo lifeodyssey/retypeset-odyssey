@@ -1,7 +1,7 @@
 {
   "name": "retypeset-odyssey",
   "type": "module",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "packageManager": "pnpm@10.26.0",
   "repository": "https://github.com/lifeodyssey/retypeset-odyssey",
   "exports": {
@@ -22,7 +22,9 @@
     "astro.config.ts",
     "tsconfig.json",
     "uno.config.ts",
-    "default-config.yaml"
+    "default-config.yaml",
+    "skill",
+    "AI_USAGE.md"
   ],
   "scripts": {
     "dev": "astro check && astro dev",
