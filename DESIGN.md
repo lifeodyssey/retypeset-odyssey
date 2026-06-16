@@ -7,6 +7,10 @@ diverge silently) when the system shifts.
 This file is the canonical design context the `/impeccable` skill loads.
 The flagship consumer is [zhenjia.dev](https://zhenjia.dev).
 
+For generating on-brand visuals with tools that can't read this repo (v0,
+Figma Make, Stitch, an LLM mockup), see the self-contained paste-in prompt in
+`DESIGN_PROMPT.md` — keep the two in sync.
+
 ## Origin
 
 retypeset-odyssey forks [astro-theme-retypeset](https://github.com/radishzzz/astro-theme-retypeset).
