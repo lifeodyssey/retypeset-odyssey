@@ -21,7 +21,7 @@ A consumer repo needs exactly three things at its root:
 {
   "type": "module",
   "dependencies": {
-    "astro": "^5",
+    "astro": "^6.3.7",
     "retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey"
   }
 }

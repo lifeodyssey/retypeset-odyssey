@@ -1,7 +1,20 @@
 {
   "name": "retypeset-odyssey",
   "type": "module",
-  "version": "0.1.16",
+  "version": "0.1.17",
+  "description": "Trilingual (zh/en/ja) Astro blog theme, usable as a standalone template or an installable npm package for content-only repos. Forked from astro-theme-retypeset; adds npm packaging, folder-based collections, Hexo migration, and agent-facing docs (AI_USAGE.md, a Claude Skill, and build-time llms.txt).",
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "blog",
+    "theme",
+    "i18n",
+    "typography",
+    "retypeset",
+    "llms-txt",
+    "agent-skill",
+    "ai-friendly"
+  ],
   "packageManager": "pnpm@10.26.0",
   "repository": "https://github.com/lifeodyssey/retypeset-odyssey",
   "exports": {

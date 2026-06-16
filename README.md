@@ -24,6 +24,7 @@ Other deltas from upstream: trilingual content support (zh / en / ja) with `.en.
 - Pagefind full-text search
 - Responsive, typography-first layout
 - Folder-based content collections — drop a new folder under `content/` and you get list + detail routes for free
+- Agent-ready — ships an `AI_USAGE.md` handbook and a `skill/SKILL.md` Claude Skill, and auto-generates `/llms.txt` + `/llms-full.txt` at build time, so AI coding agents can configure and write for the theme without reading source
 
 ## Usage A — Standalone (fork & clone)
 
@@ -51,7 +52,7 @@ Set up your own minimal Astro project that consumes this theme. One install, one
   },
   "dependencies": {
     "astro": "^6.3.7",
-    "retypeset-odyssey": "^0.1.3"
+    "retypeset-odyssey": "^0.1.17"
   }
 }
 ```
@@ -136,16 +137,36 @@ pnpm build  # → dist/
 - Loads `default-config.yaml` (shipped with the package), deep-merges your `retypeset.config.yaml` on top, and validates the result with Zod. The merged config is exposed to the theme via a Vite virtual module (`virtual:retypeset/config`) — every theme file that does `import ... from '@/config'` automatically picks up your overrides without any code change on your side.
 - Drives Astro's top-level config from the same YAML: `site`, `base`, `build.format`, `trailingSlash`, `prefetch`, `i18n`, and `image.domains` are all set automatically.
 - Registers UnoCSS (with the theme's `uno.config.ts`), MDX, partytown, sitemap, pagefind, and astro-compress — so you do not import any of them yourself.
-- Injects all theme routes (`posts/[slug]`, `tags/[tag]`, RSS, OG images, etc.) via Astro's `injectRoute` API.
+- Injects all theme routes (`posts/[slug]`, `tags/[tag]`, RSS, OG images, `robots.txt`, `/llms.txt`, `/llms-full.txt`, etc.) via Astro's `injectRoute` API.
 - Points `publicDir` at the package's own `public/`, so fonts, icons, and other assets ship without copying.
 
 ### Configuration reference
 
-The full schema lives in [`src/config-schema.ts`](./src/config-schema.ts) and the defaults in [`default-config.yaml`](./default-config.yaml). Top-level groups: `site`, `color`, `global`, `comment`, `seo`, `footer`, `preload`, `collections`. Any field you do not set in your YAML falls back to the default. Validation errors surface at `astro build` time with a clear path into the YAML.
+The full schema lives in [`src/config-schema.ts`](./src/config-schema.ts) and the defaults in [`default-config.yaml`](./default-config.yaml). Top-level groups: `site`, `color`, `global`, `comment`, `seo`, `footer`, `preload`, `collections`, `poems`. Any field you do not set in your YAML falls back to the default. Validation errors surface at `astro build` time with a clear path into the YAML.
 
 ### Folder-based collections
 
 Drop any folder under `content/` (e.g. `content/tech/`) and the integration will auto-discover it, generate `/tech` as the list page and `/tech/<slug>` as detail pages — no code change needed. Folders prefixed with `_` or `.` are ignored, so `content/_drafts/` is a natural place to stash in-progress work. Disable a folder by setting `collections.<name>.enabled: false`, and give it a per-language tagline with `collections.<name>.intro.{zh,en,ja}` just like the built-ins.
+
+## For AI agents
+
+The theme ships its own agent-facing docs, so an AI coding agent can configure
+a site and write posts without spelunking through the source:
+
+- **[`AI_USAGE.md`](./AI_USAGE.md)** — a word-for-word handbook: every
+  `retypeset.config.yaml` key and every frontmatter field (types + defaults,
+  taken verbatim from the Zod schema), common recipes, hard rules, and minimal
+  boilerplate. Feed it to any assistant.
+- **[`skill/SKILL.md`](./skill/SKILL.md)** — a Claude Skill. Claude Code
+  auto-discovers it when you work on a retypeset site; it carries the workflow
+  skeleton and points back to `AI_USAGE.md` for detail. Both ship in the
+  package (`files` in `package.json`).
+- **`/llms.txt` + `/llms-full.txt`** — generated at build time on every
+  consumer site (injected Astro endpoints, like `robots.txt`): a
+  [llmstxt.org](https://llmstxt.org)-style index of your posts, with full bodies
+  inlined in the `-full` variant.
+
+These describe how to *use* the theme; they do not impose a writing voice.
 
 ## Customization
 
