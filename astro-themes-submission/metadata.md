@@ -1,6 +1,12 @@
 # Astro Themes Catalog Submission
 
-Materials for submitting `retypeset-odyssey` to <https://astro.build/themes/> when submissions reopen.
+Materials for submitting `retypeset-odyssey` to <https://astro.build/themes/>.
+
+**Status (2026-06):** submissions have reopened — the catalog was paused during
+the Astro 6 release, and the portal (<https://portal.astro.build/info>) now just
+asks you to log in via GitHub. The theme already targets Astro 6 (`astro@^6.3.7`),
+so the version blocker is cleared. Remaining before submitting: capture the
+preview screenshots below (the form requires preview images).
 
 ## Theme name
 
@@ -34,7 +40,7 @@ URL-encoded tags, and a build pipeline tuned for Cloudflare Pages.
 ## Tags
 
 `blog`, `i18n`, `multilingual`, `chinese`, `mdx`, `katex`, `mermaid`, `pagefind`,
-`typography`, `cloudflare-pages`, `retypeset`, `hexo-migration`
+`typography`, `cloudflare-pages`, `retypeset`, `hexo-migration`, `llms-txt`, `agent-ready`
 
 ## License
 
@@ -44,13 +50,12 @@ MIT (inherited from upstream radishzzz/astro-theme-retypeset)
 
 - **GitHub**: <https://github.com/lifeodyssey/retypeset-odyssey>
 - **npm**: <https://www.npmjs.com/package/retypeset-odyssey> (pending publish)
-- **Demo**: <https://zhenjia.org>
+- **Demo**: <https://zhenjia.dev>
 - **Starter template**: <https://github.com/lifeodyssey/retypeset-starter> (pending creation)
 
 ## Astro version compatibility
 
-- Astro 5.x ✅ (current)
-- Astro 6.x ⏳ (upgrade in progress)
+- Astro 6.x ✅ (current — depends on `astro@^6.3.7`)
 
 ## Author
 
@@ -58,8 +63,7 @@ Zhenjia Zhou ([@lifeodyssey](https://github.com/lifeodyssey))
 
 ## Screenshots (TODO)
 
-Once the submission flow reopens, capture these at 1440×900 (or whatever resolution
-the form requests):
+Capture these at 1440×900 (or whatever resolution the form requests):
 
 1. **Homepage**: posts list in default theme (light mode), showing typography +
    sidebar + tag/category pills.
@@ -70,21 +74,23 @@ the form requests):
 4. **Tag page**: `/tags/AI` showing the tag header + filtered post list.
 5. **Dark mode**: homepage in dark theme.
 
-Use real content from zhenjia.org. Mask any personal info that shouldn't be in a
+Use real content from zhenjia.dev. Mask any personal info that shouldn't be in a
 public marketing screenshot (none expected, but check).
 
 ## What to highlight in the description vs upstream Retypeset
 
 Things only this fork has:
 
-- **Real trilingual i18n** (zh/en/ja) tested with 225 posts of actual content
+- **Real trilingual i18n** (zh/en/ja) tested on 200+ posts of actual content (zhenjia.dev)
 - **One-package install** as Astro integration (no clone + edit + manual config)
 - **YAML config** instead of TS object editing
 - **Hexo migration support**: `migrate-hexo.ts` + `abbrlink` 301 bridge
 - **Slash-safe tags** (e.g., `CI/CD` works without breaking routing)
 - **Cloudflare Pages-tuned** deploy pipeline
-- **AI-friendly** (Astro MCP server compatible, content schema designed for
-  LLM-assisted authoring)
+- **Agent-ready** — ships an `AI_USAGE.md` handbook and a `skill/SKILL.md`
+  Claude Skill (both in the package `files`), and auto-generates `/llms.txt` +
+  `/llms-full.txt` at build time, so AI coding agents can configure and write
+  for the theme without reading source
 
 Things shared with upstream:
 
