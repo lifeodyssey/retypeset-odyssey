@@ -91,7 +91,7 @@ const defaults = {
     verification: { google: '', bing: '', yandex: '', baidu: '' },
     googleAnalyticsID: '',
     umamiAnalyticsID: '',
-    cloudflareAnalyticsToken: '',
+    cloudflareAnalyticsToken: 'b73119196a9f488289a1214cc86f0df8',
     follow: { feedID: '', userID: '' },
     apiflashKey: '',
   },
