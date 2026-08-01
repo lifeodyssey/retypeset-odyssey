@@ -53,6 +53,12 @@ const { Content, headings, remarkPluginFrontmatter } = await render(journal)
   postDescription={description}
   postSlug={`journals/${journal.id}`}
   supportedLangs={supportedLangs}
+  article={{
+    type: 'Article',
+    published: journal.data.published,
+    updated: journal.data.updated,
+    tags: journal.data.tags,
+  }}
 >
   <article class="heti">
     <div class="relative">
@@ -86,4 +92,3 @@ const { Content, headings, remarkPluginFrontmatter } = await render(journal)
     </div>
   </article>
 </Layout>
-

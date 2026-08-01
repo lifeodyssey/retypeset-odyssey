@@ -26,9 +26,21 @@ interface Props {
   postDescription?: string
   postSlug?: string
   supportedLangs?: Language[]
+  article?: {
+    type: 'Article' | 'BlogPosting'
+    published?: Date
+    updated?: Date
+    tags?: string[]
+  }
 }
 
-const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
+const {
+  postTitle,
+  postDescription,
+  postSlug,
+  supportedLangs = [],
+  article,
+} = Astro.props
 const { isPost, isNote, isJournal } = getPageInfo(Astro.url.pathname)
 const isArticle = isPost || isNote || isJournal
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
@@ -44,7 +56,7 @@ const MarginBottom = isPost && themeConfig.comment.enabled
     isArticle ? 'scroll-smooth' : '',
   ]}
 >
-  <Head {postTitle} {postDescription} {postSlug} />
+  <Head {postTitle} {postDescription} {postSlug} {supportedLangs} {article} />
   {/*
     Body acts as the mobile content column (centered max-width with padding).
     On mobile body is a flex column; the rail aside's children flatten into

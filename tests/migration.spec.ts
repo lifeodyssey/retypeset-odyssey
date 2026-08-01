@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 const BASE_URL = 'http://localhost:4321'
 
@@ -52,7 +52,8 @@ test.describe('Blog Migration Evaluation', () => {
       const indexResponse = await page.goto(`${BASE_URL}/sitemap-index.xml`)
       // In dev mode, sitemap might not be served correctly
       expect(indexResponse?.status()).toBeLessThan(500)
-    } else {
+    }
+    else {
       expect(response?.status()).toBe(200)
     }
   })
@@ -90,6 +91,61 @@ test.describe('Blog Migration Evaluation', () => {
     expect(content).toContain('property="og:type"')
     expect(content).toContain('property="og:title"')
     expect(content).toContain('property="og:url"')
+  })
+
+  test('SEO URLs use clean canonical and content-level alternates', async ({ page }) => {
+    await page.goto(`${BASE_URL}/posts/agent-coding-experience-and-future`)
+
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://zhenjia.dev/posts/agent-coding-experience-and-future',
+    )
+    await expect(page.locator('link[rel="alternate"][hreflang="zh"]')).toHaveAttribute(
+      'href',
+      'https://zhenjia.dev/posts/agent-coding-experience-and-future',
+    )
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
+      'href',
+      'https://zhenjia.dev/en/posts/agent-coding-experience-and-future',
+    )
+    await expect(page.locator('link[rel="alternate"][hreflang="ja"]')).toHaveAttribute(
+      'href',
+      'https://zhenjia.dev/ja/posts/agent-coding-experience-and-future',
+    )
+  })
+
+  test('post exposes BlogPosting structured data', async ({ page }) => {
+    await page.goto(`${BASE_URL}/posts/agent-coding-experience-and-future`)
+    const jsonLd = await page.locator('script[type="application/ld+json"]').textContent()
+    const data = JSON.parse(jsonLd || '{}')
+    const article = data['@graph']?.find((entry: { '@type'?: string }) => entry['@type'] === 'BlogPosting')
+
+    expect(article).toMatchObject({
+      '@type': 'BlogPosting',
+      'url': 'https://zhenjia.dev/posts/agent-coding-experience-and-future',
+      'inLanguage': 'zh',
+    })
+    expect(article.datePublished).toBeTruthy()
+  })
+
+  test('single-language content does not advertise nonexistent translations', async ({ page }) => {
+    await page.goto(`${BASE_URL}/journals/2020`)
+
+    await expect(page.locator('link[rel="alternate"][hreflang="zh"]')).toHaveCount(1)
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(0)
+    await expect(page.locator('link[rel="alternate"][hreflang="ja"]')).toHaveCount(0)
+  })
+
+  test('homepage canonical and OG image do not expose build filenames or demo hosts', async ({ page }) => {
+    await page.goto(BASE_URL)
+
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://zhenjia.dev/')
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://zhenjia.dev/og/site.png',
+    )
+    const content = await page.content()
+    expect(content).not.toContain('retypeset.radishzz.cc')
   })
 })
 
@@ -135,7 +191,8 @@ test.describe('Feature Parity Evaluation', () => {
     if (atomResponse?.status() !== 200) {
       const rssResponse = await page.goto(`${BASE_URL}/rss.xml`)
       expect(rssResponse?.status()).toBe(200)
-    } else {
+    }
+    else {
       expect(atomResponse?.status()).toBe(200)
     }
   })

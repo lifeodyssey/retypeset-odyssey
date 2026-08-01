@@ -9,20 +9,17 @@
  */
 
 import type { Language } from '@/i18n/config'
+import type { DynamicEntry } from '@/utils/dynamic-collections'
 import { render } from 'astro:content'
+// @ts-ignore - virtual module provided by the integration
+import { dynamicCollections } from 'virtual:retypeset/dynamic-collections'
 import PostDate from '@/components/PostDate.astro'
 import BackButton from '@/components/Widgets/BackButton.astro'
 import TOC from '@/components/Widgets/TOC.astro'
 import { allLocales } from '@/config'
 import { getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
-import {
-  type DynamicEntry,
-  getDynamicGroups,
-} from '@/utils/dynamic-collections'
-// eslint-disable-next-line ts/ban-ts-comment
-// @ts-ignore - virtual module provided by the integration
-import { dynamicCollections } from 'virtual:retypeset/dynamic-collections'
+import { getDynamicGroups } from '@/utils/dynamic-collections'
 
 export async function getStaticPaths() {
   const paths: Array<{
@@ -69,6 +66,12 @@ const { Content, headings, remarkPluginFrontmatter } = await render(entry)
   postTitle={entry.data.title}
   postSlug={`${collection}/${entry.id}`}
   supportedLangs={supportedLangs}
+  article={{
+    type: 'Article',
+    published: entry.data.published,
+    updated: entry.data.updated,
+    tags: entry.data.tags,
+  }}
 >
   <article class="heti">
     <div class="relative">

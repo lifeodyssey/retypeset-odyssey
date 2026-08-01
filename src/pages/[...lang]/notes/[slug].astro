@@ -53,6 +53,12 @@ const { Content, headings, remarkPluginFrontmatter } = await render(note)
   postDescription={description}
   postSlug={`notes/${note.id}`}
   supportedLangs={supportedLangs}
+  article={{
+    type: 'Article',
+    published: note.data.published,
+    updated: note.data.updated,
+    tags: note.data.tags,
+  }}
 >
   <article class="heti">
     <div class="relative">

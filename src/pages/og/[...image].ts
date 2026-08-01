@@ -1,8 +1,10 @@
 import type { CollectionEntry } from 'astro:content'
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
+import process from 'node:process'
 import { OGImageRoute } from 'astro-og-canvas'
 import { getCollection } from 'astro:content'
+import { themeConfig } from '@/config'
 import { getJournalDescription, getNoteDescription, getPostDescription } from '@/utils/description'
 
 // Resolve font paths from the theme package's installed location.
@@ -23,7 +25,6 @@ const OG_LOGO = join(themeRoot, 'public/icons/og-logo.png')
 
 // eslint-disable-next-line antfu/no-top-level-await
 const posts = await getCollection('posts')
-// eslint-disable-next-line antfu/no-top-level-await
 let notes: CollectionEntry<'notes'>[] = []
 try {
   // eslint-disable-next-line antfu/no-top-level-await
@@ -36,7 +37,6 @@ catch (error) {
   }
 }
 
-// eslint-disable-next-line antfu/no-top-level-await
 let journals: CollectionEntry<'journals'>[] = []
 try {
   // eslint-disable-next-line antfu/no-top-level-await
@@ -50,12 +50,19 @@ catch (error) {
 }
 
 // Create slug-to-metadata lookup object for blog posts
-type OGPage = {
+interface OGPage {
   title: string
   description: string
 }
 
 const pages = Object.fromEntries([
+  [
+    'site',
+    {
+      title: themeConfig.site.title,
+      description: themeConfig.site.description,
+    },
+  ],
   ...posts.map((post: CollectionEntry<'posts'>) => [
     post.id,
     {

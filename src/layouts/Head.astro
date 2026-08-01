@@ -1,21 +1,41 @@
 ---
+import type { Language } from '@/i18n/config'
 import { ClientRouter } from 'astro:transitions'
 import katexCSS from 'katex/dist/katex.min.css?url'
 import { allLocales, base, defaultLocale, themeConfig } from '@/config'
 import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
+import {
+  getAlternatePath,
+  getCanonicalPath,
+  getDefaultAlternatePath,
+  getSiteRootPath,
+  serializeJsonLd,
+} from '@/utils/seo'
 
 interface Props {
   postTitle?: string
   postDescription?: string
   postSlug?: string
+  supportedLangs?: Language[]
+  article?: {
+    type: 'Article' | 'BlogPosting'
+    published?: Date
+    updated?: Date
+    tags?: string[]
+  }
 }
 
 // Props and Language
-const { postTitle, postDescription, postSlug } = Astro.props
+const {
+  postTitle,
+  postDescription,
+  postSlug,
+  supportedLangs = [],
+  article,
+} = Astro.props
 const { currentLang } = getPageInfo(Astro.url.pathname)
 const currentUI = ui[currentLang as keyof typeof ui] ?? {}
-const lang = currentLang === defaultLocale ? '' : `${currentLang}/`
 
 // Site Configuration
 const { title, subtitle, description, i18nTitle, author, favicon } = themeConfig.site
@@ -37,11 +57,79 @@ const siteDescription = i18nTitle ? currentUI.description : description
 // Page Metadata
 const pageTitle = postTitle ? `${postTitle} | ${siteTitle}` : `${siteTitle} - ${siteSubtitle}`
 const pageDescription = postDescription || siteDescription
+const canonicalPath = getCanonicalPath(Astro.url.pathname)
+const canonicalUrl = new URL(canonicalPath, themeConfig.site.url)
+const pageLangs = supportedLangs.length > 0 ? supportedLangs : allLocales
+const alternateLinks = pageLangs.map(lang => ({
+  lang,
+  href: new URL(getAlternatePath(canonicalPath, currentLang, lang), themeConfig.site.url),
+}))
+const defaultAlternatePath = getDefaultAlternatePath(canonicalPath, currentLang, pageLangs)
 const pageImage = postSlug
-  ? new URL(`${base}/og/${postSlug}.png`, Astro.url.origin)
+  ? new URL(`${base}/og/${postSlug}.png`, themeConfig.site.url)
   : apiflashKey
-    ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${Astro.url}&format=png&width=1500&height=788&ttl=259200&wait_until=network_idle&no_tracking=true`
-    : `https://api.apiflash.com/v1/urltoimage?access_key=02a837b6188f4ba0a7fd9fbeff03a83e&url=https://retypeset.radishzz.cc/${lang}&format=png&width=1500&height=788&ttl=604800&wait_until=network_idle&no_tracking=true`
+    ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${canonicalUrl}&format=png&width=1500&height=788&ttl=259200&wait_until=network_idle&no_tracking=true`
+    : new URL(`${base}/og/site.png`, themeConfig.site.url)
+
+const siteRoot = new URL(getSiteRootPath(), themeConfig.site.url)
+const authorUrl = new URL(getAlternatePath('/about', defaultLocale, defaultLocale), themeConfig.site.url)
+const personId = new URL('#person', siteRoot).href
+const websiteId = new URL('#website', siteRoot).href
+const webpageId = new URL('#webpage', canonicalUrl).href
+const jsonLdGraph: Record<string, unknown>[] = [
+  {
+    '@type': 'Person',
+    '@id': personId,
+    'name': author,
+    'url': authorUrl.href,
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    'url': siteRoot.href,
+    'name': siteTitle,
+    'description': siteDescription,
+    'inLanguage': allLocales,
+    'publisher': { '@id': personId },
+  },
+]
+
+if (article && postTitle) {
+  jsonLdGraph.push({
+    '@type': article.type,
+    '@id': new URL('#article', canonicalUrl).href,
+    'url': canonicalUrl.href,
+    'headline': postTitle,
+    'description': pageDescription,
+    'image': pageImage.toString(),
+    'datePublished': article.published?.toISOString(),
+    'dateModified': article.updated?.toISOString() ?? article.published?.toISOString(),
+    'inLanguage': currentLang,
+    'keywords': article.tags?.length ? article.tags : undefined,
+    'author': { '@id': personId },
+    'isPartOf': { '@id': websiteId },
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': canonicalUrl.href,
+    },
+  })
+}
+else {
+  jsonLdGraph.push({
+    '@type': 'WebPage',
+    '@id': webpageId,
+    'url': canonicalUrl.href,
+    'name': pageTitle,
+    'description': pageDescription,
+    'inLanguage': currentLang,
+    'isPartOf': { '@id': websiteId },
+  })
+}
+
+const jsonLd = serializeJsonLd({
+  '@context': 'https://schema.org',
+  '@graph': jsonLdGraph,
+})
 ---
 
 <head>
@@ -66,26 +154,45 @@ const pageImage = postSlug
 {katexEnabled && <link rel="stylesheet" href={katexCSS} media="print" onload={`this.media='all'`} />}
 
 <!-- Site Links -->
-<link rel="canonical" href={Astro.url} />
+<link rel="canonical" href={canonicalUrl} />
 <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
 <link rel="alternate" href={`${base}/rss.xml`} type="application/rss+xml" title="RSS Feed" />
 <link rel="alternate" href={`${base}/atom.xml`} type="application/atom+xml" title="Atom Feed" />
-{allLocales.map(lang => (
+{alternateLinks.map(({ lang, href }) => (
   <link
     rel="alternate"
-    href={`${Astro.url.origin}${base}${lang === defaultLocale ? '' : `/${lang}/`}`}
+    href={href}
     hreflang={lang === 'zh-tw' ? 'zh-TW' : lang}
   />
 ))}
+{defaultAlternatePath && (
+  <link
+    rel="alternate"
+    href={new URL(defaultAlternatePath, themeConfig.site.url)}
+    hreflang="x-default"
+  />
+)}
 
 <!-- Open Graph -->
 <meta property="og:type" content={postTitle ? 'article' : 'website'} />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content={siteTitle} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={pageImage} />
+<meta property="og:image:alt" content={pageTitle} />
+{article?.published && <meta property="article:published_time" content={article.published.toISOString()} />}
+{article?.updated && <meta property="article:modified_time" content={article.updated.toISOString()} />}
+{article?.tags?.map(tag => <meta property="article:tag" content={tag} />)}
 <meta name="twitter:card" content="summary_large_image" />
 {twitterID && <meta name="twitter:site" content={twitterID} />}
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={pageImage} />
+<meta name="twitter:image:alt" content={pageTitle} />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={jsonLd} is:inline />
 
 <!-- Site Verification -->
 {google && <meta name="google-site-verification" content={google} />}
