@@ -201,7 +201,8 @@ const jsonLd = serializeJsonLd({
 {baidu && <meta name="baidu-site-verification" content={baidu} />}
 
 <!-- Global View Transition -->
-<ClientRouter fallback="none" />
+<!-- fallback="swap": keeps router scroll tracking active in non-VT browsers (fallback="none" breaks back-button scroll restoration when bfcache misses) -->
+<ClientRouter fallback="swap" />
 
 <!-- Theme Toggle -->
 <script
