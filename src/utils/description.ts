@@ -141,19 +141,19 @@ function getEntryDescription(
   // Check for <!-- more --> marker (Hexo-style excerpt boundary)
   const moreMarkerRegex = /<!--\s*more\s*-->/i
   const moreMatch = rawContent.match(moreMarkerRegex)
-  const hasMoreMarker = moreMatch && moreMatch.index !== undefined
+  const moreIndex = moreMatch?.index
 
   // Get content to process (before <!-- more --> if exists)
   let contentToProcess = rawContent
-  if (hasMoreMarker) {
-    contentToProcess = rawContent.substring(0, moreMatch.index)
+  if (moreMatch && moreIndex !== undefined) {
+    contentToProcess = rawContent.substring(0, moreIndex)
   }
 
   if (scene !== 'list') {
     let withoutLeadins = stripTemporalLeadins(contentToProcess)
-    if (!withoutLeadins.trim() && hasMoreMarker) {
+    if (!withoutLeadins.trim() && moreMatch && moreIndex !== undefined) {
       withoutLeadins = stripTemporalLeadins(
-        rawContent.substring(moreMatch.index + moreMatch[0].length),
+        rawContent.substring(moreIndex + moreMatch[0].length),
       )
     }
     if (withoutLeadins.trim()) {
@@ -179,7 +179,7 @@ function getEntryDescription(
   // Other scenes (og, meta, feed) still receive plain text because they
   // feed single-line metadata / RSS where HTML would leak through as raw
   // tags.
-  if (scene === 'list' && hasMoreMarker) {
+  if (scene === 'list' && moreIndex !== undefined) {
     return renderedContent
   }
 
