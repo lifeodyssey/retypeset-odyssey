@@ -9,7 +9,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      PRIMARY_SITE_URL: https://zhenjia.org
+      PRIMARY_SITE_URL: https://zhenjia.dev
       PRIMARY_URL_MODE: slug
       ENABLE_LEGACY_REDIRECTS: true
     steps:

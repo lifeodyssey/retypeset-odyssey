@@ -4,7 +4,7 @@ import { ClientRouter } from 'astro:transitions'
 import katexCSS from 'katex/dist/katex.min.css?url'
 import { allLocales, base, defaultLocale, themeConfig } from '@/config'
 import { ui } from '@/i18n/ui'
-import { getPageInfo } from '@/utils/page'
+import { getPageInfo, shouldNoindex } from '@/utils/page'
 import {
   getAlternatePath,
   getCanonicalPath,
@@ -76,13 +76,25 @@ const authorUrl = new URL(getAlternatePath('/about', defaultLocale, defaultLocal
 const personId = new URL('#person', siteRoot).href
 const websiteId = new URL('#website', siteRoot).href
 const webpageId = new URL('#webpage', canonicalUrl).href
+const person = themeConfig.seo?.person ?? {}
+const noindex = shouldNoindex(Astro.url.pathname)
+const personNode: Record<string, unknown> = {
+  '@type': 'Person',
+  '@id': personId,
+  'name': author,
+  'url': authorUrl.href,
+}
+if (person.jobTitle) {
+  personNode.jobTitle = person.jobTitle
+}
+if (person.email) {
+  personNode.email = person.email
+}
+if (person.sameAs?.length) {
+  personNode.sameAs = person.sameAs
+}
 const jsonLdGraph: Record<string, unknown>[] = [
-  {
-    '@type': 'Person',
-    '@id': personId,
-    'name': author,
-    'url': authorUrl.href,
-  },
+  personNode,
   {
     '@type': 'WebSite',
     '@id': websiteId,
@@ -141,6 +153,7 @@ const jsonLd = serializeJsonLd({
 {favicon.toLowerCase().endsWith('.ico') && <link rel="icon" type="image/x-icon" href={`${base}${favicon}`} />}
 <title>{pageTitle}</title>
 <meta name="description" content={pageDescription} />
+{noindex && <meta name="robots" content="noindex, follow" />}
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content={metaTheme} />

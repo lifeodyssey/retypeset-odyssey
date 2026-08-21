@@ -132,6 +132,21 @@ export const ThemeConfigSchema = z.object({
         .optional()
         .default({}),
       apiflashKey: z.string().optional().default(''),
+      person: z
+        .object({
+          jobTitle: z.string().optional().default(''),
+          email: z.string().optional().default(''),
+          sameAs: z.array(z.string().url()).optional().default([]),
+        })
+        .optional()
+        .default({}),
+      llms: z
+        .object({
+          // Post slugs listed first in /llms.txt. Empty = all default-locale posts.
+          featured: z.array(z.string()).optional().default([]),
+        })
+        .optional()
+        .default({}),
     })
     .optional()
     .default({}),

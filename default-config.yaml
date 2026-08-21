@@ -25,7 +25,7 @@ site:
   # Author name.
   author: Zhenjia
   # Canonical site URL (no trailing slash).
-  url: https://zhenjia.org
+  url: https://zhenjia.dev
   # Base path. Use '/' unless the site is served from a subpath.
   base: /
   # Favicon URL. Recommended formats: svg, png, ico.
@@ -107,6 +107,14 @@ seo:
     userID: ''
   # ApiFlash access key (https://apiflash.com/) for generating OG screenshots.
   apiflashKey: ''
+  # Author entity for JSON-LD Person (sameAs, jobTitle, email).
+  person:
+    jobTitle: ''
+    email: ''
+    sameAs: []
+  # /llms.txt featured post slugs (canonical URL slugs). Empty = all default-locale posts.
+  llms:
+    featured: []
 
 # ---- FOOTER -----------------------------------------------------------------
 footer:

@@ -1,13 +1,12 @@
 import type { APIRoute } from 'astro'
 import { themeConfig } from '@/config'
-import { getPostPath, getPosts } from '@/utils/content'
+import { getLlmsPosts, publicPostUrl } from '@/utils/llms'
 
-// `/llms-full.txt` — the full-text companion to `/llms.txt`: the same post
-// list with each post's raw markdown body inlined, so an agent can read the
-// whole site in one fetch instead of crawling every page.
+// `/llms-full.txt` — companion to `/llms.txt` with raw markdown inlined.
+// Honors seo.llms.featured so a consumer can keep this file curated.
 export const GET: APIRoute = async ({ site }) => {
   const { title, description, author } = themeConfig.site
-  const posts = await getPosts()
+  const posts = await getLlmsPosts()
 
   const head = [
     `# ${title}`,
@@ -19,7 +18,7 @@ export const GET: APIRoute = async ({ site }) => {
   ].filter(Boolean)
 
   const body = posts.map((post) => {
-    const href = site ? new URL(getPostPath(post).slice(1), site).href : getPostPath(post)
+    const href = publicPostUrl(post, site)
     const published = post.data.published?.toISOString().slice(0, 10)
     const tags = post.data.tags?.length ? `Tags: ${post.data.tags.join(', ')}` : ''
     return [

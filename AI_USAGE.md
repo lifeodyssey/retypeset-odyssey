@@ -92,7 +92,10 @@ Providers: `giscus` (`repo`, `repoId`, `category`, `categoryId`, `mapping`,
 ### `seo` (optional)
 `twitterID`; `verification.{google,bing,yandex,baidu}`; `googleAnalyticsID`
 (G-XXXXXXXXXX, not UA-*); `umamiAnalyticsID`; `cloudflareAnalyticsToken`;
-`follow.{feedID,userID}`; `apiflashKey`.
+`follow.{feedID,userID}`; `apiflashKey`;
+`person.{jobTitle,email,sameAs[]}` (JSON-LD Person);
+`llms.featured` (array of post slugs; empty = all default-locale posts in
+`/llms.txt` and `/llms-full.txt`).
 
 ### `footer`
 `links`: array of `{ name, url }`. `startYear`: integer (first-published year).

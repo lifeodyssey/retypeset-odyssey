@@ -24,6 +24,7 @@ import { rehypeImageProcessor } from './src/plugins/rehype-image-processor.mjs'
 import { remarkContainerDirectives } from './src/plugins/remark-container-directives.mjs'
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
+import { shouldIncludeInSitemap } from './src/utils/sitemap'
 
 interface RetypesetOptions {
   /**
@@ -298,6 +299,9 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
             format: 'file', // Generates /posts/xxx.html instead of /posts/xxx/index.html
           },
           trailingSlash: 'never', // Required for build.format: 'file'
+          redirects: {
+            '/sitemap.xml': '/sitemap-index.xml',
+          },
           prefetch: {
             prefetchAll: true,
             defaultStrategy: 'viewport',
@@ -328,7 +332,15 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
                 forward: ['dataLayer.push', 'gtag'],
               },
             }),
-            sitemap(),
+            sitemap({
+              filter: page => shouldIncludeInSitemap(page, moreLocales),
+              i18n: {
+                defaultLocale,
+                locales: Object.fromEntries(
+                  allLocales.map(code => [code, langMap[code][0]]),
+                ),
+              },
+            }),
             pagefind(),
             Compress({
               CSS: true,

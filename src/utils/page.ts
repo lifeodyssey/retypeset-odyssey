@@ -83,6 +83,34 @@ export function isAboutPage(path: string) {
   return matchPageType(path, 'about')
 }
 
+export function isSearchPage(path: string) {
+  return matchPageType(path, 'search')
+}
+
+export function isPaginatedListPage(path: string) {
+  const pathWithoutBase = base && path.startsWith(base)
+    ? path.slice(base.length)
+    : path
+  const normalizedPath = stripHtmlExtension(pathWithoutBase.replace(/^\/|\/$/g, ''))
+
+  if (/\/page\/\d+$/.test(normalizedPath)) {
+    return true
+  }
+
+  if (/^\d+$/.test(normalizedPath)) {
+    return true
+  }
+
+  return (moreLocales as readonly string[]).some((lang) => {
+    return new RegExp(`^${lang}/\\d+$`).test(normalizedPath)
+  })
+}
+
+/** Search and paginated list pages should not be indexed. */
+export function shouldNoindex(path: string) {
+  return isSearchPage(path) || isPaginatedListPage(path)
+}
+
 export function isCategoryPage(path: string) {
   return matchPageType(path, 'categories')
 }
@@ -102,6 +130,7 @@ export function getPageInfo(path: string) {
   const isCategory = isCategoryPage(path)
   const isTimeline = isTimelinePage(path)
   const isAbout = isAboutPage(path)
+  const isSearch = isSearchPage(path)
 
   return {
     currentLang,
@@ -113,6 +142,7 @@ export function getPageInfo(path: string) {
     isCategory,
     isTimeline,
     isAbout,
+    isSearch,
     getLocalizedPath: (targetPath: string) =>
       getLocalizedPath(targetPath, currentLang),
   }

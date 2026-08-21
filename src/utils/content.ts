@@ -432,7 +432,7 @@ export function getPostCategory(post: CollectionEntry<'posts'>): PostCategory {
 export function getPostPath(post: CollectionEntry<'posts'>, langPrefix?: string): string {
   const slug = getPostSlug(post)
   const prefix = langPrefix ? `/${langPrefix}` : ''
-  return `${prefix}/posts/${slug}.html`
+  return `${prefix}/posts/${slug}`
 }
 
 /**

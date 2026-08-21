@@ -24,6 +24,27 @@ test.describe('Blog Migration Evaluation', () => {
     expect(content).toMatch(/搜索|Search/)
   })
 
+  test('search and pagination are noindexed; homepage is not', async ({ page }) => {
+    await page.goto(`${BASE_URL}/search`)
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow')
+
+    await page.goto(`${BASE_URL}/2`)
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow')
+
+    await page.goto(BASE_URL)
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0)
+  })
+
+  test('robots.txt allows retrieval crawlers and blocks training crawlers', async ({ page }) => {
+    const response = await page.goto(`${BASE_URL}/robots.txt`)
+    expect(response?.status()).toBe(200)
+    const content = await page.content()
+    expect(content).toContain('ai-input=yes')
+    expect(content).toContain('ai-train=no')
+    expect(content).toContain('User-agent: OAI-SearchBot')
+    expect(content).toMatch(/User-agent: GPTBot[\s\S]*Disallow: \//)
+  })
+
   test('tags page loads', async ({ page }) => {
     const response = await page.goto(`${BASE_URL}/tags`)
     expect(response?.status()).toBe(200)
@@ -112,6 +133,12 @@ test.describe('Blog Migration Evaluation', () => {
       'href',
       'https://zhenjia.dev/ja/posts/agent-coding-experience-and-future',
     )
+  })
+
+  test('meta description skips the written-in disclaimer', async ({ page }) => {
+    await page.goto(`${BASE_URL}/posts/agent-coding-experience-and-future`)
+    const description = await page.locator('meta[name="description"]').getAttribute('content')
+    expect(description || '').not.toMatch(/^本文写于/)
   })
 
   test('post exposes BlogPosting structured data', async ({ page }) => {

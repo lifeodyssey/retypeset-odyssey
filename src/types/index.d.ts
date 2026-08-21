@@ -97,6 +97,14 @@ export interface ThemeConfig {
       userID?: string
     }
     apiflashKey?: string
+    person?: {
+      jobTitle?: string
+      email?: string
+      sameAs?: string[]
+    }
+    llms?: {
+      featured?: string[]
+    }
   }
   footer: {
     links: {

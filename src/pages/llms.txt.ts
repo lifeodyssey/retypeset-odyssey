@@ -1,13 +1,14 @@
 import type { APIRoute } from 'astro'
 import { themeConfig } from '@/config'
-import { getPostPath, getPosts } from '@/utils/content'
+import { getPostDescription } from '@/utils/description'
+import { getLlmsPosts, publicPostUrl } from '@/utils/llms'
 
-// `/llms.txt` — an llmstxt.org-style index of the site's content for AI
-// agents and crawlers. Lists the default-language posts with their canonical
-// URLs; `/llms-full.txt` carries the same list with each post body inlined.
+// `/llms.txt` — llmstxt.org index. Featured slugs in seo.llms.featured
+// come first; otherwise all default-locale posts, each with an excerpt.
 export const GET: APIRoute = async ({ site }) => {
   const { title, description, author } = themeConfig.site
-  const posts = await getPosts()
+  const posts = await getLlmsPosts()
+  const featured = themeConfig.seo?.llms?.featured ?? []
 
   const lines = [
     `# ${title}`,
@@ -17,17 +18,17 @@ export const GET: APIRoute = async ({ site }) => {
     author ? `Author: ${author}.` : '',
     site ? `Full text for LLMs: ${new URL('llms-full.txt', site).href}` : '',
     '',
-    '## Posts',
+    featured.length ? '## Featured' : '## Posts',
     '',
     ...posts.map((post) => {
-      const href = site ? new URL(getPostPath(post).slice(1), site).href : getPostPath(post)
-      const desc = post.data.description?.trim()
+      const href = publicPostUrl(post, site)
+      const desc = getPostDescription(post, 'meta').replace(/\s+/g, ' ').trim()
       return `- [${post.data.title}](${href})${desc ? `: ${desc}` : ''}`
     }),
     '',
-  ].filter(line => line !== undefined)
+  ]
 
-  return new Response(lines.join('\n'), {
+  return new Response(lines.filter(line => line !== undefined).join('\n'), {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   })
 }

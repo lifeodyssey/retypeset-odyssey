@@ -80,8 +80,42 @@ function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
   return excerpt
 }
 
+/** Drop leading disclaimers so meta/OG excerpts start at the thesis. */
+function stripTemporalLeadins(markdown: string): string {
+  const blocks = markdown.split(/\n{2,}/)
+  const isLeadin = (block: string) => {
+    const text = block.replace(/^>\s?/gm, '').replace(/^\*\*|\*\*$/g, '').trim()
+    if (!text) {
+      return true
+    }
+    return (
+      /^(?:本文写于|本文寫於)/.test(text)
+      || /^This (?:article|post) was written/i.test(text)
+      || /^(?:本稿は|本記事は).{0,80}(?:年|に)/.test(text)
+      || /^(?:全文约|全文約)/.test(text)
+      || /阅读大约需要/.test(text)
+      || /^\*\*?Disclaimer\*\*?/i.test(text)
+    )
+  }
+
+  while (blocks.length && isLeadin(blocks[0])) {
+    blocks.shift()
+  }
+
+  if (blocks[0]) {
+    const withoutOpeningSentence = blocks[0]
+      .replace(/^(?:本文写于|本文寫於)[^。！？\n]*[。！？]\s*/, '')
+      .replace(/^This (?:article|post) was written[^.!?\n]*[.!?]\s*/i, '')
+    if (withoutOpeningSentence.trim()) {
+      blocks[0] = withoutOpeningSentence
+    }
+  }
+
+  return blocks.join('\n\n')
+}
+
 // Generates post description from existing description or content
-type DescribableEntry = {
+interface DescribableEntry {
   data: {
     description?: string
     lang?: string
@@ -113,6 +147,18 @@ function getEntryDescription(
   let contentToProcess = rawContent
   if (hasMoreMarker) {
     contentToProcess = rawContent.substring(0, moreMatch.index)
+  }
+
+  if (scene !== 'list') {
+    let withoutLeadins = stripTemporalLeadins(contentToProcess)
+    if (!withoutLeadins.trim() && hasMoreMarker) {
+      withoutLeadins = stripTemporalLeadins(
+        rawContent.substring(moreMatch.index + moreMatch[0].length),
+      )
+    }
+    if (withoutLeadins.trim()) {
+      contentToProcess = withoutLeadins
+    }
   }
 
   const cleanContent = contentToProcess
