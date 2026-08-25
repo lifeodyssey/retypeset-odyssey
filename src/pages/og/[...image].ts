@@ -63,22 +63,26 @@ const pages = Object.fromEntries([
       description: themeConfig.site.description,
     },
   ],
+  // Keys carry a trailing `.md`: astro-og-canvas strips the last dot-segment of
+  // each key as if it were a file extension, so a bare `foo.en` would collapse
+  // into `foo.png` and collide with the zh entry. With `.md` appended it strips
+  // `.md` and emits `foo.en.png`, matching the URL Head.astro builds.
   ...posts.map((post: CollectionEntry<'posts'>) => [
-    post.id,
+    `${post.id}.md`,
     {
       title: post.data.title,
       description: getPostDescription(post, 'og'),
     },
   ]),
   ...notes.map((note: CollectionEntry<'notes'>) => [
-    `notes/${note.id}`,
+    `notes/${note.id}.md`,
     {
       title: note.data.title,
       description: getNoteDescription(note, 'og'),
     },
   ]),
   ...journals.map((journal: CollectionEntry<'journals'>) => [
-    `journals/${journal.id}`,
+    `journals/${journal.id}.md`,
     {
       title: journal.data.title,
       description: getJournalDescription(journal, 'og'),

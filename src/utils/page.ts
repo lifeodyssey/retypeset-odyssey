@@ -106,9 +106,22 @@ export function isPaginatedListPage(path: string) {
   })
 }
 
-/** Search and paginated list pages should not be indexed. */
+/**
+ * Individual tag / category archive pages (`/tags/<x>`, `/en/categories/<x>`),
+ * excluding the `/tags` and `/categories` overview pages.
+ */
+export function isTaxonomyDetailPage(path: string) {
+  const pathWithoutBase = base && path.startsWith(base)
+    ? path.slice(base.length)
+    : path
+  const normalizedPath = stripHtmlExtension(pathWithoutBase.replace(/^\/|\/$/g, ''))
+  const langPrefix = (moreLocales as readonly string[]).map(lang => `${lang}/`).join('|')
+  return new RegExp(`^(?:${langPrefix})?(?:tags|categories)/.+`).test(normalizedPath)
+}
+
+/** Search, paginated list and single tag / category pages should not be indexed. */
 export function shouldNoindex(path: string) {
-  return isSearchPage(path) || isPaginatedListPage(path)
+  return isSearchPage(path) || isPaginatedListPage(path) || isTaxonomyDetailPage(path)
 }
 
 export function isCategoryPage(path: string) {
