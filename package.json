@@ -1,7 +1,7 @@
 {
   "name": "retypeset-odyssey",
   "type": "module",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Trilingual (zh/en/ja) Astro blog theme, usable as a standalone template or an installable npm package for content-only repos. Forked from astro-theme-retypeset; adds npm packaging, folder-based collections, Hexo migration, and agent-facing docs (AI_USAGE.md, a Claude Skill, and build-time llms.txt).",
   "keywords": [
     "astro",
