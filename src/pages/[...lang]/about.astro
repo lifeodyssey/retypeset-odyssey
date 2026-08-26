@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
+import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
 
 export async function getStaticPaths() {
@@ -16,9 +17,15 @@ const allAboutEntries = await getCollection('about')
 const aboutEntry = allAboutEntries.find(entry => entry.data.lang === currentLang)
   ?? allAboutEntries.find(entry => entry.data.lang === '')
 const { Content } = aboutEntry ? await render(aboutEntry) : { Content: null }
+
+// Frontmatter title/description win; otherwise fall back to the i18n
+// "about" label (Head.astro itself falls back postDescription -> site
+// description when it's undefined).
+const aboutTitle = aboutEntry?.data.title || ui[currentLang].about
+const aboutDescription = aboutEntry?.data.description
 ---
 
-<Layout>
+<Layout postTitle={aboutTitle} postDescription={aboutDescription}>
   <!-- Decorative Line -->
   <div class="uno-decorative-line" />
   <!-- About Page Content -->

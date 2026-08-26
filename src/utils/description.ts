@@ -74,10 +74,25 @@ function getExcerpt(text: string, lang: Language, scene: ExcerptScene): string {
 
   // Remove trailing punctuation and add ellipsis
   if (cleanText.length > length) {
-    return `${excerpt.replace(/\p{P}+$/u, '')}...`
+    return `${cutAtBoundary(excerpt, length).replace(/\p{P}+$/u, '')}...`
   }
 
   return excerpt
+}
+
+// When an excerpt overflows, back up to the last list-item separator or
+// sentence end inside the window (but not below half the budget) so the
+// meta description stops at a whole thought instead of mid-word.
+function cutAtBoundary(window: string, length: number): string {
+  const ends = [
+    window.lastIndexOf(' · '),
+    ...['。', '！', '？', '.', '!', '?'].map((mark) => {
+      const idx = window.lastIndexOf(mark)
+      return idx === -1 ? -1 : idx + 1
+    }),
+  ]
+  const end = Math.max(...ends)
+  return end >= length / 2 ? window.slice(0, end).trim() : window
 }
 
 /** Drop leading disclaimers so meta/OG excerpts start at the thesis. */

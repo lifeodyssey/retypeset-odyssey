@@ -212,6 +212,8 @@ const about = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './content/about' }),
   schema: z.object({
     lang: z.enum(['', ...allLocales]).optional().default(''),
+    title: z.string().optional(),
+    description: z.string().optional(),
   }),
 })
 

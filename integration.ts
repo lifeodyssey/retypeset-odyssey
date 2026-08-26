@@ -25,6 +25,7 @@ import { remarkContainerDirectives } from './src/plugins/remark-container-direct
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 import { shouldIncludeInSitemap } from './src/utils/sitemap'
+import { buildLastmodMap } from './src/utils/sitemap-lastmod'
 
 interface RetypesetOptions {
   /**
@@ -181,6 +182,18 @@ export const JOURNALS_PER_PAGE = 7
             + `Folder names must match /^[a-zA-Z0-9][a-zA-Z0-9-]*$/ and must not be \`about\`.`,
           )
         }
+
+        // URL -> ISO date map for the sitemap's `lastmod`, read straight off
+        // content frontmatter (astro:content isn't available yet at this
+        // hook). See src/utils/sitemap-lastmod.ts.
+        const lastmodMap = buildLastmodMap({
+          projectRoot,
+          enabledBuiltIns,
+          dynamicFolders,
+          allLocales,
+          defaultLocale,
+          base,
+        })
 
         // Expose the dynamic-collection list to template files via a virtual
         // module so `getStaticPaths` knows which folders to enumerate.
@@ -339,6 +352,33 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
                 locales: Object.fromEntries(
                   allLocales.map(code => [code, langMap[code][0]]),
                 ),
+              },
+              serialize(item) {
+                let pathname: string
+                try {
+                  pathname = new URL(item.url).pathname
+                }
+                catch {
+                  return item
+                }
+                pathname = pathname.replace(/\/+$/, '') || '/'
+                // `URL#pathname` percent-encodes non-ASCII segments (Chinese/
+                // Japanese slugs); lastmodMap keys are raw, so decode before
+                // lookup. Decode segment-by-segment so a literal `%` inside a
+                // slug can't be mistaken for an encoded `/`.
+                pathname = pathname
+                  .split('/')
+                  .map((segment) => {
+                    try {
+                      return decodeURIComponent(segment)
+                    }
+                    catch {
+                      return segment
+                    }
+                  })
+                  .join('/')
+                const lastmod = lastmodMap.get(pathname)
+                return lastmod ? { ...item, lastmod } : item
               },
             }),
             pagefind(),
