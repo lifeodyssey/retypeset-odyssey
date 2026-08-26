@@ -93,7 +93,8 @@ Providers: `giscus` (`repo`, `repoId`, `category`, `categoryId`, `mapping`,
 `twitterID`; `verification.{google,bing,yandex,baidu}`; `googleAnalyticsID`
 (G-XXXXXXXXXX, not UA-*); `umamiAnalyticsID`; `cloudflareAnalyticsToken`;
 `follow.{feedID,userID}`; `apiflashKey`;
-`person.{jobTitle,email,sameAs[]}` (JSON-LD Person);
+`person.{name,alternateName[],description,jobTitle,email,image,knowsAbout[],alumniOf[],worksFor,sameAs[]}`
+(JSON-LD Person; `name` overrides `site.author`, `image` may be site-relative);
 `llms.featured` (array of post slugs; empty = all default-locale posts in
 `/llms.txt` and `/llms-full.txt`).
 

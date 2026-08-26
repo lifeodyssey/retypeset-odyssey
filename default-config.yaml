@@ -107,10 +107,18 @@ seo:
     userID: ''
   # ApiFlash access key (https://apiflash.com/) for generating OG screenshots.
   apiflashKey: ''
-  # Author entity for JSON-LD Person (sameAs, jobTitle, email).
+  # Author entity for JSON-LD Person. `name` overrides site.author; `image`
+  # may be site-relative; alumniOf/worksFor take plain organization names.
   person:
+    name: ''
+    alternateName: []
+    description: ''
     jobTitle: ''
     email: ''
+    image: ''
+    knowsAbout: []
+    alumniOf: []
+    worksFor: ''
     sameAs: []
   # /llms.txt featured post slugs (canonical URL slugs). Empty = all default-locale posts.
   llms:

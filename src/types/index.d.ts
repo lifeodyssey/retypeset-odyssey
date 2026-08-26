@@ -98,8 +98,15 @@ export interface ThemeConfig {
     }
     apiflashKey?: string
     person?: {
+      name?: string
+      alternateName?: string[]
+      description?: string
       jobTitle?: string
       email?: string
+      image?: string
+      knowsAbout?: string[]
+      alumniOf?: string[]
+      worksFor?: string
       sameAs?: string[]
     }
     llms?: {

@@ -81,14 +81,32 @@ const noindex = shouldNoindex(Astro.url.pathname)
 const personNode: Record<string, unknown> = {
   '@type': 'Person',
   '@id': personId,
-  'name': author,
+  'name': person.name || author,
   'url': authorUrl.href,
+}
+if (person.alternateName?.length) {
+  personNode.alternateName = person.alternateName.length === 1 ? person.alternateName[0] : person.alternateName
+}
+if (person.description) {
+  personNode.description = person.description
 }
 if (person.jobTitle) {
   personNode.jobTitle = person.jobTitle
 }
 if (person.email) {
   personNode.email = person.email
+}
+if (person.image) {
+  personNode.image = new URL(person.image, themeConfig.site.url).href
+}
+if (person.knowsAbout?.length) {
+  personNode.knowsAbout = person.knowsAbout
+}
+if (person.alumniOf?.length) {
+  personNode.alumniOf = person.alumniOf.map(name => ({ '@type': 'CollegeOrUniversity', name }))
+}
+if (person.worksFor) {
+  personNode.worksFor = { '@type': 'Organization', 'name': person.worksFor }
 }
 if (person.sameAs?.length) {
   personNode.sameAs = person.sameAs

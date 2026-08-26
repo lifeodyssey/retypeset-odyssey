@@ -134,8 +134,17 @@ export const ThemeConfigSchema = z.object({
       apiflashKey: z.string().optional().default(''),
       person: z
         .object({
+          // Overrides `site.author` for the JSON-LD Person name when set.
+          name: z.string().optional().default(''),
+          alternateName: z.array(z.string()).optional().default([]),
+          description: z.string().optional().default(''),
           jobTitle: z.string().optional().default(''),
           email: z.string().optional().default(''),
+          // Absolute URL or site-relative path (e.g. `/avatar.png`).
+          image: z.string().optional().default(''),
+          knowsAbout: z.array(z.string()).optional().default([]),
+          alumniOf: z.array(z.string()).optional().default([]),
+          worksFor: z.string().optional().default(''),
           sameAs: z.array(z.string().url()).optional().default([]),
         })
         .optional()
