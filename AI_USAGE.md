@@ -21,7 +21,7 @@ A consumer repo needs exactly three things at its root:
 {
   "type": "module",
   "dependencies": {
-    "astro": "^6.3.7",
+    "astro": "^7.3.7",
     "retypeset-odyssey": "github:lifeodyssey/retypeset-odyssey"
   }
 }
@@ -174,6 +174,16 @@ Body in markdown. KaTeX and a table of contents are on by default.
 ```
 
 ---
+
+### Standalone HTML and public assets (experimental)
+
+Available in `retypeset-odyssey@0.1.24`. This release requires Astro 7 and Node.js 22.12.0 or newer; update the consumer's Astro dependency and build runtime when upgrading from 0.1.23.
+
+Place a complete HTML document in the consumer's `src/pages/experiments/demo.html` to serve `/experiments/demo`. Place companion assets in the consumer's `public/experiments/` and reference their public URLs, including the configured base for subpath hosting. A custom Astro `publicDir` is supported. The theme keeps its own assets separately and supplies missing defaults; consumer public files win. Conflicts between theme assets and generated routes fail the build and must be resolved explicitly.
+
+HTML pages retain their own styles and JavaScript, but still pass through Astro and HTML compression. They are not automatically collection entries or RSS items. Decide search and sitemap behavior separately; `data-pagefind-ignore="all"` on `<body>` excludes content from Pagefind, while `noindex` asks search engines not to index a page. Publish only owner-reviewed, trusted HTML because scripts run on the site's origin. Do not store personal pages inside `node_modules/retypeset-odyssey` or the reusable theme repository.
+
+The integration configures the unified Markdown processor for Astro 7; consumers do not need their own `markdown.processor` setup to preserve the theme's remark/rehype plugins.
 
 ## 4. Folder-based collections
 

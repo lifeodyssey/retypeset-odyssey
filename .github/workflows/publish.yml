@@ -74,6 +74,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test static asset integration
+        run: pnpm test:static-assets
+
       - name: Run build (sanity check)
         run: pnpm build
 

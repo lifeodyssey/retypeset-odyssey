@@ -17,7 +17,7 @@ Other deltas from upstream: trilingual content support (zh / en / ja) with `.en.
 
 ## Features
 
-- Built with Astro 6 and UnoCSS
+- Built with Astro 7 and UnoCSS
 - SEO, Sitemap, OpenGraph (with generated cards), RSS, MDX, LaTeX, Mermaid, TOC
 - i18n with route-level language switching and per-language tagline / collection-intro overrides
 - Light / Dark mode with view transitions
@@ -51,8 +51,8 @@ Set up your own minimal Astro project that consumes this theme. One install, one
     "build": "astro build"
   },
   "dependencies": {
-    "astro": "^6.3.7",
-    "retypeset-odyssey": "^0.1.17"
+    "astro": "^7.3.7",
+    "retypeset-odyssey": "^0.1.24"
   }
 }
 ```
@@ -138,7 +138,18 @@ pnpm build  # → dist/
 - Drives Astro's top-level config from the same YAML: `site`, `base`, `build.format`, `trailingSlash`, `prefetch`, `i18n`, and `image.domains` are all set automatically.
 - Registers UnoCSS (with the theme's `uno.config.ts`), MDX, partytown, sitemap, pagefind, and astro-compress — so you do not import any of them yourself.
 - Injects all theme routes (`posts/[slug]`, `tags/[tag]`, RSS, OG images, `robots.txt`, `/llms.txt`, `/llms-full.txt`, etc.) via Astro's `injectRoute` API.
-- Points `publicDir` at the package's own `public/`, so fonts, icons, and other assets ship without copying.
+- Preserves your project's `publicDir`. Theme fonts and icons are served as fallbacks in development and added to the static build before search indexing and compression. Your public files take precedence; a theme asset that collides with a generated route fails the build instead of replacing that route.
+- Configures Astro 7's unified Markdown processor with the theme's remark/rehype plugins, retaining existing Markdown behavior and HTML whitespace compression.
+
+### Standalone HTML pages (experimental)
+
+Available in `retypeset-odyssey@0.1.24`. This release requires Astro 7 and Node.js 22.12.0 or newer; update the consumer's Astro dependency and build runtime when upgrading from 0.1.23.
+
+Keep complete HTML documents in your content project's `src/pages/`, for example `src/pages/experiments/demo.html` → `/experiments/demo`. Each page can include its own CSS and JavaScript without adopting the blog layout. Astro still processes these pages and the theme's compression applies; this is not byte-for-byte file hosting.
+
+Put companion assets in your project's `public/`, for example `public/experiments/demo.css` → `/experiments/demo.css`. Custom Astro `publicDir` settings are also respected. Prefix asset URLs with your configured base when hosting under a subpath. The reusable theme and personal pages remain in separate repositories; do not edit the installed theme package to add content.
+
+These pages do not automatically become collection entries or RSS items. Search and sitemap inclusion require separate consideration: use `data-pagefind-ignore="all"` on `<body>` to exclude a demonstration's content from Pagefind, and `noindex` metadata when appropriate. Only publish trusted HTML reviewed by the site owner: its JavaScript runs on the blog's origin without iframe isolation.
 
 ### Configuration reference
 

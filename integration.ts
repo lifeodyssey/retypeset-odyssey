@@ -1,12 +1,13 @@
-import type { AstroIntegration } from 'astro'
+import type { AstroConfig, AstroIntegration } from 'astro'
+import { existsSync, readFileSync } from 'node:fs'
+import { isAbsolute, resolve as resolvePath } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { unified } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import Compress from 'astro-compress'
 import pagefind from 'astro-pagefind'
-import { existsSync, readFileSync } from 'node:fs'
-import { isAbsolute, resolve as resolvePath } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import rehypeKatex from 'rehype-katex'
 import rehypeMermaid from 'rehype-mermaid'
 import rehypeSlug from 'rehype-slug'
@@ -26,6 +27,7 @@ import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 import { shouldIncludeInSitemap } from './src/utils/sitemap'
 import { buildLastmodMap } from './src/utils/sitemap-lastmod'
+import { copyMissingThemeAssets, createThemeAssetsMiddleware } from './static-assets'
 
 interface RetypesetOptions {
   /**
@@ -89,6 +91,9 @@ function deepMerge<T>(base: T, override: unknown): T {
  *   export default defineConfig({ integrations: [retypeset()] })
  */
 export default function retypesetTheme(options: RetypesetOptions = {}): AstroIntegration {
+  const themePublicDir = fileURLToPath(new URL('./public/', import.meta.url))
+  let resolvedConfig: AstroConfig
+
   return {
     name: 'retypeset-odyssey',
     hooks: {
@@ -176,7 +181,6 @@ export const JOURNALS_PER_PAGE = 7
           enabledBuiltIns.includes(name)
 
         if (skippedFolders.length > 0) {
-          // eslint-disable-next-line no-console
           console.warn(
             `[retypeset-odyssey] Skipped content folders with unsupported names: ${skippedFolders.join(', ')}. `
             + `Folder names must match /^[a-zA-Z0-9][a-zA-Z0-9-]*$/ and must not be \`about\`.`,
@@ -312,6 +316,7 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
             format: 'file', // Generates /posts/xxx.html instead of /posts/xxx/index.html
           },
           trailingSlash: 'never', // Required for build.format: 'file'
+          compressHTML: true,
           redirects: {
             '/sitemap.xml': '/sitemap-index.xml',
           },
@@ -391,22 +396,24 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
             }),
           ],
           markdown: {
-            remarkPlugins: [
-              remarkDirective,
-              remarkMath,
-              remarkContainerDirectives,
-              remarkLeafDirectives,
-              remarkReadingTime,
-            ],
-            rehypePlugins: [
-              rehypeKatex,
-              [rehypeMermaid, { strategy: 'pre-mermaid' }],
-              rehypeSlug,
-              rehypeHeadingAnchor,
-              rehypeImageProcessor,
-              rehypeExternalLinks,
-              rehypeCodeCopyButton,
-            ],
+            processor: unified({
+              remarkPlugins: [
+                remarkDirective,
+                remarkMath,
+                remarkContainerDirectives,
+                remarkLeafDirectives,
+                remarkReadingTime,
+              ],
+              rehypePlugins: [
+                rehypeKatex,
+                [rehypeMermaid, { strategy: 'pre-mermaid' }],
+                rehypeSlug,
+                rehypeHeadingAnchor,
+                rehypeImageProcessor,
+                rehypeExternalLinks,
+                rehypeCodeCopyButton,
+              ],
+            }),
             syntaxHighlight: {
               type: 'shiki',
               excludeLangs: ['mermaid'],
@@ -418,9 +425,6 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
               },
             },
           },
-          // Astro internally calls fileURLToPath() on publicDir, so it must
-          // be a URL object.
-          publicDir: themeUrl('./public/') as any,
           vite: {
             plugins: [
               {
@@ -479,6 +483,24 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
             },
           },
         })
+      },
+      'astro:config:done': ({ config }) => {
+        resolvedConfig = config
+      },
+      'astro:server:setup': ({ server }) => {
+        if (resolvePath(fileURLToPath(resolvedConfig.publicDir)) === resolvePath(themePublicDir))
+          return
+        server.middlewares.use(createThemeAssetsMiddleware({
+          themePublicDir,
+          consumerPublicDir: fileURLToPath(resolvedConfig.publicDir),
+          base: resolvedConfig.base,
+        }))
+      },
+      'astro:build:generated': async ({ dir }) => {
+        if (resolvePath(fileURLToPath(resolvedConfig.publicDir)) === resolvePath(themePublicDir))
+          return
+        // Add theme defaults before Pagefind and Compress run at build:done.
+        await copyMissingThemeAssets(themePublicDir, fileURLToPath(resolvedConfig.publicDir), fileURLToPath(dir))
       },
     },
   }
