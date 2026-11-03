@@ -8,8 +8,8 @@ import { z } from 'zod'
  * against this schema before being exposed to the theme via the
  * `virtual:retypeset/config` module.
  *
- * Optional groups (`comment`, `seo`, `preload`) default to empty objects so
- * downstream code can safely read nested fields with `?.`.
+ * Optional groups use pre-parse defaults so their nested fields are populated
+ * when the group is omitted, preserving the Zod 3 configuration behavior.
  */
 
 const LanguageCode = z.enum([
@@ -31,7 +31,7 @@ const LanguageCode = z.enum([
 // preferred; missing locales fall back to the i18n defaults in src/i18n/ui.ts.
 const LocalizedString = z.union([
   z.string(),
-  z.record(LanguageCode, z.string()),
+  z.partialRecord(LanguageCode, z.string()),
 ])
 
 export const ThemeConfigSchema = z.object({
@@ -89,14 +89,12 @@ export const ThemeConfigSchema = z.object({
           emitMetadata: z.enum(['0', '1']).optional().default('0'),
           inputPosition: z.enum(['top', 'bottom']).optional().default('bottom'),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
       twikoo: z
         .object({
           envId: z.string().optional().default(''),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
       waline: z
         .object({
           serverURL: z.string().optional().default(''),
@@ -104,11 +102,9 @@ export const ThemeConfigSchema = z.object({
           search: z.boolean().optional().default(false),
           imageUploader: z.boolean().optional().default(false),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
     })
-    .optional()
-    .default({}),
+    .prefault({}),
   seo: z
     .object({
       twitterID: z.string().optional().default(''),
@@ -119,8 +115,7 @@ export const ThemeConfigSchema = z.object({
           yandex: z.string().optional().default(''),
           baidu: z.string().optional().default(''),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
       googleAnalyticsID: z.string().optional().default(''),
       umamiAnalyticsID: z.string().optional().default(''),
       cloudflareAnalyticsToken: z.string().optional().default(''),
@@ -129,8 +124,7 @@ export const ThemeConfigSchema = z.object({
           feedID: z.string().optional().default(''),
           userID: z.string().optional().default(''),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
       apiflashKey: z.string().optional().default(''),
       person: z
         .object({
@@ -147,18 +141,15 @@ export const ThemeConfigSchema = z.object({
           worksFor: z.string().optional().default(''),
           sameAs: z.array(z.string().url()).optional().default([]),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
       llms: z
         .object({
           // Post slugs listed first in /llms.txt. Empty = all default-locale posts.
           featured: z.array(z.string()).optional().default([]),
         })
-        .optional()
-        .default({}),
+        .prefault({}),
     })
-    .optional()
-    .default({}),
+    .prefault({}),
   footer: z.object({
     links: z
       .array(
@@ -176,8 +167,7 @@ export const ThemeConfigSchema = z.object({
       customGoogleAnalyticsJS: z.string().optional().default(''),
       customUmamiAnalyticsJS: z.string().optional().default(''),
     })
-    .optional()
-    .default({}),
+    .prefault({}),
   // Collection settings. Keys are collection names (built-in or auto-discovered
   // folders under `content/`). `enabled` controls whether the collection is
   // built and routed (folders not listed here default to `enabled: true`).
@@ -190,7 +180,7 @@ export const ThemeConfigSchema = z.object({
       z
         .object({
           enabled: z.boolean().optional().default(true),
-          intro: z.record(LanguageCode, z.string()).optional(),
+          intro: z.partialRecord(LanguageCode, z.string()).optional(),
         })
         .passthrough(),
     )
@@ -204,7 +194,7 @@ export const ThemeConfigSchema = z.object({
   // Loaded from default-poems.yaml by the integration; consumers can add
   // or override entries in their own retypeset.config.yaml.
   poems: z
-    .record(
+    .partialRecord(
       LanguageCode,
       z.array(
         z.object({

@@ -33,5 +33,8 @@ jobs:
       - name: Test static asset integration
         run: pnpm test:static-assets
 
+      - name: Test configuration compatibility
+        run: pnpm test:config-schema
+
       - name: Build
         run: pnpm build
