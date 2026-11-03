@@ -320,7 +320,9 @@ export const dynamicCollections = ${JSON.stringify(dynamicFolders)}
           redirects: {
             '/sitemap.xml': '/sitemap-index.xml',
           },
-          prefetch: {
+          // Keep the theme default only when the consumer has not configured
+          // prefetch. In particular, false must survive this integration.
+          prefetch: config.prefetch ?? {
             prefetchAll: true,
             defaultStrategy: 'viewport',
           },
