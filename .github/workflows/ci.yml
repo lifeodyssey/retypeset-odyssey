@@ -36,5 +36,11 @@ jobs:
       - name: Test configuration compatibility
         run: pnpm test:config-schema
 
+      - name: Test consumer prefetch configuration
+        run: pnpm test:prefetch
+
       - name: Build
         run: pnpm build
+
+      - name: Test generated localized feed links
+        run: pnpm test:footer-output
