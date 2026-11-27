@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.25 - 2026-11-28
+
+### Fixes
+
+- Preserve explicit consumer `prefetch` configuration (including `prefetch: false`) instead of unconditionally overriding it with viewport prefetching (#16).
+- Fix production footer RSS link rendering so localized feed URLs keep their full `/atom.xml` extension (instead of truncating to `/atom.xm`) and opt feed links out of Astro prefetching (#16).
+
+### Security and validation
+
+- Migrate configuration schema validation to patched Zod 4 with compatible defaults and regression tests (#15).
+
 ## 0.1.24 - 2026-10-08
 
 ### Compatibility
